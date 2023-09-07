@@ -29,7 +29,7 @@ function Login() {
             console.error('Lỗi:' + error);
             setMsg("Email hoặc mật khẩu không chính xác!")
         }
-        await axios.get('http://127.0.0.1:8000/api/profile', {
+        await axios.get('http://127.0.0.1:8000/api/getMe', {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('employer_jwt')}`,
             }

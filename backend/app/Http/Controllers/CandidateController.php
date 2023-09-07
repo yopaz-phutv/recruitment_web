@@ -50,9 +50,9 @@ class CandidateController extends Controller
         ])->exists();
 
         if ($res) {
-            return response()->json(true);
+            return response()->json(['value' => true]);
         } else {
-            return response()->json(false);
+            return response()->json(['value' => false]);
         }
     }
     public function processJobSaving(Request $req)

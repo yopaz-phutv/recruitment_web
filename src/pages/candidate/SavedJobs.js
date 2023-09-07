@@ -3,14 +3,16 @@ import CandidateLayout from "./CandidateLayout";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { BsTrash3 } from "react-icons/bs";
-import { AiOutlineInfoCircle } from "react-icons/ai";
 import SavedJobPopup from "./SavedJobPopup";
+import { useSelector } from "react-redux";
+import candidateApi from "../../api/candidate";
 
 function SavedJobs() {
   const [jobs, setJobs] = useState([{ locations: [], employer: {} }]);
   const [jobLocations, setJobLocations] = useState([]);
   const [curJob, setCurJob] = useState({});
-  const user = JSON.parse(localStorage.getItem("candidate"));
+  const user = useSelector((state) => state.candAuth.current);
+  console.log("current", user);
   const config = {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("jwt")}`,
@@ -18,33 +20,26 @@ function SavedJobs() {
   };
 
   const getSavedJobs = async () => {
-    await axios
-      .get(`http://127.0.0.1:8000/api/candidates/${user.id}/getSavedJobs`)
-      .then((res) => {
-        const jobs = res.data;
-        let jobLocs = [];
-        console.log(jobs);
-        setJobs(jobs);
-        for (let i = 0; i < jobs.length; i++) {
-          jobLocs[i] = "";
-          for (let j = 0; j < jobs[i].locations.length; j++) {
-            jobLocs[i] = jobLocs[i] + jobs[i].locations[j].name;
-            if (j !== jobs[i].locations.length - 1) {
-              jobLocs[i] = jobLocs[i] + ", ";
-            }
-          }
+    const jobs = await candidateApi.getSavedJobs(user.id);
+    let jobLocs = [];
+    console.log(jobs);
+    setJobs(jobs);
+    for (let i = 0; i < jobs.length; i++) {
+      jobLocs[i] = "";
+      for (let j = 0; j < jobs[i].locations.length; j++) {
+        jobLocs[i] = jobLocs[i] + jobs[i].locations[j].name;
+        if (j !== jobs[i].locations.length - 1) {
+          jobLocs[i] = jobLocs[i] + ", ";
         }
-        setJobLocations(jobLocs);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      }
+    }
+    setJobLocations(jobLocs);
   };
 
   useEffect(() => {
     getSavedJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   return (
     <CandidateLayout>

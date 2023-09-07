@@ -3,40 +3,25 @@ import React, { useEffect, useState } from "react";
 import Layout from "../layouts/Layout";
 import { Link } from "react-router-dom";
 import "./custom.css";
+import employerApi from "../api/employer";
 
 function CompanyList() {
   const [companies, setCompanies] = useState([]);
   const [comKey, setComKey] = useState("");
 
   const getAllCompany = async () => {
-    // localStorage.clear()
-    await axios
-      .get("http://127.0.0.1:8000/api/companies")
-      .then((res) => {
-        console.log(res.data);
-        setCompanies(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await employerApi.getAll();
+    setCompanies(res);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(comKey);
-    await axios
-      .get(`http://127.0.0.1:8000/api/companies?keyword=${comKey}`)
-      .then((res) => {
-        console.log(res.data);
-        setCompanies(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await employerApi.search(comKey);
+    setCompanies(res);
   };
 
   const handleChange = (e) => {
-    //const { name, value } = e.target;
     setComKey(e.target.value);
   };
 

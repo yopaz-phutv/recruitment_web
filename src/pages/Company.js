@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./custom.css";
+import employerApi from "../api/employer";
 
 function Company() {
   const { id } = useParams();
@@ -10,27 +11,13 @@ function Company() {
   const [jobs, setJobs] = useState([{}]);
 
   const getCompanyInfor = async () => {
-    await axios
-      .get(`http://127.0.0.1:8000/api/companies/${id}/getByID`)
-      .then((res) => {
-        console.log(res.data);
-        setInfor(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await employerApi.getById(id);
+    setInfor(res);    
   };
 
   const getCompanyJobs = async () => {
-    await axios
-      .get(`http://127.0.0.1:8000/api/companies/${id}/getComJobs`)
-      .then((res) => {
-        console.log(res.data);
-        setJobs(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await employerApi.getComJobs(id);
+    setJobs(res);
   };
 
   useEffect(() => {

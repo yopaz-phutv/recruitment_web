@@ -4,7 +4,11 @@ import axios from "axios";
 import { BsSearch } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import jobApi from "../api/job";
+import industryApi from "../api/industry";
+import locationApi from "../api/location";
+import jtypeApi from "../api/jtype";
+import jlevelApi from "../api/jlevel";
 
 function JobList() {
   const [jobs, setJobs] = useState([{ employer: {} }]);
@@ -14,25 +18,13 @@ function JobList() {
   const [jlevels, setJlevels] = useState([]);
   const { register, handleSubmit } = useForm();
   // const [isSavedJobs, setIsSavedJobs] = useState([]);
-  const config = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-    },
-  };
   // const user = JSON.parse(localStorage.getItem('candidate'))
 
   const getAllJobs = async () => {
     // let tjobs = []
-    await axios
-      .get("http://127.0.0.1:8000/api/jobs")
-      .then((res) => {
-        console.log(res.data.inf);
-        // tjobs = res.data.inf
-        setJobs(res.data.inf);        
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await jobApi.getAll();
+    setJobs(res.inf);
+    
       // await axios
       // .get(`http://127.0.0.1:8000/api/candidates/${user.id}/getSavedJobs`, config)
       // .then((res) => {
@@ -58,64 +50,29 @@ function JobList() {
   };
 
   const getAllIndustries = async () => {
-    await axios
-      .get("http://127.0.0.1:8000/api/industries")
-      .then((res) => {
-        // console.log(industries);
-        setIndustries(res.data.inf);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await industryApi.getAll();
+    setIndustries(res.inf);    
   };
 
   const getAllLocations = async () => {
-    await axios
-      .get("http://127.0.0.1:8000/api/locations")
-      .then((res) => {
-        // console.log(locations);
-        setLocations(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await locationApi.getAll();
+    setLocations(res);    
   };
 
   const getAllJtypes = async () => {
-    await axios
-      .get("http://127.0.0.1:8000/api/jtypes")
-      .then((res) => {
-        // console.log(locations);
-        setJtypes(res.data.inf);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await jtypeApi.getAll();
+    setJtypes(res.inf);
   };
 
   const getAllJlevels = async () => {
-    await axios
-      .get("http://127.0.0.1:8000/api/jlevels")
-      .then((res) => {
-        // console.log(locations);
-        setJlevels(res.data.inf);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await jlevelApi.getAll();
+    setJlevels(res.inf);
   };
 
   const handleFilter = async (data) => {
     console.log(data);
-    await axios
-      .post("http://127.0.0.1:8000/api/jobs/filter", data)
-      .then((res) => {
-        console.log(res.data.inf);
-        setJobs(res.data.inf);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await jobApi.filter(data);
+    setJobs(res.inf);
   };
   
   // const handleClickSaveBtn = async (index) => {

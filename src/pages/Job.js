@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import Layout from "../layouts/Layout";
 import {
   AiFillHeart,
   AiOutlineDollarCircle,
-  AiOutlineFieldTime,
   AiOutlineHeart,
   AiOutlinePlus,
 } from "react-icons/ai";
@@ -20,6 +18,9 @@ import {
   BsUpload,
 } from "react-icons/bs";
 import { FaIndustry } from "react-icons/fa";
+import jobApi from "../api/job";
+import { useSelector } from "react-redux";
+import candidateApi from "../api/candidate";
 
 function Job() {
   const { id } = useParams();
@@ -29,42 +30,24 @@ function Job() {
     jlevel: {},
     industries: {},
   });
-  const user = JSON.parse(localStorage.getItem("candidate"));
-  const isLogginedIn = localStorage.getItem("jwt");
+  const user = useSelector((state) => state.candAuth.current);
+  const isAuth = useSelector((state) => state.candAuth.isAuth);
   const [isApplied, setIsApplied] = useState(false);
   const [isUpload, setIsUpload] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [file, setFile] = useState();
   const [industries, setIndustries] = useState([]);
-  const config = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-    },
-  };
 
   const getJobInf = async () => {
-    await axios
-      .get(`http://127.0.0.1:8000/api/jobs/${id}/getByID`)
-      .then((res) => {
-        console.log(res.data);
-        setJob(res.data);
-        setIndustries(res.data.industries);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await jobApi.getById(id);
+    setJob(res);
+    setIndustries(res.industries);
   };
 
   const checkApplying = async () => {
-    await axios
-      .get(`http://127.0.0.1:8000/api/jobs/${id}/checkApplying`, config)
-      .then((res) => {
-        // console.log(res.data);
-        setIsApplied(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await jobApi.checkApplying(id);
+    setIsApplied(res.value);
+    console.log("is applying?", res.value);
   };
 
   const handleApply = async () => {
@@ -72,64 +55,45 @@ function Job() {
     formData.append("cv", file);
     formData.append("fname", file.name);
     console.log(file);
-    await axios
-      .post(`http://127.0.0.1:8000/api/jobs/${id}/apply`, formData, config)
-      .then((res) => {
-        console.log(res.data);
-        alert("Ứng tuyển thành công!");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+    await jobApi.apply(id, formData);
+    alert("Ứng tuyển thành công!");
+    window.location.reload();
   };
 
   const getFileInf = (e) => {
     setFile(e.target.files[0]);
   };
   const checkLoggedIn = () => {
-    if (!isLogginedIn) {
+    if (!isAuth) {
       alert("Vui lòng đăng nhập!");
     }
   };
   const checkJobSaved = async () => {
-    await axios
-      .get(`http://127.0.0.1:8000/api/candidates/${id}/checkJobSaved`, config)
-      .then((res) => {
-        // console.log('checksave:"'+ res.data+'"');
-        setIsSaved(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await candidateApi.checkJobSaved(id);
+    setIsSaved(res.value);
+    console.log("save job?:", res.value);
   };
   const handleClickSaveBtn = async (status) => {
-    await axios
-      .post(
-        `http://127.0.0.1:8000/api/candidates/${id}/processJobSaving`,
-        { status: status },
-        config
-      )
-      .then((res) => {
-        console.log(res.data);
-        setIsSaved(!isSaved);
-        setTimeout(() => {
-          alert("Cập nhật thành công!");
-        }, 100);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const data = { status: status };
+    await candidateApi.processJobSaving(id, data);
+    setIsSaved(!isSaved);
+    setTimeout(() => {
+      alert("Cập nhật thành công!");
+    }, 100);
   };
 
   useEffect(() => {
-    if (localStorage.getItem("jwt")) {
-      checkApplying();
-      checkJobSaved();
-    }
     getJobInf();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    if (isAuth) {
+      checkApplying();
+      checkJobSaved();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
 
   return (
     <Layout>
@@ -166,8 +130,8 @@ function Job() {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    data-bs-toggle={isLogginedIn ? "modal" : ""}
-                    data-bs-target={isLogginedIn ? "#applying_dialog" : ""}
+                    data-bs-toggle={isAuth ? "modal" : ""}
+                    data-bs-target={isAuth ? "#applying_dialog" : ""}
                     disabled={isApplied === true}
                     onClick={checkLoggedIn}
                   >
@@ -178,7 +142,7 @@ function Job() {
                     style={{ marginLeft: "120px" }}
                     onClick={() => handleClickSaveBtn(!isSaved)}
                   >
-                    {isSaved === false ? (
+                    {!isSaved ? (
                       <div>
                         <AiOutlineHeart className="fs-5" /> Lưu việc làm
                       </div>
@@ -188,7 +152,7 @@ function Job() {
                       </div>
                     )}
                   </div>
-                  {isLogginedIn && (
+                  {isAuth && (
                     <div className="modal fade" id="applying_dialog">
                       <div
                         className="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-scrollable"

@@ -191,7 +191,7 @@ class JobController extends Controller
             ])->first();
 
         if ($res != null) {
-            return response()->json(true);
-        } else return response()->json(false);
+            return response()->json(['value' => true]);
+        } else return response()->json(['value' => false]);
     }
 }

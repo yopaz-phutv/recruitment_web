@@ -1,27 +1,23 @@
 import { useEffect, useState } from "react";
 import CandidateLayout from "./CandidateLayout";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import candidateApi from "../../api/candidate";
 
 function AppliedJobs() {
   const [jobs, setJobs] = useState([]);
-  const user = JSON.parse(localStorage.getItem("candidate"));
+  const user = useSelector((state) => state.candAuth.current);
+  const isAuth = useSelector(state=>state.candAuth.isAuth);
 
   const getAppliedJobs = async () => {
-    await axios
-      .get(`http://127.0.0.1:8000/api/candidates/${user.id}/getAppliedJobs`)
-      .then((res) => {
-        setJobs(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+    const res = await candidateApi.getAppliedJobs(user.id);
+    setJobs(res);
+  }
 
   useEffect(() => {
     getAppliedJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAuth]);
 
   return (
     <CandidateLayout>

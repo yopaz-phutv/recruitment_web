@@ -104,7 +104,13 @@ class AuthController extends Controller
         if ($user->role == 2) {
             $user = User::with('employer')->find($user->id);
         }
-
+        if ($user->role == 1) {
+            $name = User::join('candidates', 'users.id', '=', 'user_id')
+                ->where('users.id', $user->id)
+                ->select('firstname', 'lastname')
+                ->first();
+            $user['name'] = $name;
+        }
         if (!$user) {
             return response()->json([
                 'message' => 'Unauthorized',
@@ -126,7 +132,7 @@ class AuthController extends Controller
     {
         return response()->json([
             'user' => Auth::user(),
-            'authorisation' => [
+            'authorization' => [
                 'token' => Auth::refresh(),
                 'type' => 'bearer',
             ]
