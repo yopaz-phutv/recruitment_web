@@ -4,8 +4,10 @@ import axios from "axios";
 // import {userContext} from "../../context/index.js";
 import { BsCheckCircle, BsEye, BsSearch, BsXCircle } from "react-icons/bs";
 import "./custom.css";
-import { MessagePopup, ProfilePopup } from "../../components/popup";
+import { MessagePopup } from "../../components/popup";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import employerApi from "../../api/employer";
 
 function CandidateList() {
   const {
@@ -17,7 +19,8 @@ function CandidateList() {
   const [curCandidate, setCurCandidate] = useState({});
   const [popupMsg, setPopupMsg] = useState("");
   const [status, setStatus] = useState("0");
-  const com_inf = JSON.parse(localStorage.getItem("company"));
+  const com_inf = useSelector((state) => state.employerAuth.current.employer);
+  const isAuth = useSelector((state) => state.employerAuth.isAuth);
   const config = {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("employer_jwt")}`,
@@ -25,36 +28,26 @@ function CandidateList() {
   };
 
   const getCandidateList = async (inf) => {
-    let link = `http://127.0.0.1:8000/api/companies/getCandidateList`;
+    const data = { id: com_inf.id, status: status };
+    let keyword = "";
     if (inf) {
-      link = link + `?keyword=${inf.keyword}`;
+      keyword = inf.keyword;
     }
-    await axios
-      .post(link, { id: com_inf.id, status: status }, config)
-      .then((res) => {
-        console.log(res.data);
-        setCandidates(res.data);
-      })
-      .catch((error) => {
-        console.error("Lỗi:" + error);
-      });
+    const res = await employerApi.getCandidateList(keyword, data);
+    setCandidates(res);
   };
 
   const handleClickActionBtn = async (cand_inf, key) => {
-    console.log(cand_inf);
+    console.log("status:", cand_inf.status, "key:", key);
     if (key === 1 && cand_inf.status === 0) {
-      await axios
-        .post(
-          `http://127.0.0.1:8000/api/companies/processApplying`,
-          { ...cand_inf, request_type: key },
-          config
-        )
+      const data = { ...cand_inf, request_type: key };
+      console.log("data:", data);
+      await employerApi
+        .processApplying(data)
         .then((res) => {
-          console.log(res.data);
+          console.log(res);
         })
-        .catch((error) => {
-          console.error("Lỗi:" + error);
-        });
+        .catch();
     }
     if (key !== 1) {
       setCurCandidate({ ...cand_inf, request_type: key });
@@ -78,9 +71,9 @@ function CandidateList() {
   };
 
   useEffect(() => {
-    getCandidateList();
+    if (isAuth) getCandidateList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
+  }, [status, isAuth]);
 
   return (
     <Layout>

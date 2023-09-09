@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import CandidateLayout from "./CandidateLayout";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { BsTrash3 } from "react-icons/bs";
 import SavedJobPopup from "./SavedJobPopup";
@@ -12,12 +11,7 @@ function SavedJobs() {
   const [jobLocations, setJobLocations] = useState([]);
   const [curJob, setCurJob] = useState({});
   const user = useSelector((state) => state.candAuth.current);
-  console.log("current", user);
-  const config = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-    },
-  };
+  const isAuth = useSelector(state=>state.candAuth.isAuth);
 
   const getSavedJobs = async () => {
     const jobs = await candidateApi.getSavedJobs(user.id);
@@ -37,9 +31,9 @@ function SavedJobs() {
   };
 
   useEffect(() => {
-    getSavedJobs();
+    if(isAuth) getSavedJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [isAuth]);
 
   return (
     <CandidateLayout>
@@ -90,7 +84,7 @@ function SavedJobs() {
         </table>
         {jobs.length === 0 && <h5 className="">Không có bản ghi nào</h5>}
       </div>
-      <SavedJobPopup config={config} job_id={curJob.id} />
+      <SavedJobPopup job_id={curJob.id} />
     </CandidateLayout>
   );
 }

@@ -1,36 +1,37 @@
-import axiosClient from "./axiosClient";
+import commonAxios from "./commonAxios";
+import employerAxios from "./employerAxios";
 
 const prefix = "/companies";
 const employerApi = {
   getAll: () => {
-    return axiosClient.get(`${prefix}`);
+    return commonAxios.get(`${prefix}`);
   },
   getById: (id) => {
-    return axiosClient.get(`${prefix}/${id}/getByID`);
+    return commonAxios.get(`${prefix}/${id}/getByID`);
   },
   getHotList: () => {
-    return axiosClient.get(`${prefix}/getHotList`);
+    return commonAxios.get(`${prefix}/getHotList`);
   },
-  destroy: (id) => {
-    return axiosClient.delete(`${prefix}/${id}/destroy`);
-  },
+  // destroy: (id) => {
+  //   return commonAxios.delete(`${prefix}/${id}/destroy`);
+  // },
   search: (keyword) => {
-    return axiosClient.get(`${prefix}?keyword=${keyword}`);
+    return commonAxios.get(`${prefix}?keyword=${keyword}`);
   },
   getComJobs: (id) => {
-    return axiosClient.get(`${prefix}/${id}/getComJobs`);
+    return commonAxios.get(`${prefix}/${id}/getComJobs`);
   },
-  getJobList: (id) => {
-    return axiosClient.get(`${prefix}/${id}/getJobList`);
+  getJobList: (id, keyword) => {
+    return commonAxios.get(`${prefix}/${id}/getJobList?keyword=${keyword}`);
   },
-  getCandidateList: () => {
-    return axiosClient.post(`${prefix}/getCandidateList`);
+  getCandidateList: (keyword, data) => {
+    return employerAxios.post(`${prefix}/getCandidateList?keyword=${keyword}`, data);
   },
-  processApplying: () => {
-    return axiosClient.post(`${prefix}/processApplying`);
+  processApplying: (data) => {
+    return employerAxios.post(`${prefix}/processApplying`, data);
   },
-  changeJobStatus: (job_id) => {
-    return axiosClient.post(`${prefix}/${job_id}/changeJobStatus`);
+  changeJobStatus: (job_id, data) => {
+    return employerAxios.post(`${prefix}/${job_id}/changeJobStatus`, data);
   },
 };
 export default employerApi;

@@ -1,21 +1,10 @@
-import axios from "axios";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import candidateApi from "../../../api/candidate";
 
-function SavedJobPopup({ config, job_id }) {
+function SavedJobPopup({ job_id }) {
   const deleteSavedJob = async () => {
-    await axios
-      .post(
-        `http://127.0.0.1:8000/api/candidates/${job_id}/processJobSaving`,
-        { status: 0 },
-        config
-      )
-      .then((res) => {
-        console.log(res.data);
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await candidateApi.processJobSaving(job_id, { status: 0 });
+    window.location.reload();
   };
 
   return (

@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineLine } from "react-icons/ai";
+import jobApi from "../../../api/job";
 
 function JobDetail({ inf, jtypes, jlevels, industries, locations }) {
   const jobIndustries = inf.industries;
@@ -15,7 +15,7 @@ function JobDetail({ inf, jtypes, jlevels, industries, locations }) {
   const [isEditIndustry, setIsEditIndustry] = useState(false);
   const [isEditLocation, setIsEditLocation] = useState(false);
   const [isEditSalary, setIsEditSalary] = useState(false);
-  
+
   const onSubmit = async (job_inf) => {
     console.log(job_inf);
     const keys = Object.keys(job_inf);
@@ -25,38 +25,30 @@ function JobDetail({ inf, jtypes, jlevels, industries, locations }) {
         delete job_inf[key];
       }
       if (key === "salaryOpt") {
-        if(job_inf[key] === "0"){
-          job_inf.min_salary = null
-          job_inf.max_salary = null
+        if (job_inf[key] === "0") {
+          job_inf.min_salary = null;
+          job_inf.max_salary = null;
         }
         delete job_inf[key];
       }
-      if(key === 'industries'){
+      if (key === "industries") {
         for (let j = 0; j < job_inf[key].length; j++) {
-          job_inf[key][j] = industries[job_inf[key][j]].id          
+          job_inf[key][j] = industries[job_inf[key][j]].id;
         }
       }
-      if(key === 'locations'){
+      if (key === "locations") {
         for (let j = 0; j < job_inf[key].length; j++) {
-          job_inf[key][j] = locations[job_inf[key][j]].id          
+          job_inf[key][j] = locations[job_inf[key][j]].id;
         }
       }
     }
-    console.log(job_inf);    
-    await axios
-      .post(`http://127.0.0.1:8000/api/jobs/${inf.id}/update`, job_inf)
-      .then((res) => {
-        console.log(res.data);
-        alert("Cập nhật thành công!");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log(job_inf);
+    await jobApi.update(inf.id, job_inf);
+    alert("Cập nhật thành công!");
+    window.location.reload();
   };
 
   useEffect(() => {
-    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -214,7 +206,7 @@ function JobDetail({ inf, jtypes, jlevels, industries, locations }) {
                     <span>Chọn:</span>
                     <select
                       className="form-select ms-2"
-                      style={{ width: '20%' }}
+                      style={{ width: "20%" }}
                       multiple
                       size="6"
                       {...register("locations")}

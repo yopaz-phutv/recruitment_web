@@ -1,33 +1,35 @@
-import axiosClient from "./axiosClient";
+import candidateAxios from "./candidateAxios";
+import commonAxios from "./commonAxios";
+import employerAxios from "./employerAxios";
 
 const prefix = "/jobs";
 const jobApi = {
   getAll: () => {
-    return axiosClient.get(`${prefix}`);
+    return commonAxios.get(`${prefix}`);
   },
   getById: (id) => {
-    return axiosClient.get(`${prefix}/${id}/getByID`);
+    return commonAxios.get(`${prefix}/${id}/getByID`);
   },
   getHotList: () => {
-    return axiosClient.get(`${prefix}/getHotList`);
+    return commonAxios.get(`${prefix}/getHotList`);
   },
-  create: () => {
-    return axiosClient.post(`${prefix}/create`);
+  create: (data) => {
+    return employerAxios.post(`${prefix}`, data);
   },
-  update: (id) => {
-    return axiosClient.post(`${prefix}/${id}/update`);
+  update: (id, data) => {
+    return employerAxios.post(`${prefix}/${id}/update`, data);
   },
   getJobIndustries: (id) => {
-    return axiosClient.get(`${prefix}/${id}/getJobIndustries`);
+    return commonAxios.get(`${prefix}/${id}/getJobIndustries`);
   },
   filter: (data) => {
-    return axiosClient.post(`${prefix}/filter`, data);
+    return commonAxios.post(`${prefix}/filter`, data);
   },
   apply: (id, formData) => {
-    return axiosClient.post(`${prefix}/${id}/apply`, formData);
+    return candidateAxios.post(`${prefix}/${id}/apply`, formData);
   },
   checkApplying: (id) => {
-    return axiosClient.get(`${prefix}/${id}/checkApplying`);
+    return candidateAxios.get(`${prefix}/${id}/checkApplying`);
   },
 };
 

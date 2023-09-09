@@ -9,7 +9,7 @@ import {
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
-function Home(props) {
+function Home() {
   const poster = process.env.PUBLIC_URL + "/image/poster4.jpg";
   const [hotJobs, setHotJobs] = useState([{ employer: {}, locations: [] }]);
   const [hotCompanies, setHotCompanies] = useState([]);

@@ -1,19 +1,19 @@
 import { BsEye, BsSearch } from "react-icons/bs";
 import Layout from "../Layout";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import "./style.css";
 import { useForm } from "react-hook-form";
 import { AiOutlinePlus } from "react-icons/ai";
 import JobDetail from "./JobDetail";
 import JobCreating from "./JobCreating";
+import { useSelector } from "react-redux";
+import industryApi from "../../../api/industry";
+import jtypeApi from "../../../api/jtype";
+import jlevelApi from "../../../api/jlevel";
+import locationApi from "../../../api/location";
+import employerApi from "../../../api/employer";
 
 function JobManagement() {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("employer_jwt")}`,
-    },
-  };
   const [jobs, setJobs] = useState([{}]);
   const [curJob, setCurJob] = useState({ industries: [], locations: [] });
   const [jtypes, setJtypes] = useState([]);
@@ -21,94 +21,57 @@ function JobManagement() {
   const [industries, setIndustries] = useState([]);
   const [locations, setLocations] = useState([]);
   const { register, handleSubmit } = useForm();
-  const company = JSON.parse(localStorage.getItem("company"));
+  const company = useSelector((state) => state.employerAuth.current.employer);
+  const isAuth = useSelector((state) => state.employerAuth.isAuth);
 
   const getAllJtypes = async () => {
-    await axios
-      .get("http://127.0.0.1:8000/api/jtypes")
-      .then((res) => {
-        setJtypes(res.data.inf);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await jtypeApi.getAll();
+    setJtypes(res.inf);
   };
 
   const getAllJlevels = async () => {
-    await axios
-      .get("http://127.0.0.1:8000/api/jlevels")
-      .then((res) => {
-        setJlevels(res.data.inf);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await jlevelApi.getAll();
+    setJlevels(res.inf);
   };
   const getAllIndustries = async () => {
-    await axios
-      .get("http://127.0.0.1:8000/api/industries")
-      .then((res) => {
-        setIndustries(res.data.inf);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await industryApi.getAll();
+    setIndustries(res.inf);
   };
   const getAllLocations = async () => {
-    await axios
-      .get("http://127.0.0.1:8000/api/locations")
-      .then((res) => {
-        setLocations(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = await locationApi.getAll();
+    setLocations(res);
   };
 
   const getJobList = async (data) => {
     let searchKey = "";
     if (data) searchKey = data.searchKey;
-    await axios
-      .get(
-        `http://127.0.0.1:8000/api/companies/${company.id}/getJobList?keyword=${searchKey}`,
-        config
-      )
-      .then((res) => {
-        console.log(res.data);
-        setJobs(res.data);
-      })
-      .catch((error) => {
-        console.error("Lỗi:" + error);
-      });
+    const res = await employerApi.getJobList(company.id, searchKey);
+    setJobs(res);
   };
   const handleClickActBtn = (job_inf) => {
     setCurJob(job_inf);
   };
   const handleClickSwitchBtn = async ({ job_id, status, index }) => {
     let temp_jobs = [...jobs];
-    await axios
-      .post(`http://127.0.0.1:8000/api/companies/${job_id}/changeJobStatus`, {
-        status: status,
-      })
-      .then((res) => {
-        console.log(res.data);
-        alert("Cập nhật thành công!");
-        temp_jobs[index].is_active = status;
-        setJobs(temp_jobs);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const data = { status: status };
+    await employerApi.changeJobStatus(job_id, data);
+    alert("Cập nhật thành công!");
+    temp_jobs[index].is_active = status;
+    setJobs(temp_jobs);
   };
 
   useEffect(() => {
-    getJobList();
     getAllJtypes();
     getAllJlevels();
     getAllIndustries();
     getAllLocations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (isAuth) getJobList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
 
   return (
     <Layout>
@@ -216,7 +179,6 @@ function JobManagement() {
             locations={locations}
           />
           <JobCreating
-            config={config}
             jtypes={jtypes}
             jlevels={jlevels}
             industries={industries}

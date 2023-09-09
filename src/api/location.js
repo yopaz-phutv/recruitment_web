@@ -1,9 +1,9 @@
-import axiosClient from "./axiosClient";
+import commonAxios from "./commonAxios";
 
 const prefix = "/locations";
 const locationApi = {
   getAll: () => {
-    return axiosClient.get(`${prefix}`);
+    return commonAxios.get(`${prefix}`);
   },
 }
 

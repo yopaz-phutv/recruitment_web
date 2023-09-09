@@ -1,11 +1,10 @@
-import axiosClient from "./axiosClient";
+import commonAxios from "./commonAxios";
 
 const prefix = "/industries";
 const industryApi = {
   getAll: () => {
-    return axiosClient.get(`${prefix}`);
+    return commonAxios.get(`${prefix}`);
   },
 }
 
 export default industryApi;
-export const getAllIndustries = industryApi.getAll();

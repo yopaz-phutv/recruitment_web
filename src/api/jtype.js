@@ -1,9 +1,9 @@
-import axiosClient from "./axiosClient";
+import commonAxios from "./commonAxios";
 
 const prefix = "/jtypes";
 const jtypeApi = {
   getAll: () => {
-    return axiosClient.get(`${prefix}`);
+    return commonAxios.get(`${prefix}`);
   },
 }
 

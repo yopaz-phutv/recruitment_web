@@ -23,7 +23,7 @@ function Layout(props) {
   const isAuth = useSelector((state) => state.candAuth.isAuth);
 
   const handleLogout = async () => {
-    await authApi.logout();
+    await authApi.logout(1);
     dispatch(candAuthActions.logout());
     localStorage.removeItem("candidate_jwt");
     if (window.location.pathname === "/profile") {
@@ -65,7 +65,7 @@ function Layout(props) {
   };
 
   const getMe = async () => {
-    const res = await authApi.getMe();
+    const res = await authApi.getMe(1);
     dispatch(candAuthActions.setCurrentCandidate(res));
   };
 

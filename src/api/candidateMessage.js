@@ -1,12 +1,12 @@
-import axiosClient from "./axiosClient";
+import candidateAxios from "./candidateAxios";
 
 const prefix = '/cand-msgs'
 const candMsgApi = {
   getMsgs: (candidateId) => {
-    return axiosClient.get(`${prefix}/${candidateId}/getByCandidateID`);
+    return candidateAxios.get(`${prefix}/${candidateId}/getByCandidateID`);
   },
   markAsRead: (msgId) => {
-    return axiosClient.get(`${prefix}/${msgId}/updateReadMsg`);
+    return candidateAxios.get(`${prefix}/${msgId}/updateReadMsg`);
   },
 };
 

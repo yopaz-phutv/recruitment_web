@@ -1,21 +1,24 @@
-import axios from "./axiosClient";
+import candidateAxios from "./candidateAxios";
+import commonAxios from "./commonAxios";
+import employerAxios from "./employerAxios";
 
-const auth = {
+const authApi = {
   login: (params) => {
-    return axios.post("/login", params);
+    return commonAxios.post("/login", params);
   },
   register: (params) => {
-    return axios.post("/register", params);
+    return commonAxios.post("/register", params);
   },
-  logout: () => {
-    return axios.get("/logout");
-  },
-  refresh: () => {
-    return axios.get("/refresh");
-  },
-  getMe: () => {
-    return axios.get("/getMe");
+  logout: (role) => {
+    if (role === 1) return candidateAxios.get("/logout");
+    if (role === 2) return employerAxios.get("/logout");  },
+  refresh: (role) => {
+    if (role === 1) return candidateAxios.get("/refresh");
+    if (role === 2) return employerAxios.get("/refresh");  },
+  getMe: (role) => {
+    if (role === 1) return candidateAxios.get("/getMe");
+    if (role === 2) return employerAxios.get("/getMe");
   },
 };
 
-export default auth;
+export default authApi;

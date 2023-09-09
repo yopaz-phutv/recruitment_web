@@ -1,14 +1,14 @@
 import axios from "axios";
 // import queryString from 'query-string';
 
-const axiosClient = axios.create({
+const employerAxios = axios.create({
   baseURL: process.env.REACT_APP_API_URL + '/api',
   // paramsSerializer: params => queryString.stringify(params),
 });
 
-axiosClient.interceptors.request.use(
+employerAxios.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('candidate_jwt');
+    const token = localStorage.getItem('employer_jwt');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -20,7 +20,7 @@ axiosClient.interceptors.request.use(
   }
 );
 
-axiosClient.interceptors.response.use(
+employerAxios.interceptors.response.use(
   (response) => {
     if (response && response.data) {
       return response.data;
@@ -34,4 +34,4 @@ axiosClient.interceptors.response.use(
   }
 );
 
-export default axiosClient;
+export default employerAxios;

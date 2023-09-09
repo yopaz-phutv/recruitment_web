@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { AiOutlineLine } from "react-icons/ai";
+import jobApi from "../../../api/job";
 
-function JobCreating({ config, jtypes, jlevels, industries, locations }) {
+function JobCreating({ jtypes, jlevels, industries, locations }) {
   const {
     register,
     formState: { errors },
@@ -24,16 +24,9 @@ function JobCreating({ config, jtypes, jlevels, industries, locations }) {
     if (job_inf.max_salary === "") delete job_inf.max_salary;
     console.log(job_inf);
 
-    await axios
-      .post(`http://127.0.0.1:8000/api/jobs`, job_inf, config)
-      .then((res) => {
-        console.log(res.data);
-        alert("Tạo mới thành công!");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await jobApi.create(job_inf);
+    alert("Tạo mới thành công!");
+    window.location.reload();
   };
 
   return (
@@ -87,7 +80,7 @@ function JobCreating({ config, jtypes, jlevels, industries, locations }) {
                     style={{ width: "50%" }}
                   >
                     {watch("industries").map((item, index) => (
-                      <span key={'cur_industry' + item}>
+                      <span key={"cur_industry" + item}>
                         {industries[item].name}
                         {index !== watch("industries").length - 1 && ", "}
                       </span>
@@ -123,7 +116,7 @@ function JobCreating({ config, jtypes, jlevels, industries, locations }) {
                     </option>
                   ))}
                 </select>
-              </div>              
+              </div>
               <div className="mt-2">
                 <strong>Tỉnh thành:</strong>
                 <div className="d-flex mt-2">
@@ -148,7 +141,7 @@ function JobCreating({ config, jtypes, jlevels, industries, locations }) {
                     style={{ width: "50%" }}
                   >
                     {watch("locations").map((item, index) => (
-                      <span key={'cur_location' + item}>
+                      <span key={"cur_location" + item}>
                         {locations[item].name}
                         {index !== watch("locations").length - 1 && ", "}
                       </span>
