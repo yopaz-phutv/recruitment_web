@@ -1,9 +1,8 @@
-// import { useState } from "react";
-import Layout from "../layouts/Layout";
 import { useForm } from "react-hook-form";
 import { AiFillWarning } from "react-icons/ai";
-import authApi from "../api/auth";
 import { useNavigate } from "react-router-dom";
+import authApi from "../../../api/auth";
+import Layout from "../layouts/Layout";
 
 function Signup() {
   const required_field = <span className="text-danger fw-bold">*</span>;

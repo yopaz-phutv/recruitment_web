@@ -1,5 +1,5 @@
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import candidateApi from "../../api/candidate";
+import candidateApi from "../../../api/candidate";
 
 function SavedJobPopup({ job_id }) {
   const deleteSavedJob = async () => {

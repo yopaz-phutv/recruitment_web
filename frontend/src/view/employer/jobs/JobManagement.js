@@ -1,5 +1,5 @@
 import { BsEye, BsSearch } from "react-icons/bs";
-import Layout from "../Layout";
+import Layout from "../layouts/Layout";
 import { useEffect, useState } from "react";
 import "./style.css";
 import { useForm } from "react-hook-form";
@@ -7,9 +7,9 @@ import { AiOutlinePlus } from "react-icons/ai";
 import JobDetail from "./JobDetail";
 import JobCreating from "./JobCreating";
 import { useSelector } from "react-redux";
-import industryApi from "../../../api/industry";
 import jtypeApi from "../../../api/jtype";
 import jlevelApi from "../../../api/jlevel";
+import industryApi from "../../../api/industry";
 import locationApi from "../../../api/location";
 import employerApi from "../../../api/employer";
 

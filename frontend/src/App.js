@@ -1,18 +1,18 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Home from './pages/Home';
-import Signup from './pages/Signup';
-import CompanyList from './pages/CompanyList';
-import Company from './pages/Company';
-import JobList from './pages/JobList';
-import Job from './pages/Job';
-import Login from './pages/employers/Login';
-import EmployerLayout from './pages/employers/Layout';
-import CandidateList from './pages/employers/CandidateList';
-import JobManagement from "./pages/employers/job-management/JobManagement";
-import CandidateLayout from './pages/candidate/CandidateLayout';
-import AppliedJobs from './pages/candidate/AppliedJobs';
-import SavedJobs from './pages/candidate/SavedJobs';
+import Home from './view/candidate/Home';
+import CompanyList from './view/candidate/CompanyList';
+import Company from './view/candidate/Company';
+import JobList from './view/candidate/JobList';
+import Job from './view/candidate/Job';
+import EmployerLayout from './view/employer/layouts/Layout';
+import Login from './view/employer/auth/Login';
+import CandidateList from './view/employer/candidates/CandidateList';
+import JobManagement from './view/employer/jobs/JobManagement';
+import CandidateLayout from './view/candidate/management/layouts/CandidateLayout';
+import AppliedJobs from './view/candidate/management/AppliedJobs';
+import SavedJobs from './view/candidate/management/SavedJobs';
+import Signup from './view/candidate/auth/Signup';
 
 function App() {
   return (    

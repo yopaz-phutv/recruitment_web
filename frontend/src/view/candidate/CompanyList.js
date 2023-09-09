@@ -1,9 +1,8 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Layout from "../layouts/Layout";
+import Layout from "./layouts/Layout";
 import { Link } from "react-router-dom";
 import "./custom.css";
-import employerApi from "../api/employer";
+import employerApi from "../../api/employer";
 
 function CompanyList() {
   const [companies, setCompanies] = useState([]);

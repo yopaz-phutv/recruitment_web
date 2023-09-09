@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import CandidateLayout from "./CandidateLayout";
+import CandidateLayout from "./layouts/CandidateLayout";
 import { Link } from "react-router-dom";
 import { BsTrash3 } from "react-icons/bs";
-import SavedJobPopup from "./SavedJobPopup";
 import { useSelector } from "react-redux";
-import candidateApi from "../../api/candidate";
+import SavedJobPopup from "./SavedJobPopup";
+import candidateApi from "../../../api/candidate";
 
 function SavedJobs() {
   const [jobs, setJobs] = useState([{ locations: [], employer: {} }]);

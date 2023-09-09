@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import Layout from "./Layout";
-import axios from "axios";
-// import {userContext} from "../../context/index.js";
 import { BsCheckCircle, BsEye, BsSearch, BsXCircle } from "react-icons/bs";
 import "./custom.css";
-import { MessagePopup } from "../../components/popup";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import employerApi from "../../api/employer";
+import Layout from "../layouts/Layout";
+import { MessagePopup } from "./popup";
+import employerApi from "../../../api/employer";
 
 function CandidateList() {
   const {
@@ -21,11 +19,6 @@ function CandidateList() {
   const [status, setStatus] = useState("0");
   const com_inf = useSelector((state) => state.employerAuth.current.employer);
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
-  const config = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("employer_jwt")}`,
-    },
-  };
 
   const getCandidateList = async (inf) => {
     const data = { id: com_inf.id, status: status };

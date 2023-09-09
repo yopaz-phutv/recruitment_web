@@ -1,14 +1,14 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import { Link, useNavigate } from "react-router-dom";
-import Login from "./Login";
 import { useEffect, useState } from "react";
 import { BsBell, BsFillCircleFill } from "react-icons/bs";
 import "./layout.css";
 import { useDispatch, useSelector } from "react-redux";
-import { candAuthActions } from "../redux/slices/candAuthSlice";
-import authApi from "../api/auth";
-import candMsgApi from "../api/candidateMessage";
+import authApi from "../../../api/auth";
+import candMsgApi from "../../../api/candidateMessage";
+import { candAuthActions } from "../../../redux/slices/candAuthSlice";
+import Login from "../auth/Login";
 
 const user_icon = process.env.PUBLIC_URL + "/image/user_icon.png";
 

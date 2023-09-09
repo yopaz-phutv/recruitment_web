@@ -1,5 +1,5 @@
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import employerApi from "../api/employer";
+import employerApi from "../../../api/employer";
 
 function MessagePopup({ message, cand_inf }) {
   const processRequest = async () => {

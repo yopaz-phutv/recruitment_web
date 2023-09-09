@@ -1,5 +1,4 @@
 import axios from "axios";
-import Layout from "../layouts/Layout";
 import { useEffect, useState } from "react";
 import {
   BsCaretLeft,
@@ -8,6 +7,7 @@ import {
   BsGeoAlt,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import Layout from "./layouts/Layout";
 
 function Home() {
   const poster = process.env.PUBLIC_URL + "/image/poster4.jpg";

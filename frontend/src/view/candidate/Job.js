@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Layout from "../layouts/Layout";
+import Layout from "./layouts/Layout";
 import {
   AiFillHeart,
   AiOutlineDollarCircle,
@@ -18,9 +18,9 @@ import {
   BsUpload,
 } from "react-icons/bs";
 import { FaIndustry } from "react-icons/fa";
-import jobApi from "../api/job";
 import { useSelector } from "react-redux";
-import candidateApi from "../api/candidate";
+import jobApi from "../../api/job";
+import candidateApi from "../../api/candidate";
 
 function Job() {
   const { id } = useParams();

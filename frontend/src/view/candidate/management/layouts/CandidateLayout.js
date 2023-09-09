@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Layout from "../../layouts/Layout";
 import { AiTwotoneAppstore } from "react-icons/ai";
 import "./layout.css";
+import Layout from "../../layouts/Layout";
 
 function CandidateLayout(props) {
   return (

@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import Layout from "../layouts/Layout";
-import axios from "axios";
+import Layout from "./layouts/Layout";
 import { BsSearch } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import jobApi from "../api/job";
-import industryApi from "../api/industry";
-import locationApi from "../api/location";
-import jtypeApi from "../api/jtype";
-import jlevelApi from "../api/jlevel";
+import jobApi from "../../api/job";
+import industryApi from "../../api/industry";
+import locationApi from "../../api/location";
+import jtypeApi from "../../api/jtype";
+import jlevelApi from "../../api/jlevel";
 
 function JobList() {
   const [jobs, setJobs] = useState([{ employer: {} }]);

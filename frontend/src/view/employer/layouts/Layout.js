@@ -8,9 +8,9 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import "./layout_style.css";
 import { useEffect } from "react";
-import authApi from "../../api/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { employerAuthActions } from "../../redux/slices/employerAuthSlice";
+import authApi from "../../../api/auth";
+import { employerAuthActions } from "../../../redux/slices/employerAuthSlice";
 // import { Tooltip } from 'bootstrap';
 
 function Layout(props) {

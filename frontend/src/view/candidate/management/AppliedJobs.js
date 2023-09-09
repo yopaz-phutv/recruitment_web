@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import CandidateLayout from "./CandidateLayout";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import candidateApi from "../../api/candidate";
+import CandidateLayout from "./layouts/CandidateLayout";
+import candidateApi from "../../../api/candidate";
 
 function AppliedJobs() {
   const [jobs, setJobs] = useState([]);

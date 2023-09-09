@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import authApi from "../api/auth";
 import { useState } from "react";
-import { candAuthActions } from "../redux/slices/candAuthSlice";
+import authApi from "../../../api/auth";
+import { candAuthActions } from "../../../redux/slices/candAuthSlice";
 
 function Login() {
   const {

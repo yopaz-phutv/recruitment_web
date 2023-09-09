@@ -1,9 +1,8 @@
 import { Link, useParams } from "react-router-dom";
-import Layout from "../layouts/Layout";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import "./custom.css";
-import employerApi from "../api/employer";
+import Layout from "./layouts/Layout";
+import employerApi from "../../api/employer";
 
 function Company() {
   const { id } = useParams();

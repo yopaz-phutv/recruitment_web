@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import authApi from "../../api/auth";
 import { useDispatch } from "react-redux";
-import { employerAuthActions } from "../../redux/slices/employerAuthSlice";
+import authApi from "../../../api/auth";
+import { employerAuthActions } from "../../../redux/slices/employerAuthSlice";
 
 function Login() {
   const required_mark = <span className="text-danger"> *</span>;
