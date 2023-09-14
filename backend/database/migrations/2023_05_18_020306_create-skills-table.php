@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('skills', function (Blueprint $table) {
             $table->unsignedBigInteger('candidate_id')->primary();
-            $table->string('name', 100);
+            $table->string('name', 60);
             $table->unsignedTinyInteger('proficiency');
             //$table->timestamps();
         });

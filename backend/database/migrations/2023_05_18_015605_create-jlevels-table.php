@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('jlevels', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 60);
+            $table->string('name', 40);
             //$table->timestamps();
         });
     }

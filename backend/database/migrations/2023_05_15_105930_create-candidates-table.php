@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
             $table->unsignedBigInteger('user_id');
-            $table->string('firstname', 50);
-            $table->string('lastname', 50);
+            $table->string('firstname', 40);
+            $table->string('lastname', 20);
             $table->unsignedTinyInteger('gender')->nullable();
             $table->date('dob')->nullable();
             $table->char('phone', 10)->nullable();
