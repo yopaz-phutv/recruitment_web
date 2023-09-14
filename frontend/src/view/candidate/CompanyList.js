@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Layout from "./layouts/Layout";
 import { Link } from "react-router-dom";
 import "./custom.css";
 import employerApi from "../../api/employer";
@@ -29,7 +28,7 @@ function CompanyList() {
   }, []);
 
   return (
-    <Layout>
+    <>
       {/* <h2 className="p-2 mb-3 shadow bg-light">Danh sách công ty</h2> */}
       <form
         className="d-flex pt-3"
@@ -126,7 +125,7 @@ function CompanyList() {
         </div>
       </div>
       <div style={{ minHeight: '25px' }}></div>
-    </Layout>
+    </>
   );
 }
 

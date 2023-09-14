@@ -31,7 +31,7 @@ function Login() {
         } else {
           const closeBtn = document.getElementById("closeBtn");
           closeBtn.click();
-          document.getElementById("resetBtn").click();
+          document.querySelector('button.resetBtn').click();
         }
       })
       .catch((error) => {
@@ -60,7 +60,6 @@ function Login() {
                 <input
                   type="text"
                   className="form-control"
-                  id="email"
                   name="email"                  
                   {...register("email")}
                 />
@@ -96,7 +95,7 @@ function Login() {
                   )}
                   &nbsp;Đăng nhập
                 </button>
-                <button type="reset" id="resetBtn" style={{ display: 'none' }} />
+                <button type="reset" className="resetBtn" style={{ display: 'none' }} />
               </div>
             </form>
           </div>

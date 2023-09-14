@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import CandidateLayout from "./layouts/CandidateLayout";
 import { Link } from "react-router-dom";
 import { BsTrash3 } from "react-icons/bs";
 import { useSelector } from "react-redux";
@@ -36,7 +35,7 @@ function SavedJobs() {
   }, [isAuth]);
 
   return (
-    <CandidateLayout>
+    <>
       <div className="m-4 px-5 pt-4 bg-white" style={{ height: "92.5%" }}>
         <p className="mb-4 h4 ms-1">Việc làm đã lưu</p>
         <table className="table border">
@@ -85,7 +84,7 @@ function SavedJobs() {
         {jobs.length === 0 && <h5 className="">Không có bản ghi nào</h5>}
       </div>
       <SavedJobPopup job_id={curJob.id} />
-    </CandidateLayout>
+    </>
   );
 }
 

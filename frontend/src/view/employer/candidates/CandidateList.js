@@ -3,7 +3,6 @@ import { BsCheckCircle, BsEye, BsSearch, BsXCircle } from "react-icons/bs";
 import "./custom.css";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import Layout from "../layouts/Layout";
 import { MessagePopup } from "./popup";
 import employerApi from "../../../api/employer";
 
@@ -69,7 +68,7 @@ function CandidateList() {
   }, [status, isAuth]);
 
   return (
-    <Layout>
+    <>
       <div
         className="bg-white"
         style={{
@@ -179,7 +178,7 @@ function CandidateList() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
 

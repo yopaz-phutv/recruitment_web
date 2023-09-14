@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import CandidateLayout from "./layouts/CandidateLayout";
 import candidateApi from "../../../api/candidate";
 
 function AppliedJobs() {
@@ -20,7 +19,7 @@ function AppliedJobs() {
   }, [isAuth]);
 
   return (
-    <CandidateLayout>
+    <>
       <div className="m-4 px-5 pt-4 bg-white" style={{ height: "92.5%" }}>
         <p className="mb-4 h4 ms-1">Việc làm đã nộp</p>
         <table className="table border">
@@ -66,7 +65,7 @@ function AppliedJobs() {
         </table>
         {jobs.length === 0 && <h5 className="">Không có bản ghi nào</h5>}
       </div>
-    </CandidateLayout>
+    </>
   );
 }
 

@@ -53,7 +53,8 @@ function Layout(props) {
 
   const handleReadMsg = async (inf) => {
     if (inf.isRead === 0) {
-      await candMsgApi.markAsRead(inf.id)
+      await candMsgApi
+        .markAsRead(inf.id)
         .then((res) => {
           console.log(res);
         })
@@ -200,7 +201,7 @@ function Layout(props) {
         className="page-body"
         style={{ minHeight: "78vh", marginTop: "73px" }}
       >
-        <Login />
+        {!isAuth && <Login />}
         {props.children}
       </main>
       <footer className="bg-light border-top" style={{ paddingTop: "35px" }}>

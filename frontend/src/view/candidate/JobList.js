@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Layout from "./layouts/Layout";
 import { BsSearch } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -98,7 +97,7 @@ function JobList() {
   }, []);
 
   return (
-    <Layout>
+    <>
       <form
         className="pt-3 pb-2"
         style={{ marginLeft: "76px" }}
@@ -288,7 +287,7 @@ function JobList() {
           </h4>
         )}
       </div>
-    </Layout>
+    </>
   );
 }
 

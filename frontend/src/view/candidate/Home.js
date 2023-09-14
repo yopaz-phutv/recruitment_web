@@ -7,7 +7,6 @@ import {
   BsGeoAlt,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import Layout from "./layouts/Layout";
 
 function Home() {
   const poster = process.env.PUBLIC_URL + "/image/poster4.jpg";
@@ -49,7 +48,7 @@ function Home() {
   }, []);
 
   return (
-    <Layout>
+    <>
       <div>
         <img className="w-100" src={poster} alt="poster" />
       </div>
@@ -176,7 +175,7 @@ function Home() {
       <div style={{ height: "40px" }}>
         <span></span>
       </div>
-    </Layout>
+    </>
   );
 }
 export default Home;

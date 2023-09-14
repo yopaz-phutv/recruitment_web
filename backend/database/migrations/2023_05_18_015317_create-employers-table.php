@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('employers', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
             $table->unsignedBigInteger('user_id');
-            $table->string('name', 100);
+            $table->string('name', 150);
             $table->string('address');
             $table->unsignedInteger('min_employees')->nullable();
             $table->unsignedInteger('max_employees')->nullable();

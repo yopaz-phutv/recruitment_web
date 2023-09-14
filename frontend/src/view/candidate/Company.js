@@ -1,7 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./custom.css";
-import Layout from "./layouts/Layout";
 import employerApi from "../../api/employer";
 
 function Company() {
@@ -26,7 +25,7 @@ function Company() {
   }, []);
 
   return (
-    <Layout>
+    <>
       <div className="container image-container d-flex justify-content-center">
         <img
           src={infor.image}
@@ -150,7 +149,7 @@ function Company() {
           ))}
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
 

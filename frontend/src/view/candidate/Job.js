@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Layout from "./layouts/Layout";
 import {
   AiFillHeart,
   AiOutlineDollarCircle,
@@ -96,7 +95,7 @@ function Job() {
   }, [isAuth]);
 
   return (
-    <Layout>
+    <>
       <div className="container image-container d-flex justify-content-center">
         <img
           src={job.employer.image}
@@ -385,7 +384,7 @@ function Job() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
 

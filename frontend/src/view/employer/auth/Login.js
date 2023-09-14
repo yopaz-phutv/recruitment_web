@@ -33,7 +33,7 @@ function Login() {
       });
 
     await authApi.getMe(2).then((res) => {
-      dispatch(employerAuthActions.setUser(res.employer));
+      dispatch(employerAuthActions.setUser(res));
       nav("/employer");
     });
   };

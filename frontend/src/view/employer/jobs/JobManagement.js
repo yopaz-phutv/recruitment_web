@@ -1,5 +1,4 @@
 import { BsEye, BsSearch } from "react-icons/bs";
-import Layout from "../layouts/Layout";
 import { useEffect, useState } from "react";
 import "./style.css";
 import { useForm } from "react-hook-form";
@@ -74,7 +73,7 @@ function JobManagement() {
   }, [isAuth]);
 
   return (
-    <Layout>
+    <>
       <div
         className="bg-white"
         style={{
@@ -186,7 +185,7 @@ function JobManagement() {
           />
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
 

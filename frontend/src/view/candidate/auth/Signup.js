@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { AiFillWarning } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import authApi from "../../../api/auth";
-import Layout from "../layouts/Layout";
 
 function Signup() {
   const required_field = <span className="text-danger fw-bold">*</span>;
@@ -40,7 +39,7 @@ function Signup() {
   };
 
   return (
-    <Layout>
+    <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-4"></div>
@@ -184,7 +183,7 @@ function Signup() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
 
