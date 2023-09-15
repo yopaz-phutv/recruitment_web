@@ -9,6 +9,7 @@ import authApi from "../../../api/auth";
 import candMsgApi from "../../../api/candidateMessage";
 import { candAuthActions } from "../../../redux/slices/candAuthSlice";
 import Login from "../auth/Login";
+import { socket } from "../../../socket/socket";
 
 const user_icon = process.env.PUBLIC_URL + "/image/user_icon.png";
 
@@ -31,8 +32,9 @@ function Layout(props) {
     }
   };
 
-  const getNewMessages = async () => {
-    const res = await candMsgApi.getMsgs();
+  const getAllMessages = async () => {
+    const res = await candMsgApi.getMsgs(candidate.id);
+    console.log('bell msgs:' ,res);
     let msgs = res;
     let msg_styles = [];
 
@@ -64,19 +66,43 @@ function Layout(props) {
     }
     nav(`/jobs/${inf.job_id}`);
   };
-
+  const onHasNewMessage = async (new_msg) => {
+    console.log("new message:", new_msg);
+    setHasNew(true);
+    await getAllMessages();
+  };
   const getMe = async () => {
     const res = await authApi.getMe(1);
     dispatch(candAuthActions.setCurrentCandidate(res));
   };
-
   useEffect(() => {
     if (localStorage.getItem("candidate_jwt")) {
       getMe();
-      getNewMessages();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
+  useEffect(() => {
+    if (isAuth) {
+      getAllMessages();
+      if (socket.connect()) {
+        console.log("Connected to server!");
+      }
+      return () => {
+        socket.disconnect();
+      };
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
+
+  useEffect(() => {
+    socket.on("application_msg", onHasNewMessage);
+
+    return () => {
+      socket.off("application_msg", onHasNewMessage);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bellMsgs]);  
 
   return (
     <>
