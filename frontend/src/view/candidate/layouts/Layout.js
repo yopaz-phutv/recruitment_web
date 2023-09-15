@@ -99,7 +99,7 @@ function Layout(props) {
     socket.on("application_msg", onHasNewMessage);
 
     return () => {
-      socket.off("application_msg", onHasNewMessage);
+      socket.off("application_msg", onHasNewMessage)
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bellMsgs]);  
