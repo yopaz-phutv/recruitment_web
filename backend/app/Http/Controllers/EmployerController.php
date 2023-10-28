@@ -11,6 +11,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class EmployerController extends Controller
 {
@@ -133,6 +134,9 @@ class EmployerController extends Controller
                 $content = 'Bạn đã bị từ chối khỏi vị trí ';
             }
             $content = $content . $req->jname . ', ' . $com_name . ', lúc ' . $currentTime;
+
+            $redis = Redis::connection();
+            $redis->publish('application_result', $content);
 
             DB::table('candidate_messages')->insert([
                 [
