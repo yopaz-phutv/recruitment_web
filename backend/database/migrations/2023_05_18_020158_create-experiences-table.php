@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('experiences', function (Blueprint $table) {
-            $table->unsignedBigInteger('candidate_id')->primary();
-            $table->unsignedBigInteger('jtype_id');
+            $table->id();
+            $table->unsignedBigInteger('candidate_id');
             $table->string('name', 100);
             $table->string('company', 100);
             $table->date('start_date');
             $table->date('end_date');
-            $table->text('description');
+            $table->text('description')->nullable();
             //$table->timestamps();
         });
     }

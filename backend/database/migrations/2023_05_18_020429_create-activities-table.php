@@ -12,15 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('activities', function (Blueprint $table) {
-            $table->unsignedBigInteger('candidate_id')->primary();
+            $table->id();
+            $table->unsignedBigInteger('candidate_id');
             $table->string('organization', 100);
             $table->string('role', 100);
-            $table->boolean('is_present');
+            $table->boolean('is_present')->nullable();
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date')->nullable();
             $table->text('description');
-            $table->text('image');
-            $table->text('link');
+            // $table->text('image');
+            $table->text('link')->nullable();
             //$table->timestamps();
         });
     }

@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->unsignedBigInteger('candidate_id')->primary();
+            $table->id();
+            $table->unsignedBigInteger('candidate_id');
             $table->string('name', 100);
-            $table->string('prj_type', 60);
-            $table->string('role', 100);
-            //$table->string('mission', 100);
-            $table->string('technologies');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->string('prj_type', 60)->nullable();
+            $table->string('role', 100)->nullable();
+            $table->string('technologies')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->text('description');
-            $table->text('link');
+            $table->text('link')->nullable();
             //$table->timestamps();
         });
     }

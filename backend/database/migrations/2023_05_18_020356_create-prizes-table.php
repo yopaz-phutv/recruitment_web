@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('prizes', function (Blueprint $table) {
-            $table->unsignedBigInteger('candidate_id')->primary();
+            $table->id();
+            $table->unsignedBigInteger('candidate_id');
             $table->string('name', 100);
-            $table->text('image');
-            $table->date('received_date');
+            $table->date('receive_date');
+            $table->text('image')->nullable();
             //$table->timestamps();
         });
     }

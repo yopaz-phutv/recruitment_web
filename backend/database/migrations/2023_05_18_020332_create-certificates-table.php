@@ -12,9 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('certificates', function (Blueprint $table) {
-            $table->unsignedBigInteger('candidate_id')->primary();
+            $table->id();
+            $table->unsignedBigInteger('candidate_id');
             $table->string('name', 100);
-            $table->text('image');
+            $table->date('receive_date')->nullable();
+            $table->date('expire_date')->nullable();
+            $table->text('image')->nullable();
             //$table->timestamps();
         });
     }

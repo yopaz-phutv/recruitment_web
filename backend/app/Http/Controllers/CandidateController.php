@@ -10,12 +10,49 @@ use Illuminate\Support\Facades\DB;
 
 class CandidateController extends Controller
 {
-    public function show($id)
+    // public function show($id)
+    // {
+    //     $candidate = Candidate::find($id);
+
+    //     return response()->json($candidate);
+    // }
+    public function getCurrent()
     {
+        $id = Auth::user()->id;
         $candidate = Candidate::find($id);
 
         return response()->json($candidate);
     }
+
+    public function update(Request $req)
+    {
+        $id = Auth::user()->id;
+        $candidate = Candidate::find($id);
+
+        $candidate->lastname = $req->lastname;
+        $candidate->firstname = $req->firstname;
+        $candidate->gender = $req->gender;
+        $candidate->dob = $req->dob;
+        $candidate->phone = $req->phone;
+        $candidate->email = $req->email;
+        $candidate->address = $req->address;
+        $candidate->link = $req->link;
+        $candidate->objective = $req->objective;
+
+        $file = $req->file('image');
+        if ($file) {
+            $fname = 'avatar_candidate_' . '_' . $candidate->id;
+            $path =  env('APP_URL') . '/storage/' . $file->storeAs('avatar_images', $fname, 'public');
+            $candidate->avatar = $path;
+        }
+        if ($req->delete_img) {
+            $candidate->avatar = NULL;
+        }
+        $candidate->save();
+        // return response()->json($req);
+        return response()->json('updated successfully');
+    }
+
     public function getAppliedJobs($id)
     {
         $jobs = Job::join('job_applying', 'id', '=', 'job_id')

@@ -5,6 +5,12 @@ const candidateApi = {
   getById: (id) => {
     return candidateAxios.get(`${prefix}/${id}`);
   },
+  update: (data) => {
+    return candidateAxios.post(`${prefix}/update`, data);
+  },
+  getCurrent: () => {
+    return candidateAxios.get(`${prefix}/getCurrent`);
+  },
   getAppliedJobs: (id) => {
     return candidateAxios.get(`${prefix}/${id}/getAppliedJobs`);
   },

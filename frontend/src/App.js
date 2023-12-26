@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
+import "./common/style.css";
 import Home from "./view/candidate/Home";
 import CompanyList from "./view/candidate/CompanyList";
 import Company from "./view/candidate/Company";
@@ -14,6 +14,7 @@ import AppliedJobs from "./view/candidate/management/AppliedJobs";
 import SavedJobs from "./view/candidate/management/SavedJobs";
 import Signup from "./view/candidate/auth/Signup";
 import Layout from "./view/candidate/layouts/Layout";
+import Profile from "./view/candidate/management/profile";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                       <Routes>
                         <Route path="applied-jobs" element={<AppliedJobs />} />
                         <Route path="saved-jobs" element={<SavedJobs />} />
+                        <Route path="profile" element={<Profile />} />
                       </Routes>
                     </CandidateLayout>
                   }

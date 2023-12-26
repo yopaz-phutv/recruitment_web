@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import { AiTwotoneAppstore } from "react-icons/ai";
 import "./layout.css";
-import Layout from "../../layouts/Layout";
 
 function CandidateLayout(props) {
   return (
-    <Layout>
+    <>
       <div className="d-flex">
         <div
           className="border-end bg-light"
@@ -25,6 +24,13 @@ function CandidateLayout(props) {
                 <span className="ms-4 d-flex align-items-center cand-item-color">
                   <AiTwotoneAppstore style={{ fontSize: "20px" }} />
                   &nbsp;Dashboard
+                </span>
+              </Link>
+            </li>
+            <li className="nav-item border-bottom py-1 cand-item">
+              <Link to="/candidate/profile" className="nav-link">
+                <span className="ms-4 d-flex align-items-center cand-item-color">
+                  Quản lý hồ sơ
                 </span>
               </Link>
             </li>
@@ -53,7 +59,7 @@ function CandidateLayout(props) {
           {props.children}
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
 

@@ -1,0 +1,48 @@
+.ts-xs {
+    font-size: 12.5px;
+}
+.ts-sm {
+    font-size: 14px;
+}
+.ts-ssm {
+    font-size: 14.75px;
+}
+.ts-md {
+    font-size: 16px;
+}
+.ts-lg {
+    font-size: 18px;
+}
+.ts-xxl {
+    font-size: 20px;
+}
+/* font weight */
+.fw-500 {
+    font-weight: 500;
+}
+.fw-600 {
+    font-weight: 600;
+}
+.fw-700 {
+    font-weight: 700;
+}
+.fw-800 {
+    font-weight: 800;
+}
+.fw-900 {
+    font-weight: 500;
+}
+/* element width by percent */
+.w-95 {
+    width: 95%;
+}
+.w-40 {
+    width: 40%;
+}
+
+.whitespace-pre-line {
+    white-space: pre-line;
+}
+.kkk {
+    background-color: rgb(233, 238, 240);
+}
