@@ -8,8 +8,7 @@ import authApi from "../../../api/auth";
 import candMsgApi from "../../../api/candidateMessage";
 import { candAuthActions } from "../../../redux/slices/candAuthSlice";
 import Login from "../auth/Login";
-import { socket } from "../../../socket/socket";
-
+import Pusher from "pusher-js";
 const user_icon = process.env.PUBLIC_URL + "/image/user_icon.png";
 
 function Layout(props) {
@@ -33,43 +32,40 @@ function Layout(props) {
 
   const getAllMessages = async () => {
     const res = await candMsgApi.getMsgs(candidate.id);
-    console.log('bell msgs:' ,res);
+    console.log("bell msgs:", res);
     let msgs = res;
-    let msg_styles = [];
-
     setBellMsgs(msgs);
-    for (let i = 0; i < msgs.length; i++) {
-      if (msgs[i].isRead === 0) {
+  };
+  const handleReadMsg = async (inf) => {
+    if (inf.isRead === 0) {
+      await candMsgApi.markAsRead(inf.id);
+      let temp = [...bellMsgs];
+      for (let i = 0; i < temp.length; i++) {
+        if (temp[i].id === inf.id) {
+          temp[i].isRead = 1;
+        }
+      }
+      setBellMsgs(temp);
+    }
+    nav(`/jobs/${inf.job_id}`);
+  };
+  useEffect(() => {
+    let msg_styles = [];
+    for (let i = 0; i < bellMsgs.length; i++) {
+      if (bellMsgs[i].isRead === 0) {
         setHasNew(true);
         break;
       }
+      if (i === bellMsgs.length - 1) setHasNew(false);
     }
-    for (let i = 0; i < msgs.length; i++) {
-      if (msgs[i].isRead === 0) {
+    for (let i = 0; i < bellMsgs.length; i++) {
+      if (bellMsgs[i].isRead === 0) {
         msg_styles[i] = " text-primary";
       } else msg_styles[i] = " text-secondary";
     }
     setMsgStyles(msg_styles);
-  };
+  }, [bellMsgs]);
 
-  const handleReadMsg = async (inf) => {
-    if (inf.isRead === 0) {
-      await candMsgApi
-        .markAsRead(inf.id)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    nav(`/jobs/${inf.job_id}`);
-  };
-  const onHasNewMessage = async (new_msg) => {
-    console.log("new message:", new_msg);
-    setHasNew(true);
-    await getAllMessages();
-  };
   const getMe = async () => {
     const res = await authApi.getMe(1);
     dispatch(candAuthActions.setCurrentCandidate(res));
@@ -80,28 +76,23 @@ function Layout(props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   useEffect(() => {
     if (isAuth) {
       getAllMessages();
-      if (socket.connect()) {
-        console.log("Connected to server!");
-      }
-      return () => {
-        socket.disconnect();
-      };
+      let pusher = new Pusher("5b0ac1136aca9c77eadb", {
+        cluster: "ap1",
+        encrypted: true,
+      });
+      let channelName = `candidate-channel_${candidate.id}`;
+      let channel = pusher.subscribe(channelName);
+      channel.bind("notification-event", (data) => {
+        // alert("bell message::", JSON.stringify(data));
+        getAllMessages();
+      });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth]);
-
-  useEffect(() => {
-    socket.on("application_msg", onHasNewMessage);
-
-    return () => {
-      socket.off("application_msg", onHasNewMessage)
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bellMsgs]);  
+  }, [isAuth]);
 
   return (
     <>
@@ -157,7 +148,7 @@ function Layout(props) {
                   >
                     <BsBell className="text-dark" />
                   </div>
-                  {hasNew > 0 && (
+                  {hasNew && (
                     <div className="bell-new">
                       <BsFillCircleFill />
                     </div>

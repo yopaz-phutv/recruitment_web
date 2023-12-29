@@ -56,6 +56,8 @@
     ]
   },
   "devDependencies": {
+    "laravel-echo": "^1.15.3",
+    "pusher-js": "^8.4.0-rc2",
     "react-router-dom": "^6.11.1"
   }
 }

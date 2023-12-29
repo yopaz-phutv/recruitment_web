@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Candidate;
+use App\Events\NotifyCandidateEvent;
 use App\Models\CandidateMessage;
 use App\Models\Employer;
 use App\Models\Job;
@@ -11,7 +11,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redis;
+// use Illuminate\Support\Facades\Redis;
 
 class EmployerController extends Controller
 {
@@ -54,7 +54,7 @@ class EmployerController extends Controller
     {
         $keyw = $request->query('keyword');
         $companies = Employer::whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyw) . '%'])->get();
-        //dd($companies);
+
         return $companies;
     }
 
@@ -135,16 +135,17 @@ class EmployerController extends Controller
             }
             $content = $content . $req->jname . ', ' . $com_name . ', lúc ' . $currentTime;
 
-            $redis = Redis::connection();
-            $redis->publish('application_result', $content);
-
-            DB::table('candidate_messages')->insert([
+            // $redis = Redis::connection();
+            // $redis->publish('application_result', $content);
+            event(new NotifyCandidateEvent($content, $req->candidate_id));
+            CandidateMessage::create(
                 [
                     'candidate_id' => $req->candidate_id,
                     'job_id' => $req->job_id,
                     'content' => $content,
+                    'isRead' => 0,
                 ]
-            ]);
+            );
         }
 
         return response()->json("Updated successfully");

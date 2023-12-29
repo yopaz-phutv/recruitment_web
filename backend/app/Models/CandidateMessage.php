@@ -9,9 +9,6 @@ class CandidateMessage extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    // protected $hidden = [
-    //     'id'
-    // ];
 
     public function candidate()
     {

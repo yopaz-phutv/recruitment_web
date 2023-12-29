@@ -1,5 +1,5 @@
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
-const URL = 'http://localhost:6001';
+// const URL = 'http://localhost:6001';
 
-export const socket = io(URL);
+// export const socket = io(URL);
