@@ -9,6 +9,7 @@ import candMsgApi from "../../../api/candidateMessage";
 import { candAuthActions } from "../../../redux/slices/candAuthSlice";
 import Login from "../auth/Login";
 import Pusher from "pusher-js";
+
 const user_icon = process.env.PUBLIC_URL + "/image/user_icon.png";
 
 function Layout(props) {
