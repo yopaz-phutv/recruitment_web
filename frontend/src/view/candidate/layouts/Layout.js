@@ -25,10 +25,8 @@ function Layout(props) {
   const handleLogout = async () => {
     await authApi.logout(1);
     dispatch(candAuthActions.logout());
-    localStorage.removeItem("candidate_jwt");
-    if (window.location.pathname === "/profile") {
-      nav("/");
-    }
+    localStorage.removeItem("candidate_jwt");    
+    nav("/");
   };
 
   const getAllMessages = async () => {
