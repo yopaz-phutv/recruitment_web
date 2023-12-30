@@ -85,12 +85,13 @@ class EmployerController extends Controller
 
     public function getCandidateList(Request $req)
     {
-        $job_ids = Job::where('employer_id', '=', $req->id)->pluck('id');
+        $job_ids = Job::where('employer_id', '=', Auth::user()->id)->pluck('id');
 
         $keyword = $req->query('keyword'); //search by name, email, applied job of candidate
 
-        if ($req->status == 0 || $req->status == 1) $status = [0, 1]; //for unapproved candidates
-        else if ($req->status == 2) $status = [2]; //for approved candidates
+        if ($req->status == 'WAITING' || $req->status == 'BROWSING_RESUME') {
+            $status = ['WAITING', 'BROWSING_RESUME'];
+        } else $status[] = $req->status;
 
         $candidates = DB::table('job_applying')
             ->join('jobs', 'job_id', '=', 'jobs.id')
@@ -115,38 +116,56 @@ class EmployerController extends Controller
     public function processApplying(Request $req)
     {
         $currentTime = Carbon::now();
+        // DB::table('job_applying')
+        //     ->where([
+        //         ['job_id', '=', $req->job_id],
+        //         ['candidate_id', '=', $req->candidate_id]
+        //     ])
+        //     ->update([
+        //         'status' => $req->request_type,
+        //         'updated_at' => $currentTime
+        //     ]);
+        // if ($req->request_type != 1) {
+        //     $com_name = Employer::where('user_id', '=', Auth::user()->id)->value('name');
+        //     $currentTime = Carbon::parse($currentTime)->format('H:i d/m/Y');
+
+        //     if ($req->request_type == 2) {
+        //         $content = 'Bạn đã được nhận vào vị trí ';
+        //     } else {
+        //         $content = 'Bạn đã bị từ chối khỏi vị trí ';
+        //     }
+        //     $content = $content . $req->jname . ', ' . $com_name . ', lúc ' . $currentTime;
+
+        //     // $redis = Redis::connection();
+        //     // $redis->publish('application_result', $content);
+        //     event(new NotifyCandidateEvent($content, $req->candidate_id));
+        //     CandidateMessage::create(
+        //         [
+        //             'candidate_id' => $req->candidate_id,
+        //             'job_id' => $req->job_id,
+        //             'content' => $content,
+        //             'isRead' => 0,
+        //         ]
+        //     );
+        // }
+        if ($req->actType == "VIEWED") $nextStatus = "BROWSING_RESUME";
+        else if ($req->actType == "ACCEPT") {
+            if ($req->step == "step1") $nextStatus = "BROWSING_INTERVIEW";
+            else if ($req->step == "step2") $nextStatus = "PASSED";
+        } else if ($req->actType == "REJECT") {
+            if ($req->step == "step1") $nextStatus = "RESUME_FAILED";
+            else if ($req->step == "step2") $nextStatus = "INTERVIEW_FAILED";
+        }
+        //update:
         DB::table('job_applying')
             ->where([
                 ['job_id', '=', $req->job_id],
                 ['candidate_id', '=', $req->candidate_id]
             ])
             ->update([
-                'status' => $req->request_type,
+                'status' => $nextStatus,
                 'updated_at' => $currentTime
             ]);
-        if ($req->request_type != 1) {
-            $com_name = Employer::where('user_id', '=', Auth::user()->id)->value('name');
-            $currentTime = Carbon::parse($currentTime)->format('H:i d/m/Y');
-
-            if ($req->request_type == 2) {
-                $content = 'Bạn đã được nhận vào vị trí ';
-            } else {
-                $content = 'Bạn đã bị từ chối khỏi vị trí ';
-            }
-            $content = $content . $req->jname . ', ' . $com_name . ', lúc ' . $currentTime;
-
-            // $redis = Redis::connection();
-            // $redis->publish('application_result', $content);
-            event(new NotifyCandidateEvent($content, $req->candidate_id));
-            CandidateMessage::create(
-                [
-                    'candidate_id' => $req->candidate_id,
-                    'job_id' => $req->job_id,
-                    'content' => $content,
-                    'isRead' => 0,
-                ]
-            );
-        }
 
         return response()->json("Updated successfully");
     }

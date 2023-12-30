@@ -18,9 +18,10 @@ function CandidateList() {
   } = useForm();
   const [candidates, setCandidates] = useState([]);
   const [curCandidate, setCurCandidate] = useState({});
+  const [keyword, setKeyword] = useState("");
   const [popupMsg, setPopupMsg] = useState("");
-  const [status, setStatus] = useState("0");
-  const [option, setOption] = useState("step1");
+  const [status, setStatus] = useState("WAITING");
+  const [step, setStep] = useState("step1");
 
   const com_inf = useSelector((state) => state.employerAuth.current.employer);
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
@@ -28,43 +29,50 @@ function CandidateList() {
   const makeTabStyle = (tabName) => {
     return clsx(
       "fw-600 pb-1 me-5",
-      option === tabName
+      step === tabName
         ? "border-2 border-bottom border-primary"
         : "text-secondary"
     );
   };
-
-  const getCandidateList = async (inf) => {
-    const data = { id: com_inf.id, status: status };
-    let keyword = "";
-    if (inf) {
-      keyword = inf.keyword;
-    }
-    const res = await employerApi.getCandidateList(keyword, data);
+  const getCandidateList = async () => {
+    const res = await employerApi.getCandidateList(keyword, status);
     setCandidates(res);
   };
 
-  const handleClickActionBtn = async (cand_inf, key) => {
-    console.log("status:", cand_inf.status, "key:", key);
-    if (key === 1 && cand_inf.status === 0) {
-      const data = { ...cand_inf, request_type: key };
-      console.log("data:", data);
+  useEffect(() => {
+    getCandidateList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keyword, status]);
+  useEffect(() => {
+    if (step === "step1") setStatus("WAITING");
+    else if (step === "step2") setStatus("BROWSING_INTERVIEW");
+    else if (step === "step3") setStatus("PASSED");
+  }, [step]);
+
+  const handleClickActionBtn = async (candidate, actType) => {
+    console.log("status:", candidate.status, "actType:", actType);
+    if (actType === "VIEWED" && candidate.status === "WAITING") {
       await employerApi
-        .processApplying(data)
+        .processApplying({ ...candidate, actType })
         .then((res) => {
           console.log(res);
-        })
-        .catch();
+        });
     }
-    if (key !== 1) {
-      setCurCandidate({ ...cand_inf, request_type: key });
-      const prefix_msg =
-        key === 2 ? "Chấp nhận ứng viên " : "Từ chối ứng viên ";
+    if (actType !== "VIEWED") {
+      setCurCandidate({ ...candidate, actType, step });
+      let prefix_msg = "";
+      if (step === "step1") {
+        if (actType === "ACCEPT") prefix_msg = "Chấp nhận hồ sơ ứng viên ";
+        else if (actType === "REJECT") prefix_msg = "Từ chối hồ sơ ứng viên ";
+      } else if (step === "step2") {
+        if (actType === "ACCEPT") prefix_msg = "Tiếp nhận ứng viên ";
+        else if (actType === "REJECT") prefix_msg = "Không tiếp nhận ứng viên ";
+      }
       setPopupMsg(
         <p>
           {prefix_msg}
           <strong>
-            {cand_inf.lastname} {cand_inf.firstname}
+            {candidate.lastname} {candidate.firstname}
           </strong>
           ?
         </p>
@@ -72,15 +80,10 @@ function CandidateList() {
     }
   };
 
-  const handleChangeStatus = (e) => {
-    setStatus(e.target.value);
-    // console.log(e.target.value);
-  };
-
   useEffect(() => {
     if (isAuth) getCandidateList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status, isAuth]);
+  }, [isAuth]);
 
   return (
     <>
@@ -91,7 +94,7 @@ function CandidateList() {
           margin: "15px 0px 0px 18px",
         }}
       >
-        <Tab.Container onSelect={(k) => setOption(k)}>
+        <Tab.Container onSelect={(k) => setStep(k)}>
           <Nav className="pb-1 justify-content-center bg-light shadow-sm">
             <Nav.Item>
               <Nav.Link eventKey="step1">
@@ -111,7 +114,10 @@ function CandidateList() {
           </Nav>
         </Tab.Container>
         <div style={{ marginLeft: "35px" }}>
-          <Form className="mt-3" onSubmit={handleSubmit(getCandidateList)}>
+          <Form
+            className="mt-3"
+            onSubmit={handleSubmit((data) => setKeyword(data.keyword))}
+          >
             <Form.Group className="input-group" style={{ width: "35%" }}>
               <Form.Control
                 size="sm"
@@ -124,21 +130,35 @@ function CandidateList() {
                 <BsSearch />
               </button>
             </Form.Group>
-            <div className="d-flex align-items-center mt-3 ts-ssm">
-              <div className="fw-500">Trạng thái: </div>&nbsp;
-              <Form.Select
-                size="sm"
-                className="rounded"
-                name="status"
-                style={{ width: "13%" }}
-                onChange={handleChangeStatus}
-              >
-                <option value="0">Chưa duyệt</option>
-                <option value="2">Đã chấp nhận</option>
-              </Form.Select>
-            </div>
+            {step !== "step3" && (
+              <div className="d-flex align-items-center mt-3 ts-ssm">
+                <div className="fw-500">Trạng thái: </div>&nbsp;
+                <Form.Select
+                  size="sm"
+                  className="rounded"
+                  style={{ width: "13%" }}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  {step === "step1" && (
+                    <>
+                      <option value="WAITING">Chưa duyệt hồ sơ</option>
+                      <option value="RESUME_FAILED">Hồ sơ bị loại</option>
+                    </>
+                  )}
+                  {step === "step2" && (
+                    <>
+                      <option value="BROWSING_INTERVIEW">
+                        Chưa duyệt phỏng vấn
+                      </option>
+                      <option value="INTERVIEW_FAILED">
+                        Phỏng vấn bị loại
+                      </option>
+                    </>
+                  )}
+                </Form.Select>
+              </div>
+            )}
           </Form>
-
           <div className="mt-3" style={{ width: "90%" }}>
             <table className="table table-borderless border text-center">
               <thead className="table-danger ts-ssm">
@@ -152,7 +172,7 @@ function CandidateList() {
                 </tr>
               </thead>
               <tbody className="ts-sm">
-                {candidates.length !== 0 &&
+                {candidates.length > 0 &&
                   candidates.map((item) => (
                     <tr key={item.jname + item.phone}>
                       <td>{item.lastname + " " + item.firstname}</td>
@@ -161,13 +181,15 @@ function CandidateList() {
                       <td>{item.phone}</td>
                       <td>{item.email}</td>
                       <td style={{ fontSize: "17px" }}>
-                        {status === "0" && (
+                        {status !== "PASSED" && (
                           <>
                             <button
                               className="border-0 bg-white"
                               data-bs-toggle="modal"
                               data-bs-target="#infModal"
-                              onClick={() => handleClickActionBtn(item, 2)}
+                              onClick={() =>
+                                handleClickActionBtn(item, "ACCEPT")
+                              }
                             >
                               <BsCheckCircle className="text-success" />
                             </button>
@@ -175,7 +197,9 @@ function CandidateList() {
                               className="border-0 bg-white"
                               data-bs-toggle="modal"
                               data-bs-target="#infModal"
-                              onClick={() => handleClickActionBtn(item, 3)}
+                              onClick={() =>
+                                handleClickActionBtn(item, "REJECT")
+                              }
                             >
                               <BsXCircle className="ms-2 text-danger" />
                             </button>
@@ -191,7 +215,7 @@ function CandidateList() {
                           <BsEye
                             type="button"
                             className="text-primary"
-                            onClick={() => handleClickActionBtn(item, 1)}
+                            onClick={() => handleClickActionBtn(item, "VIEWED")}
                           />
                         </a>
                       </td>
@@ -202,7 +226,7 @@ function CandidateList() {
             {candidates.length === 0 && (
               <h5 className="">Không có bản ghi nào</h5>
             )}
-            <MessagePopup message={popupMsg} cand_inf={curCandidate} />
+            <MessagePopup message={popupMsg} candidate={curCandidate} />
           </div>
         </div>
       </div>

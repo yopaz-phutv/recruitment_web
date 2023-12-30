@@ -1,10 +1,10 @@
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import employerApi from "../../../api/employer";
 
-function MessagePopup({ message, cand_inf }) {
+function MessagePopup({ message, candidate }) {
   const processRequest = async () => {
     await employerApi
-      .processApplying(cand_inf)
+      .processApplying(candidate)
       .then(() => {
         alert("Cập nhật thành công!");
       })
@@ -49,7 +49,7 @@ function MessagePopup({ message, cand_inf }) {
   );
 }
 
-function ProfilePopup({ cand_inf }) {
+function ProfilePopup({ candidate }) {
   return (
     <div className="modal modal-xl fade" id="profileModal">
       <div className="modal-dialog modal-fullscreen-md-down modal-dialog-scrollable">
@@ -63,7 +63,7 @@ function ProfilePopup({ cand_inf }) {
             />
           </div>
           <div className="modal-body text-center" style={{ fontSize: "18px" }}>
-            <img src={cand_inf.cv_link} alt="cv" width={"75%"} />
+            <img src={candidate.cv_link} alt="cv" width={"75%"} />
           </div>
           <div className="modal-footer border-top-0">
             <button

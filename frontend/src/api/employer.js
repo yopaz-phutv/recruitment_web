@@ -24,8 +24,9 @@ const employerApi = {
   getJobList: (id, keyword) => {
     return commonAxios.get(`${prefix}/${id}/getJobList?keyword=${keyword}`);
   },
-  getCandidateList: (keyword, data) => {
-    return employerAxios.post(`${prefix}/getCandidateList?keyword=${keyword}`, data);
+  getCandidateList: (keyword, status) => {
+    let url = `${prefix}/getCandidateList?keyword=${keyword}&status=${status}`;
+    return employerAxios.get(url);
   },
   processApplying: (data) => {
     return employerAxios.post(`${prefix}/processApplying`, data);

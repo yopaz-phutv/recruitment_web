@@ -53,7 +53,7 @@ Route::controller(EmployerController::class)->prefix('companies')->group(functio
     Route::get('', 'search');
     Route::get('{id}/getComJobs', 'getComJobs');
     Route::get('{id}/getJobList', 'getJobList');
-    Route::post('getCandidateList', 'getCandidateList')->middleware('jwt');
+    Route::get('getCandidateList', 'getCandidateList')->middleware('jwt');
     Route::post('processApplying', 'processApplying')->middleware('jwt');
     Route::post('{job_id}/changeJobStatus', 'changeJobStatus');
 });

@@ -43,10 +43,12 @@ function AppliedJobs() {
                 <td>{item.name} </td>
                 <td>{item.postDate} </td>
                 <td>
-                  {item.status === 0 && "Đang chờ duyệt"}
-                  {item.status === 1 && "Đang duyệt"}
-                  {item.status === 2 && "Được nhận"}
-                  {item.status === 3 && "Bị từ chối"}
+                  {item.status === "WAITING" && "Đang chờ duyệt"}
+                  {item.status === "BROWSING_RESUME" && "Đang duyệt hồ sơ"}
+                  {item.status === "RESUME_FAILED" && "Bị từ chối hồ sơ"}
+                  {item.status === "BROWSING_INTERVIEW" && "Đang duyệt phỏng vấn"}
+                  {item.status === "INTERVIEW_FAILED" && "Phỏng vấn thất bại"}
+                  {item.status === "PASSED" && "Được nhận"}
                 </td>
                 <td>
                   <a
