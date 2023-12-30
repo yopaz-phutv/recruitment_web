@@ -5,6 +5,10 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { MessagePopup } from "./popup";
 import employerApi from "../../../api/employer";
+import Form from "react-bootstrap/Form";
+import Nav from "react-bootstrap/Nav";
+import Tab from "react-bootstrap/Tab";
+import clsx from "clsx";
 
 function CandidateList() {
   const {
@@ -16,8 +20,19 @@ function CandidateList() {
   const [curCandidate, setCurCandidate] = useState({});
   const [popupMsg, setPopupMsg] = useState("");
   const [status, setStatus] = useState("0");
+  const [option, setOption] = useState("step1");
+
   const com_inf = useSelector((state) => state.employerAuth.current.employer);
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
+
+  const makeTabStyle = (tabName) => {
+    return clsx(
+      "fw-600 pb-1 me-5",
+      option === tabName
+        ? "border-2 border-bottom border-primary"
+        : "text-secondary"
+    );
+  };
 
   const getCandidateList = async (inf) => {
     const data = { id: com_inf.id, status: status };
@@ -73,44 +88,60 @@ function CandidateList() {
         className="bg-white"
         style={{
           height: "94%",
-          margin: "17px 18px 0px 18px",
+          margin: "15px 0px 0px 18px",
         }}
       >
+        <Tab.Container onSelect={(k) => setOption(k)}>
+          <Nav className="pb-1 justify-content-center bg-light shadow-sm">
+            <Nav.Item>
+              <Nav.Link eventKey="step1">
+                <span className={makeTabStyle("step1")}>Duyệt hồ sơ</span>
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="step2">
+                <span className={makeTabStyle("step2")}>Duyệt phỏng vấn</span>
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="step3">
+                <span className={makeTabStyle("step3")}>Đã tiếp nhận</span>
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Tab.Container>
         <div style={{ marginLeft: "35px" }}>
-          <h4 className="pt-3">Danh sách ứng viên</h4>
-          <div className="mt-4">
-            <form className="mb-3" onSubmit={handleSubmit(getCandidateList)}>
-              <div className="input-group" style={{ width: "35%" }}>
-                <input
-                  type="text"
-                  className="form-control border-end-0"
-                  placeholder="Nhập tên, email ứng viên, việc làm"
-                  {...register("keyword")}
-                />
-                <button type="submit" className="input-group-text bg-white">
-                  <BsSearch />
-                </button>
-              </div>
-              <div
-                className="d-flex align-items-center mt-3"
-                style={{ fontSize: "15px" }}
+          <Form className="mt-3" onSubmit={handleSubmit(getCandidateList)}>
+            <Form.Group className="input-group" style={{ width: "35%" }}>
+              <Form.Control
+                size="sm"
+                type="text"
+                className="border-end-0"
+                placeholder="Nhập tên, email ứng viên, việc làm"
+                {...register("keyword")}
+              />
+              <button type="submit" className="input-group-text bg-white">
+                <BsSearch />
+              </button>
+            </Form.Group>
+            <div className="d-flex align-items-center mt-3 ts-ssm">
+              <div className="fw-500">Trạng thái: </div>&nbsp;
+              <Form.Select
+                size="sm"
+                className="rounded"
+                name="status"
+                style={{ width: "13%" }}
+                onChange={handleChangeStatus}
               >
-                <strong>Trạng thái: </strong>&nbsp;
-                <select
-                  className="rounded form-select"
-                  name="status"
-                  style={{ width: "13%" }}
-                  onChange={handleChangeStatus}
-                >
-                  <option value="0">Chưa duyệt</option>
-                  <option value="2">Đã chấp nhận</option>
-                </select>
-              </div>
-            </form>
-          </div>
-          <div className="mt-4 " style={{ width: "90%" }}>
+                <option value="0">Chưa duyệt</option>
+                <option value="2">Đã chấp nhận</option>
+              </Form.Select>
+            </div>
+          </Form>
+
+          <div className="mt-3" style={{ width: "90%" }}>
             <table className="table table-borderless border text-center">
-              <thead className="table-danger" style={{ fontSize: "15px" }}>
+              <thead className="table-danger ts-ssm">
                 <tr>
                   <th style={{ width: "17%" }}>Họ tên</th>
                   <th style={{}}>Vị trí ứng tuyển</th>
@@ -120,7 +151,7 @@ function CandidateList() {
                   <th style={{ width: "13%" }}>Hành động</th>
                 </tr>
               </thead>
-              <tbody style={{ fontSize: "14px" }}>
+              <tbody className="ts-sm">
                 {candidates.length !== 0 &&
                   candidates.map((item) => (
                     <tr key={item.jname + item.phone}>
@@ -160,8 +191,6 @@ function CandidateList() {
                           <BsEye
                             type="button"
                             className="text-primary"
-                            // data-bs-toggle="modal"
-                            // data-bs-target="#profileModal"
                             onClick={() => handleClickActionBtn(item, 1)}
                           />
                         </a>
@@ -174,7 +203,6 @@ function CandidateList() {
               <h5 className="">Không có bản ghi nào</h5>
             )}
             <MessagePopup message={popupMsg} cand_inf={curCandidate} />
-            {/* <ProfilePopup cand_inf={curCandidate} /> */}
           </div>
         </div>
       </div>
