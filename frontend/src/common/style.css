@@ -13,8 +13,11 @@
 .ts-lg {
     font-size: 18px;
 }
-.ts-xxl {
+.ts-xl {
     font-size: 20px;
+}
+.ts-xxl {
+    font-size: 24px;
 }
 /* font weight */
 .fw-500 {

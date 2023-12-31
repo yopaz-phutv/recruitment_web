@@ -115,47 +115,28 @@ class EmployerController extends Controller
 
     public function processApplying(Request $req)
     {
-        $currentTime = Carbon::now();
-        // DB::table('job_applying')
-        //     ->where([
-        //         ['job_id', '=', $req->job_id],
-        //         ['candidate_id', '=', $req->candidate_id]
-        //     ])
-        //     ->update([
-        //         'status' => $req->request_type,
-        //         'updated_at' => $currentTime
-        //     ]);
-        // if ($req->request_type != 1) {
-        //     $com_name = Employer::where('user_id', '=', Auth::user()->id)->value('name');
-        //     $currentTime = Carbon::parse($currentTime)->format('H:i d/m/Y');
+        $currentTime = Carbon::parse(Carbon::now())->format('H:i d/m/Y');
+        $company = Employer::where('user_id', '=', Auth::user()->id)->value('name');
 
-        //     if ($req->request_type == 2) {
-        //         $content = 'Bạn đã được nhận vào vị trí ';
-        //     } else {
-        //         $content = 'Bạn đã bị từ chối khỏi vị trí ';
-        //     }
-        //     $content = $content . $req->jname . ', ' . $com_name . ', lúc ' . $currentTime;
-
-        //     // $redis = Redis::connection();
-        //     // $redis->publish('application_result', $content);
-        //     event(new NotifyCandidateEvent($content, $req->candidate_id));
-        //     CandidateMessage::create(
-        //         [
-        //             'candidate_id' => $req->candidate_id,
-        //             'job_id' => $req->job_id,
-        //             'content' => $content,
-        //             'isRead' => 0,
-        //         ]
-        //     );
-        // }
         if ($req->actType == "VIEWED") $nextStatus = "BROWSING_RESUME";
         else if ($req->actType == "ACCEPT") {
-            if ($req->step == "step1") $nextStatus = "BROWSING_INTERVIEW";
-            else if ($req->step == "step2") $nextStatus = "PASSED";
+            if ($req->step == "step1") {
+                $nextStatus = "BROWSING_INTERVIEW";
+                $msgName = "Hồ sơ được chấp nhận, vị trí ";
+            } else if ($req->step == "step2") {
+                $nextStatus = "PASSED";
+                $msgName = "Chúc mừng bạn đã được nhận, vị trí ";
+            }
         } else if ($req->actType == "REJECT") {
-            if ($req->step == "step1") $nextStatus = "RESUME_FAILED";
-            else if ($req->step == "step2") $nextStatus = "INTERVIEW_FAILED";
+            if ($req->step == "step1") {
+                $nextStatus = "RESUME_FAILED";
+                $msgName = "Hồ sơ bị loại, vị trí ";
+            } else if ($req->step == "step2") {
+                $nextStatus = "INTERVIEW_FAILED";
+                $msgName = "Phỏng vấn bị loại, vị trí ";
+            }
         }
+        $msgName = $msgName . $req->jname . ', ' . $company . ', lúc ' . $currentTime;
         //update:
         DB::table('job_applying')
             ->where([
@@ -164,8 +145,20 @@ class EmployerController extends Controller
             ])
             ->update([
                 'status' => $nextStatus,
-                'updated_at' => $currentTime
+                'updated_at' => Carbon::now(),
             ]);
+        if ($req->actType != "VIEWED") {
+            CandidateMessage::create(
+                [
+                    'candidate_id' => $req->candidate_id,
+                    'job_id' => $req->job_id,
+                    'name' => $msgName,
+                    'title' => $req->title,
+                    'content' => $req->content,
+                ]
+            );
+        }
+        event(new NotifyCandidateEvent($msgName, $req->candidate_id));
 
         return response()->json("Updated successfully");
     }

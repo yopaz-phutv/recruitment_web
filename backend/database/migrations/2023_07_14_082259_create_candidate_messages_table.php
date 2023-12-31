@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('job_id');
-            $table->string('content');
+            $table->string('name');
+            $table->string('title');
+            $table->text('content');
             $table->boolean('isRead')->default(0);
             $table->timestamps();
         });

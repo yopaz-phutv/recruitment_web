@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./common/style.css";
+import { ToastContainer } from "react-toastify";
 import Home from "./view/candidate/Home";
 import CompanyList from "./view/candidate/CompanyList";
 import Company from "./view/candidate/Company";
@@ -18,49 +19,55 @@ import Profile from "./view/candidate/management/profile";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="*"
-          element={
-            <Layout>
-              <Routes>
-                <Route exact path="" element={<Home />} />
-                <Route path="sign-up" element={<Signup />} />
-                <Route path="companies" element={<CompanyList />} />
-                <Route path="companies/:id" element={<Company />} />
-                <Route path="jobs" element={<JobList />} />
-                <Route path="jobs/:id" element={<Job />} />
-                <Route
-                  path="candidate/*"
-                  element={
-                    <CandidateLayout>
-                      <Routes>
-                        <Route path="applied-jobs" element={<AppliedJobs />} />
-                        <Route path="saved-jobs" element={<SavedJobs />} />
-                        <Route path="profile" element={<Profile />} />
-                      </Routes>
-                    </CandidateLayout>
-                  }
-                />
-              </Routes>
-            </Layout>
-          }
-        />
-        <Route
-          path="employer/*"
-          element={
-            <EmployerLayout>
-              <Routes>
-                <Route path="login" element={<Login />} />
-                <Route path="candidate-list" element={<CandidateList />} />
-                <Route path="job-management" element={<JobManagement />} />
-              </Routes>
-            </EmployerLayout>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <ToastContainer autoClose={1000} position="bottom-right"/>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="*"
+            element={
+              <Layout>
+                <Routes>
+                  <Route exact path="" element={<Home />} />
+                  <Route path="sign-up" element={<Signup />} />
+                  <Route path="companies" element={<CompanyList />} />
+                  <Route path="companies/:id" element={<Company />} />
+                  <Route path="jobs" element={<JobList />} />
+                  <Route path="jobs/:id" element={<Job />} />
+                  <Route
+                    path="candidate/*"
+                    element={
+                      <CandidateLayout>
+                        <Routes>
+                          <Route
+                            path="applied-jobs"
+                            element={<AppliedJobs />}
+                          />
+                          <Route path="saved-jobs" element={<SavedJobs />} />
+                          <Route path="profile" element={<Profile />} />
+                        </Routes>
+                      </CandidateLayout>
+                    }
+                  />
+                </Routes>
+              </Layout>
+            }
+          />
+          <Route
+            path="employer/*"
+            element={
+              <EmployerLayout>
+                <Routes>
+                  <Route path="login" element={<Login />} />
+                  <Route path="candidate-list" element={<CandidateList />} />
+                  <Route path="job-management" element={<JobManagement />} />
+                </Routes>
+              </EmployerLayout>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 

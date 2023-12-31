@@ -32,8 +32,7 @@ function Layout(props) {
   const getAllMessages = async () => {
     const res = await candMsgApi.getMsgs(candidate.id);
     console.log("bell msgs:", res);
-    let msgs = res;
-    setBellMsgs(msgs);
+    setBellMsgs(res);
   };
   const handleReadMsg = async (inf) => {
     if (inf.isRead === 0) {
@@ -166,7 +165,7 @@ function Layout(props) {
                               msgStyles[index]
                             }
                           >
-                            {item.content}
+                            {item.name}
                           </li>
                         </div>
                       ))

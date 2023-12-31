@@ -19,11 +19,11 @@ function CandidateList() {
   const [candidates, setCandidates] = useState([]);
   const [curCandidate, setCurCandidate] = useState({});
   const [keyword, setKeyword] = useState("");
-  const [popupMsg, setPopupMsg] = useState("");
   const [status, setStatus] = useState("WAITING");
   const [step, setStep] = useState("step1");
+  const [showDialog, setShowDialog] = useState(false);
 
-  const com_inf = useSelector((state) => state.employerAuth.current.employer);
+  // const com_inf = useSelector((state) => state.employerAuth.current.employer);
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
 
   const makeTabStyle = (tabName) => {
@@ -50,7 +50,6 @@ function CandidateList() {
   }, [step]);
 
   const handleClickActionBtn = async (candidate, actType) => {
-    console.log("status:", candidate.status, "actType:", actType);
     if (actType === "VIEWED" && candidate.status === "WAITING") {
       await employerApi
         .processApplying({ ...candidate, actType })
@@ -59,24 +58,8 @@ function CandidateList() {
         });
     }
     if (actType !== "VIEWED") {
+      setShowDialog(true);
       setCurCandidate({ ...candidate, actType, step });
-      let prefix_msg = "";
-      if (step === "step1") {
-        if (actType === "ACCEPT") prefix_msg = "Chấp nhận hồ sơ ứng viên ";
-        else if (actType === "REJECT") prefix_msg = "Từ chối hồ sơ ứng viên ";
-      } else if (step === "step2") {
-        if (actType === "ACCEPT") prefix_msg = "Tiếp nhận ứng viên ";
-        else if (actType === "REJECT") prefix_msg = "Không tiếp nhận ứng viên ";
-      }
-      setPopupMsg(
-        <p>
-          {prefix_msg}
-          <strong>
-            {candidate.lastname} {candidate.firstname}
-          </strong>
-          ?
-        </p>
-      );
     }
   };
 
@@ -136,7 +119,7 @@ function CandidateList() {
                 <Form.Select
                   size="sm"
                   className="rounded"
-                  style={{ width: "13%" }}
+                  style={{ width: "17%" }}
                   onChange={(e) => setStatus(e.target.value)}
                 >
                   {step === "step1" && (
@@ -181,12 +164,12 @@ function CandidateList() {
                       <td>{item.phone}</td>
                       <td>{item.email}</td>
                       <td style={{ fontSize: "17px" }}>
-                        {status !== "PASSED" && (
+                        {status !== "PASSED" &&
+                        status !== "RESUME_FAILED" &&
+                        status !== "INTERVIEW_FAILED" ? (
                           <>
                             <button
                               className="border-0 bg-white"
-                              data-bs-toggle="modal"
-                              data-bs-target="#infModal"
                               onClick={() =>
                                 handleClickActionBtn(item, "ACCEPT")
                               }
@@ -195,8 +178,6 @@ function CandidateList() {
                             </button>
                             <button
                               className="border-0 bg-white"
-                              data-bs-toggle="modal"
-                              data-bs-target="#infModal"
                               onClick={() =>
                                 handleClickActionBtn(item, "REJECT")
                               }
@@ -204,7 +185,7 @@ function CandidateList() {
                               <BsXCircle className="ms-2 text-danger" />
                             </button>
                           </>
-                        )}
+                        ) : null}
                         <a
                           className="ms-2"
                           style={{ textDecoration: "none" }}
@@ -226,7 +207,12 @@ function CandidateList() {
             {candidates.length === 0 && (
               <h5 className="">Không có bản ghi nào</h5>
             )}
-            <MessagePopup message={popupMsg} candidate={curCandidate} />
+            <MessagePopup
+              candidate={curCandidate}
+              showDialog={showDialog}
+              setShowDialog={setShowDialog}
+              getCandidateList={getCandidateList}
+            />
           </div>
         </div>
       </div>

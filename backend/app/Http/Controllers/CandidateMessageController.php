@@ -9,9 +9,9 @@ class CandidateMessageController extends Controller
 {
     public function getByCandidateID($id)
     {
-        $msg = CandidateMessage::where('candidate_id', '=', $id)->get();
+        $msgs = CandidateMessage::where('candidate_id', '=', $id)->get();
 
-        return response()->json($msg);
+        return response()->json($msgs);
     }
     public function updateReadMsg($id)
     {
