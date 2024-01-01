@@ -9,6 +9,7 @@ import candMsgApi from "../../../api/candidateMessage";
 import { candAuthActions } from "../../../redux/slices/candAuthSlice";
 import Login from "../auth/Login";
 import Pusher from "pusher-js";
+import BellDialog from "./BellDialog";
 
 const user_icon = process.env.PUBLIC_URL + "/image/user_icon.png";
 
@@ -17,6 +18,8 @@ function Layout(props) {
   const [bellMsgs, setBellMsgs] = useState([]);
   const [msgStyles, setMsgStyles] = useState([]);
   const [hasNew, setHasNew] = useState(false);
+  const [showBellDialog, setShowBellDialog] = useState(false);
+  const [curNotification, setCurNotification] = useState({});
 
   const dispatch = useDispatch();
   const candidate = useSelector((state) => state.candAuth.current);
@@ -25,7 +28,7 @@ function Layout(props) {
   const handleLogout = async () => {
     await authApi.logout(1);
     dispatch(candAuthActions.logout());
-    localStorage.removeItem("candidate_jwt");    
+    localStorage.removeItem("candidate_jwt");
     nav("/");
   };
 
@@ -35,6 +38,9 @@ function Layout(props) {
     setBellMsgs(res);
   };
   const handleReadMsg = async (inf) => {
+    setShowBellDialog(true);
+    setCurNotification(inf);
+    // update read status
     if (inf.isRead === 0) {
       await candMsgApi.markAsRead(inf.id);
       let temp = [...bellMsgs];
@@ -45,7 +51,7 @@ function Layout(props) {
       }
       setBellMsgs(temp);
     }
-    nav(`/jobs/${inf.job_id}`);
+    // nav(`/jobs/${inf.job_id}`);
   };
   useEffect(() => {
     let msg_styles = [];
@@ -94,6 +100,11 @@ function Layout(props) {
 
   return (
     <>
+      <BellDialog
+        show={showBellDialog}
+        setShow={setShowBellDialog}
+        current={curNotification}
+      />
       <header>
         <nav className="navbar navbar-expand-sm bg-light border-bottom py-3 fixed-top">
           <div className="container-fluid">

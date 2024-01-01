@@ -14,9 +14,9 @@
     right: 24px;    
 }
 .bell-part ul.dropdown-menu{
-    left: -4cm;
+    left: -6cm;
     font-size: 14.5px;
-    min-width: 230px;
+    min-width: 340px;
 }
 .msg-item:active{
     background-color: rgba(50, 149, 230, 0.308);

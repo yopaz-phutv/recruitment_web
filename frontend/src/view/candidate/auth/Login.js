@@ -76,7 +76,7 @@ function Login() {
               </div>
               <div className="text-center">
                 <a
-                  href="#"
+                  href="/k"
                   className="d-block mt-1"
                   style={{ textDecoration: "none" }}
                 >

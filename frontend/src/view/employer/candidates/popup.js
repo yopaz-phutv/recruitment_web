@@ -4,6 +4,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
+import { useSelector } from "react-redux";
+import { emailjsConfig } from "../../../services";
 
 function MessagePopup({
   candidate,
@@ -21,20 +25,44 @@ function MessagePopup({
     if (actType === "ACCEPT") prefix_msg = "Tiếp nhận ứng viên ";
     else if (actType === "REJECT") prefix_msg = "Không tiếp nhận ứng viên ";
   }
+  const company = useSelector((state) => state.employerAuth.current.employer);
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
   const requiredMsg = "Không được để trống!";
+  const [isSendMail, setIsSendMail] = useState(false);
   const onSubmit = async (data) => {
     try {
       await employerApi.processApplying({ ...candidate, ...data });
+
       toast.success("Gửi thông báo thành công!");
       getCandidateList();
       setShowDialog(false);
     } catch (e) {
-      toast.error("Đã có lỗi xảy ra. Vui lòng thử lại!");
+      toast.error("Gửi thông báo thất bại!");
+    }
+    if (isSendMail) {
+      var templateParams = {
+        to_email: candidate.email,
+        title: data.title,
+        candidate_name: candidate.firstname,
+        company_name: company.name,
+        content: data.content,
+      };
+      try {
+        await emailjs.send(
+          emailjsConfig.serviceId,
+          emailjsConfig.templateId1,
+          templateParams,
+          emailjsConfig.publicKey
+        );
+        toast.success("Gửi email thành công!");
+      } catch (e) {
+        toast.error("Gửi email thất bại!");
+      }
     }
   };
   const handleClose = () => {
@@ -44,7 +72,10 @@ function MessagePopup({
   return (
     <Modal
       show={showDialog}
-      onShow={() => document.getElementById("reset").click()}
+      onShow={() => {
+        document.getElementById("reset").click();
+        setIsSendMail(false);
+      }}
       onHide={handleClose}
       size="lg"
       fullscreen="md-down"
@@ -64,8 +95,13 @@ function MessagePopup({
             </div>
           </div>
         </div>
-        <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-          <Form.Group className="mt-1">
+        <Form className="mt-2" noValidate onSubmit={handleSubmit(onSubmit)}>
+          <Form.Check
+            type="checkbox"
+            label="Gửi email thông báo"
+            onClick={() => setIsSendMail(!isSendMail)}
+          />
+          <Form.Group>
             <Form.Label className="fw-500">Tiêu đề</Form.Label>
             <Form.Control
               type="text"

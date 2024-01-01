@@ -1,51 +1,55 @@
 .ts-xs {
-    font-size: 12.5px;
+  font-size: 12.75px;
 }
 .ts-sm {
-    font-size: 14px;
+  font-size: 13.75px;
 }
 .ts-ssm {
-    font-size: 14.75px;
+  font-size: 15px;
 }
 .ts-md {
-    font-size: 16px;
+  font-size: 16px;
 }
 .ts-lg {
-    font-size: 18px;
+  font-size: 18px;
 }
 .ts-xl {
-    font-size: 20px;
+  font-size: 20px;
 }
 .ts-xxl {
-    font-size: 24px;
+  font-size: 24px;
 }
+.ts-17 {
+    font-size: 17px;
+  }
+  
 /* font weight */
 .fw-500 {
-    font-weight: 500;
+  font-weight: 500;
 }
 .fw-600 {
-    font-weight: 600;
+  font-weight: 600;
 }
 .fw-700 {
-    font-weight: 700;
+  font-weight: 700;
 }
 .fw-800 {
-    font-weight: 800;
+  font-weight: 800;
 }
 .fw-900 {
-    font-weight: 500;
+  font-weight: 500;
 }
 /* element width by percent */
 .w-95 {
-    width: 95%;
+  width: 95%;
 }
 .w-40 {
-    width: 40%;
+  width: 40%;
 }
 
 .whitespace-pre-line {
-    white-space: pre-line;
+  white-space: pre-line;
 }
 .kkk {
-    background-color: rgb(233, 238, 240);
+  background-color: rgb(233, 238, 240);
 }

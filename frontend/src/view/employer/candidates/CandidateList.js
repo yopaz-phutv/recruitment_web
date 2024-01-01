@@ -23,7 +23,6 @@ function CandidateList() {
   const [step, setStep] = useState("step1");
   const [showDialog, setShowDialog] = useState(false);
 
-  // const com_inf = useSelector((state) => state.employerAuth.current.employer);
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
 
   const makeTabStyle = (tabName) => {
