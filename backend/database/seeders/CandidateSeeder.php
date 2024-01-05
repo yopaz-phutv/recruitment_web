@@ -24,7 +24,7 @@ class CandidateSeeder extends Seeder
                 'phone' => '0333333331',
                 'email' => 'phu@gmail.com',
                 'address' => 'Gia Lâm, Hà Nội',
-                'link' => 'kkk',
+                'link' => 'https://github.com/tranphu033',
                 'objective' => 'muc tieu',
                 'avatar' => 'avatar.jpg'
             ],

@@ -11,4 +11,13 @@ class Experience extends Model
     protected $table = "experiences";
     protected $guarded = [];
     public $timestamps = false;
+
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class);
+    }
+    public function resume()
+    {
+        return $this->belongsTo(Resume::class);
+    }
 }

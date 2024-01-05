@@ -5,19 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Candidate extends Model
+class Resume extends Model
 {
     use HasFactory;
-
+    protected $table = "resumes";
     protected $guarded = [];
 
-    public function messages()
+    public function candidate()
     {
-        return $this->hasMany(CandidateMessage::class);
-    }
-    public function user()
-    {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(Candidate::class);
     }
     public function educations()
     {
@@ -50,9 +46,5 @@ class Candidate extends Model
     public function others()
     {
         return $this->hasMany(Other::class);
-    }
-    public function resumes()
-    {
-        return $this->hasMany(Resume::class);
     }
 }

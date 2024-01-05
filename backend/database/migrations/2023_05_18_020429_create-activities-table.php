@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('candidate_id');
+            $table->unsignedBigInteger('resume_id')->nullable();
             $table->string('organization', 100);
             $table->string('role', 100);
             $table->boolean('is_present')->nullable();

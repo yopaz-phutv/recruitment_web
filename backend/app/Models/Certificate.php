@@ -11,4 +11,13 @@ class Certificate extends Model
     protected $table = "certificates";
     protected $guarded = [];
     public $timestamps = false;
+
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class);
+    }
+    public function resume()
+    {
+        return $this->belongsTo(Resume::class);
+    }
 }

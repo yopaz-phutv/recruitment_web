@@ -11,4 +11,13 @@ class Activity extends Model
     protected $table = "activities";
     protected $guarded = [];
     public $timestamps = false;
+
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class);
+    }
+    public function resume()
+    {
+        return $this->belongsTo(Resume::class);
+    }
 }

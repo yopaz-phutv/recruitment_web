@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('prizes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('candidate_id');
+            $table->unsignedBigInteger('resume_id')->nullable();
             $table->string('name', 100);
             $table->date('receive_date');
             $table->text('image')->nullable();
