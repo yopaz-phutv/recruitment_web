@@ -4,6 +4,7 @@ import { IoCalendarClear } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import { MdLocationOn } from "react-icons/md";
+import { IoIosLink } from "react-icons/io";
 import dayjs from "dayjs";
 import Form from "react-bootstrap/Form";
 import { useContext } from "react";
@@ -148,7 +149,7 @@ export default function Template1({ kkk }) {
         />
         <Input
           className="mt-1"
-          icon={<FaPhoneAlt className="text-main me-1" />}
+          icon={<IoIosLink className="text-main me-1" />}
           content={
             <a
               href={personal.link}
@@ -163,7 +164,7 @@ export default function Template1({ kkk }) {
         />
         <Input
           className="mt-1"
-          icon={<MdLocationOn className="text-main me-1" />}
+          icon={<MdLocationOn className="text-main fs-5" />}
           content={personal.address}
           contentStyle="content"
         />
