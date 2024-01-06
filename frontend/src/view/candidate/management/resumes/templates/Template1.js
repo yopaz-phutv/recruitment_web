@@ -5,8 +5,9 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import { MdLocationOn } from "react-icons/md";
 import dayjs from "dayjs";
-import Form from "react-bootstrap/Form"
-import { useState } from "react";
+import Form from "react-bootstrap/Form";
+import { useContext } from "react";
+import { ProfileContext } from "../../layouts/CandidateLayout";
 
 const Input = ({
   className,
@@ -24,93 +25,105 @@ const Input = ({
   );
 };
 
-export default function Template1({ kkk }) {  
-  const generalInfor = {
-    fullname: "Tran Van Phu",
-    dob: "08/01/2001",
-    phone: "0336935665",
-    email: "tranphudhak@gmail.com",
-    link: "https://github.com/tranphu033",
-    address: "Gia Lâm, Hà Nội",
-  };
+export default function Template1({ kkk }) {
+  const {
+    personal,
+    educations,
+    experiences,
+    projects,
+    skills,
+    certificates,
+    prizes,
+    activities,
+    others,
+  } = useContext(ProfileContext);
+
+  // const generalInfor = {
+  //   fullname: "Tran Van Phu",
+  //   dob: "08/01/2001",
+  //   phone: "0336935665",
+  //   email: "tranphudhak@gmail.com",
+  //   link: "https://github.com/tranphu033",
+  //   address: "Gia Lâm, Hà Nội",
+  // };
   const objective =
     "- Trau dồi thêm kiến thức và kỹ năng về lập trình web.\n- Tích lũy kinh nghiệm làm việc khi được tham gia vào dự án thực tế của công ty.\n- Định hướng trở thành fullstack web developer.";
-  const skills = [
-    {
-      name: "Ngôn ngữ lập trình",
-      description: "C, HTML, CSS, JavaScript, PHP",
-    },
-    {
-      name: "Framework, thư viện lập trình",
-      description: "Laravel, ReactJS, Redux, Bootstrap",
-    },
-    { name: "Cơ sở dữ liệu", description: "MySQL" },
-    { name: "Ngoại ngữ", description: "Tiếng Anh, Tiếng Nhật" },
-  ];
-  const certificates = [
-    {
-      name: "Chứng chỉ Tiếng Nhật JLPT N3",
-      receive_date: "08/2022",
-    },
-  ];
-  const educations = [
-    {
-      school: "Trường THPT Ân Thi",
-      description: "",
-      start_date: new Date("2016-08-20"),
-      end_date: new Date("2019-08-20"),
-    },
-    {
-      school: "Đại học Bách khoa Hà Nội",
-      major: "Công nghệ thông tin",
-      description: "CPA hiện tại: 3.25",
-      start_date: new Date("2019-09-01"),
-      end_date: new Date("2024-09-01"),
-    },
-  ];
-  const experiences = [
-    {
-      name: "Thực tập sinh PHP",
-      company: "Trung tâm CNTT MobiFone",
-      description:
-        "- Tìm hiểu về framework Laravel của PHP.\n- Xây dựng, hoàn thiện một module trong dự án của công ty (có sử dụng Laravel).",
-      start_date: new Date("2023-03-07"),
-      end_date: new Date("2023-06-20"),
-    },
-  ];
-  const projects = [
-    {
-      name: "WEBSITE TUYỂN DỤNG",
-      prj_type: 0,
-      link: "https://github.com/tranphu033/recruitment_web",
-      role: "",
-      technologies: "Laravel, ReactJS, Redux, Bootstrap, MySQL",
-      description: "Trang web tìm kiếm việc làm, đăng tin tuyển dụng.",
-      start_date: new Date("2023-03-07"),
-      end_date: new Date("2023-06-20"),
-    },
-    {
-      name: "WEBSITE CỬA HÀNG GIÀY DÉP",
-      prj_type: 1,
-      link: "https://github.com/tranphu033/shoes_store",
-      role: "back-end, thiết kế cơ sở dữ liệu, xây dựng các API.",
-      technologies: "PHP thuần, ReactJS, Bootstrap, MySQL",
-      description: "Trang web mua bán giày dép",
-      start_date: new Date("2023-03-07"),
-      end_date: new Date("2023-06-20"),
-    },
-    {
-      name: "ỨNG DỤNG CHIA SẺ TỆP TIN",
-      prj_type: 1,
-      link: "https://github.com/tranphu033/file_sharing_app",
-      role: "xây dựng một số chức năng của ứng dụng, viết truy vấn cơ sở dữ liệu.",
-      technologies: "C, MySQL",
-      description:
-        "Ứng dụng cho phép người dùng tham gia vào các nhóm để download, upload tài liệu.",
-      start_date: new Date("2023-03-07"),
-      end_date: new Date("2023-06-20"),
-    },
-  ];
+  // const skills = [
+  //   {
+  //     name: "Ngôn ngữ lập trình",
+  //     description: "C, HTML, CSS, JavaScript, PHP",
+  //   },
+  //   {
+  //     name: "Framework, thư viện lập trình",
+  //     description: "Laravel, ReactJS, Redux, Bootstrap",
+  //   },
+  //   { name: "Cơ sở dữ liệu", description: "MySQL" },
+  //   { name: "Ngoại ngữ", description: "Tiếng Anh, Tiếng Nhật" },
+  // ];
+  // const certificates = [
+  //   {
+  //     name: "Chứng chỉ Tiếng Nhật JLPT N3",
+  //     receive_date: "08/2022",
+  //   },
+  // ];
+  // const educations = [
+  //   {
+  //     school: "Trường THPT Ân Thi",
+  //     description: "",
+  //     start_date: new Date("2016-08-20"),
+  //     end_date: new Date("2019-08-20"),
+  //   },
+  //   {
+  //     school: "Đại học Bách khoa Hà Nội",
+  //     major: "Công nghệ thông tin",
+  //     description: "CPA hiện tại: 3.25",
+  //     start_date: new Date("2019-09-01"),
+  //     end_date: new Date("2024-09-01"),
+  //   },
+  // ];
+  // const experiences = [
+  //   {
+  //     name: "Thực tập sinh PHP",
+  //     company: "Trung tâm CNTT MobiFone",
+  //     description:
+  //       "- Tìm hiểu về framework Laravel của PHP.\n- Xây dựng, hoàn thiện một module trong dự án của công ty (có sử dụng Laravel).",
+  //     start_date: new Date("2023-03-07"),
+  //     end_date: new Date("2023-06-20"),
+  //   },
+  // ];
+  // const projects = [
+  //   {
+  //     name: "WEBSITE TUYỂN DỤNG",
+  //     prj_type: 0,
+  //     link: "https://github.com/tranphu033/recruitment_web",
+  //     role: "",
+  //     technologies: "Laravel, ReactJS, Redux, Bootstrap, MySQL",
+  //     description: "Trang web tìm kiếm việc làm, đăng tin tuyển dụng.",
+  //     start_date: new Date("2023-03-07"),
+  //     end_date: new Date("2023-06-20"),
+  //   },
+  //   {
+  //     name: "WEBSITE CỬA HÀNG GIÀY DÉP",
+  //     prj_type: 1,
+  //     link: "https://github.com/tranphu033/shoes_store",
+  //     role: "back-end, thiết kế cơ sở dữ liệu, xây dựng các API.",
+  //     technologies: "PHP thuần, ReactJS, Bootstrap, MySQL",
+  //     description: "Trang web mua bán giày dép",
+  //     start_date: new Date("2023-03-07"),
+  //     end_date: new Date("2023-06-20"),
+  //   },
+  //   {
+  //     name: "ỨNG DỤNG CHIA SẺ TỆP TIN",
+  //     prj_type: 1,
+  //     link: "https://github.com/tranphu033/file_sharing_app",
+  //     role: "xây dựng một số chức năng của ứng dụng, viết truy vấn cơ sở dữ liệu.",
+  //     technologies: "C, MySQL",
+  //     description:
+  //       "Ứng dụng cho phép người dùng tham gia vào các nhóm để download, upload tài liệu.",
+  //     start_date: new Date("2023-03-07"),
+  //     end_date: new Date("2023-06-20"),
+  //   },
+  // ];
 
   const General = () => {
     return (
@@ -118,19 +131,19 @@ export default function Template1({ kkk }) {
         <div className="title">Thông tin cá nhân</div>
         <Input
           icon={<IoCalendarClear className="text-main me-1" />}
-          content={generalInfor.dob}
+          content={personal.dob}
           contentStyle="content"
         />
         <Input
           className="mt-1"
           icon={<FaPhoneAlt className="text-main me-1" />}
-          content={generalInfor.phone}
+          content={personal.phone}
           contentStyle="content"
         />
         <Input
           className="mt-1"
           icon={<IoMdMail className="text-main me-1" />}
-          content={generalInfor.email}
+          content={personal.email}
           contentStyle="content"
         />
         <Input
@@ -138,12 +151,12 @@ export default function Template1({ kkk }) {
           icon={<FaPhoneAlt className="text-main me-1" />}
           content={
             <a
-              href={generalInfor.link}
+              href={personal.link}
               className="del-underline text-body"
               target="_blank"
               rel="noreferrer"
             >
-              {generalInfor.link}
+              {personal.link}
             </a>
           }
           contentStyle="content"
@@ -151,7 +164,7 @@ export default function Template1({ kkk }) {
         <Input
           className="mt-1"
           icon={<MdLocationOn className="text-main me-1" />}
-          content={generalInfor.address}
+          content={personal.address}
           contentStyle="content"
         />
       </>
@@ -161,7 +174,7 @@ export default function Template1({ kkk }) {
     return (
       <>
         <div className="title mb-1">Mục tiêu nghề nghiệp</div>
-        <div className="content whitespace-preline">{objective}</div>
+        <div className="content whitespace-preline">{personal.objective}</div>
       </>
     );
   };
@@ -319,48 +332,45 @@ export default function Template1({ kkk }) {
   // itemList = [...newList];
 
   return (
-    <>
-      <div
-        className="mx-auto border my-5 d-flex py-2 shadow"
-        style={{ width: "800px" }}
-      >
-        <div className="bg-main ms-2 ps-1 pe-2 pb-2" style={{ width: "340px" }}>
-          <div className="mt-2 text-center">
-            <img
-              src="https://png.pngtree.com/png-clipart/20200224/original/pngtree-cartoon-color-simple-male-avatar-png-image_5230557.jpg"
-              alt=""
-              height="172px"
-              className="rounded-pill"
-            />
-            <h4 className="text-uppercase mt-2 text-main">
-              {generalInfor.fullname}
-            </h4>
-          </div>
-          <hr className="text-main" />
-          <div className="ms-2">{itemList[0].render}</div>
-          <hr className="text-main" />
-          <div className="ms-2">{itemList[1].render}</div>
-          <hr className="text-main" />
-          <div className="ms-2">{itemList[2].render}</div>
-          <hr className="text-main" />
-          <div className="ms-2">{itemList[3].render}</div>
+    <div
+      className="mx-auto border my-5 d-flex py-2 shadow"
+      style={{ width: "800px" }}
+    >
+      <div className="bg-main ms-2 ps-1 pe-2 pb-2" style={{ width: "340px" }}>
+        <div className="mt-2 text-center">
+          <img
+            src={personal.avatar}
+            alt=""
+            height="172px"
+            className="rounded-pill"
+          />
+          <h4 className="text-uppercase mt-2 text-main">
+            {personal.lastname + " " + personal.firstname}
+          </h4>
         </div>
-        <div className="flex-fill px-1">
-          <div className="ms-2">
-            {itemList[4].render}
-            <hr className="text-main" />
-          </div>
-          <div className="ms-2">
-            {itemList[5].render}
-            <hr className="text-main" />
-          </div>
-          <div className="ms-2">
-            {itemList[6].render}
-            <hr className="text-main" />
-          </div>
+        <hr className="text-main" />
+        <div className="ms-2">{itemList[0].render}</div>
+        <hr className="text-main" />
+        <div className="ms-2">{itemList[1].render}</div>
+        <hr className="text-main" />
+        <div className="ms-2">{itemList[2].render}</div>
+        <hr className="text-main" />
+        <div className="ms-2">{itemList[3].render}</div>
+      </div>
+      <div className="flex-fill px-1">
+        <div className="ms-2">
+          {itemList[4].render}
+          <hr className="text-main" />
+        </div>
+        <div className="ms-2">
+          {itemList[5].render}
+          <hr className="text-main" />
+        </div>
+        <div className="ms-2">
+          {itemList[6].render}
+          <hr className="text-main" />
         </div>
       </div>
-      <Form.Control type="text" className="text-primary border-danger" />
-    </>
+    </div>
   );
 }
