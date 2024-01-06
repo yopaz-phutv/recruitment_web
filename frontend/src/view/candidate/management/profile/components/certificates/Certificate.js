@@ -1,22 +1,18 @@
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useContext, useState } from "react";
 import FrameLayout from "../frameLayout";
 import CertificateFormDialog from "./CertificateFormDialog";
 import certificateApi from "../../../../../../api/certificate";
 import dayjs from "dayjs";
+import { ProfileContext } from "../../../layouts/CandidateLayout";
 
 export default function Certificate() {
-  const [certificates, setCertificates] = useState([]);
+  const { certificates, setCertificates, getCertificates } =
+    useContext(ProfileContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 
-  const isAuth = useSelector((state) => state.candAuth.isAuth);
-  const getAll = async () => {
-    const res = await certificateApi.getByCurrentCandidate();
-    setCertificates(res);
-  };
   const handleDelete = async (id) => {
     let choice = window.confirm("Bạn có chắc muốn xóa Chứng chỉ này?");
     if (choice) {
@@ -31,13 +27,6 @@ export default function Certificate() {
     setActType("EDIT");
     setCurrent(item);
   };
-
-  useEffect(() => {
-    if (isAuth) {
-      getAll();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth]);
 
   return (
     <FrameLayout
@@ -94,7 +83,7 @@ export default function Certificate() {
           actType={actType}
           setActType={setActType}
           current={current}
-          getAll={getAll}
+          getAll={getCertificates}
         />
       )}
     </FrameLayout>

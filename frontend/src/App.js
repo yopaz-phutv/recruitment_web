@@ -16,6 +16,7 @@ import SavedJobs from "./view/candidate/management/SavedJobs";
 import Signup from "./view/candidate/auth/Signup";
 import Layout from "./view/candidate/layouts/Layout";
 import Profile from "./view/candidate/management/profile";
+import Resume from "./view/candidate/management/resumes";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
                           />
                           <Route path="saved-jobs" element={<SavedJobs />} />
                           <Route path="profile" element={<Profile />} />
+                          <Route path="resumes" element={<Resume />} />
                         </Routes>
                       </CandidateLayout>
                     }

@@ -13,10 +13,10 @@ import candidateApi from "../../../../../../api/candidate";
 export default function PersonalInforFormDialog({
   isEdit,
   setIsEdit,
-  infor,
+  personal,
   hasImg,
   setHasImg,
-  getInfor,
+  getPersonal,
 }) {
   const requiredMsg = "Không được để trống";
   const schema = yup.object({
@@ -80,11 +80,11 @@ export default function PersonalInforFormDialog({
     const res = await candidateApi.update(formData);
     console.log("kq::", res);
     alert("Cập nhật thành công!");
-    await getInfor();
+    await getPersonal();
     setIsEdit(false);
   };
   useEffect(() => {
-    if (infor.avatar) setHasImg(true);
+    if (personal.avatar) setHasImg(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -108,7 +108,7 @@ export default function PersonalInforFormDialog({
             >
               {hasImg ? (
                 <img
-                  src={infor.avatar}
+                  src={personal.avatar}
                   alt=""
                   width="100%"
                   height="100%"
@@ -151,7 +151,7 @@ export default function PersonalInforFormDialog({
                   type="text"
                   className="me-3"
                   placeholder="Họ"
-                  defaultValue={infor.lastname}
+                  defaultValue={personal.lastname}
                   {...register("lastname")}
                   isInvalid={errors.lastname}
                 />
@@ -159,7 +159,7 @@ export default function PersonalInforFormDialog({
                   size="sm"
                   type="text"
                   placeholder="Tên"
-                  defaultValue={infor.firstname}
+                  defaultValue={personal.firstname}
                   {...register("firstname")}
                   isInvalid={errors.firstname}
                 />
@@ -178,7 +178,7 @@ export default function PersonalInforFormDialog({
                 label="Nam"
                 inline
                 value={0}
-                defaultChecked={infor.gender === 0}
+                defaultChecked={personal.gender === 0}
                 {...register("gender")}
               />
               <Form.Check
@@ -186,7 +186,7 @@ export default function PersonalInforFormDialog({
                 label="Nữ"
                 inline
                 value={1}
-                defaultChecked={infor.gender === 1}
+                defaultChecked={personal.gender === 1}
                 {...register("gender")}
               />
               <Form.Control isInvalid={errors.gender} className="d-none" />
@@ -201,7 +201,7 @@ export default function PersonalInforFormDialog({
                 size="sm"
                 type="date"
                 {...register("dob")}
-                defaultValue={infor.dob}
+                defaultValue={personal.dob}
                 isInvalid={errors.dob}
               />
               <Form.Control.Feedback type="invalid">
@@ -215,7 +215,7 @@ export default function PersonalInforFormDialog({
                 size="sm"
                 type="text"
                 {...register("phone")}
-                defaultValue={infor.phone}
+                defaultValue={personal.phone}
                 isInvalid={errors.phone}
               />
               <Form.Control.Feedback type="invalid">
@@ -229,7 +229,7 @@ export default function PersonalInforFormDialog({
                 size="sm"
                 type="text"
                 {...register("email")}
-                defaultValue={infor.email}
+                defaultValue={personal.email}
                 isInvalid={errors.email}
               />
               <Form.Control.Feedback type="invalid">
@@ -243,7 +243,7 @@ export default function PersonalInforFormDialog({
                 size="sm"
                 type="text"
                 {...register("address")}
-                defaultValue={infor.address}
+                defaultValue={personal.address}
                 isInvalid={errors.address}
               />
               <Form.Control.Feedback type="invalid">
@@ -256,7 +256,7 @@ export default function PersonalInforFormDialog({
                 size="sm"
                 type="text"
                 {...register("link")}
-                defaultValue={infor.link}
+                defaultValue={personal.link}
                 isInvalid={errors.link}
               />
               <Form.Control.Feedback type="invalid">
@@ -270,7 +270,7 @@ export default function PersonalInforFormDialog({
               as={"textarea"}
               rows={5}
               size="sm"
-              defaultValue={infor.objective}
+              defaultValue={personal.objective}
               {...register("objective")}
             />
           </Form.Group>

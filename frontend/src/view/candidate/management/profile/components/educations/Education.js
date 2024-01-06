@@ -1,23 +1,18 @@
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import educationApi from "../../../../../../api/education";
-import { useSelector } from "react-redux";
 import FrameLayout from "../frameLayout";
 import dayjs from "dayjs";
 import EducationFormDialog from "./EducationFormDialog";
+import { ProfileContext } from "../../../layouts/CandidateLayout";
 
 export default function Education() {
-  const [educations, setEducations] = useState([]);
+  const { educations, setEducations, getEducations } =
+    useContext(ProfileContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 
-  const isAuth = useSelector((state) => state.candAuth.isAuth);
-  const getAllEducations = async () => {
-    const res = await educationApi.getByCurrentCandidate();
-    setEducations(res);
-    console.log({ educations: res });
-  };
   const handleDelete = async (id) => {
     let choice = window.confirm("Bạn có chắc muốn xóa Thông tin học vấn này?");
     if (choice) {
@@ -32,13 +27,6 @@ export default function Education() {
     setActType("EDIT");
     setCurrent(item);
   };
-
-  useEffect(() => {
-    if (isAuth) {
-      getAllEducations();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth]);
 
   return (
     <FrameLayout
@@ -96,7 +84,7 @@ export default function Education() {
           actType={actType}
           setActType={setActType}
           current={current}
-          getAllEducations={getAllEducations}
+          getAllEducations={getEducations}
         />
       )}
     </FrameLayout>

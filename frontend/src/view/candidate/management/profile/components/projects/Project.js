@@ -1,22 +1,17 @@
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useContext, useState } from "react";
 import FrameLayout from "../frameLayout";
 import dayjs from "dayjs";
 import projectApi from "../../../../../../api/project";
 import ProjectFormDialog from "./ProjectFormDialog";
+import { ProfileContext } from "../../../layouts/CandidateLayout";
 
 export default function Project() {
-  const [projects, setProjects] = useState([]);
+  const { projects, setProjects, getProjects } = useContext(ProfileContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 
-  const isAuth = useSelector((state) => state.candAuth.isAuth);
-  const getAll = async () => {
-    const res = await projectApi.getByCurrentCandidate();
-    setProjects(res);
-  };
   const handleDelete = async (id) => {
     let choice = window.confirm("Bạn có chắc muốn xóa Dự án này?");
     if (choice) {
@@ -31,13 +26,6 @@ export default function Project() {
     setActType("EDIT");
     setCurrent(item);
   };
-
-  useEffect(() => {
-    if (isAuth) {
-      getAll();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth]);
 
   return (
     <FrameLayout
@@ -109,7 +97,7 @@ export default function Project() {
           actType={actType}
           setActType={setActType}
           current={current}
-          getAll={getAll}
+          getAll={getProjects}
         />
       )}
     </FrameLayout>

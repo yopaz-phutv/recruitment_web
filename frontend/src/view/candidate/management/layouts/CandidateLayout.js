@@ -1,10 +1,114 @@
 import { Link } from "react-router-dom";
 import { AiTwotoneAppstore } from "react-icons/ai";
 import "./layout.css";
+import { createContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import candidateApi from "../../../../api/candidate";
+import educationApi from "../../../../api/education";
+import experienceApi from "../../../../api/experience";
+import projectApi from "../../../../api/project";
+import skillApi from "../../../../api/skill";
+import certificateApi from "../../../../api/certificate";
+import prizeApi from "../../../../api/prize";
+import activityApi from "../../../../api/activity";
+import otherApi from "../../../../api/other";
+
+export const ProfileContext = createContext();
 
 function CandidateLayout(props) {
+  const isAuth = useSelector((state) => state.candAuth.isAuth);
+  const [personal, setPersonal] = useState({});
+  const [educations, setEducations] = useState([]);
+  const [experiences, setExperiences] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [skills, setSkills] = useState([]);
+  const [certificates, setCertificates] = useState([]);
+  const [prizes, setPrizes] = useState([]);
+  const [activities, setActivities] = useState([]);
+  const [others, setOthers] = useState([]);
+
+  const getPersonal = async () => {
+    const res = await candidateApi.getCurrent();
+    setPersonal(res);
+  };
+  const getEducations = async () => {
+    const res = await educationApi.getByCurrentCandidate();
+    setEducations(res);
+  };
+  const getExperiences = async () => {
+    const res = await experienceApi.getByCurrentCandidate();
+    setExperiences(res);
+  };
+  const getProjects = async () => {
+    const res = await projectApi.getByCurrentCandidate();
+    setProjects(res);
+  };
+  const getSkills = async () => {
+    const res = await skillApi.getByCurrentCandidate();
+    setSkills(res);
+  };
+  const getCertificates = async () => {
+    const res = await certificateApi.getByCurrentCandidate();
+    setCertificates(res);
+  };
+  const getPrizes = async () => {
+    const res = await prizeApi.getByCurrentCandidate();
+    setPrizes(res);
+  };
+  const getActivities = async () => {
+    const res = await activityApi.getByCurrentCandidate();
+    setActivities(res);
+  };
+  const getOthers = async () => {
+    const res = await otherApi.getByCurrentCandidate();
+    setOthers(res);
+  };
+  useEffect(() => {
+    if (isAuth) {
+      getPersonal();
+      getEducations();
+      getExperiences();
+      getProjects();
+      getSkills();
+      getCertificates();
+      getPrizes();
+      getActivities();
+      getOthers();
+    }
+  }, [isAuth]);
+
   return (
-    <>
+    <ProfileContext.Provider
+      value={{
+        personal,
+        setPersonal,
+        educations,
+        setEducations,
+        experiences,
+        setExperiences,
+        projects,
+        setProjects,
+        skills,
+        setSkills,
+        certificates,
+        setCertificates,
+        prizes,
+        setPrizes,
+        activities,
+        setActivities,
+        others,
+        setOthers,
+        getPersonal,
+        getEducations,
+        getExperiences,
+        getProjects,
+        getSkills,
+        getCertificates,
+        getPrizes,
+        getActivities,
+        getOthers,
+      }}
+    >
       <div className="d-flex">
         <div
           className="border-end bg-light"
@@ -30,15 +134,19 @@ function CandidateLayout(props) {
             <li className="nav-item border-bottom py-1 cand-item">
               <Link to="/candidate/profile" className="nav-link">
                 <span className="ms-4 d-flex align-items-center cand-item-color">
+                  Profile cá nhân
+                </span>
+              </Link>
+            </li>
+            <li className="nav-item border-bottom py-1 cand-item">
+              <Link to="/candidate/resumes" className="nav-link">
+                <span className="ms-4 d-flex align-items-center cand-item-color">
                   Quản lý hồ sơ
                 </span>
               </Link>
             </li>
             <li className="nav-item border-bottom py-1 cand-item">
-              <Link
-                to="/candidate/applied-jobs"
-                className="nav-link"
-              >
+              <Link to="/candidate/applied-jobs" className="nav-link">
                 <span className="ms-4 d-flex align-items-center cand-item-color">
                   {/* <AiTwotoneAppstore style={{ fontSize: "20px" }} /> */}
                   Việc làm đã nộp
@@ -55,11 +163,9 @@ function CandidateLayout(props) {
             </li>
           </ul>
         </div>
-        <div style={{ width: "calc(1536px - 280px)" }}>
-          {props.children}
-        </div>
+        <div style={{ width: "calc(1536px - 280px)" }}>{props.children}</div>
       </div>
-    </>
+    </ProfileContext.Provider>
   );
 }
 

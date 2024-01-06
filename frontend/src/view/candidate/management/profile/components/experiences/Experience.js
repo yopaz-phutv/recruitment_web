@@ -1,24 +1,22 @@
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useContext, useState } from "react";
 import FrameLayout from "../frameLayout";
 import dayjs from "dayjs";
 import experienceApi from "../../../../../../api/experience";
 import ExperienceFormDialog from "./ExperienceFormDialog";
+import { ProfileContext } from "../../../layouts/CandidateLayout";
 
 export default function Experience() {
-  const [experiences, setExperiences] = useState([]);
+  const { experiences, setExperiences, getExperiences } =
+    useContext(ProfileContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 
-  const isAuth = useSelector((state) => state.candAuth.isAuth);
-  const getAll = async () => {
-    const res = await experienceApi.getByCurrentCandidate();
-    setExperiences(res);
-  };
   const handleDelete = async (id) => {
-    let choice = window.confirm("Bạn có chắc muốn xóa Kinh nghiệm việc làm này?");
+    let choice = window.confirm(
+      "Bạn có chắc muốn xóa Kinh nghiệm việc làm này?"
+    );
     if (choice) {
       await experienceApi.destroy(id);
       let temp = experiences.filter((item) => {
@@ -31,13 +29,6 @@ export default function Experience() {
     setActType("EDIT");
     setCurrent(item);
   };
-
-  useEffect(() => {
-    if (isAuth) {
-      getAll();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth]);
 
   return (
     <FrameLayout
@@ -59,9 +50,9 @@ export default function Experience() {
                   {dayjs(item.end_date).format("DD/MM/YYYY")}
                 </span>
               </div>
-            ) : null}            
+            ) : null}
             <div className="ts-ssm">
-              <span className="">Mô tả:</span>              
+              <span className="">Mô tả:</span>
               <span className="text-secondary">{" " + item.description}</span>
             </div>
           </div>
@@ -81,7 +72,7 @@ export default function Experience() {
               >
                 Xóa
               </Button>
-            </Stack>            
+            </Stack>
           </div>
         </div>
       ))}
@@ -90,7 +81,7 @@ export default function Experience() {
           actType={actType}
           setActType={setActType}
           current={current}
-          getAll={getAll}
+          getAll={getExperiences}
         />
       )}
     </FrameLayout>

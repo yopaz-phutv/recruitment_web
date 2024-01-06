@@ -15,6 +15,7 @@ use App\Http\Controllers\JlevelController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JtypeController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\OtherController;
 use App\Http\Controllers\PrizeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SkillController;
@@ -145,6 +146,13 @@ Route::controller(PrizeController::class)->prefix('prizes')->group(function () {
     Route::post('/update/{id}', 'update');
 });
 Route::controller(ActivityController::class)->prefix('activities')->group(function () {
+    Route::get('', 'index');
+    Route::get('getByCurrentCandidate', 'getByCurrentCandidate');
+    Route::post('', 'create');
+    Route::delete('{id}', 'destroy');
+    Route::patch('{id}', 'update');
+});
+Route::controller(OtherController::class)->prefix('others')->group(function () {
     Route::get('', 'index');
     Route::get('getByCurrentCandidate', 'getByCurrentCandidate');
     Route::post('', 'create');

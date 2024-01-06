@@ -1,0 +1,40 @@
+.bg-main {
+    background-color: #c6e2ff;
+}
+.text-main {
+    color: #0e849c;
+}
+.border-main {
+    border-color: #0e849c !important;
+}
+div .border-lighter {
+    border-color: #b8d6f7 !important;
+}
+.title {
+    font-size: 18px;
+    font-weight: 550;
+    color: #0e849c;
+}
+.content {
+    font-size: 15.5px;
+}
+.whitespace-preline {
+    white-space: pre-line;
+}
+/* font weight */
+.fw-500 {
+    font-weight: 500;
+}
+.fw-550 {
+    font-weight: 550;
+}
+.fw-600 {
+    font-weight: 600;
+}
+.fw-700 {
+    font-weight: 700;
+}
+
+.del-underline {
+    text-decoration: none;
+}

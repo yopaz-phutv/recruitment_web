@@ -1,22 +1,18 @@
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useContext, useState } from "react";
 import FrameLayout from "../frameLayout";
 import dayjs from "dayjs";
 import ActivityFormDialog from "./ActivityFormDialog";
 import activityApi from "../../../../../../api/activity";
+import { ProfileContext } from "../../../layouts/CandidateLayout";
 
 export default function Activity() {
-  const [activities, setActivities] = useState([]);
+  const { activities, setActivities, getActivities } =
+    useContext(ProfileContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 
-  const isAuth = useSelector((state) => state.candAuth.isAuth);
-  const getAll = async () => {
-    const res = await activityApi.getByCurrentCandidate();
-    setActivities(res);
-  };
   const handleDelete = async (id) => {
     let choice = window.confirm("Bạn có chắc muốn xóa Hoạt động này?");
     if (choice) {
@@ -31,13 +27,6 @@ export default function Activity() {
     setActType("EDIT");
     setCurrent(item);
   };
-
-  useEffect(() => {
-    if (isAuth) {
-      getAll();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth]);
 
   return (
     <FrameLayout
@@ -99,7 +88,7 @@ export default function Activity() {
           actType={actType}
           setActType={setActType}
           current={current}
-          getAll={getAll}
+          getAll={getActivities}
         />
       )}
     </FrameLayout>
