@@ -53,3 +53,13 @@
 .kkk {
   background-color: rgb(233, 238, 240);
 }
+/* custom cv input, textarea */
+.cv-input {
+  border: none;
+}
+.cv-input:focus {
+  outline: none;
+}
+.cv-input:hover {
+  outline: 1px dashed darkgray;
+}
