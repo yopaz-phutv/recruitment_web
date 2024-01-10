@@ -40,7 +40,7 @@ export default function Activity() {
           <hr />
           <div className="border-0 border-success border-start ps-3 d-inline-block">
             <div className="fw-bold">{item.organization}</div>
-            <div className="ts-ssm text-secondary">{item.role}</div>
+            <div className="ts-smd text-secondary">{item.role}</div>
             {item.start_date || item.start_date ? (
               <div>
                 <span className="text-secondary ts-xs">
@@ -51,7 +51,7 @@ export default function Activity() {
                 </span>
               </div>
             ) : null}
-            <div className="ts-ssm">
+            <div className="ts-smd">
               {item.link && (
                 <div>
                   Link: <a href={item.link}>{item.link}</a>

@@ -51,7 +51,7 @@ export default function Prize() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <span className="ts-ssm">Ảnh</span>
+                <span className="ts-smd">Ảnh</span>
               </a>
             )}
           </div>

@@ -122,7 +122,7 @@ export default function PersonalInforFormDialog({
               )}
             </div>
             <Form.Group>
-              <Form.Label className="ts-ssm">Tải ảnh lên</Form.Label>
+              <Form.Label className="ts-smd">Tải ảnh lên</Form.Label>
               <Form.Control
                 id="avatar-upload"
                 type="file"

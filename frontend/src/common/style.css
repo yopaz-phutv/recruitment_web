@@ -1,10 +1,11 @@
+/* font size */
 .ts-xs {
   font-size: 12.75px;
 }
 .ts-sm {
   font-size: 13.75px;
 }
-.ts-ssm {
+.ts-smd {
   font-size: 15px;
 }
 .ts-md {
@@ -20,12 +21,14 @@
   font-size: 24px;
 }
 .ts-17 {
-    font-size: 17px;
-  }
-  
+  font-size: 17px;
+}
 /* font weight */
 .fw-500 {
   font-weight: 500;
+}
+.fw-550 {
+  font-weight: 550;
 }
 .fw-600 {
   font-weight: 600;
@@ -39,16 +42,28 @@
 .fw-900 {
   font-weight: 500;
 }
-/* element width by percent */
-.w-95 {
-  width: 95%;
+/* element width by percentage */
+.w-15 {
+  width: 15%;
+}
+.w-20 {
+  width: 20%;
 }
 .w-40 {
   width: 40%;
 }
-
-.whitespace-pre-line {
+.w-95 {
+  width: 95%;
+}
+/* others */
+.whitespace-preline {
   white-space: pre-line;
+}
+.del-underline {
+  text-decoration: none;
+}
+.pointer {
+  cursor: pointer;
 }
 .kkk {
   background-color: rgb(233, 238, 240);
@@ -62,4 +77,24 @@
 }
 .cv-input:hover {
   outline: 1px dashed darkgray;
+}
+.resize-none {
+  resize: none;
+}
+/* hover */
+.item-hover:hover {
+  color: blue;
+}
+/* z-index */
+.z-index-1 {
+  z-index: 1;
+}
+.z-index-2 {
+  z-index: 2;
+}
+.z-index-3 {
+  z-index: 3;
+}
+.z-index-4 {
+  z-index: 4;
 }

@@ -6,7 +6,6 @@ import { IoMdMail } from "react-icons/io";
 import { MdLocationOn } from "react-icons/md";
 import { IoIosLink } from "react-icons/io";
 import dayjs from "dayjs";
-import Form from "react-bootstrap/Form";
 import { useContext } from "react";
 import { ProfileContext } from "../../layouts/CandidateLayout";
 

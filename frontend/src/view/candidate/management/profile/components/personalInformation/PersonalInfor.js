@@ -42,7 +42,7 @@ export default function PersonalInfor() {
         <div>
           <span className="ts-sm text-secondary">Mục tiêu nghề nghiệp</span>
           <br />
-          <span className="ts-ssm fw-500 whitespace-pre-line">
+          <span className="ts-smd fw-500 whitespace-preline">
             {personal.objective || none}
           </span>
         </div>
@@ -52,7 +52,7 @@ export default function PersonalInfor() {
         <div>
           <div className={itemStyle}>
             <span className="ts-sm text-secondary">Họ tên</span> <br />
-            <span className="ts-ssm fw-500">
+            <span className="ts-smd fw-500">
               {personal.lastname + " " + personal.firstname}
             </span>
           </div>
@@ -60,7 +60,7 @@ export default function PersonalInfor() {
         <div>
           <div className={itemStyle}>
             <span className="ts-sm text-secondary">Giới tính</span> <br />
-            <span className="ts-ssm fw-500">
+            <span className="ts-smd fw-500">
               {personal.gender === 0 && "Nam"}
               {personal.gender === 1 && "Nữ"}
               {personal.gender === undefined && none}
@@ -70,7 +70,7 @@ export default function PersonalInfor() {
         <div>
           <div className={itemStyle}>
             <span className="ts-sm text-secondary">Ngày sinh</span> <br />
-            <span className="ts-ssm fw-500">
+            <span className="ts-smd fw-500">
               {personal.dob ? dayjs(personal.dob).format("DD/MM/YYYY") : none}
             </span>
           </div>
@@ -78,25 +78,25 @@ export default function PersonalInfor() {
         <div>
           <div className={itemStyle}>
             <span className="ts-sm text-secondary">Số điện thoại</span> <br />
-            <span className="ts-ssm fw-500">{personal.phone || none}</span>
+            <span className="ts-smd fw-500">{personal.phone || none}</span>
           </div>
         </div>
         <div>
           <div className={itemStyle}>
             <span className="ts-sm text-secondary">Email</span> <br />
-            <span className="ts-ssm fw-500">{personal.email || none}</span>
+            <span className="ts-smd fw-500">{personal.email || none}</span>
           </div>
         </div>
         <div>
           <div className={itemStyle}>
             <span className="ts-sm text-secondary">Địa chỉ</span> <br />
-            <span className="ts-ssm fw-500">{personal.address || none}</span>
+            <span className="ts-smd fw-500">{personal.address || none}</span>
           </div>
         </div>
         <div>
           <div className={itemStyle}>
             <span className="ts-sm text-secondary">Liên kết</span> <br />
-            <a href={personal.link} className="ts-ssm fw-500">
+            <a href={personal.link} className="ts-smd fw-500">
               {personal.link || none}
             </a>
           </div>

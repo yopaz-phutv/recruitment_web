@@ -113,7 +113,7 @@ function CandidateList() {
               </button>
             </Form.Group>
             {step !== "step3" && (
-              <div className="d-flex align-items-center mt-3 ts-ssm">
+              <div className="d-flex align-items-center mt-3 ts-smd">
                 <div className="fw-500">Trạng thái: </div>&nbsp;
                 <Form.Select
                   size="sm"
@@ -143,7 +143,7 @@ function CandidateList() {
           </Form>
           <div className="mt-3" style={{ width: "90%" }}>
             <table className="table table-borderless border text-center">
-              <thead className="table-danger ts-ssm">
+              <thead className="table-danger ts-smd">
                 <tr>
                   <th style={{ width: "17%" }}>Họ tên</th>
                   <th style={{}}>Vị trí ứng tuyển</th>

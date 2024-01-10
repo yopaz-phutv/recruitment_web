@@ -54,7 +54,7 @@ export default function Skill() {
               ))}
             </Stack>
             {item.description && (
-              <div className="ts-ssm">
+              <div className="ts-smd">
                 <span className="text-secondary">{" " + item.description}</span>
               </div>
             )}
