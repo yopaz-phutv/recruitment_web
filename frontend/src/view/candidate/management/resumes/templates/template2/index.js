@@ -10,6 +10,7 @@ import { ProfileContext } from "../../../layouts/CandidateLayout";
 import { useForm } from "react-hook-form";
 import dayjs from "dayjs";
 import { ContentItem, InforPart } from "../../components";
+import clsx from "clsx";
 
 export default function Template2() {
   const {
@@ -51,7 +52,7 @@ export default function Template2() {
     console.log("educations:", cvEducations);
   };
 
-  const Skill = ({ infor, index }) => {
+  const Skill = ({ infor, index, bgColor }) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     useEffect(() => {
@@ -66,13 +67,13 @@ export default function Template2() {
     return (
       <div className="content">
         <FlexInput
-          innerClassName="bg-main fw-550"
+          innerClassName={clsx("fw-550", bgColor)}
           placeholder="Tên kỹ năng"
           defaultValue={infor?.name}
           setCurrent={setName}
         />
         <FlexInput
-          innerClassName="bg-main"
+          innerClassName={clsx(bgColor)}
           placeholder="Mô tả"
           defaultValue={infor?.description}
           setCurrent={setDescription}
@@ -80,7 +81,7 @@ export default function Template2() {
       </div>
     );
   };
-  const Certificate = ({ infor, index }) => {
+  const Certificate = ({ infor, index, bgColor }) => {
     const [name, setName] = useState("");
     const [receiveDate, setReceiveDate] = useState("");
     useEffect(() => {
@@ -96,14 +97,14 @@ export default function Template2() {
       <div className="content d-flex">
         <FlexInput
           className="w-20"
-          innerClassName="bg-main fw-550 ts-sm"
+          innerClassName={clsx("fw-550 ts-sm", bgColor)}
           placeholder="Tgian nhận"
           defaultValue={dayjs(infor.receive_date).format("MM/YYYY")}
           setCurrent={setReceiveDate}
         />
         <FlexInput
           className="flex-fill"
-          innerClassName="bg-main"
+          innerClassName={clsx(bgColor)}
           placeholder="Tên chứng chỉ"
           defaultValue={infor?.name}
           setCurrent={setName}
@@ -111,7 +112,7 @@ export default function Template2() {
       </div>
     );
   };
-  const Prize = ({ infor, index }) => {
+  const Prize = ({ infor, index, bgColor }) => {
     const [name, setName] = useState("");
     const [receiveDate, setReceiveDate] = useState("");
     useEffect(() => {
@@ -127,14 +128,14 @@ export default function Template2() {
       <div className="content d-flex">
         <FlexInput
           className="w-20"
-          innerClassName="bg-main fw-550 ts-sm"
+          innerClassName={clsx("fw-550 ts-sm", bgColor)}
           placeholder="Tgian nhận"
           defaultValue={dayjs(infor.receive_date).format("MM/YYYY")}
           setCurrent={setReceiveDate}
         />
         <FlexInput
           className="flex-fill"
-          innerClassName="bg-main"
+          innerClassName={clsx(bgColor)}
           placeholder="Tên giải thưởng"
           defaultValue={infor?.name}
           setCurrent={setName}
@@ -142,7 +143,7 @@ export default function Template2() {
       </div>
     );
   };
-  const Education = ({ infor, index, menu }) => {
+  const Education = ({ infor, index, menu, bgColor }) => {
     const [school, setSchool] = useState("");
     const [major, setMajor] = useState("");
     const [description, setDescription] = useState("");
@@ -171,18 +172,18 @@ export default function Template2() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start border-main">
+      <div className="content border-3 border-start">
         <div className="d-flex align-items-center">
           <FlexInput
             className="flex-fill"
-            innerClassName="fw-550"
+            innerClassName={clsx("fw-550", bgColor)}
             placeholder="Trường/Trung tâm"
             defaultValue={infor?.school}
             setCurrent={setSchool}
           />
           <FlexInput
             className="w-15"
-            innerClassName="fst-italic text-secondary text-end"
+            innerClassName={clsx("fst-italic text-secondary text-end", bgColor)}
             placeholder="Bắt đầu"
             defaultValue={dayjs(infor.start_date).format("YYYY")}
             setCurrent={setStartDate}
@@ -190,7 +191,7 @@ export default function Template2() {
           -
           <FlexInput
             className="w-15"
-            innerClassName="fst-italic text-secondary"
+            innerClassName={clsx("fst-italic text-secondary", bgColor)}
             placeholder="Kết thúc"
             defaultValue={dayjs(infor.end_date).format("YYYY")}
             setCurrent={setEndDate}
@@ -198,7 +199,7 @@ export default function Template2() {
         </div>
         {menu[0].on && (
           <FlexInput
-            innerClassName=""
+            innerClassName={clsx(bgColor)}
             placeholder="Chuyên ngành"
             defaultValue={infor?.major}
             setCurrent={setMajor}
@@ -206,7 +207,7 @@ export default function Template2() {
         )}
         {menu[1].on && (
           <FlexInput
-            innerClassName=""
+            innerClassName={clsx(bgColor)}
             placeholder="Mô tả"
             defaultValue={infor?.description}
             setCurrent={setDescription}
@@ -215,46 +216,46 @@ export default function Template2() {
       </div>
     );
   };
-  const PersonalPart = () => {
+  const PersonalPart = ({ bgColor }) => {
     return (
       <InforPart inforType="personal" handleChangePos={handleChangePos}>
         <FlexInput
-          innerClassName="bg-main title"
+          innerClassName={clsx("title", bgColor)}
           placeholder="Thông tin cá nhân"
           defaultValue="Thông tin cá nhân"
           {...register("personalTitle")}
         />
         <div className="ms-2">
           <FlexInput
-            innerClassName="bg-main content"
+            innerClassName={clsx("content", bgColor)}
             iconLeft={<IoCalendarClear className="mb-1" />}
             placeholder="Ngày tháng năm sinh"
             defaultValue={dayjs(personal.dob).format("DD-MM-YYYY")}
             {...register("dob")}
           />
           <FlexInput
-            innerClassName="bg-main content"
+            innerClassName={clsx("content", bgColor)}
             iconLeft={<FaPhoneAlt className="mb-1" />}
             placeholder="Số điện thoại"
             defaultValue={personal.phone}
             {...register("phone")}
           />
           <FlexInput
-            innerClassName="bg-main content"
+            innerClassName={clsx("content", bgColor)}
             iconLeft={<IoMdMail className="mb-1" />}
             placeholder="Email"
             defaultValue={personal.email}
             {...register("email")}
           />
           <FlexInput
-            innerClassName="bg-main content"
+            innerClassName={clsx("content", bgColor)}
             iconLeft={<IoIosLink className="mb-1" />}
             placeholder="Liên kết"
             defaultValue={personal.link}
             {...register("link")}
           />
           <FlexInput
-            innerClassName="bg-main content"
+            innerClassName={clsx("content", bgColor)}
             iconLeft={<MdLocationOn className="mb-1" />}
             placeholder="Địa chỉ"
             defaultValue={personal.address}
@@ -265,11 +266,11 @@ export default function Template2() {
       </InforPart>
     );
   };
-  const SkillPart = () => {
+  const SkillPart = ({ bgColor }) => {
     return (
       <InforPart inforType="skill" handleChangePos={handleChangePos}>
         <FlexInput
-          innerClassName="bg-main title"
+          innerClassName={clsx("title", bgColor)}
           placeholder="Các kỹ năng"
           defaultValue="Các kỹ năng"
           {...register("skillTitle")}
@@ -281,18 +282,18 @@ export default function Template2() {
             items={cvSkills}
             setItems={setCvSkills}
           >
-            <Skill infor={item} index={index} />
+            <Skill infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
         <hr className="text-main" />
       </InforPart>
     );
   };
-  const CertificatePart = () => {
+  const CertificatePart = ({ bgColor }) => {
     return (
       <InforPart inforType="certificate" handleChangePos={handleChangePos}>
         <FlexInput
-          innerClassName="bg-main title"
+          innerClassName={clsx("title", bgColor)}
           placeholder="Chứng chỉ"
           defaultValue="Chứng chỉ"
           {...register("certificateTitle")}
@@ -304,18 +305,18 @@ export default function Template2() {
             items={cvCertificates}
             setItems={setCvCertificates}
           >
-            <Certificate infor={item} index={index} />
+            <Certificate infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
         <hr className="text-main" />
       </InforPart>
     );
   };
-  const PrizePart = () => {
+  const PrizePart = ({ bgColor }) => {
     return (
       <InforPart inforType="prize" handleChangePos={handleChangePos}>
         <FlexInput
-          innerClassName="bg-main title"
+          innerClassName={clsx("title", bgColor)}
           placeholder="Giải thưởng"
           defaultValue="Giải thưởng"
           {...register("prizeTitle")}
@@ -327,18 +328,18 @@ export default function Template2() {
             items={cvPrizes}
             setItems={setCvPrizes}
           >
-            <Prize infor={item} index={index} />
+            <Prize infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
         <hr className="text-main" />
       </InforPart>
     );
   };
-  const EducationPart = () => {
+  const EducationPart = ({ bgColor }) => {
     return (
       <InforPart inforType="education" handleChangePos={handleChangePos}>
         <FlexInput
-          innerClassName="title"
+          innerClassName={clsx("title", bgColor)}
           placeholder="Học vấn"
           defaultValue="Học vấn"
           {...register("educationTitle")}
@@ -355,7 +356,7 @@ export default function Template2() {
               { name: "Mô tả", on: true },
             ]}
           >
-            <Education infor={item} index={index} />
+            <Education infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
         <hr className="text-main" />
@@ -374,15 +375,15 @@ export default function Template2() {
   const renderPart = (index) => {
     switch (parts[index]) {
       case "personal":
-        return <PersonalPart />;
+        return <PersonalPart bgColor={index <= 3 && "bg-main"} />;
       case "skill":
-        return <SkillPart />;
+        return <SkillPart bgColor={index <= 3 && "bg-main"} />;
       case "certificate":
-        return <CertificatePart />;
+        return <CertificatePart bgColor={index <= 3 && "bg-main"} />;
       case "prize":
-        return <PrizePart />;
+        return <PrizePart bgColor={index <= 3 && "bg-main"} />;
       case "education":
-        return <EducationPart />;
+        return <EducationPart bgColor={index <= 3 && "bg-main"} />;
       default:
         break;
     }
