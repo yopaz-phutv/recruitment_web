@@ -31,16 +31,32 @@ export default function Template2() {
 
   const { register, handleSubmit } = useForm();
 
-  const [cvEducations, setCvEducations] = useState([]);
-  const [cvExperiences, setCvExperiences] = useState([]);
-  const [cvProjects, setCvProjects] = useState([]);
-  const [cvSkills, setCvSkills] = useState([]);
-  const [cvCertificates, setCvCertificates] = useState([]);
-  const [cvPrizes, setCvPrizes] = useState([]);
-  const [cvActivities, setCvActivities] = useState([]);
-  const [cvOthers, setCvOthers] = useState([]);
-  // const [curPartKey, setCurPartKey] = useState("");
-  // const [curPartInstruction, setCurPartInstruction] = useState("");
+  const [cvEducations, setCvEducations] = useState([{}]);
+  const [cvExperiences, setCvExperiences] = useState([{}]);
+  const [cvProjects, setCvProjects] = useState([{}]);
+  const [cvSkills, setCvSkills] = useState([{}]);
+  const [cvCertificates, setCvCertificates] = useState([{}]);
+  const [cvPrizes, setCvPrizes] = useState([{}]);
+  const [cvActivities, setCvActivities] = useState([{}]);
+  const [cvOthers, setCvOthers] = useState([{}]);
+  const [parts, setParts] = useState([
+    "personal",
+    "skill",
+    "certificate",
+    "prize",
+    "education",
+  ]);
+  const [partMenu, setPartMenu] = useState([
+    { key: "personal", name: "Thông tin cá nhân", on: true },
+    { key: "education", name: "Học vấn", on: true },
+    { key: "experience", name: "Kinh nghiệm", on: true },
+    { key: "project", name: "Dự án", on: true },
+    { key: "skill", name: "Kỹ năng", on: true },
+    { key: "certificate", name: "Chứng chỉ", on: true },
+    { key: "prize", name: "Giải thưởng", on: true },
+    { key: "activity", name: "Hoạt động", on: true },
+    { key: "other", name: "Khác", on: true },
+  ]);
 
   const onSubmit = (data) => {
     console.log({ data });
@@ -172,7 +188,7 @@ export default function Template2() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start">
+      <div className="content border-3 border-start border-main">
         <div className="d-flex align-items-center">
           <FlexInput
             className="flex-fill"
@@ -218,7 +234,13 @@ export default function Template2() {
   };
   const PersonalPart = ({ bgColor }) => {
     return (
-      <InforPart inforType="personal" handleChangePos={handleChangePos}>
+      <InforPart
+        type="personal"
+        parts={parts}
+        setParts={setParts}
+        partMenu={partMenu}
+        setPartMenu={setPartMenu}
+      >
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Thông tin cá nhân"
@@ -268,7 +290,13 @@ export default function Template2() {
   };
   const SkillPart = ({ bgColor }) => {
     return (
-      <InforPart inforType="skill" handleChangePos={handleChangePos}>
+      <InforPart
+        type="skill"
+        parts={parts}
+        setParts={setParts}
+        partMenu={partMenu}
+        setPartMenu={setPartMenu}
+      >
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Các kỹ năng"
@@ -291,7 +319,13 @@ export default function Template2() {
   };
   const CertificatePart = ({ bgColor }) => {
     return (
-      <InforPart inforType="certificate" handleChangePos={handleChangePos}>
+      <InforPart
+        type="certificate"
+        parts={parts}
+        setParts={setParts}
+        partMenu={partMenu}
+        setPartMenu={setPartMenu}
+      >
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Chứng chỉ"
@@ -314,7 +348,13 @@ export default function Template2() {
   };
   const PrizePart = ({ bgColor }) => {
     return (
-      <InforPart inforType="prize" handleChangePos={handleChangePos}>
+      <InforPart
+        type="prize"
+        parts={parts}
+        setParts={setParts}
+        partMenu={partMenu}
+        setPartMenu={setPartMenu}
+      >
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Giải thưởng"
@@ -337,7 +377,13 @@ export default function Template2() {
   };
   const EducationPart = ({ bgColor }) => {
     return (
-      <InforPart inforType="education" handleChangePos={handleChangePos}>
+      <InforPart
+        type="education"
+        parts={parts}
+        setParts={setParts}
+        partMenu={partMenu}
+        setPartMenu={setPartMenu}
+      >
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Học vấn"
@@ -364,14 +410,6 @@ export default function Template2() {
     );
   };
 
-  const [parts, setParts] = useState([
-    "personal",
-    "skill",
-    "certificate",
-    "prize",
-    "education",
-  ]);
-
   const renderPart = (index) => {
     switch (parts[index]) {
       case "personal":
@@ -387,19 +425,6 @@ export default function Template2() {
       default:
         break;
     }
-  };
-  const handleChangePos = (inforType, instruction) => {
-    let temp = [...parts];
-    let curInd = parts.findIndex((item) => item === inforType);
-    let curPart = parts[curInd];
-    if (instruction === "UP" && curInd > 0) {
-      temp[curInd] = temp[curInd - 1];
-      temp[curInd - 1] = curPart;
-    } else if (instruction === "DOWN" && curInd < parts.length - 1) {
-      temp[curInd] = temp[curInd + 1];
-      temp[curInd + 1] = curPart;
-    }
-    setParts(temp);
   };
 
   useEffect(() => {
@@ -427,6 +452,10 @@ export default function Template2() {
     if (others.length > 0) setCvOthers(others);
   }, [others]);
 
+  useEffect(() => {
+    console.log("parts:", parts);
+  }, [parts]);
+
   return (
     <>
       <form
@@ -434,7 +463,7 @@ export default function Template2() {
         style={{ width: "800px" }}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="bg-main ms-2 ps-1 pe-2 pb-2" style={{ width: "340px" }}>
+        <div className="bg-main ms-2 ps-1 pe-2" style={{ width: "340px" }}>
           <div className="mt-2 d-flex flex-column align-items-center">
             <img
               src="https://static.topcv.vn/avatars/oovNh1I1zrAJGotXsNea_63ecb2f362c9c_cvtpl.jpg"

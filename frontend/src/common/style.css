@@ -68,6 +68,9 @@
 .kkk {
   background-color: rgb(233, 238, 240);
 }
+.bg-disabled {
+  background-color: rgb(228, 223, 223);
+}
 /* custom cv input, textarea */
 .cv-input {
   border: none;

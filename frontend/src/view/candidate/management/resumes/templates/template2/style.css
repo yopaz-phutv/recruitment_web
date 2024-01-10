@@ -4,7 +4,7 @@
 .text-main {
   color: #0e849c !important;
 }
-.border-main {
+div .border-main {
   border-color: #0e849c !important;
 }
 div .border-lighter {
