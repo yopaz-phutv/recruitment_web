@@ -28,7 +28,7 @@ const FlexInput = ({
   }, []);
 
   return (
-    <div className={clsx("d-flex gap-1 align-items-center z-index-1", className)}>
+    <div className={clsx("d-flex gap-1 align-items-start z-index-1", className)}>
       <div className="text-main">{iconLeft || null}</div>
       <textarea
         className={clsx(

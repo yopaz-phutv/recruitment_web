@@ -1,9 +1,7 @@
 import Button from "react-bootstrap/Button";
-import { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useContext, useState } from "react";
 import FrameLayout from "../frameLayout";
 import dayjs from "dayjs";
-import candidateApi from "../../../../../../api/candidate";
 import { FaUser } from "react-icons/fa";
 import PersonalInforFormDialog from "./PersonalInforFormDialog";
 import { ProfileContext } from "../../../layouts/CandidateLayout";
@@ -12,7 +10,7 @@ export default function PersonalInfor() {
   const { personal, getPersonal } = useContext(ProfileContext);
   const [isEdit, setIsEdit] = useState(false);
   const [hasImg, setHasImg] = useState(false);
-  const none = <span className="text-danger">Chưa có</span>;
+  const none = <span>Chưa có</span>;
   const itemStyle = "border-0 border-bottom w-95 pb-1";
 
   const handleEdit = () => {
@@ -53,7 +51,11 @@ export default function PersonalInfor() {
           <div className={itemStyle}>
             <span className="ts-sm text-secondary">Họ tên</span> <br />
             <span className="ts-smd fw-500">
-              {personal.lastname + " " + personal.firstname}
+              {personal.lastname && personal.firstname ? (
+                <>{personal.lastname + " " + personal.firstname}</>
+              ) : (
+                none
+              )}
             </span>
           </div>
         </div>

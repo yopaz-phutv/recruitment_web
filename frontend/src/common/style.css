@@ -20,6 +20,7 @@
 .ts-xxl {
   font-size: 24px;
 }
+/* other font size */
 .ts-17 {
   font-size: 17px;
 }
@@ -39,9 +40,6 @@
 .fw-800 {
   font-weight: 800;
 }
-.fw-900 {
-  font-weight: 500;
-}
 /* element width by percentage */
 .w-15 {
   width: 15%;
@@ -49,27 +47,20 @@
 .w-20 {
   width: 20%;
 }
+.w-30 {
+  width: 30%;
+}
+.w-35 {
+  width: 35%;
+}
 .w-40 {
   width: 40%;
 }
+.w-45 {
+  width: 45%;
+}
 .w-95 {
   width: 95%;
-}
-/* others */
-.whitespace-preline {
-  white-space: pre-line;
-}
-.del-underline {
-  text-decoration: none;
-}
-.pointer {
-  cursor: pointer;
-}
-.kkk {
-  background-color: rgb(233, 238, 240);
-}
-.bg-disabled {
-  background-color: rgb(228, 223, 223);
 }
 /* custom cv input, textarea */
 .cv-input {
@@ -100,4 +91,20 @@
 }
 .z-index-4 {
   z-index: 4;
+}
+/* others */
+.whitespace-preline {
+  white-space: pre-line;
+}
+.text-decoration-none {
+  text-decoration: none;
+}
+.pointer {
+  cursor: pointer;
+}
+.kkk {
+  background-color: rgb(233, 238, 240);
+}
+.bg-disabled {
+  background-color: rgb(228, 223, 223);
 }

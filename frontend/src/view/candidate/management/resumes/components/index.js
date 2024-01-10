@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
 import { AiFillCaretUp } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
@@ -7,16 +7,11 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoMdSettings } from "react-icons/io";
 import { FaCheck } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { TemplateContext } from "../templates/template2";
 
-export const InforPart = ({
-  children,
-  className,
-  type,
-  parts,
-  setParts,
-  partMenu,
-  setPartMenu,
-}) => {
+export const InforPart = ({ children, className, type }) => {
+  const { parts, setParts, partMenu, setPartMenu } =
+    useContext(TemplateContext);
   const [showOp, setShowOp] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -54,8 +49,7 @@ export const InforPart = ({
       partTemp.splice(curPartIndex + 1, 0, currentOp.key);
       setPartMenu(menuTemp);
       setParts(partTemp);
-    }
-    else toast.info("Thông tin này đã có!");
+    } else toast.info("Thông tin này đã có!");
   };
 
   return (
@@ -180,33 +174,35 @@ export const ContentItem = ({
               className="fs-5 text-success pointer"
               onClick={handleAdd}
             />
-            <div
-              className="position-relative"
-              onMouseMove={() => setShowMenu(true)}
-              onMouseLeave={() => setShowMenu(false)}
-            >
-              <IoMdSettings className="fs-5 text-secondary pointer mb-1" />
-              {showMenu && (
-                <div
-                  className="position-absolute top-100 end-0 bg-light border rounded shadow-sm ts-sm z-index-3"
-                  style={{ minWidth: "160px" }}
-                >
-                  {menu?.map((item, index) => (
-                    <div
-                      key={index}
-                      className={clsx(
-                        "px-2 py-1 pointer item-hover d-flex align-items-center",
-                        item.on && "text-primary"
-                      )}
-                      onClick={() => handleChangeMenu(index)}
-                    >
-                      <div className="flex-fill">{item.name}</div>
-                      {item.on && <FaCheck className="text-primary" />}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            {menuVaule && (
+              <div
+                className="position-relative"
+                onMouseMove={() => setShowMenu(true)}
+                onMouseLeave={() => setShowMenu(false)}
+              >
+                <IoMdSettings className="fs-5 text-secondary pointer mb-1" />
+                {showMenu && (
+                  <div
+                    className="position-absolute top-100 end-0 bg-light border rounded shadow-sm ts-sm z-index-3"
+                    style={{ minWidth: "160px" }}
+                  >
+                    {menu?.map((item, index) => (
+                      <div
+                        key={index}
+                        className={clsx(
+                          "px-2 py-1 pointer item-hover d-flex align-items-center",
+                          item.on && "text-primary"
+                        )}
+                        onClick={() => handleChangeMenu(index)}
+                      >
+                        <div className="flex-fill">{item.name}</div>
+                        {item.on && <FaCheck className="text-primary" />}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}

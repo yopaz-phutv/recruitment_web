@@ -57,7 +57,10 @@ export default function Project() {
               )}
               {item.link && (
                 <div>
-                  Link: <a href={item.link}>{item.link}</a>
+                  Link:{" "}
+                  <a href={item.link} className="text-decoration-none">
+                    {item.link}
+                  </a>
                 </div>
               )}
               {item.technologies && (
