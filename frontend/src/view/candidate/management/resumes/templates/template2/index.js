@@ -27,7 +27,7 @@ export default function Template2() {
     others,
   } = useContext(ProfileContext);
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const [fullname, setFullname] = useState("");
   const [cvEducations, setCvEducations] = useState([{}]);
@@ -63,6 +63,10 @@ export default function Template2() {
     { key: "other", name: "Khác", on: true },
   ]);
 
+  useEffect(() => {
+    reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [personal]);
   useEffect(() => {
     if (personal.lastname && personal.firstname)
       setFullname(personal.lastname + " " + personal.firstname);
