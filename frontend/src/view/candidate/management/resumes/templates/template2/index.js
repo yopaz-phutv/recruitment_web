@@ -28,6 +28,7 @@ export default function Template2() {
   } = useContext(ProfileContext);
 
   const { register, handleSubmit, reset } = useForm();
+  const [crtCvOption, setCrtCvOption] = useState(1);
 
   const [fullname, setFullname] = useState("");
   const [cvEducations, setCvEducations] = useState([{}]);
@@ -38,17 +39,18 @@ export default function Template2() {
   const [cvPrizes, setCvPrizes] = useState([{}]);
   const [cvActivities, setCvActivities] = useState([{}]);
   const [cvOthers, setCvOthers] = useState([{}]);
+  //default order of parts
   const [parts, setParts] = useState([
     "personal",
     "objective",
     "skill",
     "certificate",
     "prize",
+    "other",
     "education",
     "experience",
     "project",
     "activity",
-    "other",
   ]);
   const [partMenu, setPartMenu] = useState([
     { key: "personal", name: "Thông tin cá nhân", on: true },
@@ -68,33 +70,51 @@ export default function Template2() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personal]);
   useEffect(() => {
-    if (personal.lastname && personal.firstname)
-      setFullname(personal.lastname + " " + personal.firstname);
-  }, [personal]);
+    if (crtCvOption === 0) {
+      if (personal.lastname && personal.firstname)
+        setFullname(personal.lastname + " " + personal.firstname);
+    }
+  }, [crtCvOption, personal]);
   useEffect(() => {
-    if (educations.length > 0) setCvEducations(educations);
-  }, [educations]);
+    if (crtCvOption === 0) {
+      if (educations.length > 0) setCvEducations(educations);
+    }
+  }, [crtCvOption, educations]);
   useEffect(() => {
-    if (experiences.length > 0) setCvExperiences(experiences);
-  }, [experiences]);
+    if (crtCvOption === 0) {
+      if (experiences.length > 0) setCvExperiences(experiences);
+    }
+  }, [crtCvOption, experiences]);
   useEffect(() => {
-    if (projects.length > 0) setCvProjects(projects);
-  }, [projects]);
+    if (crtCvOption === 0) {
+      if (projects.length > 0) setCvProjects(projects);
+    }
+  }, [crtCvOption, projects]);
   useEffect(() => {
-    if (skills.length > 0) setCvSkills(skills);
-  }, [skills]);
+    if (crtCvOption === 0) {
+      if (skills.length > 0) setCvSkills(skills);
+    }
+  }, [crtCvOption, skills]);
   useEffect(() => {
-    if (certificates.length > 0) setCvCertificates(certificates);
-  }, [certificates]);
+    if (crtCvOption === 0) {
+      if (certificates.length > 0) setCvCertificates(certificates);
+    }
+  }, [certificates, crtCvOption]);
   useEffect(() => {
-    if (prizes.length > 0) setCvPrizes(prizes);
-  }, [prizes]);
+    if (crtCvOption === 0) {
+      if (prizes.length > 0) setCvPrizes(prizes);
+    }
+  }, [crtCvOption, prizes]);
   useEffect(() => {
-    if (activities.length > 0) setCvActivities(activities);
-  }, [activities]);
+    if (crtCvOption === 0) {
+      if (activities.length > 0) setCvActivities(activities);
+    }
+  }, [activities, crtCvOption]);
   useEffect(() => {
-    if (others.length > 0) setCvOthers(others);
-  }, [others]);
+    if (crtCvOption === 0) {
+      if (others.length > 0) setCvOthers(others);
+    }
+  }, [crtCvOption, others]);
 
   const onSubmit = (data) => {
     console.log({ data });
@@ -107,6 +127,7 @@ export default function Template2() {
     console.log("experiences:", cvExperiences);
     console.log("projects:", cvProjects);
     console.log("activities:", cvActivities);
+    console.log("others:", cvOthers);
   };
 
   const Skill = ({ infor, index, bgColor }) => {
@@ -156,7 +177,11 @@ export default function Template2() {
           className="w-20"
           innerClassName={clsx("fw-550 ts-sm", bgColor)}
           placeholder="Tgian nhận"
-          defaultValue={dayjs(infor.receive_date).format("MM/YYYY")}
+          defaultValue={
+            infor.receive_date
+              ? dayjs(infor.receive_date).format("MM/YYYY")
+              : null
+          }
           setCurrent={setReceiveDate}
         />
         <FlexInput
@@ -187,7 +212,11 @@ export default function Template2() {
           className="w-20"
           innerClassName={clsx("fw-550 ts-sm", bgColor)}
           placeholder="Tgian nhận"
-          defaultValue={dayjs(infor.receive_date).format("MM/YYYY")}
+          defaultValue={
+            infor.receive_date
+              ? dayjs(infor.receive_date).format("MM/YYYY")
+              : null
+          }
           setCurrent={setReceiveDate}
         />
         <FlexInput
@@ -245,7 +274,9 @@ export default function Template2() {
               bgColor
             )}
             placeholder="Bắt đầu"
-            defaultValue={dayjs(infor.start_date).format("YYYY")}
+            defaultValue={
+              infor.start_date ? dayjs(infor.start_date).format("YYYY") : null
+            }
             setCurrent={setStartDate}
           />
           -
@@ -253,7 +284,9 @@ export default function Template2() {
             className="w-15"
             innerClassName={clsx("fst-italic text-secondary ts-sm", bgColor)}
             placeholder="Kết thúc"
-            defaultValue={dayjs(infor.end_date).format("YYYY")}
+            defaultValue={
+              infor.end_date ? dayjs(infor.end_date).format("YYYY") : null
+            }
             setCurrent={setEndDate}
           />
         </div>
@@ -322,7 +355,11 @@ export default function Template2() {
               bgColor
             )}
             placeholder="Bắt đầu"
-            defaultValue={dayjs(infor.start_date).format("MM/YYYY")}
+            defaultValue={
+              infor.start_date
+                ? dayjs(infor.start_date).format("MM/YYYY")
+                : null
+            }
             setCurrent={setStartDate}
           />
           -
@@ -330,7 +367,9 @@ export default function Template2() {
             className="w-15"
             innerClassName={clsx("fst-italic text-secondary ts-sm", bgColor)}
             placeholder="Kết thúc"
-            defaultValue={dayjs(infor.end_date).format("MM/YYYY")}
+            defaultValue={
+              infor.end_date ? dayjs(infor.end_date).format("MM/YYYY") : null
+            }
             setCurrent={setEndDate}
           />
         </div>
@@ -411,7 +450,11 @@ export default function Template2() {
               bgColor
             )}
             placeholder="Bắt đầu"
-            defaultValue={dayjs(infor.start_date).format("MM/YYYY")}
+            defaultValue={
+              infor.start_date
+                ? dayjs(infor.start_date).format("MM/YYYY")
+                : null
+            }
             setCurrent={setStartDate}
           />
           -
@@ -419,7 +462,9 @@ export default function Template2() {
             className="w-15"
             innerClassName={clsx("fst-italic text-secondary ts-sm", bgColor)}
             placeholder="Kết thúc"
-            defaultValue={dayjs(infor.end_date).format("MM/YYYY")}
+            defaultValue={
+              infor.end_date ? dayjs(infor.end_date).format("MM/YYYY") : null
+            }
             setCurrent={setEndDate}
           />
         </div>
@@ -513,7 +558,11 @@ export default function Template2() {
               bgColor
             )}
             placeholder="Bắt đầu"
-            defaultValue={dayjs(infor.start_date).format("MM/YYYY")}
+            defaultValue={
+              infor.start_date
+                ? dayjs(infor.start_date).format("MM/YYYY")
+                : null
+            }
             setCurrent={setStartDate}
           />
           -
@@ -523,7 +572,9 @@ export default function Template2() {
             placeholder="Kết thúc"
             defaultValue={
               !infor.is_present
-                ? dayjs(infor.end_date).format("MM/YYYY")
+                ? infor.end_date
+                  ? dayjs(infor.end_date).format("MM/YYYY")
+                  : null
                 : "hiện tại"
             }
             setCurrent={setEndDate}
@@ -552,7 +603,35 @@ export default function Template2() {
       </div>
     );
   };
+  const Other = ({ infor, index, bgColor }) => {
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    useEffect(() => {
+      if (name) cvOthers[index].name = name;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [name]);
+    useEffect(() => {
+      if (description) cvOthers[index].description = description;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [description]);
 
+    return (
+      <div className="content">
+        <FlexInput
+          innerClassName={clsx("title", bgColor)}
+          placeholder="Khác"
+          defaultValue={infor?.name}
+          setCurrent={setName}
+        />
+        <FlexInput
+          innerClassName={clsx(bgColor)}
+          placeholder="Mô tả"
+          defaultValue={infor?.description}
+          setCurrent={setDescription}
+        />
+      </div>
+    );
+  };
   const PersonalPart = ({ bgColor }) => {
     return (
       <InforPart type="personal">
@@ -566,36 +645,40 @@ export default function Template2() {
           <FlexInput
             innerClassName={clsx("content", bgColor)}
             iconLeft={<IoCalendarClear className="mb-1" />}
-            placeholder="Ngày tháng năm sinh"
-            defaultValue={dayjs(personal.dob).format("DD/MM/YYYY")}
+            placeholder="Ngày/tháng/năm sinh"
+            defaultValue={
+              crtCvOption === 0
+                ? dayjs(personal.dob).format("DD/MM/YYYY")
+                : null
+            }
             {...register("dob")}
           />
           <FlexInput
             innerClassName={clsx("content", bgColor)}
             iconLeft={<FaPhoneAlt className="mb-1" />}
             placeholder="Số điện thoại"
-            defaultValue={personal.phone}
+            defaultValue={crtCvOption === 0 ? personal.phone : null}
             {...register("phone")}
           />
           <FlexInput
             innerClassName={clsx("content", bgColor)}
             iconLeft={<IoMdMail className="mb-1" />}
             placeholder="Email"
-            defaultValue={personal.email}
+            defaultValue={crtCvOption === 0 ? personal.email : null}
             {...register("email")}
           />
           <FlexInput
             innerClassName={clsx("content", bgColor)}
             iconLeft={<IoIosLink className="mb-1" />}
             placeholder="Liên kết"
-            defaultValue={personal.link}
+            defaultValue={crtCvOption === 0 ? personal.link : null}
             {...register("link")}
           />
           <FlexInput
             innerClassName={clsx("content", bgColor)}
             iconLeft={<MdLocationOn className="mb-1" />}
             placeholder="Địa chỉ"
-            defaultValue={personal.address}
+            defaultValue={crtCvOption === 0 ? personal.address : null}
             {...register("address")}
           />
         </div>
@@ -615,7 +698,7 @@ export default function Template2() {
         <FlexInput
           innerClassName={clsx("content", bgColor)}
           placeholder="Nội dung"
-          defaultValue={personal?.objective}
+          defaultValue={crtCvOption === 0 ? personal?.objective : null}
           {...register("objective")}
         />
         <hr className="text-main" />
@@ -731,7 +814,7 @@ export default function Template2() {
         {cvExperiences.map((item, index) => (
           <ContentItem
             className="mb-1 py-1"
-            key={`education_${index}`}
+            key={`experience_${index}`}
             index={index}
             items={cvExperiences}
             setItems={setCvExperiences}
@@ -755,7 +838,7 @@ export default function Template2() {
         {cvProjects.map((item, index) => (
           <ContentItem
             className="mb-1 py-1"
-            key={`education_${index}`}
+            key={`project_${index}`}
             index={index}
             items={cvProjects}
             setItems={setCvProjects}
@@ -784,7 +867,7 @@ export default function Template2() {
         {cvActivities.map((item, index) => (
           <ContentItem
             className="mb-1 py-1"
-            key={`education_${index}`}
+            key={`activity_${index}`}
             index={index}
             items={cvActivities}
             setItems={setCvActivities}
@@ -798,8 +881,27 @@ export default function Template2() {
     );
   };
 
+  const OtherPart = ({ bgColor }) => {
+    return (
+      <InforPart type="other">
+        {cvOthers.map((item, index) => (
+          <ContentItem
+            className="mb-1 py-1"
+            key={`other_${index}`}
+            index={index}
+            items={cvOthers}
+            setItems={setCvOthers}
+          >
+            <Other infor={item} index={index} bgColor={bgColor} />
+          </ContentItem>
+        ))}
+        <hr className="text-main" />
+      </InforPart>
+    );
+  };
+
   const renderPart = (index) => {
-    const bgColor = index <= 4 ? "bg-main" : "";
+    const bgColor = index <= 5 ? "bg-main" : "";
     switch (parts[index]) {
       case "personal":
         return <PersonalPart bgColor={bgColor} />;
@@ -819,6 +921,8 @@ export default function Template2() {
         return <ProjectPart bgColor={bgColor} />;
       case "activity":
         return <ActivityPart bgColor={bgColor} />;
+      case "other":
+        return <OtherPart bgColor={bgColor} />;
       default:
         break;
     }
@@ -853,7 +957,7 @@ export default function Template2() {
             <hr className="text-main" />
             {parts.map((_, index) => {
               return (
-                index <= 4 && (
+                index <= 5 && (
                   <div key={`part_${index}`}>{renderPart(index)}</div>
                 )
               );
@@ -863,7 +967,7 @@ export default function Template2() {
             <div className="ms-2">
               {parts.map((_, index) => {
                 return (
-                  index > 4 && (
+                  index > 5 && (
                     <div key={`part_${index}`}>{renderPart(index)}</div>
                   )
                 );
