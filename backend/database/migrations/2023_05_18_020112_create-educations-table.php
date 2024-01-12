@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('resume_id')->nullable();
-            $table->string('school', 100);
+            $table->string('school', 100)->nullable();
             $table->string('major', 100)->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->text('description');
+            $table->text('description')->nullable();
             //$table->timestamps();
         });
     }

@@ -11,6 +11,10 @@ import { useForm } from "react-hook-form";
 import dayjs from "dayjs";
 import { ContentItem, InforPart } from "../../components";
 import clsx from "clsx";
+import resumeApi from "../../../../../../api/resume";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { toast } from "react-toastify";
 
 export const TemplateContext = createContext();
 
@@ -28,7 +32,7 @@ export default function Template2() {
   } = useContext(ProfileContext);
 
   const { register, handleSubmit, reset } = useForm();
-  const [crtCvOption, setCrtCvOption] = useState(1);
+  const [crtCvOption, setCrtCvOption] = useState(1); // 0: all new, 1: profile-based
 
   const [fullname, setFullname] = useState("");
   const [cvEducations, setCvEducations] = useState([{}]);
@@ -70,64 +74,144 @@ export default function Template2() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personal]);
   useEffect(() => {
-    if (crtCvOption === 0) {
+    if (crtCvOption === 1) {
       if (personal.lastname && personal.firstname)
         setFullname(personal.lastname + " " + personal.firstname);
     }
   }, [crtCvOption, personal]);
   useEffect(() => {
-    if (crtCvOption === 0) {
+    if (crtCvOption === 1) {
       if (educations.length > 0) setCvEducations(educations);
     }
   }, [crtCvOption, educations]);
   useEffect(() => {
-    if (crtCvOption === 0) {
+    if (crtCvOption === 1) {
       if (experiences.length > 0) setCvExperiences(experiences);
     }
   }, [crtCvOption, experiences]);
   useEffect(() => {
-    if (crtCvOption === 0) {
+    if (crtCvOption === 1) {
       if (projects.length > 0) setCvProjects(projects);
     }
   }, [crtCvOption, projects]);
   useEffect(() => {
-    if (crtCvOption === 0) {
+    if (crtCvOption === 1) {
       if (skills.length > 0) setCvSkills(skills);
     }
   }, [crtCvOption, skills]);
   useEffect(() => {
-    if (crtCvOption === 0) {
+    if (crtCvOption === 1) {
       if (certificates.length > 0) setCvCertificates(certificates);
     }
   }, [certificates, crtCvOption]);
   useEffect(() => {
-    if (crtCvOption === 0) {
+    if (crtCvOption === 1) {
       if (prizes.length > 0) setCvPrizes(prizes);
     }
   }, [crtCvOption, prizes]);
   useEffect(() => {
-    if (crtCvOption === 0) {
+    if (crtCvOption === 1) {
       if (activities.length > 0) setCvActivities(activities);
     }
   }, [activities, crtCvOption]);
   useEffect(() => {
-    if (crtCvOption === 0) {
+    if (crtCvOption === 1) {
       if (others.length > 0) setCvOthers(others);
     }
   }, [crtCvOption, others]);
 
-  const onSubmit = (data) => {
-    console.log({ data });
+  const formatDate = (str) => {
+    const arr = str.split("/");
+    const len = arr.length;
+    if (arr[0].length !== 4) {
+      if (len === 2) {
+        //only include month and year
+        let temp = arr[0];
+        arr[0] = arr[1];
+        arr[1] = temp;
+      } else if (len === 3) {
+        // inlude day, month, year
+        let temp = arr[0];
+        arr[0] = arr[2];
+        arr[2] = temp;
+      }
+    }
+    return arr.join("-");
   };
-  const submit = () => {
+  const formatDateInPart = (part) => {
+    part.forEach((item, index, self) => {
+      if (item.start_date) self[index].start_date = formatDate(item.start_date);
+      if (item.end_date) self[index].end_date = formatDate(item.end_date);
+    });
+  };
+  // const isEmptyObj = (object) => {
+  //   return Object.keys(object).length === 0;
+  // };
+  // const formatPart = (part) => {
+  //   part.forEach((item, index, self) => {
+  //     if (isEmptyObj(item)) self.splice(index, 1);
+  //   });
+  // };
+  const isPresentInParts = (partName) => {
+    return parts.findIndex((item) => item === partName) > -1 ? true : false;
+  };
+  const onSubmit = async (data) => {
+    console.log({ data });
+    var dob = "";
+    if (data.dob) {
+      const [dobDay, dobMonth, dobYear] = data.dob.split("/");
+      dob = dobYear + "-" + dobMonth + "-" + dobDay;
+    }
+
+    let educations = [...cvEducations];
+    let experiences = [...cvExperiences];
+    let projects = [...cvProjects];
+    let skills = [...cvSkills];
+    let certificates = [...cvCertificates];
+    let prizes = [...cvPrizes];
+    let activities = [...cvActivities];
+    let others = [...cvOthers];
+
+    //format date
+    formatDateInPart(educations);
+    formatDateInPart(experiences);
+    formatDateInPart(projects);
+    formatDateInPart(activities);
+    certificates.forEach((item, index, self) => {
+      if (item.receive_date)
+        self[index].receive_date = formatDate(item.receive_date);
+    });
+    prizes.forEach((item, index, self) => {
+      if (item.receive_date)
+        self[index].receive_date = formatDate(item.receive_date);
+    });
+    //end: format date
     console.log("skills:", cvSkills);
-    console.log("certificates:", cvCertificates);
-    console.log("prizes:", cvPrizes);
-    console.log("educations:", cvEducations);
-    console.log("experiences:", cvExperiences);
-    console.log("projects:", cvProjects);
-    console.log("activities:", cvActivities);
+    console.log("certificates:", certificates);
+    console.log("prizes:", prizes);
+    console.log("educations:", educations);
+    console.log("experiences:", experiences);
+    console.log("projects:", projects);
+    console.log("activities:", activities);
     console.log("others:", cvOthers);
+    try {
+      const ret = await resumeApi.create({
+        basicInfor: { ...data, dob },
+        educations: isPresentInParts("education") ? educations : null,
+        experiences: isPresentInParts("experience") ? experiences : null,
+        projects: isPresentInParts("project") ? projects : null,
+        skills: isPresentInParts("skill") ? skills : null,
+        certificates: isPresentInParts("certificate") ? certificates : null,
+        prizes: isPresentInParts("prize") ? prizes : null,
+        activities: isPresentInParts("activity") ? activities : null,
+        others: isPresentInParts("other") ? others : null,
+      });
+      console.log("result:", ret);
+      toast.success("Tạo mới thành công!");
+    } catch (e) {
+      toast.error("Đã có lỗi xảy ra!");
+      console.error(">>Error:", e.response.data.message);
+    }
   };
 
   const Skill = ({ infor, index, bgColor }) => {
@@ -647,7 +731,7 @@ export default function Template2() {
             iconLeft={<IoCalendarClear className="mb-1" />}
             placeholder="Ngày/tháng/năm sinh"
             defaultValue={
-              crtCvOption === 0
+              crtCvOption === 1
                 ? dayjs(personal.dob).format("DD/MM/YYYY")
                 : null
             }
@@ -657,28 +741,28 @@ export default function Template2() {
             innerClassName={clsx("content", bgColor)}
             iconLeft={<FaPhoneAlt className="mb-1" />}
             placeholder="Số điện thoại"
-            defaultValue={crtCvOption === 0 ? personal.phone : null}
+            defaultValue={crtCvOption === 1 ? personal.phone : null}
             {...register("phone")}
           />
           <FlexInput
             innerClassName={clsx("content", bgColor)}
             iconLeft={<IoMdMail className="mb-1" />}
             placeholder="Email"
-            defaultValue={crtCvOption === 0 ? personal.email : null}
+            defaultValue={crtCvOption === 1 ? personal.email : null}
             {...register("email")}
           />
           <FlexInput
             innerClassName={clsx("content", bgColor)}
             iconLeft={<IoIosLink className="mb-1" />}
             placeholder="Liên kết"
-            defaultValue={crtCvOption === 0 ? personal.link : null}
+            defaultValue={crtCvOption === 1 ? personal.link : null}
             {...register("link")}
           />
           <FlexInput
             innerClassName={clsx("content", bgColor)}
             iconLeft={<MdLocationOn className="mb-1" />}
             placeholder="Địa chỉ"
-            defaultValue={crtCvOption === 0 ? personal.address : null}
+            defaultValue={crtCvOption === 1 ? personal.address : null}
             {...register("address")}
           />
         </div>
@@ -698,7 +782,7 @@ export default function Template2() {
         <FlexInput
           innerClassName={clsx("content", bgColor)}
           placeholder="Nội dung"
-          defaultValue={crtCvOption === 0 ? personal?.objective : null}
+          defaultValue={crtCvOption === 1 ? personal?.objective : null}
           {...register("objective")}
         />
         <hr className="text-main" />
@@ -933,8 +1017,25 @@ export default function Template2() {
       value={{ parts, setParts, partMenu, setPartMenu }}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="d-flex gap-2 py-3 shadow-sm">
+          <Form.Control
+            type="text"
+            aria-label="resume_title"
+            placeholder="Tiêu đề hồ sơ"
+            // defaultValue={}
+            className="ms-3 w-20 border-primary"
+            {...register("title")}
+          />
+          <Button
+            type="submit"
+            variant="outline-primary"
+            className="ms-auto me-5 px-5 py-1"
+          >
+            <span className="fw-600">Lưu</span>
+          </Button>
+        </div>
         <div
-          className="mx-auto border my-5 d-flex py-2 shadow"
+          className="mx-auto border mt-4 mb-5 d-flex py-2 shadow"
           style={{ width: "800px" }}
         >
           <div className="bg-main ms-2 ps-1 pe-2" style={{ width: "340px" }}>
@@ -975,11 +1076,7 @@ export default function Template2() {
             </div>
           </div>
         </div>
-        <button type="submit">submit form</button>
       </form>
-      <button type="button" onClick={submit}>
-        submit
-      </button>
     </TemplateContext.Provider>
   );
 }

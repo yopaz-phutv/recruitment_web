@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('resume_id')->nullable();
-            $table->string('name', 100);
-            $table->date('receive_date');
+            $table->string('name', 100)->nullable();
+            $table->date('receive_date')->nullable();
             $table->text('image')->nullable();
             //$table->timestamps();
         });

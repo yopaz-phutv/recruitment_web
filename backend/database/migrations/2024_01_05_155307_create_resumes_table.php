@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('resumes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('candidate_id');
+            $table->string('title', 60)->nullable();
             $table->string('fullname', 100)->nullable();
             $table->unsignedTinyInteger('gender')->nullable();
             $table->date('dob')->nullable();
@@ -23,6 +24,16 @@ return new class extends Migration
             $table->text('link')->nullable();
             $table->text('avatar')->nullable();
             $table->text('objective')->nullable();
+            $table->string('personalTitle', 60)->nullable();
+            $table->string('objectiveTitle', 60)->nullable();
+            $table->string('educationTitle', 60)->nullable();
+            $table->string('experienceTitle', 60)->nullable();
+            $table->string('projectTitle', 60)->nullable();
+            $table->string('skillTitle', 60)->nullable();
+            $table->string('certificateTitle', 60)->nullable();
+            $table->string('prizeTitle', 60)->nullable();
+            $table->string('activityTitle', 60)->nullable();
+            $table->string('otherTitle', 60)->nullable();
             $table->timestamps();
         });
     }

@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('resume_id')->nullable();
-            $table->string('organization', 100);
-            $table->string('role', 100);
+            $table->string('organization', 100)->nullable();
+            $table->string('role', 100)->nullable();
             $table->boolean('is_present')->nullable();
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->text('description');
+            $table->text('description')->nullable();
             // $table->text('image');
             $table->text('link')->nullable();
             //$table->timestamps();

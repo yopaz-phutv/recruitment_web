@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('resume_id')->nullable();
-            $table->string('name', 60);
-            $table->unsignedTinyInteger('proficiency');
+            $table->string('name', 60)->nullable();
+            $table->unsignedTinyInteger('proficiency')->nullable();
             $table->string('description')->nullable();
             //$table->timestamps();
         });

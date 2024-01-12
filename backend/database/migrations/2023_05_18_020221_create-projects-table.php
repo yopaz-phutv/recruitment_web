@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('resume_id')->nullable();
-            $table->string('name', 100);
+            $table->string('name', 100)->nullable();
             $table->string('prj_type', 60)->nullable();
             $table->string('role', 100)->nullable();
             $table->string('technologies')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->text('link')->nullable();
             //$table->timestamps();
         });

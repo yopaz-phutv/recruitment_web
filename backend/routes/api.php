@@ -18,6 +18,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\OtherController;
 use App\Http\Controllers\PrizeController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\SkillController;
 use App\Models\CandidateMessage;
 use App\Models\Employer;
@@ -158,4 +159,8 @@ Route::controller(OtherController::class)->prefix('others')->group(function () {
     Route::post('', 'create');
     Route::delete('{id}', 'destroy');
     Route::patch('{id}', 'update');
+});
+Route::controller(ResumeController::class)->prefix('resumes')->group(function () {
+    Route::post('', 'create');
+    Route::delete('{id}', 'destroy');
 });
