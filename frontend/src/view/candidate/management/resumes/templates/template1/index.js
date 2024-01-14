@@ -120,9 +120,8 @@ export default function Template1() {
   };
 
   useEffect(() => {
-    reset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [basicInfor]);
+    reset(); //reset form to get defaultValue correctly
+  }, [basicInfor, reset]);
 
   useEffect(() => {
     if (id) {
@@ -133,9 +132,13 @@ export default function Template1() {
   }, []);
 
   useEffect(() => {
-    if (basicInfor.lastname && basicInfor.firstname)
-      setFullname(basicInfor.lastname + " " + basicInfor.firstname);
-  }, [basicInfor]);
+    if (cvMode === "CREATE_1") {
+      if (basicInfor.lastname && basicInfor.firstname)
+        setFullname(basicInfor.lastname + " " + basicInfor.firstname);
+    } else if (cvMode === "EDIT") {
+      setFullname(basicInfor.fullname);
+    }
+  }, [basicInfor, cvMode]);
   useEffect(() => {
     if (cvMode === "CREATE_1") {
       setBasicInfor(personal);
@@ -1141,7 +1144,7 @@ export default function Template1() {
                 placeholder="HỌ TÊN"
                 className="mt-2"
                 innerClassName="bg-main h4 text-main text-center text-uppercase"
-                defaultValue={fullname ? fullname : null}
+                defaultValue={fullname}
                 {...register("fullname")}
               />
             </div>
