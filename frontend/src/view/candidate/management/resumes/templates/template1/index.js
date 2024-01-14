@@ -6,7 +6,7 @@ import { MdLocationOn } from "react-icons/md";
 import { IoIosLink } from "react-icons/io";
 import FlexInput from "../../../../../../components/FlexInput";
 import { createContext, useContext, useEffect, useState } from "react";
-import { ProfileContext } from "../../../layouts/CandidateLayout";
+import { CandidateContext } from "../../../layouts/CandidateLayout";
 import { useForm } from "react-hook-form";
 import dayjs from "dayjs";
 import { ContentItem, InforPart } from "../../components";
@@ -15,10 +15,11 @@ import resumeApi from "../../../../../../api/resume";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
 export const TemplateContext = createContext();
 
-export default function Template2() {
+export default function Template1() {
   const {
     personal,
     educations,
@@ -29,12 +30,20 @@ export default function Template2() {
     prizes,
     activities,
     others,
-  } = useContext(ProfileContext);
+    cvMode,
+    setCvMode,
+  } = useContext(CandidateContext);
 
-  const { register, handleSubmit, reset } = useForm();
-  const [crtCvOption, setCrtCvOption] = useState(1); // 0: all new, 1: profile-based
+  const { id } = useParams(); //resume ID if exist
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
   const [fullname, setFullname] = useState("");
+  const [basicInfor, setBasicInfor] = useState({});
   const [cvEducations, setCvEducations] = useState([{}]);
   const [cvExperiences, setCvExperiences] = useState([{}]);
   const [cvProjects, setCvProjects] = useState([{}]);
@@ -69,56 +78,109 @@ export default function Template2() {
     { key: "other", name: "Khác", on: true },
   ]);
 
+  const getEditResume = async () => {
+    let partsTemp = ["personal", "objective"];
+    const res = await resumeApi.getById(id);
+    console.log("current resume::", res);
+
+    setBasicInfor(res.basicInfor);
+    if (res.skills.length > 0) {
+      setCvSkills(res.skills);
+      partsTemp.push("skill");
+    }
+    if (res.certificates.length > 0) {
+      setCvCertificates(res.certificates);
+      partsTemp.push("certificate");
+    }
+    if (res.prizes.length > 0) {
+      setCvPrizes(res.prizes);
+      partsTemp.push("prize");
+    }
+    if (res.others.length > 0) {
+      setCvOthers(res.others);
+      partsTemp.push("other");
+    }
+    if (res.educations.length > 0) {
+      setCvEducations(res.educations);
+      partsTemp.push("education");
+    }
+    if (res.experiences.length > 0) {
+      setCvExperiences(res.experiences);
+      partsTemp.push("experience");
+    }
+    if (res.projects.length > 0) {
+      setCvProjects(res.projects);
+      partsTemp.push("project");
+    }
+    if (res.activities.length > 0) {
+      setCvActivities(res.activities);
+      partsTemp.push("activity");
+    }
+    setParts(partsTemp);
+  };
+
   useEffect(() => {
     reset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [personal]);
+  }, [basicInfor]);
+
   useEffect(() => {
-    if (crtCvOption === 1) {
-      if (personal.lastname && personal.firstname)
-        setFullname(personal.lastname + " " + personal.firstname);
+    if (id) {
+      setCvMode("EDIT");
+      getEditResume();
     }
-  }, [crtCvOption, personal]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
-    if (crtCvOption === 1) {
+    if (basicInfor.lastname && basicInfor.firstname)
+      setFullname(basicInfor.lastname + " " + basicInfor.firstname);
+  }, [basicInfor]);
+  useEffect(() => {
+    if (cvMode === "CREATE_1") {
+      setBasicInfor(personal);
+    }
+  }, [cvMode, personal]);
+  useEffect(() => {
+    if (cvMode === "CREATE_1") {
       if (educations.length > 0) setCvEducations(educations);
     }
-  }, [crtCvOption, educations]);
+  }, [cvMode, educations]);
   useEffect(() => {
-    if (crtCvOption === 1) {
+    if (cvMode === "CREATE_1") {
       if (experiences.length > 0) setCvExperiences(experiences);
     }
-  }, [crtCvOption, experiences]);
+  }, [cvMode, experiences]);
   useEffect(() => {
-    if (crtCvOption === 1) {
+    if (cvMode === "CREATE_1") {
       if (projects.length > 0) setCvProjects(projects);
     }
-  }, [crtCvOption, projects]);
+  }, [cvMode, projects]);
   useEffect(() => {
-    if (crtCvOption === 1) {
+    if (cvMode === "CREATE_1") {
       if (skills.length > 0) setCvSkills(skills);
     }
-  }, [crtCvOption, skills]);
+  }, [cvMode, skills]);
   useEffect(() => {
-    if (crtCvOption === 1) {
+    if (cvMode === "CREATE_1") {
       if (certificates.length > 0) setCvCertificates(certificates);
     }
-  }, [certificates, crtCvOption]);
+  }, [certificates, cvMode]);
   useEffect(() => {
-    if (crtCvOption === 1) {
+    if (cvMode === "CREATE_1") {
       if (prizes.length > 0) setCvPrizes(prizes);
     }
-  }, [crtCvOption, prizes]);
+  }, [cvMode, prizes]);
   useEffect(() => {
-    if (crtCvOption === 1) {
+    if (cvMode === "CREATE_1") {
       if (activities.length > 0) setCvActivities(activities);
     }
-  }, [activities, crtCvOption]);
+  }, [activities, cvMode]);
   useEffect(() => {
-    if (crtCvOption === 1) {
+    if (cvMode === "CREATE_1") {
       if (others.length > 0) setCvOthers(others);
     }
-  }, [crtCvOption, others]);
+  }, [cvMode, others]);
 
   const formatDate = (str) => {
     const arr = str.split("/");
@@ -722,7 +784,9 @@ export default function Template2() {
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Thông tin cá nhân"
-          defaultValue="Thông tin cá nhân"
+          defaultValue={
+            cvMode === "EDIT" ? basicInfor.personalTitle : "Thông tin cá nhân"
+          }
           {...register("personalTitle")}
         />
         <div className="ms-2">
@@ -731,8 +795,8 @@ export default function Template2() {
             iconLeft={<IoCalendarClear className="mb-1" />}
             placeholder="Ngày/tháng/năm sinh"
             defaultValue={
-              crtCvOption === 1
-                ? dayjs(personal.dob).format("DD/MM/YYYY")
+              cvMode !== "CREATE_0"
+                ? dayjs(basicInfor.dob).format("DD/MM/YYYY")
                 : null
             }
             {...register("dob")}
@@ -741,28 +805,28 @@ export default function Template2() {
             innerClassName={clsx("content", bgColor)}
             iconLeft={<FaPhoneAlt className="mb-1" />}
             placeholder="Số điện thoại"
-            defaultValue={crtCvOption === 1 ? personal.phone : null}
+            defaultValue={cvMode !== "CREATE_0" ? basicInfor.phone : null}
             {...register("phone")}
           />
           <FlexInput
             innerClassName={clsx("content", bgColor)}
             iconLeft={<IoMdMail className="mb-1" />}
             placeholder="Email"
-            defaultValue={crtCvOption === 1 ? personal.email : null}
+            defaultValue={cvMode !== "CREATE_0" ? basicInfor.email : null}
             {...register("email")}
           />
           <FlexInput
             innerClassName={clsx("content", bgColor)}
             iconLeft={<IoIosLink className="mb-1" />}
             placeholder="Liên kết"
-            defaultValue={crtCvOption === 1 ? personal.link : null}
+            defaultValue={cvMode !== "CREATE_0" ? basicInfor.link : null}
             {...register("link")}
           />
           <FlexInput
             innerClassName={clsx("content", bgColor)}
             iconLeft={<MdLocationOn className="mb-1" />}
             placeholder="Địa chỉ"
-            defaultValue={crtCvOption === 1 ? personal.address : null}
+            defaultValue={cvMode !== "CREATE_0" ? basicInfor.address : null}
             {...register("address")}
           />
         </div>
@@ -776,13 +840,17 @@ export default function Template2() {
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Mục tiêu nghề nghiệp"
-          defaultValue="Mục tiêu nghề nghiệp"
+          defaultValue={
+            cvMode === "EDIT"
+              ? basicInfor.objectiveTitle
+              : "Mục tiêu nghề nghiệp"
+          }
           {...register("objectiveTitle")}
         />
         <FlexInput
           innerClassName={clsx("content", bgColor)}
           placeholder="Nội dung"
-          defaultValue={crtCvOption === 1 ? personal?.objective : null}
+          defaultValue={cvMode !== "CREATE_0" ? basicInfor?.objective : null}
           {...register("objective")}
         />
         <hr className="text-main" />
@@ -795,7 +863,9 @@ export default function Template2() {
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Các kỹ năng"
-          defaultValue="Các kỹ năng"
+          defaultValue={
+            cvMode === "EDIT" ? basicInfor.skillTitle : "Các kỹ năng"
+          }
           {...register("skillTitle")}
         />
         {cvSkills.map((item, index) => (
@@ -818,7 +888,9 @@ export default function Template2() {
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Chứng chỉ"
-          defaultValue="Chứng chỉ"
+          defaultValue={
+            cvMode === "EDIT" ? basicInfor.certificateTitle : "Chứng chỉ"
+          }
           {...register("certificateTitle")}
         />
         {cvCertificates.map((item, index) => (
@@ -841,7 +913,9 @@ export default function Template2() {
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Giải thưởng"
-          defaultValue="Giải thưởng"
+          defaultValue={
+            cvMode === "EDIT" ? basicInfor.prizeTitle : "Giải thưởng"
+          }
           {...register("prizeTitle")}
         />
         {cvPrizes.map((item, index) => (
@@ -864,7 +938,9 @@ export default function Template2() {
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Học vấn"
-          defaultValue="Học vấn"
+          defaultValue={
+            cvMode === "EDIT" ? basicInfor.educationTitle : "Học vấn"
+          }
           {...register("educationTitle")}
         />
         {cvEducations.map((item, index) => (
@@ -892,7 +968,11 @@ export default function Template2() {
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Kinh nghiệm làm việc"
-          defaultValue="Kinh nghiệm làm việc"
+          defaultValue={
+            cvMode === "EDIT"
+              ? basicInfor.experienceTitle
+              : "Kinh nghiệm làm việc"
+          }
           {...register("experienceTitle")}
         />
         {cvExperiences.map((item, index) => (
@@ -916,7 +996,7 @@ export default function Template2() {
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Dự án"
-          defaultValue="Dự án"
+          defaultValue={cvMode === "EDIT" ? basicInfor.projectTitle : "Dự án"}
           {...register("projectTitle")}
         />
         {cvProjects.map((item, index) => (
@@ -945,7 +1025,9 @@ export default function Template2() {
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Hoạt động"
-          defaultValue="Hoạt động"
+          defaultValue={
+            cvMode === "EDIT" ? basicInfor.activityTitle : "Hoạt động"
+          }
           {...register("activityTitle")}
         />
         {cvActivities.map((item, index) => (
@@ -1017,31 +1099,39 @@ export default function Template2() {
       value={{ parts, setParts, partMenu, setPartMenu }}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="d-flex gap-2 py-3 shadow-sm">
-          <Form.Control
-            type="text"
-            aria-label="resume_title"
-            placeholder="Tiêu đề hồ sơ"
-            // defaultValue={}
-            className="ms-3 w-20 border-primary"
-            {...register("title")}
-          />
+        <div className="clearfix py-3 shadow-sm">
+          <Form.Group className="float-start ms-3 w-20">
+            <Form.Control
+              type="text"
+              aria-label="resume_title"
+              placeholder="Tiêu đề hồ sơ"
+              defaultValue={cvMode === "EDIT" ? basicInfor.title : null}
+              className="border-primary"
+              {...register("title", {
+                required: "Vui lòng điền tiêu đề hồ sơ",
+              })}
+              isInvalid={errors.title}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.title?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
           <Button
             type="submit"
             variant="outline-primary"
-            className="ms-auto me-5 px-5 py-1"
+            className="float-end me-5 px-5 py-1"
           >
             <span className="fw-600">Lưu</span>
           </Button>
         </div>
         <div
-          className="mx-auto border mt-4 mb-5 d-flex py-2 shadow"
+          className="resume mx-auto border mt-4 mb-5 d-flex py-2 shadow"
           style={{ width: "800px" }}
         >
           <div className="bg-main ms-2 ps-1 pe-2" style={{ width: "340px" }}>
             <div className="mt-2 d-flex flex-column align-items-center">
               <img
-                src={personal.avatar}
+                src={basicInfor?.avatar}
                 alt="avatar"
                 width="172px"
                 height="172px"
@@ -1051,7 +1141,7 @@ export default function Template2() {
                 placeholder="HỌ TÊN"
                 className="mt-2"
                 innerClassName="bg-main h4 text-main text-center text-uppercase"
-                defaultValue={fullname}
+                defaultValue={fullname ? fullname : null}
                 {...register("fullname")}
               />
             </div>

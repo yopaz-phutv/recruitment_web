@@ -4,10 +4,10 @@ import FrameLayout from "../frameLayout";
 import dayjs from "dayjs";
 import { FaUser } from "react-icons/fa";
 import PersonalInforFormDialog from "./PersonalInforFormDialog";
-import { ProfileContext } from "../../../layouts/CandidateLayout";
+import { CandidateContext } from "../../../layouts/CandidateLayout";
 
 export default function PersonalInfor() {
-  const { personal, getPersonal } = useContext(ProfileContext);
+  const { personal, getPersonal } = useContext(CandidateContext);
   const [isEdit, setIsEdit] = useState(false);
   const [hasImg, setHasImg] = useState(false);
   const none = <span>Chưa có</span>;

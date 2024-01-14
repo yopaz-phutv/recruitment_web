@@ -5,11 +5,11 @@ import FrameLayout from "../frameLayout";
 import dayjs from "dayjs";
 import experienceApi from "../../../../../../api/experience";
 import ExperienceFormDialog from "./ExperienceFormDialog";
-import { ProfileContext } from "../../../layouts/CandidateLayout";
+import { CandidateContext } from "../../../layouts/CandidateLayout";
 
 export default function Experience() {
   const { experiences, setExperiences, getExperiences } =
-    useContext(ProfileContext);
+    useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 

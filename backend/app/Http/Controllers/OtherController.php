@@ -16,11 +16,24 @@ class OtherController extends Controller
         return response()->json($res);
     }
 
-    public function getByCurrentCandidate()
+    public function getByCurrentCandidateProfile()
     {
         $candidate_id = Auth::user()->id;
-        $res = Other::where("candidate_id", $candidate_id)->get();
+        $res = Other::where([
+            ["candidate_id", $candidate_id],
+            ["resume_id", null]
+        ])->get();
 
+        return response()->json($res);
+    }
+
+    public function getByCurrentCandidateResumeId($resume_id)
+    {
+        $candidate_id = Auth::user()->id;
+        $res = Other::where([
+            ["candidate_id", $candidate_id],
+            ["resume_id", $resume_id]
+        ])->get();
         return response()->json($res);
     }
 

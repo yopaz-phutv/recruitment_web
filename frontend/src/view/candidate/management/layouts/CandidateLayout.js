@@ -13,7 +13,7 @@ import prizeApi from "../../../../api/prize";
 import activityApi from "../../../../api/activity";
 import otherApi from "../../../../api/other";
 
-export const ProfileContext = createContext();
+export const CandidateContext = createContext();
 
 function CandidateLayout(props) {
   const isAuth = useSelector((state) => state.candAuth.isAuth);
@@ -27,40 +27,42 @@ function CandidateLayout(props) {
   const [activities, setActivities] = useState([]);
   const [others, setOthers] = useState([]);
 
+  const [cvMode, setCvMode] = useState("CREATE_0");
+
   const getPersonal = async () => {
     const res = await candidateApi.getCurrent();
     setPersonal(res);
   };
   const getEducations = async () => {
-    const res = await educationApi.getByCurrentCandidate();
+    const res = await educationApi.getByCurrentCandidateProfile();
     setEducations(res);
   };
   const getExperiences = async () => {
-    const res = await experienceApi.getByCurrentCandidate();
+    const res = await experienceApi.getByCurrentCandidateProfile();
     setExperiences(res);
   };
   const getProjects = async () => {
-    const res = await projectApi.getByCurrentCandidate();
+    const res = await projectApi.getByCurrentCandidateProfile();
     setProjects(res);
   };
   const getSkills = async () => {
-    const res = await skillApi.getByCurrentCandidate();
+    const res = await skillApi.getByCurrentCandidateProfile();
     setSkills(res);
   };
   const getCertificates = async () => {
-    const res = await certificateApi.getByCurrentCandidate();
+    const res = await certificateApi.getByCurrentCandidateProfile();
     setCertificates(res);
   };
   const getPrizes = async () => {
-    const res = await prizeApi.getByCurrentCandidate();
+    const res = await prizeApi.getByCurrentCandidateProfile();
     setPrizes(res);
   };
   const getActivities = async () => {
-    const res = await activityApi.getByCurrentCandidate();
+    const res = await activityApi.getByCurrentCandidateProfile();
     setActivities(res);
   };
   const getOthers = async () => {
-    const res = await otherApi.getByCurrentCandidate();
+    const res = await otherApi.getByCurrentCandidateProfile();
     setOthers(res);
   };
   useEffect(() => {
@@ -78,7 +80,7 @@ function CandidateLayout(props) {
   }, [isAuth]);
 
   return (
-    <ProfileContext.Provider
+    <CandidateContext.Provider
       value={{
         personal,
         setPersonal,
@@ -107,6 +109,8 @@ function CandidateLayout(props) {
         getPrizes,
         getActivities,
         getOthers,
+        cvMode,
+        setCvMode,
       }}
     >
       <div className="d-flex">
@@ -145,6 +149,13 @@ function CandidateLayout(props) {
                 </span>
               </Link>
             </li>
+            {/* <li className="nav-item border-bottom py-1 cand-item">
+              <Link to="/candidate/resumes/create" className="nav-link">
+                <span className="ms-4 d-flex align-items-center cand-item-color">
+                  Tạo hồ sơ trực tuyến
+                </span>
+              </Link>
+            </li> */}
             <li className="nav-item border-bottom py-1 cand-item">
               <Link to="/candidate/applied-jobs" className="nav-link">
                 <span className="ms-4 d-flex align-items-center cand-item-color">
@@ -165,7 +176,7 @@ function CandidateLayout(props) {
         </div>
         <div style={{ width: "calc(1536px - 280px)" }}>{props.children}</div>
       </div>
-    </ProfileContext.Provider>
+    </CandidateContext.Provider>
   );
 }
 

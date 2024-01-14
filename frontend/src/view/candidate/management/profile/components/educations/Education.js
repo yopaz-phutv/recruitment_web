@@ -5,11 +5,11 @@ import educationApi from "../../../../../../api/education";
 import FrameLayout from "../frameLayout";
 import dayjs from "dayjs";
 import EducationFormDialog from "./EducationFormDialog";
-import { ProfileContext } from "../../../layouts/CandidateLayout";
+import { CandidateContext } from "../../../layouts/CandidateLayout";
 
 export default function Education() {
   const { educations, setEducations, getEducations } =
-    useContext(ProfileContext);
+    useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 

@@ -2,8 +2,8 @@ import candidateAxios from "./candidateAxios";
 
 const prefix = "/activities";
 const activityApi = {
-  getByCurrentCandidate: () => {
-    return candidateAxios.get(`${prefix}/getByCurrentCandidate`);
+  getByCurrentCandidateProfile: () => {
+    return candidateAxios.get(`${prefix}/getByCurrentCandidateProfile`);
   },
   create: (data) => {
     return candidateAxios.post(`${prefix}`, data);

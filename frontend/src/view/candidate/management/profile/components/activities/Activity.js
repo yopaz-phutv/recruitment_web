@@ -5,11 +5,11 @@ import FrameLayout from "../frameLayout";
 import dayjs from "dayjs";
 import ActivityFormDialog from "./ActivityFormDialog";
 import activityApi from "../../../../../../api/activity";
-import { ProfileContext } from "../../../layouts/CandidateLayout";
+import { CandidateContext } from "../../../layouts/CandidateLayout";
 
 export default function Activity() {
   const { activities, setActivities, getActivities } =
-    useContext(ProfileContext);
+    useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 

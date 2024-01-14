@@ -5,8 +5,8 @@ const educationApi = {
   getAll: () => {
     return candidateAxios.get(`${prefix}`);
   },
-  getByCurrentCandidate: () => {
-    return candidateAxios.get(`${prefix}/getByCurrentCandidate`);
+  getByCurrentCandidateProfile: () => {
+    return candidateAxios.get(`${prefix}/getByCurrentCandidateProfile`);
   },
   create: (data) => {
     return candidateAxios.post(`${prefix}`, data);

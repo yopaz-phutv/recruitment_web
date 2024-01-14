@@ -5,10 +5,10 @@ import FrameLayout from "../frameLayout";
 import dayjs from "dayjs";
 import PrizeFormDialog from "./PrizeFormDialog";
 import prizeApi from "../../../../../../api/prize";
-import { ProfileContext } from "../../../layouts/CandidateLayout";
+import { CandidateContext } from "../../../layouts/CandidateLayout";
 
 export default function Prize() {
-  const { prizes, setPrizes, getPrizes } = useContext(ProfileContext);
+  const { prizes, setPrizes, getPrizes } = useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 

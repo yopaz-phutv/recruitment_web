@@ -106,61 +106,71 @@ Route::controller(CandidateMessageController::class)->prefix('cand-msgs')->group
 
 Route::controller(EducationController::class)->prefix('educations')->group(function () {
     Route::get('', 'index');
-    Route::get('getByCurrentCandidate', 'getByCurrentCandidate');
+    Route::get('getByCurrentCandidateProfile', 'getByCurrentCandidateProfile');
+    Route::get('{resume_id}/getByCurrentCandidateResumeId', 'getByCurrentCandidateResumeId');
     Route::post('', 'create');
     Route::delete('{id}', 'destroy');
     Route::post('update/{id}', 'update');
 });
 Route::controller(ExperienceController::class)->prefix('experiences')->group(function () {
     Route::get('', 'index');
-    Route::get('getByCurrentCandidate', 'getByCurrentCandidate');
+    Route::get('getByCurrentCandidateProfile', 'getByCurrentCandidateProfile');
+    Route::get('{resume_id}/getByCurrentCandidateResumeId', 'getByCurrentCandidateResumeId');
     Route::post('', 'create');
     Route::delete('{id}', 'destroy');
     Route::patch('{id}', 'update');
 });
 Route::controller(SkillController::class)->prefix('skills')->group(function () {
     Route::get('', 'index');
-    Route::get('getByCurrentCandidate', 'getByCurrentCandidate');
+    Route::get('getByCurrentCandidateProfile', 'getByCurrentCandidateProfile');
+    Route::get('{resume_id}/getByCurrentCandidateResumeId', 'getByCurrentCandidateResumeId');
     Route::post('', 'create');
     Route::delete('{id}', 'destroy');
     Route::patch('{id}', 'update');
 });
 Route::controller(ProjectController::class)->prefix('projects')->group(function () {
     Route::get('', 'index');
-    Route::get('getByCurrentCandidate', 'getByCurrentCandidate');
+    Route::get('getByCurrentCandidateProfile', 'getByCurrentCandidateProfile');
+    Route::get('{resume_id}/getByCurrentCandidateResumeId', 'getByCurrentCandidateResumeId');
     Route::post('', 'create');
     Route::delete('{id}', 'destroy');
     Route::patch('{id}', 'update');
 });
 Route::controller(CertificateController::class)->prefix('certificates')->group(function () {
     Route::get('', 'index');
-    Route::get('getByCurrentCandidate', 'getByCurrentCandidate');
+    Route::get('getByCurrentCandidateProfile', 'getByCurrentCandidateProfile');
+    Route::get('{resume_id}/getByCurrentCandidateResumeId', 'getByCurrentCandidateResumeId');
     Route::post('', 'create');
     Route::delete('{id}', 'destroy');
     Route::post('/update/{id}', 'update');
 });
 Route::controller(PrizeController::class)->prefix('prizes')->group(function () {
     Route::get('', 'index');
-    Route::get('getByCurrentCandidate', 'getByCurrentCandidate');
+    Route::get('getByCurrentCandidateProfile', 'getByCurrentCandidateProfile');
+    Route::get('{resume_id}/getByCurrentCandidateResumeId', 'getByCurrentCandidateResumeId');
     Route::post('', 'create');
     Route::delete('{id}', 'destroy');
     Route::post('/update/{id}', 'update');
 });
 Route::controller(ActivityController::class)->prefix('activities')->group(function () {
     Route::get('', 'index');
-    Route::get('getByCurrentCandidate', 'getByCurrentCandidate');
+    Route::get('getByCurrentCandidateProfile', 'getByCurrentCandidateProfile');
+    Route::get('{resume_id}/getByCurrentCandidateResumeId', 'getByCurrentCandidateResumeId');
     Route::post('', 'create');
     Route::delete('{id}', 'destroy');
     Route::patch('{id}', 'update');
 });
 Route::controller(OtherController::class)->prefix('others')->group(function () {
     Route::get('', 'index');
-    Route::get('getByCurrentCandidate', 'getByCurrentCandidate');
+    Route::get('getByCurrentCandidateProfile', 'getByCurrentCandidateProfile');
+    Route::get('{resume_id}/getByCurrentCandidateResumeId', 'getByCurrentCandidateResumeId');
     Route::post('', 'create');
     Route::delete('{id}', 'destroy');
     Route::patch('{id}', 'update');
 });
 Route::controller(ResumeController::class)->prefix('resumes')->group(function () {
+    Route::get('getByCurrentCandidate', 'getByCurrentCandidate');
+    Route::get('{id}/getById', 'getById');
     Route::post('', 'create');
     Route::delete('{id}', 'destroy');
 });

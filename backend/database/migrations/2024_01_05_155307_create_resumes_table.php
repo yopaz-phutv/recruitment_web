@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('certificateTitle', 60)->nullable();
             $table->string('prizeTitle', 60)->nullable();
             $table->string('activityTitle', 60)->nullable();
-            $table->string('otherTitle', 60)->nullable();
+            $table->text('cvLink')->nullable();
             $table->timestamps();
         });
     }

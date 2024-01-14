@@ -5,10 +5,10 @@ import FrameLayout from "../frameLayout";
 import skillApi from "../../../../../../api/skill";
 import { IoMdStar, IoMdStarOutline } from "react-icons/io";
 import SkillFormDialog from "./SkillFormDialog";
-import { ProfileContext } from "../../../layouts/CandidateLayout";
+import { CandidateContext } from "../../../layouts/CandidateLayout";
 
 export default function Skill() {
-  const { skills, setSkills, getSkills } = useContext(ProfileContext);
+  const { skills, setSkills, getSkills } = useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 

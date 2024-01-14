@@ -5,11 +5,11 @@ import FrameLayout from "../frameLayout";
 import CertificateFormDialog from "./CertificateFormDialog";
 import certificateApi from "../../../../../../api/certificate";
 import dayjs from "dayjs";
-import { ProfileContext } from "../../../layouts/CandidateLayout";
+import { CandidateContext } from "../../../layouts/CandidateLayout";
 
 export default function Certificate() {
   const { certificates, setCertificates, getCertificates } =
-    useContext(ProfileContext);
+    useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 

@@ -62,6 +62,12 @@
 .w-95 {
   width: 95% !important;
 }
+.w-80 {
+  width: 80% !important;
+}
+.w-85 {
+  width: 85% !important;
+}
 /* custom cv input, textarea */
 .cv-input {
   border: none;

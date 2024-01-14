@@ -14,13 +14,26 @@ class EducationController extends Controller
         return Education::all();
     }
 
-    public function getByCurrentCandidate()
+    public function getByCurrentCandidateProfile()
     {
         $candidate_id = Auth::user()->id;
-        $res = Education::where("candidate_id", $candidate_id)->get();
+        $res = Education::where([
+            ["candidate_id", $candidate_id],
+            ["resume_id", null]
+        ])->get();
         return response()->json($res);
     }
 
+    public function getByCurrentCandidateResumeId($resume_id)
+    {
+        $candidate_id = Auth::user()->id;
+        $res = Education::where([
+            ["candidate_id", $candidate_id],
+            ["resume_id", $resume_id]
+        ])->get();
+        return response()->json($res);
+    }
+    
     public function create(Request $req)
     {
         $candidate_id = Auth::user()->id;

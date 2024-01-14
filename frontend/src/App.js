@@ -17,6 +17,7 @@ import Signup from "./view/candidate/auth/Signup";
 import Layout from "./view/candidate/layouts/Layout";
 import Profile from "./view/candidate/management/profile";
 import Resume from "./view/candidate/management/resumes";
+import Template1 from "./view/candidate/management/resumes/templates/template1";
 
 function App() {
   return (
@@ -47,6 +48,8 @@ function App() {
                           <Route path="saved-jobs" element={<SavedJobs />} />
                           <Route path="profile" element={<Profile />} />
                           <Route path="resumes" element={<Resume />} />
+                          <Route path="resumes/create" element={<Template1 />} />
+                          <Route path="resumes/:id" element={<Template1 />} />                          
                         </Routes>
                       </CandidateLayout>
                     }

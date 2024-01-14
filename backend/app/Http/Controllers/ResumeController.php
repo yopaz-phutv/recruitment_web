@@ -17,6 +17,24 @@ use Illuminate\Support\Facades\Auth;
 
 class ResumeController extends Controller
 {
+    public function getByCurrentCandidate()
+    {
+        $res = Resume::where('candidate_id', Auth::user()->id)
+            ->select(['id', 'title', 'created_at', 'updated_at'])
+            ->get();
+
+        return response()->json($res);
+    }
+    public function getById($id)
+    {
+        $resume = Resume::where('id', $id)
+            ->with(['educations', 'experiences', 'projects', 'skills', 'certificates', 'prizes', 'activities', 'others'])
+            ->first();
+        $basicInfor = Resume::find($id);
+        $resume['basicInfor'] = $basicInfor;
+
+        return response()->json($resume);
+    }
     public function create(Request $req)
     {
         $candidate_id = Auth::user()->id;

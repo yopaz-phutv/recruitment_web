@@ -16,13 +16,26 @@ class ExperienceController extends Controller
         return response()->json($res);
     }
 
-    public function getByCurrentCandidate()
+    public function getByCurrentCandidateProfile()
     {
         $candidate_id = Auth::user()->id;
-        $res = Experience::where("candidate_id", $candidate_id)->get();
+        $res = Experience::where([
+            ["candidate_id", $candidate_id],
+            ["resume_id", null]
+        ])->get();
         return response()->json($res);
     }
 
+    public function getByCurrentCandidateResumeId($resume_id)
+    {
+        $candidate_id = Auth::user()->id;
+        $res = Experience::where([
+            ["candidate_id", $candidate_id],
+            ["resume_id", $resume_id]
+        ])->get();
+        return response()->json($res);
+    }
+    
     public function create(Request $req)
     {
         $candidate_id = Auth::user()->id;

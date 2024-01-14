@@ -5,10 +5,10 @@ import FrameLayout from "../frameLayout";
 import dayjs from "dayjs";
 import projectApi from "../../../../../../api/project";
 import ProjectFormDialog from "./ProjectFormDialog";
-import { ProfileContext } from "../../../layouts/CandidateLayout";
+import { CandidateContext } from "../../../layouts/CandidateLayout";
 
 export default function Project() {
-  const { projects, setProjects, getProjects } = useContext(ProfileContext);
+  const { projects, setProjects, getProjects } = useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 

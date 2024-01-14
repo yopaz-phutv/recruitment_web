@@ -7,7 +7,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoMdSettings } from "react-icons/io";
 import { FaCheck } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { TemplateContext } from "../templates/template2";
+import { TemplateContext } from "../templates/template1";
 
 export const InforPart = ({ children, className, type }) => {
   const { parts, setParts, partMenu, setPartMenu } =
