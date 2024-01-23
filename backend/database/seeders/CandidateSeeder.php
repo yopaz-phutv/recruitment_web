@@ -22,7 +22,7 @@ class CandidateSeeder extends Seeder
                 'gender' => 0,
                 'dob' => '2001-01-08',
                 'phone' => '0333333331',
-                'email' => 'phu@gmail.com',
+                'email' => 'tranphudhak@gmail.com',
                 'address' => 'Gia Lâm, Hà Nội',
                 'link' => 'https://github.com/tranphu033',
                 'objective' => 'muc tieu',
