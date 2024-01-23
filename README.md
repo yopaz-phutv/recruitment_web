@@ -22,4 +22,4 @@ Truy cập vào thư mục "frontend", thực hiện:
 - `npm install` : cài đặt package
 - `npm start` : chạy ứng dụng web trên môi trường local
 
-#### Lưu ý: đảm bảo kết nối Internet để các chức năng: gửi thông báo realtime, gửi email hoạt động được
+#### *Lưu ý: đảm bảo kết nối Internet để các chức năng: gửi thông báo realtime, gửi email hoạt động được
