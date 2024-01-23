@@ -30,7 +30,7 @@ export default function Activity() {
 
   return (
     <FrameLayout
-      title="Hoạt động khác"
+      title="Hoạt động"
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}

@@ -10,6 +10,7 @@ import { IoMdAdd } from "react-icons/io";
 import CreateOptionDialog from "./CreateOptionDialog";
 import { useNavigate } from "react-router-dom";
 import { CandidateContext } from "../layouts/CandidateLayout";
+import { toast } from "react-toastify";
 
 export default function Resume() {
   const { setCvMode } = useContext(CandidateContext);
@@ -27,6 +28,18 @@ export default function Resume() {
   const handleEdit = (id) => {
     setCvMode("EDIT");
     nav(`/candidate/resumes/${id}`);
+  };
+  const handleDelete = async (id) => {
+    const choice = window.confirm("Bạn có chắc muốn xóa bản ghi này?");
+    if (choice) {
+      try {
+        await resumeApi.destroy(id);
+        toast.success("Xóa bản ghi thành công!");
+        await getResumes();
+      } catch (error) {
+        toast.error("Đã có lỗi xảy ra!");
+      }
+    }
   };
 
   useEffect(() => {
@@ -73,7 +86,10 @@ export default function Resume() {
                       className="text-primary pointer"
                       onClick={() => handleEdit(item.id)}
                     />
-                    <MdDelete className="text-danger pointer" />
+                    <MdDelete
+                      className="text-danger pointer"
+                      onClick={() => handleDelete(item.id)}
+                    />
                   </div>
                 </td>
               </tr>

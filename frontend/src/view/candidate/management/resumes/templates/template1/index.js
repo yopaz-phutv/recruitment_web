@@ -16,6 +16,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import html2canvas from "html2canvas";
+import { useNavigate } from "react-router-dom";
 
 export const TemplateContext = createContext();
 
@@ -35,9 +37,11 @@ export default function Template1() {
   } = useContext(CandidateContext);
 
   const { id } = useParams(); //resume ID if exist
+  const nav = useNavigate();
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     reset,
   } = useForm();
@@ -261,7 +265,11 @@ export default function Template1() {
     console.log("others:", cvOthers);
     try {
       const ret = await resumeApi.create({
-        basicInfor: { ...data, dob },
+        basicInfor: {
+          ...data,
+          dob,
+          avatar: cvMode === "CREATE_1" ? basicInfor.avatar : null,
+        },
         educations: isPresentInParts("education") ? educations : null,
         experiences: isPresentInParts("experience") ? experiences : null,
         projects: isPresentInParts("project") ? projects : null,
@@ -273,6 +281,7 @@ export default function Template1() {
       });
       console.log("result:", ret);
       toast.success("Tạo mới thành công!");
+      nav("/candidate/resumes");
     } catch (e) {
       toast.error("Đã có lỗi xảy ra!");
       console.error(">>Error:", e.response.data.message);
@@ -954,8 +963,8 @@ export default function Template1() {
             items={cvEducations}
             setItems={setCvEducations}
             menuVaule={[
-              { name: "Chuyên ngành", on: true },
-              { name: "Mô tả", on: true },
+              { name: "Chuyên ngành", on: item.major },
+              { name: "Mô tả", on: item.description },
             ]}
           >
             <Education infor={item} index={index} bgColor={bgColor} />
@@ -1010,9 +1019,9 @@ export default function Template1() {
             items={cvProjects}
             setItems={setCvProjects}
             menuVaule={[
-              { name: "Liên kết", on: true },
-              { name: "Công việc", on: true },
-              { name: "Công nghệ", on: true },
+              { name: "Liên kết", on: item.link },
+              { name: "Công việc", on: item.role },
+              { name: "Công nghệ", on: item.technologies },
             ]}
           >
             <Project infor={item} index={index} bgColor={bgColor} />
@@ -1040,7 +1049,7 @@ export default function Template1() {
             index={index}
             items={cvActivities}
             setItems={setCvActivities}
-            menuVaule={[{ name: "Liên kết", on: true }]}
+            menuVaule={[{ name: "Liên kết", on: item.link }]}
           >
             <Activity infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
@@ -1096,6 +1105,20 @@ export default function Template1() {
         break;
     }
   };
+  const handleDownload = async () => {
+    // let doc = new jsPDF("p", "mm", [800, 1400]);
+    let cvElement = document.querySelector("#resume");
+    let filename = watch("title") + ".jpg";
+    let canvas = await html2canvas(cvElement);
+    let data = canvas.toDataURL("image/jpg");
+    let link = document.createElement("a");
+
+    link.href = data;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <TemplateContext.Provider
@@ -1120,15 +1143,23 @@ export default function Template1() {
             </Form.Control.Feedback>
           </Form.Group>
           <Button
-            type="submit"
             variant="outline-primary"
             className="float-end me-5 px-5 py-1"
+            onClick={handleDownload}
+          >
+            <span className="fw-600">Tải xuống CV</span>
+          </Button>
+          <Button
+            type="submit"
+            variant="outline-primary"
+            className="float-end me-3 px-5 py-1"
           >
             <span className="fw-600">Lưu</span>
           </Button>
         </div>
         <div
-          className="resume mx-auto border mt-4 mb-5 d-flex py-2 shadow"
+          id="resume"
+          className="mx-auto border mt-4 mb-5 d-flex py-2 shadow"
           style={{ width: "800px" }}
         >
           <div className="bg-main ms-2 ps-1 pe-2" style={{ width: "340px" }}>
