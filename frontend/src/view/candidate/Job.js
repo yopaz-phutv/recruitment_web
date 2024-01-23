@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   AiFillHeart,
   AiOutlineDollarCircle,
@@ -23,6 +23,7 @@ import candidateApi from "../../api/candidate";
 
 function Job() {
   const { id } = useParams();
+  const nav = useNavigate();
   const [job, setJob] = useState({
     employer: {},
     jtype: {},
@@ -216,6 +217,10 @@ function Job() {
                                   type="button"
                                   className="btn btn-outline-primary mt-2 w-50"
                                   disabled={isUpload && true}
+                                  onClick={() => {
+                                    document.getElementById("close-dialog-btn").click();
+                                    nav("/candidate/resumes");
+                                  }}
                                 >
                                   <AiOutlinePlus /> Tạo hồ sơ trực tuyến
                                 </button>
@@ -250,6 +255,7 @@ function Job() {
                               Nộp hồ sơ
                             </button>
                             <button
+                              id="close-dialog-btn"
                               type="button"
                               className="btn btn-danger"
                               data-bs-dismiss="modal"
