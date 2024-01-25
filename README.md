@@ -26,8 +26,9 @@ Truy cập vào thư mục "frontend", thực hiện:
 #### *Một số tài khoản người dùng trong hệ thống:
 - Tài khoản ứng viên:
 
-![image](https://github.com/tranphu033/recruitment_web/assets/82558208/5a272d93-20f9-441c-b2e3-f8a9b13a5c4e)
+![image](https://github.com/tranphu033/recruitment_web/assets/82558208/3b8592a9-5e2e-4e0b-8f43-8cdb90bc1205)
 - Tài khoản nhà tuyển dụng:
 
-![image](https://github.com/tranphu033/recruitment_web/assets/82558208/c9149171-88ad-43d8-938b-b1e0965a49b3)
+![image](https://github.com/tranphu033/recruitment_web/assets/82558208/cd849654-dd47-4672-a1ec-1344005c467b)
+
 
