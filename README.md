@@ -29,6 +29,6 @@ Truy cập vào thư mục "frontend", thực hiện:
 ![image](https://github.com/tranphu033/recruitment_web/assets/82558208/3b8592a9-5e2e-4e0b-8f43-8cdb90bc1205)
 - Tài khoản nhà tuyển dụng:
 
-![image](https://github.com/tranphu033/recruitment_web/assets/82558208/cd849654-dd47-4672-a1ec-1344005c467b)
+![image](https://github.com/tranphu033/recruitment_web/assets/82558208/6687be99-c018-4998-b64c-c85f5ae3d118)
 
 
