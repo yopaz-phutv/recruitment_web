@@ -1,3 +1,16 @@
+/* color */
+.bg-main {
+  background-color: #1a75ff !important;
+}
+.bg-main-light {
+  background-color: #80b3ff !important;
+}
+.text-main {
+  color: #1a75ff !important;
+}
+.text-main-light {
+  color: #80b3ff !important;
+}
 /* font size */
 .ts-xs {
   font-size: 12.75px;
