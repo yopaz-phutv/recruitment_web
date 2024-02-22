@@ -145,19 +145,23 @@ function Layout(props) {
           </Link>
           <div className="me-auto"></div>
           {!isAuth ? (
-            <div className="d-flex">
-              <button
-                className="btn border-end border-2 rounded-0 text-white"
+            <div className="d-flex align-items-center fw-normal ts-md pointer">
+              <div
+                className="text-white"
                 data-bs-toggle="modal"
                 data-bs-target="#login-box"
               >
                 Đăng nhập
-              </button>
-              <Link to="/sign-up" className="btn text-white rounded-0">
+              </div>
+              <div className="vr mx-2 border-2"/>
+              <Link to="/sign-up" className="text-decoration-none text-white">
                 Đăng ký
               </Link>
-              <div className="mx-2">
-                <a href="/employer/login" className="btn bg-warning">
+              <div className="ms-3 me-2">
+                <a
+                  href="/employer/login"
+                  className="btn bg-info text-white fw-500"
+                >
                   Đăng tuyển, tìm ứng viên
                 </a>
               </div>
@@ -179,7 +183,7 @@ function Layout(props) {
                 )}
                 <div
                   className={clsx(
-                    "position-absolute bg-white rounded z-index-1 msg-list fw-normal",
+                    "position-absolute bg-white rounded z-index-1 msg-list fw-normal shadow",
                     showListMsg ? "d-block" : "d-none"
                   )}
                 >
@@ -263,22 +267,34 @@ function Layout(props) {
               <h5>Chuyên mục</h5>
               <ul className="list-unstyled">
                 <li>
-                  <Link to={"#"} className="text-secondary text-decoration-none">
+                  <Link
+                    to={"#"}
+                    className="text-secondary text-decoration-none"
+                  >
                     Việc làm IT
                   </Link>
                 </li>
                 <li>
-                  <Link to={"#"} className="text-secondary text-decoration-none">
+                  <Link
+                    to={"#"}
+                    className="text-secondary text-decoration-none"
+                  >
                     Việc làm Kế toán
                   </Link>
                 </li>
                 <li>
-                  <Link to={"#"} className="text-secondary text-decoration-none">
+                  <Link
+                    to={"#"}
+                    className="text-secondary text-decoration-none"
+                  >
                     Việc làm Kinh doanh
                   </Link>
                 </li>
                 <li>
-                  <Link to={"#"} className="text-secondary text-decoration-none">
+                  <Link
+                    to={"#"}
+                    className="text-secondary text-decoration-none"
+                  >
                     Việc làm Marketing
                   </Link>
                 </li>
@@ -288,22 +304,34 @@ function Layout(props) {
               <h5>Liên kết</h5>
               <ul className="list-unstyled">
                 <li>
-                  <Link to={"/"} className="text-secondary text-decoration-none">
+                  <Link
+                    to={"/"}
+                    className="text-secondary text-decoration-none"
+                  >
                     Trang chủ
                   </Link>
                 </li>
                 <li>
-                  <Link to={"/jobs"} className="text-secondary text-decoration-none">
+                  <Link
+                    to={"/jobs"}
+                    className="text-secondary text-decoration-none"
+                  >
                     Danh sách việc làm
                   </Link>
                 </li>
                 <li>
-                  <Link to={"#"} className="text-secondary text-decoration-none">
+                  <Link
+                    to={"#"}
+                    className="text-secondary text-decoration-none"
+                  >
                     Hướng dẫn ứng tuyển
                   </Link>
                 </li>
                 <li>
-                  <Link to={"#"} className="text-secondary text-decoration-none">
+                  <Link
+                    to={"#"}
+                    className="text-secondary text-decoration-none"
+                  >
                     Chính sách bảo mật
                   </Link>
                 </li>
