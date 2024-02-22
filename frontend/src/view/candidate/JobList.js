@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import industryApi from "../../api/industry";
 import locationApi from "../../api/location";
 import jtypeApi from "../../api/jtype";
 import jlevelApi from "../../api/jlevel";
+import { AppContext } from "../../App";
 
 function JobList() {
   const [jobs, setJobs] = useState([{ employer: {} }]);
@@ -14,6 +15,7 @@ function JobList() {
   const [locations, setLocations] = useState([]);
   const [jtypes, setJtypes] = useState([]);
   const [jlevels, setJlevels] = useState([]);
+  const { setCurrentPage } = useContext(AppContext);
   const { register, handleSubmit } = useForm();
   // const [isSavedJobs, setIsSavedJobs] = useState([]);
   // const user = JSON.parse(localStorage.getItem('candidate'))
@@ -22,39 +24,39 @@ function JobList() {
     // let tjobs = []
     const res = await jobApi.getAll();
     setJobs(res.inf);
-    
-      // await axios
-      // .get(`http://127.0.0.1:8000/api/candidates/${user.id}/getSavedJobs`, config)
-      // .then((res) => {
-      //   console.log(res.data);
-      //   let savedJobIDs = res.data       
-      //   let mark = 0
-      //   for (let i = 0; i < savedJobIDs.length; i++) {
-      //     for (let j = mark; j < tjobs.length; j++) {
-      //       if(tjobs[j].id === savedJobIDs[i]){
-      //         tjobs[j].isSaved = true
-      //         mark = j+1
-      //         break;
-      //       } else {
-      //         tjobs[j].isSaved = false
-      //       }
-      //     }          
-      //   }
-      //   setJobs(tjobs)
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
+
+    // await axios
+    // .get(`http://127.0.0.1:8000/api/candidates/${user.id}/getSavedJobs`, config)
+    // .then((res) => {
+    //   console.log(res.data);
+    //   let savedJobIDs = res.data
+    //   let mark = 0
+    //   for (let i = 0; i < savedJobIDs.length; i++) {
+    //     for (let j = mark; j < tjobs.length; j++) {
+    //       if(tjobs[j].id === savedJobIDs[i]){
+    //         tjobs[j].isSaved = true
+    //         mark = j+1
+    //         break;
+    //       } else {
+    //         tjobs[j].isSaved = false
+    //       }
+    //     }
+    //   }
+    //   setJobs(tjobs)
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
   };
 
   const getAllIndustries = async () => {
     const res = await industryApi.getAll();
-    setIndustries(res.inf);    
+    setIndustries(res.inf);
   };
 
   const getAllLocations = async () => {
     const res = await locationApi.getAll();
-    setLocations(res);    
+    setLocations(res);
   };
 
   const getAllJtypes = async () => {
@@ -72,7 +74,7 @@ function JobList() {
     const res = await jobApi.filter(data);
     setJobs(res.inf);
   };
-  
+
   // const handleClickSaveBtn = async (index) => {
   //   let temps = [...isSavedJobs];
   //   temps[index] = !temps[index];
@@ -88,13 +90,13 @@ function JobList() {
   // };
 
   useEffect(() => {
+    setCurrentPage("jobs");
     getAllJobs();
     getAllIndustries();
     getAllLocations();
     getAllJtypes();
     getAllJlevels();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setCurrentPage]);
 
   return (
     <>
@@ -121,7 +123,9 @@ function JobList() {
             >
               <option value="">Tất cả ngành nghề</option>
               {industries.map((item) => (
-                <option value={item.id} key={'industry'+item.id}>{item.name}</option>
+                <option value={item.id} key={"industry" + item.id}>
+                  {item.name}
+                </option>
               ))}
             </select>
           </div>
@@ -133,7 +137,9 @@ function JobList() {
             >
               <option value="">Tất cả tỉnh thành</option>
               {locations.map((item) => (
-                <option value={item.id} key={'location'+item.id}>{item.name}</option>
+                <option value={item.id} key={"location" + item.id}>
+                  {item.name}
+                </option>
               ))}
             </select>
           </div>
@@ -171,7 +177,9 @@ function JobList() {
             >
               <option value="">Hình thức việc làm</option>
               {jtypes.map((item) => (
-                <option value={item.id} key={'jtype'+item.id}>{item.name}</option>
+                <option value={item.id} key={"jtype" + item.id}>
+                  {item.name}
+                </option>
               ))}
             </select>
           </div>
@@ -183,7 +191,9 @@ function JobList() {
             >
               <option value="">Cấp bậc</option>
               {jlevels.map((item) => (
-                <option value={item.id} key={'jlevel'+item.id}>{item.name}</option>
+                <option value={item.id} key={"jlevel" + item.id}>
+                  {item.name}
+                </option>
               ))}
             </select>
           </div>
@@ -204,7 +214,7 @@ function JobList() {
           jobs.map((job) => (
             <div
               className="col-md-5 col-sm-10 bg-white border p-1 my-2"
-              key={'job' + job.id}
+              key={"job" + job.id}
               style={{ marginLeft: "88px" }}
             >
               <div className="d-flex p-3">

@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./common/style.css";
 import { ToastContainer } from "react-toastify";
 import Home from "./view/candidate/Home";
 import CompanyList from "./view/candidate/CompanyList";
@@ -18,11 +17,16 @@ import Layout from "./view/candidate/layouts/Layout";
 import Profile from "./view/candidate/management/profile";
 import Resume from "./view/candidate/management/resumes";
 import Template1 from "./view/candidate/management/resumes/templates/template1";
+import { createContext, useState } from "react";
 
+export const AppContext = createContext();
+  
 function App() {
+  const [currentPage, setCurrentPage] = useState("home");
+
   return (
-    <>
-      <ToastContainer autoClose={1000} position="bottom-right"/>
+    <AppContext.Provider value={{ currentPage, setCurrentPage }}>
+      <ToastContainer autoClose={1000} position="bottom-right" />
       <BrowserRouter>
         <Routes>
           <Route
@@ -48,8 +52,11 @@ function App() {
                           <Route path="saved-jobs" element={<SavedJobs />} />
                           <Route path="profile" element={<Profile />} />
                           <Route path="resumes" element={<Resume />} />
-                          <Route path="resumes/create" element={<Template1 />} />
-                          <Route path="resumes/:id" element={<Template1 />} />                          
+                          <Route
+                            path="resumes/create"
+                            element={<Template1 />}
+                          />
+                          <Route path="resumes/:id" element={<Template1 />} />
                         </Routes>
                       </CandidateLayout>
                     }
@@ -72,7 +79,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-    </>
+    </AppContext.Provider>
   );
 }
 

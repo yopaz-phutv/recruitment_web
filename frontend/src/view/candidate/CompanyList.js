@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./custom.css";
 import employerApi from "../../api/employer";
+import { AppContext } from "../../App";
 
 function CompanyList() {
   const [companies, setCompanies] = useState([]);
   const [comKey, setComKey] = useState("");
+  const { setCurrentPage } = useContext(AppContext);
 
   const getAllCompany = async () => {
     const res = await employerApi.getAll();
@@ -24,8 +26,9 @@ function CompanyList() {
   };
 
   useEffect(() => {
+    setCurrentPage("companies");
     getAllCompany();
-  }, []);
+  }, [setCurrentPage]);
 
   return (
     <>
@@ -124,7 +127,7 @@ function CompanyList() {
           )}
         </div>
       </div>
-      <div style={{ minHeight: '25px' }}></div>
+      <div style={{ minHeight: "25px" }}></div>
     </>
   );
 }

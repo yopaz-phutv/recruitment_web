@@ -1,6 +1,6 @@
 import "bootstrap/dist/js/bootstrap.js";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BsBell, BsFillCircleFill } from "react-icons/bs";
 import "./layout.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,9 @@ import { candAuthActions } from "../../../redux/slices/candAuthSlice";
 import Login from "../auth/Login";
 import Pusher from "pusher-js";
 import BellDialog from "./BellDialog";
+import Stack from "react-bootstrap/Stack";
+import { AppContext } from "../../../App";
+import clsx from "clsx";
 
 const user_icon = process.env.PUBLIC_URL + "/image/user_icon.png";
 
@@ -19,7 +22,9 @@ function Layout(props) {
   const [msgStyles, setMsgStyles] = useState([]);
   const [hasNew, setHasNew] = useState(false);
   const [showBellDialog, setShowBellDialog] = useState(false);
+  const [showListMsg, setShowListMsg] = useState(false);
   const [curNotification, setCurNotification] = useState({});
+  const { currentPage, setCurrentPage } = useContext(AppContext);
 
   const dispatch = useDispatch();
   const candidate = useSelector((state) => state.candAuth.current);
@@ -106,125 +111,135 @@ function Layout(props) {
         current={curNotification}
       />
       <header>
-        <nav className="navbar navbar-expand-sm bg-light border-bottom py-3 fixed-top">
-          <div className="container-fluid">
-            <Link className="navbar-brand ms-1" to="/">
-              Recruitment
-            </Link>
-            <ul className="navbar-nav me-auto fw-bold">
-              <li className="nav-item">
-                <Link className="nav-link" to="/companies">
-                  Công ty
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/jobs">
-                  Việc làm
-                </Link>
-              </li>
-            </ul>
-            {!isAuth ? (
-              <div className="d-flex">
-                <div className="btn-group">
-                  <button
-                    type="button"
-                    className="btn btn-outline-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#login-box"
-                  >
-                    Đăng nhập
-                  </button>
-                  <Link to="/sign-up" className="btn btn-outline-primary">
-                    Đăng ký
-                  </Link>
-                </div>
-                <div className="ms-2">
-                  <a
-                    href="/employer/login"
-                    className="btn"
-                    style={{ backgroundColor: "#c1d7d7" }}
-                  >
-                    Đăng tuyển, tìm ứng viên
-                  </a>
-                </div>
-              </div>
-            ) : (
-              <div className="d-flex sidebar-right">
-                <div className="me-3 dropdown bell-part">
-                  <div
-                    className="bell fs-3 dropdown-toggle text-light"
-                    data-bs-toggle="dropdown"
-                  >
-                    <BsBell className="text-dark" />
-                  </div>
-                  {hasNew && (
-                    <div className="bell-new">
-                      <BsFillCircleFill />
-                    </div>
-                  )}
-                  <ul className="dropdown-menu shadow">
-                    {bellMsgs.length > 0 ? (
-                      bellMsgs.map((item, index) => (
-                        <div
-                          key={"bell_msg" + index}
-                          style={{ cursor: "pointer" }}
-                          onClick={() => handleReadMsg(item)}
-                        >
-                          <li
-                            className={
-                              "dropdown-item text-wrap mb-2 msg-item" +
-                              msgStyles[index]
-                            }
-                          >
-                            {item.name}
-                          </li>
-                        </div>
-                      ))
-                    ) : (
-                      <span className="ms-3">Không có thông báo nào</span>
-                    )}
-                  </ul>
-                </div>
-                <div className="dropdown pt-1">
-                  <img
-                    src={user_icon}
-                    alt="user_icon"
-                    style={{ width: "35px" }}
-                    className="rounded-pill border border-2"
-                  />
-                  &nbsp;
-                  <span
-                    style={{ fontSize: "16px", cursor: "pointer" }}
-                    className="dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                  >
-                    {candidate.name && candidate.name.firstname}
-                  </span>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <a className="dropdown-item" href="/candidate">
-                        Tài khoản
-                      </a>
-                    </li>
-                    <li>
-                      <button
-                        type="button"
-                        className="dropdown-item"
-                        onClick={handleLogout}
-                      >
-                        Đăng xuất
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+        <Stack
+          direction="horizontal"
+          gap={1}
+          className="fixed-top bg-main text-white ts-17 fw-500"
+        >
+          <Link
+            className="nav-link ms-2 pe-2 ts-xl pb-1"
+            to="/"
+            onClick={() => setCurrentPage("home")}
+          >
+            Recruitment
+          </Link>
+          <Link
+            className={clsx(
+              "nav-link py-3 px-2",
+              currentPage === "companies" && "bg-white text-main"
             )}
-          </div>
-        </nav>
+            to="/companies"
+            onClick={() => setCurrentPage("companies")}
+          >
+            Công ty
+          </Link>
+          <Link
+            className={clsx(
+              "nav-link py-3 px-2",
+              currentPage === "jobs" && "bg-white text-main"
+            )}
+            to="/jobs"
+            onClick={() => setCurrentPage("jobs")}
+          >
+            Việc làm
+          </Link>
+          <div className="me-auto"></div>
+          {!isAuth ? (
+            <div className="d-flex">
+              <button
+                className="btn border-end border-2 rounded-0 text-white"
+                data-bs-toggle="modal"
+                data-bs-target="#login-box"
+              >
+                Đăng nhập
+              </button>
+              <Link to="/sign-up" className="btn text-white rounded-0">
+                Đăng ký
+              </Link>
+              <div className="mx-2">
+                <a href="/employer/login" className="btn bg-warning">
+                  Đăng tuyển, tìm ứng viên
+                </a>
+              </div>
+            </div>
+          ) : (
+            <div className="d-flex align-items-center sidebar-right">
+              <div
+                className="position-relative"
+                onMouseLeave={() => setShowListMsg(false)}
+              >
+                <BsBell
+                  className="text-white fs-3 me-4 pointer"
+                  onClick={() => setShowListMsg(true)}
+                />
+                {hasNew && (
+                  <div className="bell-new">
+                    <BsFillCircleFill />
+                  </div>
+                )}
+                <div
+                  className={clsx(
+                    "position-absolute bg-white rounded z-index-1 msg-list fw-normal",
+                    showListMsg ? "d-block" : "d-none"
+                  )}
+                >
+                  {bellMsgs.length > 0 ? (
+                    bellMsgs.map((item, index) => (
+                      <div
+                        key={"bell_msg" + index}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleReadMsg(item)}
+                        className={
+                          "text-wrap px-2 py-1 hover-bg-1" + msgStyles[index]
+                        }
+                      >
+                        {item.name}
+                      </div>
+                    ))
+                  ) : (
+                    <span className="ms-3">Không có thông báo nào</span>
+                  )}
+                </div>
+              </div>
+              <div className="dropdown pt-1">
+                <img
+                  src={user_icon}
+                  alt="user_icon"
+                  style={{ width: "35px" }}
+                  className="rounded-pill border border-2"
+                />
+                &nbsp;
+                <span
+                  style={{ fontSize: "16px", cursor: "pointer" }}
+                  className="dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                >
+                  {candidate.name && candidate.name.firstname}
+                </span>
+                <ul className="dropdown-menu">
+                  <li>
+                    <a className="dropdown-item" href="/candidate">
+                      Tài khoản
+                    </a>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      className="dropdown-item"
+                      onClick={handleLogout}
+                    >
+                      Đăng xuất
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          )}
+        </Stack>
       </header>
       <main
         className="page-body"
-        style={{ minHeight: "78vh", marginTop: "73px" }}
+        style={{ minHeight: "78vh", marginTop: "57px" }}
       >
         {!isAuth && <Login />}
         {props.children}
@@ -248,22 +263,22 @@ function Layout(props) {
               <h5>Chuyên mục</h5>
               <ul className="list-unstyled">
                 <li>
-                  <Link to={"#"} className="text-secondary no-underline">
+                  <Link to={"#"} className="text-secondary text-decoration-none">
                     Việc làm IT
                   </Link>
                 </li>
                 <li>
-                  <Link to={"#"} className="text-secondary no-underline">
+                  <Link to={"#"} className="text-secondary text-decoration-none">
                     Việc làm Kế toán
                   </Link>
                 </li>
                 <li>
-                  <Link to={"#"} className="text-secondary no-underline">
+                  <Link to={"#"} className="text-secondary text-decoration-none">
                     Việc làm Kinh doanh
                   </Link>
                 </li>
                 <li>
-                  <Link to={"#"} className="text-secondary no-underline">
+                  <Link to={"#"} className="text-secondary text-decoration-none">
                     Việc làm Marketing
                   </Link>
                 </li>
@@ -273,22 +288,22 @@ function Layout(props) {
               <h5>Liên kết</h5>
               <ul className="list-unstyled">
                 <li>
-                  <Link to={"/"} className="text-secondary no-underline">
+                  <Link to={"/"} className="text-secondary text-decoration-none">
                     Trang chủ
                   </Link>
                 </li>
                 <li>
-                  <Link to={"/jobs"} className="text-secondary no-underline">
+                  <Link to={"/jobs"} className="text-secondary text-decoration-none">
                     Danh sách việc làm
                   </Link>
                 </li>
                 <li>
-                  <Link to={"#"} className="text-secondary no-underline">
+                  <Link to={"#"} className="text-secondary text-decoration-none">
                     Hướng dẫn ứng tuyển
                   </Link>
                 </li>
                 <li>
-                  <Link to={"#"} className="text-secondary no-underline">
+                  <Link to={"#"} className="text-secondary text-decoration-none">
                     Chính sách bảo mật
                   </Link>
                 </li>
