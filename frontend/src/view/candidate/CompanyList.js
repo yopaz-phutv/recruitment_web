@@ -63,7 +63,7 @@ function CompanyList() {
                 onClick={() => nav(`/companies/${company.id}`)}
               >
                 <div
-                  className="d-flex border-bottom border-main-light"
+                  className="d-flex border-bottom border-main-light px-2"
                   style={{ minHeight: "110px" }}
                 >
                   <div className="d-flex align-items-center">
@@ -73,8 +73,8 @@ function CompanyList() {
                       alt={company.name}
                     />
                   </div>
-                  <div className="container-fluid d-flex align-items-center justify-content-start ps-4">
-                    <span style={{ fontSize: "17px", fontWeight: "bold" }}>
+                  <div className="container-fluid d-flex align-items-center justify-content-start ps-4 fw-bold">
+                    <span>
                       {company.name}
                     </span>
                   </div>
