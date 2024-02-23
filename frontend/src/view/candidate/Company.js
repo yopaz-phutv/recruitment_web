@@ -1,7 +1,11 @@
+import "./custom.css";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "./custom.css";
 import employerApi from "../../api/employer";
+import { IoMdPeople } from "react-icons/io";
+import { MdLocationOn } from "react-icons/md";
+import { IoIosLink } from "react-icons/io";
+import { MdPhone } from "react-icons/md";
 
 function Company() {
   const { id } = useParams();
@@ -10,7 +14,7 @@ function Company() {
 
   const getCompanyInfor = async () => {
     const res = await employerApi.getById(id);
-    setInfor(res);    
+    setInfor(res);
   };
 
   const getCompanyJobs = async () => {
@@ -29,21 +33,17 @@ function Company() {
       <div className="container image-container d-flex justify-content-center">
         <img
           src={infor.image}
-          className="mt-2"
+          className="mt-3"
           style={{ maxWidth: "93%", maxHeight: "400px" }}
           alt={infor.name}
         />
-        {/* <div className="" style={{ height: '40%' }}>kkk</div> */}
       </div>
       <div className="d-flex justify-content-center mt-3">
-        <div className="bg-light col-md-9 shadow">
-          <h4
-            className="pt-3"
-            style={{ marginLeft: "30px", textAlign: "left" }}
-          >
+        <div className="bg-white col-md-9 shadow-sm pt-3">
+          <h4 style={{ marginLeft: "30px" }} className="text-main">
             {infor.name}
           </h4>
-          <div className="d-flex ps-4 pb-4 pt-1">
+          <div className="d-flex ps-4 pb-4 pt-1 align-items-start">
             <div
               className="border d-flex align-items-center"
               style={{ height: "130px" }}
@@ -54,56 +54,58 @@ function Company() {
                 alt={infor.name}
               />
             </div>
-            <div
-              className="container-fluid ms-3 pt-2"
-              style={{ textAlign: "left" }}
-            >
-              <span className="fw-bold">Địa chỉ</span>:&nbsp;
-              <span>{infor.address}</span> <br />
-              {infor.min_employees && (
-                <span>
-                  <span className="fw-bold">Quy mô</span>:&nbsp;
-                  {infor.min_employees}
-                  {infor.max_employees === 0
-                    ? "+"
-                    : " - " + infor.max_employees}
-                  &nbsp;nhân viên <br />
-                </span>
-              )}
-              <span className="fw-bold">Phone</span>:&nbsp;
-              <span>{infor.phone}</span> <br />
-              <span className="fw-bold">Website</span>:&nbsp;
-              <a href={infor.website} style={{ textDecoration: "none" }}>
-                {infor.website}
-              </a>
+            <div className="ms-3 mt-2">
+              <div className="d-flex gap-1 flex-wrap">
+                <div className="d-flex align-items-center me-4 rounded-pill px-2 py-1 bg-main text-white">
+                  <IoMdPeople className="fs-5 me-1" />
+                  {infor.min_employees ? (
+                    <span>
+                      {infor.min_employees}
+                      {infor.max_employees !== 0
+                        ? " - " + infor.max_employees
+                        : "+ "}{" "}
+                      nhân viên
+                    </span>
+                  ) : (
+                    "Chưa cập nhật"
+                  )}
+                </div>
+                <div className="d-flex align-items-center me-4 rounded-pill px-2 py-1 bg-main text-white">
+                  <MdPhone className="fs-5 me-1" />
+                  <span>{infor.phone}</span>
+                </div>
+                <div className="d-flex align-items-center rounded-pill px-2 py-1 bg-main text-white">
+                  <IoIosLink className="ts-lg me-1" />
+                  <a
+                    href={infor.website}
+                    className="text-white text-decoration-none"
+                  >
+                    {infor.website}
+                  </a>
+                </div>
+              </div>
+              <div className="mt-2">
+                <MdLocationOn className="fs-5 text-main me-1" />
+                <span>{infor.address}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div className="d-flex justify-content-center">
-        <p
-          className="bg-light col-md-9 border mt-4 p-4 shadow"
-          style={{ textAlign: "left" }}
-        >
-          <span className="h5">Giới thiệu công ty:</span> <br />
-          {infor.description
-            ? infor.description
-            : "Công ty chưa cập nhật thông tin"}
-        </p>
+      <div className="mx-auto bg-white col-md-9 mt-4 shadow-sm">
+        <h5 className="bg-main-light p-3">Giới thiệu công ty</h5>
+        <div className="whitespace-preline px-3 pb-3">
+          {infor.description ? infor.description : "Chưa cập nhật thông tin"}
+        </div>
       </div>
-
-      <div className="d-flex justify-content-center mt-3">
+      <div className="d-flex justify-content-center mt-4">
         <div className="col-md-9 mb-5">
-          <div
-            className="bg-light border-bottom col-md-9 text-start p-3 ps-4 shadow"
-            style={{ fontSize: "23px" }}
-          >
+          <h5 className="bg-main-light border-bottom col-md-9 p-3 mb-0">
             Việc làm đang tuyển
-          </div>
+          </h5>
           {jobs.map((job) => (
             <div
-              className="bg-light border-bottom col-md-9 ps-3 py-1 shadow"
+              className="bg-white border-bottom col-md-9 ps-3 py-1"
               key={"job" + job.id}
             >
               <div className="d-flex p-3">
@@ -114,14 +116,14 @@ function Company() {
                     alt={infor.name}
                   />
                 </div>
-                <div className="container-fluid ms-3 mt-1 text-start">
+                <div className="container-fluid ms-3 mt-1">
                   <Link to={`/jobs/${job.id}`} className="nav-link">
-                    <span className="h5">{job.jname}</span>
+                    <span className="h5 text-main hover-text-bold">{job.jname}</span>
                   </Link>
                   <span className="text-secondary">{infor.name}</span>
                   <br />
                   <div style={{ fontSize: "15.5px" }}>
-                    <span className="fw-bold">Mức lương:</span>&nbsp;
+                    <span className="fw-500">Mức lương:</span>&nbsp;
                     {job.min_salary ? (
                       <span>
                         {job.min_salary} - {job.max_salary} triệu VND
@@ -130,15 +132,15 @@ function Company() {
                       <span>Cạnh tranh</span>
                     )}
                     <br />
-                    <span className="fw-bold">Địa điểm:</span>&nbsp;
+                    <span className="fw-500">Địa điểm:</span>&nbsp;
                     {job.location}
                     <div className="clearfix">
                       <span>
-                        <strong>Ngày đăng: </strong>
+                        <span className="fw-500">Ngày đăng: </span>
                         {job.postDate ? job.postDate : "06/04/2023"}
                       </span>
-                      <span className="" style={{ marginLeft: '150px' }}>
-                        <strong>Hạn nộp: </strong>
+                      <span style={{ marginLeft: "150px" }}>
+                        <span className="fw-500">Hạn nộp: </span>
                         {job.deadline}
                       </span>
                     </div>

@@ -3,23 +3,26 @@
   background-color: #1a8cff !important;
 }
 .bg-main-light {
-  background-color: #99caff !important;
+  background-color: #cce4ff !important;
 }
 .text-main {
   color: #1a8cff !important;
 }
 .text-main-light {
-  color: #99caff !important;
+  color: #cce4ff !important;
 }
 .border-main {
   border-color: #1a8cff !important;
 }
 .border-main-light {
-  border-color: #99caff !important;
+  border-color: #cce4ff !important;
 }
 /* hover */
 .item-hover:hover {
   color: blue;
+}
+.hover-text-bold:hover {
+  color: blue !important;
 }
 .hover-text-main:hover {
   color: #1a8cff !important;
@@ -32,6 +35,9 @@
 }
 .hover-shadow-sm:hover {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+.hover-underline:hover {
+  text-decoration: underline;
 }
 /* font size */
 .ts-xs {

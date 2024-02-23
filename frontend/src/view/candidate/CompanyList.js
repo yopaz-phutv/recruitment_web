@@ -37,7 +37,7 @@ function CompanyList() {
   return (
     <div style={{ margin: "0px 100px" }}>
       <form
-        className="d-flex pt-3"
+        className="d-flex pt-4"
         onSubmit={handleSubmit}
       >
         <input
@@ -52,6 +52,7 @@ function CompanyList() {
           Tìm kiếm
         </button>
       </form>
+      <h4 className="my-3 text-main text-center">Danh sách công ty</h4>
       <div className="row mt-3">
         {companies.length > 0 ? (
           companies.map((company) => (
