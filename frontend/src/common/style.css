@@ -11,12 +11,27 @@
 .text-main-light {
   color: #99caff !important;
 }
+.border-main {
+  border-color: #1a8cff !important;
+}
+.border-main-light {
+  border-color: #99caff !important;
+}
 /* hover */
 .item-hover:hover {
   color: blue;
 }
+.hover-text-main:hover {
+  color: #1a8cff !important;
+}
+.hover-link:hover {
+  color: blue !important;
+}
 .hover-bg-1:hover {
   background-color: #e8e2e25c;
+}
+.hover-shadow-sm:hover {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
 /* font size */
 .ts-xs {
