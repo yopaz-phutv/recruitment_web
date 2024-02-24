@@ -160,7 +160,6 @@ function Job() {
                       >
                         <div className="modal-content">
                           <div className="modal-header border-bottom-0">
-                            {/* <h4 className="modal-title">Modal Heading</h4> */}
                             <button
                               type="button"
                               className="btn-close btn btn-sm"

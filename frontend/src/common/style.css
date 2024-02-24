@@ -3,19 +3,22 @@
   background-color: #1a8cff !important;
 }
 .bg-main-light {
-  background-color: #cce4ff !important;
+  background-color: #cce4ff86 !important;
+}
+.bg-disabled {
+  background-color: #f4f5f5;
 }
 .text-main {
   color: #1a8cff !important;
 }
 .text-main-light {
-  color: #cce4ff !important;
+  color: #cce4ff86 !important;
 }
 .border-main {
   border-color: #1a8cff !important;
 }
 .border-main-light {
-  border-color: #cce4ff !important;
+  border-color: #cce4ff86 !important;
 }
 /* hover */
 .item-hover:hover {
@@ -146,7 +149,4 @@
 }
 .kkk {
   background-color: rgb(233, 238, 240);
-}
-.bg-disabled {
-  background-color: rgb(228, 223, 223);
 }

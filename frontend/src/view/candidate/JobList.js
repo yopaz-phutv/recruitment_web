@@ -1,15 +1,21 @@
 import { useContext, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import jobApi from "../../api/job";
 import industryApi from "../../api/industry";
 import locationApi from "../../api/location";
 import jtypeApi from "../../api/jtype";
 import jlevelApi from "../../api/jlevel";
 import { AppContext } from "../../App";
+import { MdOutlineAttachMoney } from "react-icons/md";
+import { MdLocationOn } from "react-icons/md";
+import dayjs from "dayjs";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 function JobList() {
+  const nav = useNavigate();
   const [jobs, setJobs] = useState([{ employer: {} }]);
   const [industries, setIndustries] = useState([]);
   const [locations, setLocations] = useState([]);
@@ -99,14 +105,11 @@ function JobList() {
   }, [setCurrentPage]);
 
   return (
-    <>
-      <form
-        className="pt-3 pb-2"
-        style={{ marginLeft: "76px" }}
-        onSubmit={handleSubmit(handleFilter)}
-      >
-        <div className="input-group">
-          <div className="">
+    <div className="pt-3" style={{ margin: "0px 100px" }}>
+      <form className="bg-main-light p-3 rounded" onSubmit={handleSubmit(handleFilter)}>
+        <h4 className="text-center text-main">Tìm việc làm nhanh, việc làm mới nhất trên toàn quốc</h4>
+        <div className="d-flex flex-wrap gap-2 mt-3 ps-4">
+          <div className="me-2">
             <input
               type="text"
               className="form-control"
@@ -115,7 +118,7 @@ function JobList() {
               {...register("keyw")}
             />
           </div>
-          <div className="ms-2">
+          <div className="me-2">
             <select
               className="form-select"
               style={{ width: "300px" }}
@@ -129,7 +132,7 @@ function JobList() {
               ))}
             </select>
           </div>
-          <div className="ms-2">
+          <div className="">
             <select
               className="form-select"
               style={{ width: "300px" }}
@@ -143,16 +146,7 @@ function JobList() {
               ))}
             </select>
           </div>
-          <button
-            type="submit"
-            className="btn text-white rounded ms-2 px-3"
-            style={{ backgroundColor: "#00b33c" }}
-          >
-            <BsSearch />
-          </button>
-        </div>
-        <div className="input-group mt-2">
-          <div>
+          <div className="me-2">
             <select
               className="form-select"
               style={{ width: "300px" }}
@@ -171,7 +165,7 @@ function JobList() {
           </div>
           <div>
             <select
-              className="form-select ms-2"
+              className="form-select me-2"
               style={{ width: "300px" }}
               {...register("jtype_id")}
             >
@@ -183,9 +177,9 @@ function JobList() {
               ))}
             </select>
           </div>
-          <div>
+          <div className="me-2">
             <select
-              className="form-select ms-2"
+              className="form-select"
               style={{ width: "300px" }}
               {...register("jlevel_id")}
             >
@@ -206,77 +200,99 @@ function JobList() {
               <option value="">Sắp xếp theo</option>
             </select>
           </div> */}
+          <button type="submit" className="btn bg-main text-white rounded px-3">
+            <BsSearch className="fs-5" /> Tìm kiếm
+          </button>
         </div>
       </form>
-
-      <div className="row pb-5">
+      {/* <h4 className="text-main text-center mt-1 mb-3">Danh sách việc làm</h4> */}
+      <div className="row row-cols-lg-3 pb-5 mt-3">
         {jobs.length > 0 ? (
           jobs.map((job) => (
-            <div
-              className="col-md-5 col-sm-10 bg-white border p-1 my-2"
-              key={"job" + job.id}
-              style={{ marginLeft: "88px" }}
-            >
-              <div className="d-flex p-3">
-                <div className="border d-flex align-items-center">
-                  <Link to={`/companies/${job.employer.id}`}>
-                    <img
-                      src={job.employer.logo}
-                      style={{
-                        maxHeight: "130px",
-                        maxWidth: "130px",
-                        cursor: "pointer",
-                      }}
-                      alt={job.jname}
-                    />
-                  </Link>
+            <div className="mb-3" key={`job_${job.id}`}>
+              <div className="d-flex p-2 border border-main-light hover-shadow-sm bg-white h-100">
+                <div
+                  className="border border-main-light d-flex align-items-center px-2"
+                  style={{ width: "100px", height: "100px" }}
+                  onClick={() => nav(`/companies/${job.employer.id}`)}
+                >
+                  <img
+                    src={job.employer.logo}
+                    className="pointer"
+                    width="100%"
+                    alt={job.jname}
+                  />
                 </div>
-                <div className="container-fluid ms-3 mt-1 text-start">
-                  <Link
-                    to={`/jobs/${job.id}`}
-                    className="fw-bold text-dark"
-                    style={{
-                      fontSize: "18px",
-                      textDecoration: "none",
-                      cursor: "pointer",
-                    }}
+                <div
+                  className="ms-2 mt-1"
+                  style={{ width: "calc(100% - 125px)" }}
+                >
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={<Tooltip className="ts-xs">{job.jname}</Tooltip>}
                   >
-                    <span>{job.jname}</span>
-                  </Link>
-                  <br />
-                  <span className="text-secondary">{job.employer.name}</span>
-                  <br />
-                  <div style={{ fontSize: "15.5px" }}>
-                    <span className="fw-bold">Mức lương:</span>&nbsp;
-                    {job.min_salary ? (
-                      <span>
-                        {job.min_salary} - {job.max_salary} triệu VND
-                      </span>
-                    ) : (
-                      <span>Theo thỏa thuận</span>
-                    )}
-                    <br />
-                    <div className="clearfix">
-                      <span>
-                        <strong>Địa điểm: </strong>
-                        {job.location}
-                      </span>
-                      {/* <span
-                        className="float-end me-3 text-muted"
-                        onClick={() => handleClickSaveBtn(index)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <span>
-                          {!job.isSaved ? (
-                            <AiOutlineHeart className="fs-5" />
-                          ) : (
-                            <AiFillHeart className="fs-5 text-danger" />
-                          )}
-                        </span>{" "}
-                        Lưu việc làm
-                      </span> */}
+                    <div
+                      className="text-truncate fw-bold text-dark pointer text-decoration-none hover-text-main"
+                      onClick={() => nav(`/jobs/${job.id}`)}
+                    >
+                      {job.jname}
                     </div>
-                    <div className="clearfix">
+                  </OverlayTrigger>
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={
+                      <Tooltip className="ts-xs">{job.employer.name}</Tooltip>
+                    }
+                  >
+                    <div className="ts-smd text-secondary text-truncate">
+                      {job.employer.name}
+                    </div>
+                  </OverlayTrigger>
+                  <div className="ts-sm">
+                    <div className="d-flex flex-wrap gap-1">
+                      <div className="d-flex align-items-center me-3">
+                        <MdOutlineAttachMoney className="fs-5 text-main" />
+                        {job.min_salary ? (
+                          <span>
+                            {job.min_salary} - {job.max_salary} triệu VND
+                          </span>
+                        ) : (
+                          <span>Theo thỏa thuận</span>
+                        )}
+                      </div>
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          <Tooltip className="ts-xs">
+                            {job.locations?.map((item, index) => (
+                              <>
+                                {item.name}
+                                {index !== job.locations?.length - 1 && ", "}
+                              </>
+                            ))}
+                          </Tooltip>
+                        }
+                      >
+                        <div className="d-flex align-items-center">
+                          <MdLocationOn className="fs-5 text-main" />
+                          {job.locations && job.locations[0].name}
+                          {job.locations?.length > 1 && "..."}
+                        </div>
+                      </OverlayTrigger>
+                    </div>
+                    <div className="mt-1">
+                      <span
+                        className="rounded-pill bg-disabled"
+                        style={{ padding: "2.5px 8px" }}
+                      >
+                        Còn&nbsp;
+                        {dayjs().diff(job.expire_at, "day") <= 30
+                          ? dayjs().diff(job.expire_at, "day")
+                          : "30+"}{" "}
+                        ngày
+                      </span>
+                    </div>
+                    {/* <div className="clearfix">
                       <span>
                         <strong>Ngày đăng: </strong>
                         {job.postDate ? job.postDate : "06/04/2023"}
@@ -285,7 +301,7 @@ function JobList() {
                         <strong>Hạn nộp: </strong>
                         {job.expire_at}
                       </span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -297,7 +313,7 @@ function JobList() {
           </h4>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
