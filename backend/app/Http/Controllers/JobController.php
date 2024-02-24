@@ -139,11 +139,8 @@ class JobController extends Controller
                 return $query->where('jlevel_id', '=', $req->jlevel_id);
             })
             ->where('jobs.is_active', 1)
-            ->select('jobs.*')
+            ->with('locations')
             ->get();
-        for ($i = 0; $i < count($jobs); $i++) {
-            $this->addLocationInf($jobs[$i]);
-        }
 
         return response()->json([
             'inf' => $jobs
