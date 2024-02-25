@@ -6,7 +6,7 @@ import SavedJobPopup from "./SavedJobPopup";
 import candidateApi from "../../../api/candidate";
 
 function SavedJobs() {
-  const [jobs, setJobs] = useState([{ locations: [], employer: {} }]);
+  const [jobs, setJobs] = useState([]);
   const [jobLocations, setJobLocations] = useState([]);
   const [curJob, setCurJob] = useState({});
   const user = useSelector((state) => state.candAuth.current);
@@ -57,7 +57,7 @@ function SavedJobs() {
             </tr>
           </thead>
           <tbody className="ts-smd">
-            {jobs.map((item, index) => (
+            {jobs.length > 0 && jobs.map((item, index) => (
               <tr key={"saveJob" + item.id}>
                 <td>{item.jname}</td>
                 <td>{item.employer.name} </td>
