@@ -2,7 +2,7 @@
 .bg-main {
   background-color: #1a8cff !important;
 }
-.bg-main-light {
+.bg-light {
   background-color: #cce4ff86 !important;
 }
 .bg-disabled {
@@ -11,13 +11,13 @@
 .text-main {
   color: #1a8cff !important;
 }
-.text-main-light {
+.text-light {
   color: #cce4ff86 !important;
 }
 .border-main {
   border-color: #1a8cff !important;
 }
-.border-main-light {
+.border-light {
   border-color: #cce4ff86 !important;
 }
 /* hover */
@@ -35,6 +35,13 @@
 }
 .hover-bg-1:hover {
   background-color: #e8e2e25c;
+}
+.hover-bg-light:hover {
+  background-color: #cce4ff86 !important;
+}
+.hover-bgt-light:hover {
+  background-color: #cce4ff86 !important;
+  color: #1a8cff !important;
 }
 .hover-shadow-sm:hover {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;

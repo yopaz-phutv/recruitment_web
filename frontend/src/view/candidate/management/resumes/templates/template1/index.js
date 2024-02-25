@@ -416,7 +416,7 @@ export default function Template1() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start border-main">
+      <div className="content border-3 border-start cv-border-main">
         <div className="d-flex align-items-center">
           <FlexInput
             className="flex-fill"
@@ -497,7 +497,7 @@ export default function Template1() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start border-main">
+      <div className="content border-3 border-start cv-border-main">
         <div className="d-flex align-items-center">
           <FlexInput
             className="flex-fill"
@@ -592,7 +592,7 @@ export default function Template1() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start border-main">
+      <div className="content border-3 border-start cv-border-main">
         <div className="d-flex align-items-center">
           <FlexInput
             className="flex-fill"
@@ -700,7 +700,7 @@ export default function Template1() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start border-main">
+      <div className="content border-3 border-start cv-border-main">
         <div className="d-flex align-items-center">
           <FlexInput
             className="flex-fill"
@@ -836,13 +836,13 @@ export default function Template1() {
           />
           <FlexInput
             innerClassName={clsx("content", bgColor)}
-            iconLeft={<MdLocationOn className="mb-1" />}
+            iconLeft={<MdLocationOn className="fs-5 mb-1" />}
             placeholder="Địa chỉ"
             defaultValue={cvMode !== "CREATE_0" ? basicInfor.address : null}
             {...register("address")}
           />
         </div>
-        <hr className="text-main" />
+        <hr className="cv-text-main" />
       </InforPart>
     );
   };
@@ -865,7 +865,7 @@ export default function Template1() {
           defaultValue={cvMode !== "CREATE_0" ? basicInfor?.objective : null}
           {...register("objective")}
         />
-        <hr className="text-main" />
+        <hr className="cv-text-main" />
       </InforPart>
     );
   };
@@ -890,7 +890,7 @@ export default function Template1() {
             <Skill infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="text-main" />
+        <hr className="cv-text-main" />
       </InforPart>
     );
   };
@@ -915,7 +915,7 @@ export default function Template1() {
             <Certificate infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="text-main" />
+        <hr className="cv-text-main" />
       </InforPart>
     );
   };
@@ -940,7 +940,7 @@ export default function Template1() {
             <Prize infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="text-main" />
+        <hr className="cv-text-main" />
       </InforPart>
     );
   };
@@ -970,7 +970,7 @@ export default function Template1() {
             <Education infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="text-main" />
+        <hr className="cv-text-main" />
       </InforPart>
     );
   };
@@ -998,7 +998,7 @@ export default function Template1() {
             <Experience infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="text-main" />
+        <hr className="cv-text-main" />
       </InforPart>
     );
   };
@@ -1027,7 +1027,7 @@ export default function Template1() {
             <Project infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="text-main" />
+        <hr className="cv-text-main" />
       </InforPart>
     );
   };
@@ -1054,7 +1054,7 @@ export default function Template1() {
             <Activity infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="text-main" />
+        <hr className="cv-text-main" />
       </InforPart>
     );
   };
@@ -1073,13 +1073,13 @@ export default function Template1() {
             <Other infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="text-main" />
+        <hr className="cv-text-main" />
       </InforPart>
     );
   };
 
   const renderPart = (index) => {
-    const bgColor = index <= 5 ? "bg-main" : "";
+    const bgColor = index <= 5 ? "cv-bg-main" : "";
     switch (parts[index]) {
       case "personal":
         return <PersonalPart bgColor={bgColor} />;
@@ -1162,7 +1162,7 @@ export default function Template1() {
           className="mx-auto border mt-4 mb-5 d-flex py-2 shadow"
           style={{ width: "800px" }}
         >
-          <div className="bg-main ms-2 ps-1 pe-2" style={{ width: "340px" }}>
+          <div className="cv-bg-main ms-2 ps-1 pe-2" style={{ width: "340px" }}>
             <div className="mt-2 d-flex flex-column align-items-center">
               <img
                 src={basicInfor?.avatar}
@@ -1174,12 +1174,12 @@ export default function Template1() {
               <FlexInput
                 placeholder="HỌ TÊN"
                 className="mt-2"
-                innerClassName="bg-main h4 text-main text-center text-uppercase"
+                innerClassName="cv-bg-main h4 cv-text-main text-center text-uppercase"
                 defaultValue={fullname}
                 {...register("fullname")}
               />
             </div>
-            <hr className="text-main" />
+            <hr className="cv-text-main" />
             {parts.map((_, index) => {
               return (
                 index <= 5 && (
@@ -1188,7 +1188,7 @@ export default function Template1() {
               );
             })}
           </div>
-          <div className="flex-fill px-1">
+          <div className="flex-fill px-1 bg-white">
             <div className="ms-2">
               {parts.map((_, index) => {
                 return (

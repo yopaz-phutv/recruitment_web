@@ -1,13 +1,13 @@
-.bg-main {
+.cv-bg-main {
   background-color: #c6e2ff !important;
 }
-.text-main {
+.cv-text-main {
   color: #0e849c !important;
 }
-div .border-main {
+div .cv-border-main {
   border-color: #0e849c !important;
 }
-div .border-lighter {
+div .cv-border-lighter {
   border-color: #b8d6f7 !important;
 }
 .title {
