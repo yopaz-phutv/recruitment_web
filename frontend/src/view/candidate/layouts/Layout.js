@@ -222,9 +222,9 @@ function Layout(props) {
                 </span>
                 <ul className="dropdown-menu">
                   <li>
-                    <a className="dropdown-item" href="/candidate">
+                    <Link className="dropdown-item" to="/candidate">
                       Tài khoản
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <button
@@ -248,7 +248,7 @@ function Layout(props) {
         {!isAuth && <Login />}
         {props.children}
       </main>
-      <footer className="bg-light border-top" style={{ paddingTop: "35px" }}>
+      <footer className="border-top" style={{ paddingTop: "35px" }}>
         <div className="container">
           <div className="row">
             <div

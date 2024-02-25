@@ -1125,11 +1125,12 @@ export default function Template1() {
       value={{ parts, setParts, partMenu, setPartMenu }}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="clearfix py-3 shadow-sm">
+        <div className="clearfix ms-3 py-3 border-top shadow-sm bg-white">
           <Form.Group className="float-start ms-3 w-20">
             <Form.Control
               type="text"
               aria-label="resume_title"
+              size="sm"
               placeholder="Tiêu đề hồ sơ"
               defaultValue={cvMode === "EDIT" ? basicInfor.title : null}
               className="border-primary"
@@ -1144,6 +1145,7 @@ export default function Template1() {
           </Form.Group>
           <Button
             variant="outline-primary"
+            size="sm"
             className="float-end me-5 px-5 py-1"
             onClick={handleDownload}
           >
@@ -1152,6 +1154,7 @@ export default function Template1() {
           <Button
             type="submit"
             variant="outline-primary"
+            size="sm"                        
             className="float-end me-3 px-5 py-1"
           >
             <span className="fw-600">Lưu</span>
@@ -1159,10 +1162,10 @@ export default function Template1() {
         </div>
         <div
           id="resume"
-          className="mx-auto border mt-4 mb-5 d-flex py-2 shadow"
+          className="mx-auto border mt-4 mb-5 d-flex p-2 shadow-sm"
           style={{ width: "800px" }}
         >
-          <div className="cv-bg-main ms-2 ps-1 pe-2" style={{ width: "340px" }}>
+          <div className="cv-bg-main ps-1 pe-2" style={{ width: "340px" }}>
             <div className="mt-2 d-flex flex-column align-items-center">
               <img
                 src={basicInfor?.avatar}

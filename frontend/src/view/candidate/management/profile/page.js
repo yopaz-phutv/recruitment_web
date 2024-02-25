@@ -8,11 +8,8 @@ import Activity from "./components/activities";
 import PersonalInfor from "./components/personalInformation";
 
 export default function Profile() {
-  
   return (
-    <div className="px-5 pt-4 pb-5 kkk"
-    // style={{ backgroundColor: 'goldenrod' }}
-    >
+    <div className="px-5 pt-4 pb-5">
       <div style={{ width: "70%" }}>
         <PersonalInfor />
         <Education />

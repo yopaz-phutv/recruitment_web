@@ -10,7 +10,7 @@ function SavedJobs() {
   const [jobLocations, setJobLocations] = useState([]);
   const [curJob, setCurJob] = useState({});
   const user = useSelector((state) => state.candAuth.current);
-  const isAuth = useSelector(state=>state.candAuth.isAuth);
+  const isAuth = useSelector((state) => state.candAuth.isAuth);
 
   const getSavedJobs = async () => {
     const jobs = await candidateApi.getSavedJobs(user.id);
@@ -30,25 +30,33 @@ function SavedJobs() {
   };
 
   useEffect(() => {
-    if(isAuth) getSavedJobs();
+    if (isAuth) getSavedJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
 
   return (
     <>
-      <div className="m-4 px-5 pt-4 bg-white" style={{ height: "92.5%" }}>
-        <p className="mb-4 h4 ms-1">Việc làm đã lưu</p>
-        <table className="table border">
+      <div className="mx-4 mt-4 px-5 py-3 bg-white">
+        <h4 className="mb-4 text-main">Việc làm đã lưu</h4>
+        <table className="table border shadow-sm">
           <thead className="table-primary">
             <tr>
-              <th style={{ width: "25%" }}>Vị trí</th>
-              <th style={{ width: "25%" }}>Công ty</th>
-              <th style={{ width: "20%" }}>Địa điểm</th>
-              <th style={{ width: "14%" }}>Hạn nộp</th>
-              <th>Hành động</th>
+              <th className="fw-500" style={{ width: "26%" }}>
+                Vị trí
+              </th>
+              <th className="fw-500" style={{ width: "26%" }}>
+                Công ty
+              </th>
+              <th className="fw-500" style={{ width: "18%" }}>
+                Địa điểm
+              </th>
+              <th className="fw-500" style={{ width: "14%" }}>
+                Hạn nộp
+              </th>
+              <th className="fw-500">Hành động</th>
             </tr>
           </thead>
-          <tbody style={{ fontSize: "15px" }}>
+          <tbody className="ts-smd">
             {jobs.map((item, index) => (
               <tr key={"saveJob" + item.id}>
                 <td>{item.jname}</td>
@@ -56,26 +64,27 @@ function SavedJobs() {
                 <td>{jobLocations[index]}</td>
                 <td>{item.deadline} </td>
                 <td>
-                  {item.is_active === 1 ? (
-                    <Link to={`/jobs/${item.id}`}>
-                      <button className="btn btn-sm btn-outline-primary">
-                        Ứng tuyển
+                  <div className="d-flex flex-wrap align-items-center gap-lg-3 gap-1">
+                    {item.is_active === 1 ? (
+                      <Link to={`/jobs/${item.id}`}>
+                        <button className="btn btn-sm btn-outline-primary">
+                          Ứng tuyển
+                        </button>
+                      </Link>
+                    ) : (
+                      <button className="btn btn-sm btn-outline-primary disabled">
+                        Đã đóng
                       </button>
-                    </Link>
-                  ) : (
-                    <button className="btn btn-sm btn-outline-primary disabled">
-                      Đã đóng
-                    </button>
-                  )}
-
-                  <button
-                    className="text-danger bg-white border-0 ms-2"
-                    data-bs-toggle="modal"
-                    data-bs-target="#jobDeletingModal"
-                    onClick={() => setCurJob(item)}
-                  >
-                    <BsTrash3 className="fs-5 mb-1" />
-                  </button>
+                    )}
+                    <div
+                      className="text-danger bg-white border-0"
+                      data-bs-toggle="modal"
+                      data-bs-target="#jobDeletingModal"
+                      onClick={() => setCurJob(item)}
+                    >
+                      <BsTrash3 className="fs-5" />
+                    </div>
+                  </div>
                 </td>
               </tr>
             ))}
