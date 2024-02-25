@@ -164,7 +164,7 @@ function Home() {
               </Link>
               <div className="text-center mb-2">
                 <div className="fw-bold mb-1">{company.name}</div>
-                <span className="border rounded px-1 bg-light">
+                <span className="border rounded px-1 bg-mlight">
                   {company.job_num} việc làm
                 </span>
               </div>

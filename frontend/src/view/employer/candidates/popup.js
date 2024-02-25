@@ -84,7 +84,7 @@ function MessagePopup({
         <div className="ts-xl fw-500 text-center border-bottom pb-1">
           Gửi thông báo
         </div>
-        <div className="text-center bg-light">
+        <div className="text-center bg-mlight">
           <div className="pt-1 pb-2">
             {prefix_msg}
             <span className="fw-500">

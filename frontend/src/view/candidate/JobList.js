@@ -106,7 +106,7 @@ function JobList() {
 
   return (
     <div className="pt-3" style={{ margin: "0px 100px" }}>
-      <form className="bg-light p-3 rounded shadow-sm" onSubmit={handleSubmit(handleFilter)}>
+      <form className="bg-mlight p-3 rounded shadow-sm" onSubmit={handleSubmit(handleFilter)}>
         <h4 className="text-center text-main">Tìm việc làm nhanh, việc làm mới nhất trên toàn quốc</h4>
         <div className="d-flex flex-wrap gap-2 mt-3 ps-4">
           <div className="me-2">
@@ -210,9 +210,9 @@ function JobList() {
         {jobs.length > 0 ? (
           jobs.map((job) => (
             <div className="mb-3" key={`job_${job.id}`}>
-              <div className="d-flex p-2 border border-light hover-shadow-sm bg-white h-100">
+              <div className="d-flex p-2 border border-mlight hover-shadow-sm bg-white h-100">
                 <div
-                  className="border border-light d-flex align-items-center px-2"
+                  className="border border-mlight d-flex align-items-center px-2"
                   style={{ width: "100px", height: "100px" }}
                   onClick={() => nav(`/companies/${job.employer.id}`)}
                 >

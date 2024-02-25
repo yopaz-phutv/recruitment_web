@@ -46,7 +46,7 @@ function Layout(props) {
   return (
     <>
       <nav
-        className="navbar border-bottom bg-light fixed-top"
+        className="navbar border-bottom bg-mlight fixed-top"
         style={{ minHeight: "70px" }}
       >
         <div className="navbar-brand ms-3">Recruitment</div>
@@ -73,7 +73,7 @@ function Layout(props) {
       {isAuth ? (
         <div className="d-flex" style={{ marginTop: "70px" }}>
           <div
-            className="border-end bg-light"
+            className="border-end bg-mlight"
             style={{ width: "280px", minHeight: "90.5vh" }}
           >
             <ul className="nav flex-column">

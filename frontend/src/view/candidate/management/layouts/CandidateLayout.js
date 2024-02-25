@@ -121,14 +121,14 @@ function CandidateLayout(props) {
       }}
     >
       <div className="d-flex flex-column flex-lg-row">
-        <div className="ts-smd fw-500 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-end border-light">
-          <div className="text-center text-main border-bottom border-light py-3 px-2 ts-lg fw-500">
+        <div className="ts-smd fw-500 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-end border-mlight">
+          <div className="text-center text-main border-bottom border-mlight py-3 px-2 ts-lg fw-500">
             Tài khoản của tôi
           </div>
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/candidate" && "bg-light text-main"
+              currentPage === "/candidate" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/candidate")}
           >
@@ -137,7 +137,7 @@ function CandidateLayout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/candidate/profile" && "bg-light text-main"
+              currentPage === "/candidate/profile" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/candidate/profile")}
           >
@@ -146,7 +146,7 @@ function CandidateLayout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/candidate/resumes" && "bg-light text-main"
+              currentPage === "/candidate/resumes" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/candidate/resumes")}
           >
@@ -155,7 +155,7 @@ function CandidateLayout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/candidate/applied-jobs" && "bg-light text-main"
+              currentPage === "/candidate/applied-jobs" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/candidate/applied-jobs")}
           >
@@ -164,7 +164,7 @@ function CandidateLayout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/candidate/saved-jobs" && "bg-light text-main"
+              currentPage === "/candidate/saved-jobs" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/candidate/saved-jobs")}
           >

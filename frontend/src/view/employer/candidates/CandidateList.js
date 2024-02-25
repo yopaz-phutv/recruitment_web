@@ -77,7 +77,7 @@ function CandidateList() {
         }}
       >
         <Tab.Container onSelect={(k) => setStep(k)}>
-          <Nav className="pb-1 justify-content-center bg-light shadow-sm">
+          <Nav className="pb-1 justify-content-center bg-mlight shadow-sm">
             <Nav.Item>
               <Nav.Link eventKey="step1">
                 <span className={makeTabStyle("step1")}>Duyệt hồ sơ</span>
