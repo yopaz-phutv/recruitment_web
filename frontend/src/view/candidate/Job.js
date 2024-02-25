@@ -125,7 +125,7 @@ function Job() {
                     <h4 className="mt-3">{job.jname}</h4>
                     {/* <p className="text-secondary">{job.employer.name}</p> */}
                   </div>
-                  <div className="clearfix mt-4">
+                  <div className="clearfix mt-3 mb-2">
                     <button
                       className="btn btn-primary ts-sm"
                       data-bs-toggle={isAuth ? "modal" : ""}
