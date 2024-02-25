@@ -381,8 +381,8 @@ function Job() {
           </div>
         </div>
         <div className="right-part ps-3">
-          <div className="bg-white pb-2">
-            <div className="d-flex align-items-center">
+          <div className="bg-white pb-2 shadow-sm">
+            <div className="d-flex align-items-center ms-2">
               <div
                 className="d-flex align-items-center"
                 style={{ width: "90px", height: "90px" }}
@@ -423,7 +423,12 @@ function Job() {
                   <BsFillGeoAltFill className="me-1 mb-1" />
                   Địa điểm:
                 </div>
-                <div className="whitespace-preline">{job.address}</div>
+                <div
+                  className="whitespace-preline"
+                  style={{ fontSize: "14.5px" }}
+                >
+                  {job.address}
+                </div>
               </div>
               <Button
                 size="sm"
