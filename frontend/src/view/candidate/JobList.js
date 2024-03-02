@@ -106,8 +106,13 @@ function JobList() {
 
   return (
     <div className="pt-3" style={{ margin: "0px 100px" }}>
-      <form className="bg-mlight p-3 rounded shadow-sm" onSubmit={handleSubmit(handleFilter)}>
-        <h4 className="text-center text-main">Tìm việc làm nhanh, việc làm mới nhất trên toàn quốc</h4>
+      <form
+        className="bg-mlight p-3 rounded shadow-sm border"
+        onSubmit={handleSubmit(handleFilter)}
+      >
+        <h4 className="text-center text-main">
+          Tìm việc làm nhanh, việc làm mới nhất trên toàn quốc
+        </h4>
         <div className="d-flex flex-wrap gap-2 mt-3 ps-4">
           <div className="me-2">
             <input
@@ -191,34 +196,27 @@ function JobList() {
               ))}
             </select>
           </div>
-          {/* <div>
-            <select
-              className="form-select ms-1"
-              style={{ width: "225px" }}
-              {...register("sort_type")}
-            >
-              <option value="">Sắp xếp theo</option>
-            </select>
-          </div> */}
-          <button type="submit" className="btn bg-main text-white rounded px-3">
+          <button type="submit" className="border-0 bg-main text-white rounded px-3">
             <BsSearch className="fs-5" /> Tìm kiếm
           </button>
         </div>
       </form>
       {/* <h4 className="text-main text-center mt-1 mb-3">Danh sách việc làm</h4> */}
-      <div className="row row-cols-lg-3 pb-5 mt-3">
+      <div className="row row-cols-lg-3 pb-5 mt-4">
         {jobs.length > 0 ? (
           jobs.map((job) => (
-            <div className="mb-3" key={`job_${job.id}`}>
-              <div className="d-flex p-2 border border-mlight hover-shadow-sm bg-white h-100">
+            <div
+              className="mb-3 pointer"
+              key={`job_${job.id}`}
+              onClick={() => nav(`/jobs/${job.id}`)}
+            >
+              <div className="d-flex p-2 border hover-border-main hover-shadow-sm bg-white h-100">
                 <div
-                  className="border border-mlight d-flex align-items-center px-2"
+                  className="border d-flex align-items-center px-2"
                   style={{ width: "100px", height: "100px" }}
-                  onClick={() => nav(`/companies/${job.employer.id}`)}
                 >
                   <img
                     src={job.employer.logo}
-                    className="pointer"
                     width="100%"
                     alt={job.jname}
                   />
@@ -232,7 +230,7 @@ function JobList() {
                     overlay={<Tooltip className="ts-xs">{job.jname}</Tooltip>}
                   >
                     <div
-                      className="text-truncate fw-bold text-dark pointer text-decoration-none hover-text-main"
+                      className="text-truncate fw-bold text-dark text-decoration-none hover-text-main"
                       onClick={() => nav(`/jobs/${job.id}`)}
                     >
                       {job.jname}

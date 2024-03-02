@@ -108,7 +108,7 @@ function Job() {
       <div className="d-flex mt-3">
         <div className="left-part">
           <div className="bg-white shadow-sm pb-4">
-            <div className="d-flex border-bottom border-mlight ps-4 pe-4">
+            <div className="d-flex border-bottom ps-4 pe-4">
               <div
                 className="d-flex align-items-center ms-2 mt-4 mb-3"
                 style={{ minWidth: "130px" }}
@@ -370,7 +370,7 @@ function Job() {
             </div>
           </div>
           <div className="bg-white mt-4 mb-5 shadow-sm">
-            <h5 className="bg-mlight text-main p-3">Chi tiết về job</h5>
+            <h5 className="bg-main text-white p-3">Chi tiết về job</h5>
             <div className="p-3">
               {job.description ? (
                 <div className="whitespace-preline">{job.description}</div>

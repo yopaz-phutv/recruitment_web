@@ -57,42 +57,43 @@ function SavedJobs() {
             </tr>
           </thead>
           <tbody className="ts-smd">
-            {jobs.length > 0 && jobs.map((item, index) => (
-              <tr key={"saveJob" + item.id}>
-                <td>{item.jname}</td>
-                <td>{item.employer.name} </td>
-                <td>{jobLocations[index]}</td>
-                <td>{item.deadline} </td>
-                <td>
-                  <div className="d-flex flex-wrap align-items-center gap-lg-3 gap-1">
-                    {item.is_active === 1 ? (
-                      <Link to={`/jobs/${item.id}`}>
-                        <button className="btn btn-sm btn-outline-primary">
-                          Ứng tuyển
+            {jobs.length > 0 &&
+              jobs.map((item, index) => (
+                <tr key={"saveJob" + item.id}>
+                  <td>{item.jname}</td>
+                  <td>{item.employer.name} </td>
+                  <td>{jobLocations[index]}</td>
+                  <td>{item.deadline} </td>
+                  <td>
+                    <div className="d-flex flex-wrap align-items-center gap-lg-3 gap-1">
+                      {item.is_active === 1 ? (
+                        <Link to={`/jobs/${item.id}`}>
+                          <button className="btn btn-sm btn-outline-primary">
+                            Ứng tuyển
+                          </button>
+                        </Link>
+                      ) : (
+                        <button className="btn btn-sm btn-outline-primary disabled">
+                          Đã đóng
                         </button>
-                      </Link>
-                    ) : (
-                      <button className="btn btn-sm btn-outline-primary disabled">
-                        Đã đóng
-                      </button>
-                    )}
-                    <div
-                      className="text-danger bg-white border-0"
-                      data-bs-toggle="modal"
-                      data-bs-target="#jobDeletingModal"
-                      onClick={() => setCurJob(item)}
-                    >
-                      <BsTrash3 className="fs-5" />
+                      )}
+                      <div
+                        className="text-danger bg-white border-0"
+                        data-bs-toggle="modal"
+                        data-bs-target="#jobDeletingModal"
+                        onClick={() => setCurJob(item)}
+                      >
+                        <BsTrash3 className="fs-5" />
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
         {jobs.length === 0 && <h5 className="">Không có bản ghi nào</h5>}
       </div>
-      <SavedJobPopup job_id={curJob.id} />
+      <SavedJobPopup job_id={curJob.id} />     
     </>
   );
 }

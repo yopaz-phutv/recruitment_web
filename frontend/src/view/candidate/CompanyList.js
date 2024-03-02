@@ -58,12 +58,12 @@ function CompanyList() {
           companies.map((company) => (
             <div className="col-sm-12 col-lg-4 mb-3 pointer" key={company.id}>
               <div
-                className="card border-mlight hover-shadow-sm"
+                className="card border hover-border-main hover-shadow-sm"
                 style={{ minHeight: "240px" }}
                 onClick={() => nav(`/companies/${company.id}`)}
               >
                 <div
-                  className="d-flex border-bottom border-mlight px-2"
+                  className="d-flex border-bottom px-2"
                   style={{ minHeight: "110px" }}
                 >
                   <div className="d-flex align-items-center">

@@ -93,23 +93,23 @@ function Company() {
         </div>
       </div>
       <div className="mx-auto bg-white col-md-9 mt-4 shadow-sm">
-        <h5 className="bg-mlight text-main p-3">Giới thiệu công ty</h5>
+        <h5 className="bg-main text-white p-3">Giới thiệu công ty</h5>
         <div className="whitespace-preline px-3 pb-3">
           {infor.description ? infor.description : "Chưa cập nhật thông tin"}
         </div>
       </div>
       <div className="d-flex justify-content-center mt-4">
         <div className="col-md-9 mb-5">
-          <h5 className="bg-mlight text-main col-md-9 p-3 mb-0">
+          <h5 className="bg-main text-white col-md-9 p-3 mb-0">
             Việc làm đang tuyển
           </h5>
           {jobs.map((job) => (
             <div
-              className="bg-white border-bottom border-mlight col-md-9 ps-3 py-1"
+              className="bg-white border-bottom col-md-9 ps-3 py-1"
               key={"job" + job.id}
             >
               <div className="d-flex p-3">
-                <div className="border border-mlight d-flex align-items-center">
+                <div className="border d-flex align-items-center">
                   <img
                     src={infor.logo}
                     style={{ maxHeight: "130px", maxWidth: "130px" }}

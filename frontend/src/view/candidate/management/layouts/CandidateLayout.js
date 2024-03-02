@@ -121,8 +121,8 @@ function CandidateLayout(props) {
       }}
     >
       <div className="d-flex flex-column flex-lg-row">
-        <div className="ts-smd fw-500 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-end border-mlight">
-          <div className="text-center text-main border-bottom border-mlight py-3 px-2 ts-lg fw-500">
+        <div className="ts-smd fw-500 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-end">
+          <div className="text-center text-main border-bottom py-3 px-2 ts-lg fw-500">
             Tài khoản của tôi
           </div>
           <div

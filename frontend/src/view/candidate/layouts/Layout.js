@@ -114,7 +114,7 @@ function Layout(props) {
         <Stack
           direction="horizontal"
           gap={1}
-          className="fixed-top bg-main text-white ts-17 fw-500"
+          className="fixed-top bg-white text-secondary shadow-sm ts-17 fw-500"
         >
           <Link
             className="nav-link ms-2 pe-2 ts-xl pb-1"
@@ -126,7 +126,7 @@ function Layout(props) {
           <Link
             className={clsx(
               "nav-link py-3 px-2",
-              currentPage === "companies" && "bg-white text-main"
+              currentPage === "companies" && "text-main"
             )}
             to="/companies"
             onClick={() => setCurrentPage("companies")}
@@ -136,7 +136,7 @@ function Layout(props) {
           <Link
             className={clsx(
               "nav-link py-3 px-2",
-              currentPage === "jobs" && "bg-white text-main"
+              currentPage === "jobs" && "text-main"
             )}
             to="/jobs"
             onClick={() => setCurrentPage("jobs")}
@@ -147,14 +147,13 @@ function Layout(props) {
           {!isAuth ? (
             <div className="d-flex align-items-center fw-normal ts-md pointer">
               <div
-                className="text-white"
                 data-bs-toggle="modal"
                 data-bs-target="#login-box"
               >
                 Đăng nhập
               </div>
               <div className="vr mx-2 border-2"/>
-              <Link to="/sign-up" className="text-decoration-none text-white">
+              <Link to="/sign-up" className="text-decoration-none text-secondary">
                 Đăng ký
               </Link>
               <div className="ms-3 me-2">
@@ -173,7 +172,7 @@ function Layout(props) {
                 onMouseLeave={() => setShowListMsg(false)}
               >
                 <BsBell
-                  className="text-white fs-3 me-4 pointer"
+                  className="fs-3 me-4 pointer"
                   onClick={() => setShowListMsg(true)}
                 />
                 {hasNew && (
