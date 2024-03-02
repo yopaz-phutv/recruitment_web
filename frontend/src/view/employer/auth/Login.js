@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import authApi from "../../../api/auth";
 import { employerAuthActions } from "../../../redux/slices/employerAuthSlice";
+import { toast } from "react-toastify";
 
 function Login() {
   const required_mark = <span className="text-danger"> *</span>;
@@ -20,18 +21,21 @@ function Login() {
   const [msg, setMsg] = useState("");
   const nav = useNavigate();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (inf) => {
     inf.role = 2;
+    setIsLoading(true);
     await authApi
       .login(inf)
       .then((res) => {
         localStorage.setItem("employer_jwt", res.authorization.token);
+        toast.success("Đăng nhập thành công!");    
       })
       .catch(() => {
         setMsg("Email hoặc mật khẩu không chính xác!");
       });
-
+    setIsLoading(false);
     await authApi.getMe(2).then((res) => {
       dispatch(employerAuthActions.setUser(res));
       nav("/employer");
@@ -54,7 +58,7 @@ function Login() {
         >
           <h4 className="mb-3 text-center">Nhà tuyển dụng đăng nhập</h4>
           <div>
-            <label htmlFor="email" className="float-start">
+            <label htmlFor="email" className="mb-1">
               Email{required_mark}
             </label>
             <input
@@ -66,8 +70,8 @@ function Login() {
             />
             {errors.email && required_error}
           </div>
-          <div className="mt-3">
-            <label htmlFor="passwd" className="float-start">
+          <div className="mt-2">
+            <label htmlFor="passwd" className="mb-1">
               Password{required_mark}
             </label>
             <div className="input-group">
@@ -89,28 +93,23 @@ function Login() {
             {errors.password && required_error}
           </div>
           {msg && <div className="text-danger text-center mt-2">{msg}</div>}
-          <button
-            type="submit"
-            className="btn btn-primary mt-3"
-            style={{ width: "100%" }}
-          >
+          <button type="submit" className="btn btn-primary w-100 mt-2">
             Đăng nhập
+            {isLoading && <div className="spinner-border spinner-border-sm ms-1"></div>}
           </button>
           <div className="mt-2 text-center">
-            <Link to={`#`} style={{ textDecoration: "none" }}>
+            <Link to={`#`} className="text-decoration-none">
               Quên mật khẩu
             </Link>
           </div>
-        </form>
-        <div className="border shadow rounded mt-4 pt-2 text-center">
-          <p>
-            Bạn là nhà tuyển dụng mới?
-            <Link to={`#`} style={{ textDecoration: "none" }}>
-              {" "}
+          <hr />
+          <div className="text-center">
+            Bạn là nhà tuyển dụng mới?&nbsp;
+            <Link to={`#`} className="text-decoration-none">
               Đăng ký tài khoản
             </Link>
-          </p>
-        </div>
+          </div>
+        </form>
       </div>
     </>
   );

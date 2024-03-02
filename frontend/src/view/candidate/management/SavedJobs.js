@@ -36,7 +36,7 @@ function SavedJobs() {
 
   return (
     <>
-      <div className="mx-4 mt-4 px-5 py-3 bg-white">
+      <div className="ms-4 mt-4 px-5 py-3 bg-white">
         <h4 className="mb-4 text-main">Việc làm đã lưu</h4>
         <table className="table border shadow-sm">
           <thead className="table-primary">

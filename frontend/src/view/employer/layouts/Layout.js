@@ -3,18 +3,21 @@ import {
   BsFillBriefcaseFill,
   BsFillPeopleFill,
   BsFillPersonFill,
-  BsMessenger,
+  // BsMessenger,
 } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./layout_style.css";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import authApi from "../../../api/auth";
 import { employerAuthActions } from "../../../redux/slices/employerAuthSlice";
-// import { Tooltip } from 'bootstrap';
+import { AppContext } from "../../../App";
+import clsx from "clsx";
 
 function Layout(props) {
   const nav = useNavigate();
+  const { currentPage, setCurrentPage } = useContext(AppContext);
+
   const company = useSelector((state) => state.employerAuth.current.employer);
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
   const dispatch = useDispatch();
@@ -29,6 +32,10 @@ function Layout(props) {
     const res = await authApi.getMe(2);
     dispatch(employerAuthActions.setUser(res));
   };
+  const handleChangePage = (url) => {
+    nav(url);
+    setCurrentPage(url);
+  };
 
   useEffect(() => {
     if (!localStorage.getItem("employer_jwt")) {
@@ -36,113 +43,77 @@ function Layout(props) {
     } else {
       getMe();
     }
-    // var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    // tooltipTriggerList.map(function (tooltipTriggerEl) {
-    //     return new Tooltip(tooltipTriggerEl)
-    // })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      <nav
-        className="navbar border-bottom bg-mlight fixed-top"
-        style={{ minHeight: "70px" }}
-      >
-        <div className="navbar-brand ms-3">Recruitment</div>
-        {isAuth && (
-          <div className="dropdown" style={{ cursor: "pointer" }}>
-            <div
-              className="d-flex align-items-center me-5 dropdown-toggle"
-              data-bs-toggle="dropdown"
-            >
-              {/* <div data-bs-toggle="tooltip" title="company"> */}
-              <BsFillPersonFill style={{ fontSize: "26px" }} />
-              Company Account
-              {/* </div>                         */}
-            </div>
-            <ul className="dropdown-menu">
-              <li className="dropdown-item" onClick={handleLogout}>
-                Đăng xuất
-              </li>
-            </ul>
+      <nav className="navbar border-bottom shadow-sm fixed-top">
+        <div className="navbar-brand ms-3 text-secondary">Recruitment</div>
+        <div className="dropdown" style={{ cursor: "pointer" }}>
+          <div
+            className="d-flex align-items-center me-5 dropdown-toggle"
+            data-bs-toggle="dropdown"
+          >
+            <BsFillPersonFill style={{ fontSize: "26px" }} />
+            Company Account
           </div>
-        )}
+          <ul className="dropdown-menu">
+            <li className="dropdown-item" onClick={handleLogout}>
+              Đăng xuất
+            </li>
+          </ul>
+        </div>
       </nav>
-
-      {isAuth ? (
-        <div className="d-flex" style={{ marginTop: "70px" }}>
-          <div
-            className="border-end bg-mlight"
-            style={{ width: "280px", minHeight: "90.5vh" }}
-          >
-            <ul className="nav flex-column">
-              <li>
-                <div
-                  className="border-bottom text-center text-danger py-3"
-                  style={{ fontSize: "17px" }}
-                >
-                  {company && company.name}
-                </div>
-              </li>
-              <li className="nav-item mt-3" style={{ width: "100%" }}>
-                <Link to="/employer" className="nav-link empr-item">
-                  <span className="ms-5 d-flex align-items-center empr-item-color">
-                    <AiTwotoneAppstore style={{ fontSize: "20px" }} />{" "}
-                    &nbsp;Dashboard
-                  </span>
-                </Link>
-              </li>
-              <li className="nav-item mt-3" style={{ width: "100%" }}>
-                <Link to="#" className="nav-link empr-item ">
-                  <span className="ms-5 d-flex align-items-center empr-item-color">
-                    <BsMessenger style={{ fontSize: "17px" }} /> &nbsp;Tin nhắn
-                  </span>
-                </Link>
-              </li>
-              <li className="nav-item mt-3" style={{ width: "100%" }}>
-                <Link
-                  to="/employer/job-management"
-                  className="nav-link empr-item"
-                >
-                  <span className="ms-5 d-flex align-items-center empr-item-color">
-                    <BsFillBriefcaseFill style={{ fontSize: "18px" }} />{" "}
-                    &nbsp;Việc làm
-                  </span>
-                </Link>
-              </li>
-              <li className="nav-item mt-3" style={{ width: "100%" }}>
-                <Link
-                  to={`/employer/candidate-list`}
-                  className="nav-link empr-item"
-                >
-                  <span className="ms-5 d-flex align-items-center empr-item-color">
-                    <BsFillPeopleFill style={{ fontSize: "20px" }} /> &nbsp;Ứng
-                    viên
-                  </span>
-                </Link>
-              </li>
-              <li className="nav-item mt-3" style={{ width: "100%" }}>
-                <Link to="#" className="nav-link empr-item">
-                  <span className="ms-5 d-flex align-items-center empr-item-color">
-                    <AiFillProfile style={{ fontSize: "20px" }} /> &nbsp;Công ty
-                  </span>
-                </Link>
-              </li>
-            </ul>
+      <div
+        className="d-flex flex-column flex-lg-row"
+        style={{ marginTop: "57px" }}
+      >
+        <div className="ts-smd fw-500 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-bottom border-lg-end">
+          <div className="text-center text-main border-lg-bottom py-3 px-2 fw-500">
+            {company && company.name}
           </div>
           <div
-            style={{
-              width: "calc(1536px - 280px)",
-              backgroundColor: "#bbb8b83a",
-            }}
+            className={clsx(
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+              currentPage === "/employer" && "bg-mlight text-main"
+            )}
+            onClick={() => handleChangePage("/employer")}
           >
-            {props.children}
+            <AiTwotoneAppstore className="fs-5 me-1" />
+            Dashboard
+          </div>
+          <div
+            className={clsx(
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+              currentPage === "/employer/jobs" && "bg-mlight text-main"
+            )}
+            onClick={() => handleChangePage("/employer/jobs")}
+          >
+            <BsFillBriefcaseFill className="ts-lg me-1" />
+            Việc làm
+          </div>
+          <div
+            className={clsx(
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+              currentPage === "/employer/candidates" && "bg-mlight text-main"
+            )}
+            onClick={() => handleChangePage("/employer/candidates")}
+          >
+            <BsFillPeopleFill className="fs-5 me-1" /> Ứng viên
+          </div>
+          <div
+            className={clsx(
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+              currentPage === "#" && "bg-mlight text-main"
+            )}
+            onClick={() => handleChangePage("#")}
+          >
+            <AiFillProfile className="fs-5 me-1" /> Công ty
           </div>
         </div>
-      ) : (
-        <div>{props.children}</div>
-      )}
+        <div className="content-part page-body">{props.children}</div>
+      </div>
     </>
   );
 }

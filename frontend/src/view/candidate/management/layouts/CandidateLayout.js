@@ -21,6 +21,7 @@ function CandidateLayout(props) {
   const nav = useNavigate();
   const { currentPage, setCurrentPage } = useContext(AppContext);
   const isAuth = useSelector((state) => state.candAuth.isAuth);
+  
   const [personal, setPersonal] = useState({});
   const [educations, setEducations] = useState([]);
   const [experiences, setExperiences] = useState([]);

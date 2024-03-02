@@ -6,7 +6,7 @@ import Company from "./view/candidate/Company";
 import JobList from "./view/candidate/JobList";
 import Job from "./view/candidate/Job";
 import EmployerLayout from "./view/employer/layouts/Layout";
-import Login from "./view/employer/auth/Login";
+import EmployerLogin from "./view/employer/auth/Login";
 import CandidateList from "./view/employer/candidates/CandidateList";
 import JobManagement from "./view/employer/jobs/JobManagement";
 import CandidateLayout from "./view/candidate/management/layouts/CandidateLayout";
@@ -20,7 +20,7 @@ import Template1 from "./view/candidate/management/resumes/templates/template1";
 import { createContext, useState } from "react";
 
 export const AppContext = createContext();
-  
+
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
 
@@ -70,13 +70,13 @@ function App() {
             element={
               <EmployerLayout>
                 <Routes>
-                  <Route path="login" element={<Login />} />
-                  <Route path="candidate-list" element={<CandidateList />} />
-                  <Route path="job-management" element={<JobManagement />} />
+                  <Route path="candidates" element={<CandidateList />} />
+                  <Route path="jobs" element={<JobManagement />} />
                 </Routes>
               </EmployerLayout>
             }
           />
+          <Route path="employer/login" element={<EmployerLogin />} />
         </Routes>
       </BrowserRouter>
     </AppContext.Provider>
