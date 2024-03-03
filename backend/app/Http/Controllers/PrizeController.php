@@ -26,7 +26,7 @@ class PrizeController extends Controller
         return response()->json($res);
     }
 
-    public function getByCurrentCandidateResumeId($resume_id)
+    public function getByCurCandResumeId($resume_id)
     {
         $candidate_id = Auth::user()->id;
         $res = Prize::where([

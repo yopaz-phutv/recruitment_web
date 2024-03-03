@@ -26,7 +26,7 @@ class ExperienceController extends Controller
         return response()->json($res);
     }
 
-    public function getByCurrentCandidateResumeId($resume_id)
+    public function getByCurCandResumeId($resume_id)
     {
         $candidate_id = Auth::user()->id;
         $res = Experience::where([
@@ -35,7 +35,7 @@ class ExperienceController extends Controller
         ])->get();
         return response()->json($res);
     }
-    
+
     public function create(Request $req)
     {
         $candidate_id = Auth::user()->id;
