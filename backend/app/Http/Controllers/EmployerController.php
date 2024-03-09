@@ -17,7 +17,9 @@ class EmployerController extends Controller
 {
     public function index()
     {
-        return Employer::all();
+        $all = Employer::paginate(6);
+
+        return response()->json($all);
     }
 
     public function show($id)

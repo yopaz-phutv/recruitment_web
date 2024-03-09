@@ -1,6 +1,6 @@
 /* color */
 .bg-main {
-  background-color: #1a8dffea;
+  background-color: #0099cc;
 }
 .bg-mlight {
   background-color: #cce4ffa0 !important;
@@ -9,13 +9,13 @@
   background-color: #f4f5f5 !important;
 }
 .text-main {
-  color: #1a8cff !important;
+  color: #0099cc !important;
 }
 .text-mlight {
   color: #cce4ffa0 !important;
 }
 .border-main {
-  border-color: #1a8cff !important;
+  border-color: #0099cc !important;
 }
 .border-mlight {
   border-color: #cce4ffa0 !important;
@@ -29,7 +29,7 @@
   color: blue !important;
 }
 .hover-text-main:hover {
-  color: #1a8cff !important;
+  color: #0099cc !important;
 }
 .hover-link:hover {
   color: blue !important;
@@ -42,14 +42,14 @@
   background-color: #e8e2e25c;
 }
 .hover-bg-main:hover {
-  background-color: #1a8dffea;
+  background-color: #0099cc;
 }
 .hover-bg-light:hover {
   background-color: #cce4ffa0;
 }
 /* hover border */
 .hover-border-main:hover {
-  border-color: #1a8cff !important;
+  border-color: #0099cc !important;
 }
 /* hover shadow */
 .hover-shadow-sm:hover {

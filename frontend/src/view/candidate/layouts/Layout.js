@@ -242,7 +242,7 @@ function Layout(props) {
       </header>
       <main
         className="page-body"
-        style={{ minHeight: "78vh", marginTop: "57px" }}
+        style={{ marginTop: "57px", paddingBottom: '10px' }}
       >
         {!isAuth && <Login />}
         {props.children}

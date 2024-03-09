@@ -1,21 +1,28 @@
+import "./custom.css";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./custom.css";
 import employerApi from "../../api/employer";
 import { AppContext } from "../../App";
 import { IoMdPeople } from "react-icons/io";
 import { MdLocationOn } from "react-icons/md";
 import { IoIosLink } from "react-icons/io";
+import CPagination from "../../components/CPagination";
 
 function CompanyList() {
   const nav = useNavigate();
   const [companies, setCompanies] = useState([]);
   const [comKey, setComKey] = useState("");
+  const [totalPage, setTotalPage] = useState(1);
   const { setCurrentPage } = useContext(AppContext);
 
   const getAllCompany = async () => {
-    const res = await employerApi.getAll();
-    setCompanies(res);
+    const res = await employerApi.getAll(1);
+    setCompanies(res.data);
+    setTotalPage(res.last_page);
+  };
+  const handleChangePage = async (page) => {
+    const res = await employerApi.getAll(page);
+    setCompanies(res.data);
   };
 
   const handleSubmit = async (e) => {
@@ -36,10 +43,7 @@ function CompanyList() {
 
   return (
     <div style={{ margin: "0px 100px" }}>
-      <form
-        className="d-flex pt-4"
-        onSubmit={handleSubmit}
-      >
+      <form className="d-flex pt-4" onSubmit={handleSubmit}>
         <input
           type="text"
           className="form-control"
@@ -74,9 +78,7 @@ function CompanyList() {
                     />
                   </div>
                   <div className="container-fluid d-flex align-items-center justify-content-start ps-4 fw-bold">
-                    <span>
-                      {company.name}
-                    </span>
+                    <span>{company.name}</span>
                   </div>
                 </div>
                 <div className="card-body">
@@ -119,7 +121,7 @@ function CompanyList() {
           <h4 className="ms-3 text-start">Không có kết quả nào phù hợp!</h4>
         )}
       </div>
-      <div style={{ minHeight: "25px" }}></div>
+      <CPagination className="justify-content-center" totalPage={totalPage} handleChangePage={handleChangePage} />
     </div>
   );
 }
