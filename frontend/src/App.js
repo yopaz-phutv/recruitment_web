@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./common/style.css";
 import { ToastContainer } from "react-toastify";
 import Home from "./view/candidate/Home";
 import CompanyList from "./view/candidate/CompanyList";
@@ -7,7 +6,7 @@ import Company from "./view/candidate/Company";
 import JobList from "./view/candidate/JobList";
 import Job from "./view/candidate/Job";
 import EmployerLayout from "./view/employer/layouts/Layout";
-import Login from "./view/employer/auth/Login";
+import EmployerLogin from "./view/employer/auth/Login";
 import CandidateList from "./view/employer/candidates/CandidateList";
 import JobManagement from "./view/employer/jobs/JobManagement";
 import CandidateLayout from "./view/candidate/management/layouts/CandidateLayout";
@@ -18,11 +17,16 @@ import Layout from "./view/candidate/layouts/Layout";
 import Profile from "./view/candidate/management/profile";
 import Resume from "./view/candidate/management/resumes";
 import Template1 from "./view/candidate/management/resumes/templates/template1";
+import { createContext, useState } from "react";
+
+export const AppContext = createContext();
 
 function App() {
+  const [currentPage, setCurrentPage] = useState("home");
+
   return (
-    <>
-      <ToastContainer autoClose={1000} position="bottom-right"/>
+    <AppContext.Provider value={{ currentPage, setCurrentPage }}>
+      <ToastContainer autoClose={1000} position="bottom-right" />
       <BrowserRouter>
         <Routes>
           <Route
@@ -48,8 +52,11 @@ function App() {
                           <Route path="saved-jobs" element={<SavedJobs />} />
                           <Route path="profile" element={<Profile />} />
                           <Route path="resumes" element={<Resume />} />
-                          <Route path="resumes/create" element={<Template1 />} />
-                          <Route path="resumes/:id" element={<Template1 />} />                          
+                          <Route
+                            path="resumes/create"
+                            element={<Template1 />}
+                          />
+                          <Route path="resumes/:id" element={<Template1 />} />
                         </Routes>
                       </CandidateLayout>
                     }
@@ -63,16 +70,16 @@ function App() {
             element={
               <EmployerLayout>
                 <Routes>
-                  <Route path="login" element={<Login />} />
-                  <Route path="candidate-list" element={<CandidateList />} />
-                  <Route path="job-management" element={<JobManagement />} />
+                  <Route path="candidates" element={<CandidateList />} />
+                  <Route path="jobs" element={<JobManagement />} />
                 </Routes>
               </EmployerLayout>
             }
           />
+          <Route path="employer/login" element={<EmployerLogin />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </AppContext.Provider>
   );
 }
 

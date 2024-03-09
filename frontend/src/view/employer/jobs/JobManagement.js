@@ -13,7 +13,7 @@ import locationApi from "../../../api/location";
 import employerApi from "../../../api/employer";
 
 function JobManagement() {
-  const [jobs, setJobs] = useState([{}]);
+  const [jobs, setJobs] = useState([]);
   const [curJob, setCurJob] = useState({ industries: [], locations: [] });
   const [jtypes, setJtypes] = useState([]);
   const [jlevels, setJlevels] = useState([]);
@@ -74,25 +74,19 @@ function JobManagement() {
 
   return (
     <>
-      <div
-        className="bg-white"
-        style={{
-          height: "94%",
-          margin: "17px 18px 0px 18px",
-        }}
-      >
-        <div style={{ marginLeft: "35px" }}>
-          <h4 className="pt-3">Danh sách việc làm</h4>
-          <div className="clearfix mb-3 mt-4">
+      <div className="bg-white ms-4 mt-3" style={{ height: "90%" }}>
+        <div className="pt-3" style={{ marginLeft: "45px" }}>
+          <h5 className="text-main">Danh sách việc làm</h5>
+          <div className="clearfix my-3" style={{ width: "93%" }}>
             <form
-              className="float-start"
+              className=" float-start"
               style={{ width: "35%" }}
               onSubmit={handleSubmit(getJobList)}
             >
               <div className="input-group">
                 <input
                   type="text"
-                  className="form-control border-end-0"
+                  className="form-control form-control-sm border-end-0"
                   placeholder="Nhập tên, hình thức, cấp bậc việc làm"
                   {...register("searchKey")}
                 />
@@ -103,17 +97,16 @@ function JobManagement() {
             </form>
             <button
               type="button"
-              className="mt-2 btn btn-info text-white d-flex align-items-center float-end"
+              className="float-end d-flex align-items-center btn btn-info btn-sm text-white me-3"
               data-bs-toggle="modal"
               data-bs-target="#jobCreating"
-              style={{ marginRight: "65px" }}
             >
               <AiOutlinePlus />
               Tạo mới
             </button>
           </div>
-          <table className="table border text-center" style={{ width: "96%" }}>
-            <thead className="table-danger" style={{ fontSize: "15px" }}>
+          <table className="table border text-center shadow-sm" style={{ width: "93%" }}>
+            <thead className="table-primary ts-smd">
               <tr>
                 <th style={{ width: "25%" }}>Tên</th>
                 <th style={{ width: "13%" }}>Hình thức</th>

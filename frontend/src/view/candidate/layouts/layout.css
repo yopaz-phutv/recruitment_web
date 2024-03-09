@@ -1,26 +1,18 @@
 .sidebar-right {
     margin-right: 43px;
 }
-.bell{
-    cursor: pointer;
-    position: relative;
-    bottom: 2px;
-}
 .bell-new {
     position: absolute;
     font-size: 10px;
     color: red;
-    bottom: 21px;
-    right: 24px;    
+    bottom: 17px;
+    right: 26px;    
 }
-.bell-part ul.dropdown-menu{
-    left: -6cm;
+.msg-list {
+    right: -1cm;
     font-size: 14.5px;
     min-width: 340px;
 }
-.msg-item:active{
-    background-color: rgba(50, 149, 230, 0.308);
-}
-.no-underline {
-    text-decoration: none;
+.page-body {
+    background-color: #eceff2dd;
 }

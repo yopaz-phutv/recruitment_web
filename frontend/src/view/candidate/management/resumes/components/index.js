@@ -65,7 +65,7 @@ export const InforPart = ({ children, className, type }) => {
       {children}
       {showOp && (
         <div className="position-absolute start-0 bottom-100">
-          <div className="d-flex gap-1 align-items-center rounded shadow p-1 bg-light">
+          <div className="d-flex gap-1 align-items-center rounded shadow p-1 bg-white">
             <AiFillCaretDown
               className="fs-5 text-secondary pointer"
               onClick={() => handleChangePos("DOWN")}
@@ -89,7 +89,7 @@ export const InforPart = ({ children, className, type }) => {
               />
               {showMenu && (
                 <div
-                  className="position-absolute top-100 start-0 bg-light border rounded shadow-sm ts-sm z-index-3"
+                  className="position-absolute top-100 start-0 bg-white border rounded shadow-sm ts-sm z-index-3"
                   style={{ minWidth: "160px" }}
                 >
                   {partMenu?.map((item, index) => (
@@ -163,7 +163,7 @@ export const ContentItem = ({
       {customChildren}
       {showOp && (
         <div className="position-absolute bottom-100 end-0 z-index-2">
-          <div className="d-flex gap-1 align-items-center rounded shadow p-1 bg-light">
+          <div className="d-flex gap-1 align-items-center rounded shadow p-1 bg-white">
             <AiFillCaretDown className="fs-5 text-secondary pointer" />
             <AiFillCaretUp className="fs-5 text-secondary pointer" />
             <MdDelete
@@ -183,7 +183,7 @@ export const ContentItem = ({
                 <IoMdSettings className="fs-5 text-secondary pointer mb-1" />
                 {showMenu && (
                   <div
-                    className="position-absolute top-100 end-0 bg-light border rounded shadow-sm ts-sm z-index-3"
+                    className="position-absolute top-100 end-0 bg-white border rounded shadow-sm ts-sm z-index-3"
                     style={{ minWidth: "160px" }}
                   >
                     {menu?.map((item, index) => (

@@ -32,7 +32,7 @@ const FlexInput = React.forwardRef(
       <div
         className={clsx("d-flex gap-1 align-items-start z-index-1", className)}
       >
-        <div className="text-main">{iconLeft || null}</div>
+        <div className="cv-text-main">{iconLeft || null}</div>
         <textarea
           className={clsx(
             "autoresize resize-none overflow-hidden w-100",

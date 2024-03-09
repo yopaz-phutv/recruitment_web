@@ -1,6 +1,14 @@
-.empr-item:hover {
-    background-color: #ffa60089;  
+@media screen and (min-width: 992px) {
+    .menu-part {
+        width: 20%;
+        height: 100vh;        
+    }
+    .content-part {
+        width: 80%;
+        height: 100vh;
+        overflow-y: auto;
+    }
 }
-.empr-item-color {
-    color: #0a067eec;
+.page-body {
+    background-color: #eceff2dd;
 }

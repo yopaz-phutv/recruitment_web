@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { AiTwotoneAppstore } from "react-icons/ai";
 import "./layout.css";
-import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+// import { AiTwotoneAppstore } from "react-icons/ai";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import candidateApi from "../../../../api/candidate";
 import educationApi from "../../../../api/education";
@@ -12,11 +12,16 @@ import certificateApi from "../../../../api/certificate";
 import prizeApi from "../../../../api/prize";
 import activityApi from "../../../../api/activity";
 import otherApi from "../../../../api/other";
+import clsx from "clsx";
+import { AppContext } from "../../../../App";
 
 export const CandidateContext = createContext();
 
 function CandidateLayout(props) {
+  const nav = useNavigate();
+  const { currentPage, setCurrentPage } = useContext(AppContext);
   const isAuth = useSelector((state) => state.candAuth.isAuth);
+  
   const [personal, setPersonal] = useState({});
   const [educations, setEducations] = useState([]);
   const [experiences, setExperiences] = useState([]);
@@ -26,7 +31,6 @@ function CandidateLayout(props) {
   const [prizes, setPrizes] = useState([]);
   const [activities, setActivities] = useState([]);
   const [others, setOthers] = useState([]);
-
   const [cvMode, setCvMode] = useState("CREATE_0");
 
   const getPersonal = async () => {
@@ -78,6 +82,10 @@ function CandidateLayout(props) {
       getOthers();
     }
   }, [isAuth]);
+  const handleChangePage = (url) => {
+    nav(url);
+    setCurrentPage(url);
+  };
 
   return (
     <CandidateContext.Provider
@@ -113,68 +121,58 @@ function CandidateLayout(props) {
         setCvMode,
       }}
     >
-      <div className="d-flex">
-        <div
-          className="border-end bg-light"
-          style={{ width: "280px", minHeight: "90.9vh" }}
-        >
-          <ul className="nav flex-column">
-            <li>
-              <div
-                className="border-bottom fw-bold text-center py-4"
-                style={{ fontSize: "18px" }}
-              >
-                Tài khoản của tôi
-              </div>
-            </li>
-            <li className="nav-item border-bottom py-1 cand-item">
-              <Link to="/candidate" className="nav-link">
-                <span className="ms-4 d-flex align-items-center cand-item-color">
-                  <AiTwotoneAppstore style={{ fontSize: "20px" }} />
-                  &nbsp;Dashboard
-                </span>
-              </Link>
-            </li>
-            <li className="nav-item border-bottom py-1 cand-item">
-              <Link to="/candidate/profile" className="nav-link">
-                <span className="ms-4 d-flex align-items-center cand-item-color">
-                  Profile cá nhân
-                </span>
-              </Link>
-            </li>
-            <li className="nav-item border-bottom py-1 cand-item">
-              <Link to="/candidate/resumes" className="nav-link">
-                <span className="ms-4 d-flex align-items-center cand-item-color">
-                  Quản lý hồ sơ
-                </span>
-              </Link>
-            </li>
-            {/* <li className="nav-item border-bottom py-1 cand-item">
-              <Link to="/candidate/resumes/create" className="nav-link">
-                <span className="ms-4 d-flex align-items-center cand-item-color">
-                  Tạo hồ sơ trực tuyến
-                </span>
-              </Link>
-            </li> */}
-            <li className="nav-item border-bottom py-1 cand-item">
-              <Link to="/candidate/applied-jobs" className="nav-link">
-                <span className="ms-4 d-flex align-items-center cand-item-color">
-                  {/* <AiTwotoneAppstore style={{ fontSize: "20px" }} /> */}
-                  Việc làm đã nộp
-                </span>
-              </Link>
-            </li>
-            <li className="nav-item border-bottom py-1 cand-item">
-              <Link to="/candidate/saved-jobs" className="nav-link">
-                <span className="ms-4 d-flex align-items-center cand-item-color">
-                  {/* <AiTwotoneAppstore style={{ fontSize: "20px" }} /> */}
-                  Việc làm đã lưu
-                </span>
-              </Link>
-            </li>
-          </ul>
+      <div className="d-flex flex-column flex-lg-row">
+        <div className="ts-smd fw-500 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-end">
+          <div className="text-center text-main border-bottom py-3 px-2 ts-lg fw-500">
+            Tài khoản của tôi
+          </div>
+          <div
+            className={clsx(
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+              currentPage === "/candidate" && "bg-mlight text-main"
+            )}
+            onClick={() => handleChangePage("/candidate")}
+          >
+            Dashboard
+          </div>
+          <div
+            className={clsx(
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+              currentPage === "/candidate/profile" && "bg-mlight text-main"
+            )}
+            onClick={() => handleChangePage("/candidate/profile")}
+          >
+            Profile cá nhân
+          </div>
+          <div
+            className={clsx(
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+              currentPage === "/candidate/resumes" && "bg-mlight text-main"
+            )}
+            onClick={() => handleChangePage("/candidate/resumes")}
+          >
+            Quản lý hồ sơ
+          </div>
+          <div
+            className={clsx(
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+              currentPage === "/candidate/applied-jobs" && "bg-mlight text-main"
+            )}
+            onClick={() => handleChangePage("/candidate/applied-jobs")}
+          >
+            Việc làm đã nộp
+          </div>
+          <div
+            className={clsx(
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+              currentPage === "/candidate/saved-jobs" && "bg-mlight text-main"
+            )}
+            onClick={() => handleChangePage("/candidate/saved-jobs")}
+          >
+            Việc làm đã lưu
+          </div>
         </div>
-        <div style={{ width: "calc(1536px - 280px)" }}>{props.children}</div>
+        <div className="content-part">{props.children}</div>
       </div>
     </CandidateContext.Provider>
   );

@@ -69,15 +69,12 @@ function CandidateList() {
 
   return (
     <>
-      <div
-        className="bg-white"
-        style={{
-          height: "94%",
-          margin: "15px 0px 0px 18px",
-        }}
-      >
+      <div className="bg-white ms-4 mt-3" style={{ height: "90%" }}>
+        <h5 className="mb-1 pt-3 text-main" style={{ marginLeft: "45px" }}>
+          Danh sách ứng viên
+        </h5>
         <Tab.Container onSelect={(k) => setStep(k)}>
-          <Nav className="pb-1 justify-content-center bg-light shadow-sm">
+          <Nav className="bg-mlight w-50 mx-auto pb-1 justify-content-center border">
             <Nav.Item>
               <Nav.Link eventKey="step1">
                 <span className={makeTabStyle("step1")}>Duyệt hồ sơ</span>
@@ -95,11 +92,8 @@ function CandidateList() {
             </Nav.Item>
           </Nav>
         </Tab.Container>
-        <div style={{ marginLeft: "35px" }}>
-          <Form
-            className="mt-3"
-            onSubmit={handleSubmit((data) => setKeyword(data.keyword))}
-          >
+        <div className="mt-3" style={{ marginLeft: "45px" }}>
+          <Form onSubmit={handleSubmit((data) => setKeyword(data.keyword))}>
             <Form.Group className="input-group" style={{ width: "35%" }}>
               <Form.Control
                 size="sm"
@@ -113,7 +107,7 @@ function CandidateList() {
               </button>
             </Form.Group>
             {step !== "step3" && (
-              <div className="d-flex align-items-center mt-3 ts-smd">
+              <div className="d-flex align-items-center mt-2 ts-smd">
                 <div className="fw-500">Trạng thái: </div>&nbsp;
                 <Form.Select
                   size="sm"
@@ -142,11 +136,11 @@ function CandidateList() {
             )}
           </Form>
           <div className="mt-3" style={{ width: "90%" }}>
-            <table className="table table-borderless border text-center">
-              <thead className="table-danger ts-smd">
+            <table className="table table-borderless border text-center shadow-sm">
+              <thead className="table-primary ts-smd">
                 <tr>
                   <th style={{ width: "17%" }}>Họ tên</th>
-                  <th style={{}}>Vị trí ứng tuyển</th>
+                  <th>Vị trí ứng tuyển</th>
                   <th style={{ width: "15%" }}>Thời gian</th>
                   <th style={{ width: "12%" }}>Số điện thoại</th>
                   <th style={{ width: "18%" }}>Email</th>

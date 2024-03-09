@@ -15,14 +15,13 @@ class JobController extends Controller
     public function index()
     {
         $jobs = Job::query()
-            ->with('employer')
+            ->with(['employer', 'locations'])
             ->where('is_active', 1)
-            ->select('jobs.*', DB::raw('DATE_FORMAT(created_at, "%d/%m/%Y") as postDate'))
             ->orderByDesc('created_at')
             ->get();
-        for ($i = 0; $i < count($jobs); $i++) {
-            $this->addLocationInf($jobs[$i]);
-        }
+        // for ($i = 0; $i < count($jobs); $i++) {
+        //     $this->addLocationInf($jobs[$i]);
+        // }
 
         return response()->json([
             'inf' => $jobs
@@ -140,11 +139,8 @@ class JobController extends Controller
                 return $query->where('jlevel_id', '=', $req->jlevel_id);
             })
             ->where('jobs.is_active', 1)
-            ->select('jobs.*')
+            ->with('locations')
             ->get();
-        for ($i = 0; $i < count($jobs); $i++) {
-            $this->addLocationInf($jobs[$i]);
-        }
 
         return response()->json([
             'inf' => $jobs
@@ -160,7 +156,7 @@ class JobController extends Controller
         $location = array2String($res);
         $job['location'] = $location;
         //format date to display:
-        $job['expire_at'] = Carbon::parse($job['expire_at'])->format('d/m/Y');
+        // $job['expire_at'] = Carbon::parse($job['expire_at'])->format('d/m/Y');
         // $job['updated_at'] = Carbon::parse($job['updated_at'])->toDateTimeString();
     }
     public function apply(Request $req)

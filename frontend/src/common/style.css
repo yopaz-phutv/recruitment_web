@@ -1,3 +1,61 @@
+/* color */
+.bg-main {
+  background-color: #0099cc;
+}
+.bg-mlight {
+  background-color: #cce4ffa0 !important;
+}
+.bg-disabled {
+  background-color: #f4f5f5 !important;
+}
+.text-main {
+  color: #0099cc !important;
+}
+.text-mlight {
+  color: #cce4ffa0 !important;
+}
+.border-main {
+  border-color: #0099cc !important;
+}
+.border-mlight {
+  border-color: #cce4ffa0 !important;
+}
+/* hover */
+/* hover text */
+.item-hover:hover {
+  color: blue;
+}
+.hover-text-bold:hover {
+  color: blue !important;
+}
+.hover-text-main:hover {
+  color: #0099cc !important;
+}
+.hover-link:hover {
+  color: blue !important;
+}
+.hover-underline:hover {
+  text-decoration: underline;
+}
+/* hover background */
+.hover-bg-1:hover {
+  background-color: #e8e2e25c;
+}
+.hover-bg-main:hover {
+  background-color: #0099cc;
+}
+.hover-bg-light:hover {
+  background-color: #cce4ffa0;
+}
+/* hover border */
+.hover-border-main:hover {
+  border-color: #0099cc !important;
+}
+/* hover shadow */
+.hover-shadow-sm:hover {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
 /* font size */
 .ts-xs {
   font-size: 12.75px;
@@ -20,7 +78,6 @@
 .ts-xxl {
   font-size: 24px;
 }
-/* other font size */
 .ts-17 {
   font-size: 17px;
 }
@@ -62,6 +119,9 @@
 .w-95 {
   width: 95% !important;
 }
+.w-70 {
+  width: 70% !important;
+}
 .w-80 {
   width: 80% !important;
 }
@@ -80,10 +140,6 @@
 }
 .resize-none {
   resize: none;
-}
-/* hover */
-.item-hover:hover {
-  color: blue;
 }
 /* z-index */
 .z-index-1 {
@@ -107,10 +163,4 @@
 }
 .pointer {
   cursor: pointer;
-}
-.kkk {
-  background-color: rgb(233, 238, 240);
-}
-.bg-disabled {
-  background-color: rgb(228, 223, 223);
 }
