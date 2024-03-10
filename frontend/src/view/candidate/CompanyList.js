@@ -42,7 +42,7 @@ function CompanyList() {
   }, [setCurrentPage]);
 
   return (
-    <div style={{ margin: "0px 100px" }}>
+    <div style={{ margin: "0px 100px", paddingBottom: "20px" }}>
       <form className="d-flex pt-4" onSubmit={handleSubmit}>
         <input
           type="text"
