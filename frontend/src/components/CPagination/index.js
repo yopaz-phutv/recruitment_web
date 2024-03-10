@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { useState } from "react";
 import {
   FiChevronLeft,
   FiChevronsLeft,
@@ -11,16 +10,17 @@ import { BsThreeDots } from "react-icons/bs";
 export default function CPagination({
   className,
   totalPage,
-  handleChangePage,
+  curPage,
+  setCurPage,
+  getCompanies,
 }) {
-  const [curPage, setCurPage] = useState(1);
   const frameIndexNum = 5;
   const diffToMiddle = Math.floor(frameIndexNum / 2);
   const handleClickPage = (pageNum, offset) => {
     const current = pageNum + offset;
     if (current > 0 && current <= totalPage) {
       setCurPage(current);
-      handleChangePage(current);
+      getCompanies(current);
     }
   };
 

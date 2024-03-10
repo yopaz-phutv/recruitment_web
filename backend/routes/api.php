@@ -52,7 +52,6 @@ Route::controller(EmployerController::class)->prefix('companies')->group(functio
     Route::get('{id}/getByID', 'show');
     Route::get('getHotList', 'getHotList');
     Route::delete('{id}', 'destroy');
-    // Route::get('', 'search');
     Route::get('{id}/getComJobs', 'getComJobs');
     Route::get('{id}/getJobList', 'getJobList');
     Route::get('getCandidateList', 'getCandidateList')->middleware('jwt');

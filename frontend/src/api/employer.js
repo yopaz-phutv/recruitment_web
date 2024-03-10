@@ -3,8 +3,8 @@ import employerAxios from "./employerAxios";
 
 const prefix = "/companies";
 const employerApi = {
-  getAll: (page) => {
-    return commonAxios.get(`${prefix}?page=${page}`);
+  getList: (params) => {
+    return commonAxios.get(`${prefix}?${new URLSearchParams(params).toString()}`);
   },
   getById: (id) => {
     return commonAxios.get(`${prefix}/${id}/getByID`);

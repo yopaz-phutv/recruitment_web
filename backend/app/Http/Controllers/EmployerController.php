@@ -15,11 +15,16 @@ use Illuminate\Support\Facades\DB;
 
 class EmployerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $all = Employer::paginate(6);
+        $keyw = $request->query('keyword');
+        $query = Employer::query();
+        if ($keyw) {
+            $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyw) . '%']);
+        }
+        $res = $query->paginate(6);
 
-        return response()->json($all);
+        return response()->json($res);
     }
 
     public function show($id)
@@ -50,14 +55,6 @@ class EmployerController extends Controller
         }
 
         return response()->json($res);
-    }
-
-    public function search(Request $request)
-    {
-        $keyw = $request->query('keyword');
-        $companies = Employer::whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyw) . '%'])->get();
-
-        return $companies;
     }
 
     public function getComJobs($id)

@@ -1,5 +1,5 @@
 import "./custom.css";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import employerApi from "../../api/employer";
 import { AppContext } from "../../App";
@@ -13,33 +13,28 @@ function CompanyList() {
   const [companies, setCompanies] = useState([]);
   const [comKey, setComKey] = useState("");
   const [totalPage, setTotalPage] = useState(1);
+  const [curPage, setCurPage] = useState(1);
   const { setCurrentPage } = useContext(AppContext);
 
-  const getAllCompany = async () => {
-    const res = await employerApi.getAll(1);
+  const getCompanies = async (page = 1) => {    
+    const res = await employerApi.getList({ page, keyword: comKey });
     setCompanies(res.data);
     setTotalPage(res.last_page);
   };
-  const handleChangePage = async (page) => {
-    const res = await employerApi.getAll(page);
-    setCompanies(res.data);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(comKey);
-    const res = await employerApi.search(comKey);
-    setCompanies(res);
+    setCurPage(1);    
+    getCompanies();
   };
-
   const handleChange = (e) => {
     setComKey(e.target.value);
   };
 
   useEffect(() => {
     setCurrentPage("companies");
-    getAllCompany();
-  }, [setCurrentPage]);
+    getCompanies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div style={{ margin: "0px 100px", paddingBottom: "20px" }}>
@@ -124,10 +119,12 @@ function CompanyList() {
       <CPagination
         className="justify-content-center"
         totalPage={totalPage}
-        handleChangePage={handleChangePage}
+        curPage={curPage}
+        setCurPage={setCurPage}
+        getCompanies={getCompanies}
       />
     </div>
   );
 }
 
-export default React.memo(CompanyList);
+export default CompanyList;
