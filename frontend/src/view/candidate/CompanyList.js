@@ -121,7 +121,11 @@ function CompanyList() {
           <h4 className="ms-3 text-start">Không có kết quả nào phù hợp!</h4>
         )}
       </div>
-      <CPagination className="justify-content-center" totalPage={totalPage} handleChangePage={handleChangePage} />
+      <CPagination
+        className="justify-content-center"
+        totalPage={totalPage}
+        handleChangePage={handleChangePage}
+      />
     </div>
   );
 }
