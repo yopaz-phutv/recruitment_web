@@ -7,24 +7,32 @@ import { IoMdPeople } from "react-icons/io";
 import { MdLocationOn } from "react-icons/md";
 import { IoIosLink } from "react-icons/io";
 import CPagination from "../../components/CPagination";
+import Spinner from "react-bootstrap/Spinner";
 
-function CompanyList() {  
+function CompanyList() {
   const nav = useNavigate();
+  const { setCurrentPage } = useContext(AppContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [companies, setCompanies] = useState([]);
   const [comKey, setComKey] = useState("");
   const [totalPage, setTotalPage] = useState(1);
   const [curPage, setCurPage] = useState(1);
-  const { setCurrentPage } = useContext(AppContext);
 
-  const getCompanies = async (page = 1) => {    
+  const getCompanies = async (page = 1) => {
     const res = await employerApi.getList({ page, keyword: comKey });
     setCompanies(res.data);
     setTotalPage(res.last_page);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setCurPage(1);    
-    getCompanies();
+    setCurPage(1);
+    try {
+      setIsLoading(true);
+      await getCompanies();
+      setIsLoading(false);
+    } catch (e) {
+      setIsLoading(false);
+    }
   };
   const handleChange = (e) => {
     setComKey(e.target.value);
@@ -48,6 +56,7 @@ function CompanyList() {
           onChange={handleChange}
         />
         <button type="submit" className="ms-2 btn btn-primary">
+          {isLoading && <Spinner size="sm" className="me-1" />}
           Tìm kiếm
         </button>
       </form>
