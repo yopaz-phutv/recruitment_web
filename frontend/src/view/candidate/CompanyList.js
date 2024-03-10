@@ -8,7 +8,7 @@ import { MdLocationOn } from "react-icons/md";
 import { IoIosLink } from "react-icons/io";
 import CPagination from "../../components/CPagination";
 
-function CompanyList() {
+function CompanyList() {  
   const nav = useNavigate();
   const [companies, setCompanies] = useState([]);
   const [comKey, setComKey] = useState("");
