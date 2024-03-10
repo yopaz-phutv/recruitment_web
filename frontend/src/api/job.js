@@ -1,11 +1,14 @@
 import candidateAxios from "./candidateAxios";
 import commonAxios from "./commonAxios";
 import employerAxios from "./employerAxios";
+import queryString from "query-string";
 
 const prefix = "/jobs";
 const jobApi = {
-  getAll: () => {
-    return commonAxios.get(`${prefix}`);
+  getList: (params) => {
+    return commonAxios.get(
+      `${prefix}?${queryString.stringify(params, { arrayFormat: "index" })}`
+    );
   },
   getById: (id) => {
     return commonAxios.get(`${prefix}/${id}/getByID`);

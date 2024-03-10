@@ -6,7 +6,7 @@ const prefix = "/companies";
 const employerApi = {
   getList: (params) => {
     return commonAxios.get(
-      `${prefix}?${queryString.stringify(params, { arrayFormat: "bracket" })}`
+      `${prefix}?${queryString.stringify(params, { arrayFormat: "index" })}`
     );
   },
   getById: (id) => {

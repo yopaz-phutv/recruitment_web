@@ -13,48 +13,29 @@ import { MdLocationOn } from "react-icons/md";
 import dayjs from "dayjs";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import CPagination from "../../components/CPagination";
 
 function JobList() {
   const nav = useNavigate();
-  const [jobs, setJobs] = useState([{ employer: {} }]);
+  const { setCurrentPage } = useContext(AppContext);
+  const { register, handleSubmit } = useForm();
+  const [jobs, setJobs] = useState([]);
   const [industries, setIndustries] = useState([]);
   const [locations, setLocations] = useState([]);
   const [jtypes, setJtypes] = useState([]);
   const [jlevels, setJlevels] = useState([]);
-  const { setCurrentPage } = useContext(AppContext);
-  const { register, handleSubmit } = useForm();
-  // const [isSavedJobs, setIsSavedJobs] = useState([]);
-  // const user = JSON.parse(localStorage.getItem('candidate'))
+  const [totalPage, setTotalPage] = useState(1);
+  const [curPage, setCurPage] = useState(1);
+  const [filterConditions, setFilterConditions] = useState({});
 
-  const getAllJobs = async () => {
-    // let tjobs = []
-    const res = await jobApi.getAll();
-    setJobs(res.inf);
-
-    // await axios
-    // .get(`http://127.0.0.1:8000/api/candidates/${user.id}/getSavedJobs`, config)
-    // .then((res) => {
-    //   console.log(res.data);
-    //   let savedJobIDs = res.data
-    //   let mark = 0
-    //   for (let i = 0; i < savedJobIDs.length; i++) {
-    //     for (let j = mark; j < tjobs.length; j++) {
-    //       if(tjobs[j].id === savedJobIDs[i]){
-    //         tjobs[j].isSaved = true
-    //         mark = j+1
-    //         break;
-    //       } else {
-    //         tjobs[j].isSaved = false
-    //       }
-    //     }
-    //   }
-    //   setJobs(tjobs)
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
+  const getJobs = async (page = 1, conditions) => {
+    const res = await jobApi.getList({
+      page,
+      ...(conditions || filterConditions),
+    });
+    setJobs(res.data);
+    setTotalPage(res.last_page);
   };
-
   const getAllIndustries = async () => {
     const res = await industryApi.getAll();
     setIndustries(res.inf);
@@ -76,36 +57,23 @@ function JobList() {
   };
 
   const handleFilter = async (data) => {
-    console.log(data);
-    const res = await jobApi.filter(data);
-    setJobs(res.inf);
+    // console.log(data);
+    setFilterConditions(data);
+    getJobs(1, data);
   };
-
-  // const handleClickSaveBtn = async (index) => {
-  //   let temps = [...isSavedJobs];
-  //   temps[index] = !temps[index];
-  //   setIsSavedJobs(temps);
-  //   await axios
-  //     .get(`http://127.0.0.1:8000/api/candidates/${user.id}/saveJob`)
-  //     .then((res) => {
-  //       console.log(res.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
 
   useEffect(() => {
     setCurrentPage("jobs");
-    getAllJobs();
+    getJobs();
     getAllIndustries();
     getAllLocations();
     getAllJtypes();
     getAllJlevels();
-  }, [setCurrentPage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <div className="pt-3" style={{ margin: "0px 100px" }}>
+    <div className="pt-3 pb-4" style={{ margin: "0px 100px" }}>
       <form
         className="bg-mlight p-3 rounded shadow-sm border"
         onSubmit={handleSubmit(handleFilter)}
@@ -120,7 +88,7 @@ function JobList() {
               className="form-control"
               style={{ width: "300px" }}
               placeholder="Tên công ty"
-              {...register("keyw")}
+              {...register("keyword")}
             />
           </div>
           <div className="me-2">
@@ -196,13 +164,15 @@ function JobList() {
               ))}
             </select>
           </div>
-          <button type="submit" className="border-0 bg-main text-white rounded px-3">
+          <button
+            type="submit"
+            className="border-0 bg-main text-white rounded px-3"
+          >
             <BsSearch className="fs-5" /> Tìm kiếm
           </button>
         </div>
       </form>
-      {/* <h4 className="text-main text-center mt-1 mb-3">Danh sách việc làm</h4> */}
-      <div className="row row-cols-lg-3 pb-5 mt-4">
+      <div className="row row-cols-lg-3 mt-4">
         {jobs.length > 0 ? (
           jobs.map((job) => (
             <div
@@ -215,11 +185,7 @@ function JobList() {
                   className="border d-flex align-items-center px-2"
                   style={{ width: "100px", height: "100px" }}
                 >
-                  <img
-                    src={job.employer.logo}
-                    width="100%"
-                    alt={job.jname}
-                  />
+                  <img src={job.employer.logo} width="100%" alt={job.jname} />
                 </div>
                 <div
                   className="ms-2 mt-1"
@@ -263,10 +229,10 @@ function JobList() {
                         overlay={
                           <Tooltip className="ts-xs">
                             {job.locations?.map((item, index) => (
-                              <>
+                              <div key={`location_${index}`}>
                                 {item.name}
                                 {index !== job.locations?.length - 1 && ", "}
-                              </>
+                              </div>
                             ))}
                           </Tooltip>
                         }
@@ -290,27 +256,24 @@ function JobList() {
                         ngày
                       </span>
                     </div>
-                    {/* <div className="clearfix">
-                      <span>
-                        <strong>Ngày đăng: </strong>
-                        {job.postDate ? job.postDate : "06/04/2023"}
-                      </span>
-                      <span className="float-end me-3">
-                        <strong>Hạn nộp: </strong>
-                        {job.expire_at}
-                      </span>
-                    </div> */}
                   </div>
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <h4 className="my-4 text-start" style={{ marginLeft: "100px" }}>
+          <h4 className="my-4" style={{ marginLeft: "100px" }}>
             Không có kết quả nào phù hợp!
           </h4>
         )}
       </div>
+      <CPagination
+        className="justify-content-center"
+        totalPage={totalPage}
+        curPage={curPage}
+        setCurPage={setCurPage}
+        getList={getJobs}
+      />
     </div>
   );
 }

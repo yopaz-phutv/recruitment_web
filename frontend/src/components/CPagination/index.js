@@ -12,7 +12,7 @@ export default function CPagination({
   totalPage,
   curPage,
   setCurPage,
-  getCompanies,
+  getList,
 }) {
   const frameIndexNum = 5;
   const diffToMiddle = Math.floor(frameIndexNum / 2);
@@ -20,7 +20,7 @@ export default function CPagination({
     const current = pageNum + offset;
     if (current > 0 && current <= totalPage) {
       setCurPage(current);
-      getCompanies(current);
+      getList(current);
     }
   };
 

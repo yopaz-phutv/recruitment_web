@@ -12,20 +12,36 @@ use Illuminate\Support\Facades\DB;
 
 class JobController extends Controller
 {
-    public function index()
+    public function index(Request $req)
     {
-        $jobs = Job::query()
-            ->with(['employer', 'locations'])
-            ->where('is_active', 1)
-            ->orderByDesc('created_at')
-            ->get();
-        // for ($i = 0; $i < count($jobs); $i++) {
-        //     $this->addLocationInf($jobs[$i]);
-        // }
+        $jobs = Job::with(['employer', 'locations'])
+            ->where('jobs.is_active', 1)
+            ->when($req->keyword !== null, function ($query) use ($req) {
+                return $query->join('employers', 'employer_id', '=', 'employers.id')
+                    ->whereRaw('LOWER(employers.name) LIKE ?', ['%' . strtolower($req->keyword) . '%']);
+            })
+            ->when($req->industry_id !== null, function ($query) use ($req) {
+                return $query->join('job_industry', 'jobs.id', '=', 'job_industry.job_id')
+                    ->where('industry_id', $req->industry_id);
+            })
+            ->when($req->location_id !== null, function ($query) use ($req) {
+                return $query->join('job_location', 'jobs.id', '=', 'job_location.job_id')
+                    ->where('location_id', $req->location_id);
+            })
+            ->when($req->salary !== null, function ($query) use ($req) {
+                return $query->where('min_salary', '>=', $req->salary);
+            })
+            ->when($req->jtype_id !== null, function ($query) use ($req) {
+                return $query->where('jtype_id', '=', $req->jtype_id);
+            })
+            ->when($req->jlevel_id !== null, function ($query) use ($req) {
+                return $query->where('jlevel_id', '=', $req->jlevel_id);
+            })
+            ->orderByDesc('jobs.updated_at')
+            ->select('jobs.*')
+            ->paginate(9);
 
-        return response()->json([
-            'inf' => $jobs
-        ], 200);
+        return response()->json($jobs);
     }
     public function show($id)
     {
@@ -114,38 +130,6 @@ class JobController extends Controller
         return response()->json($res);
     }
 
-    public function filter(Request $req)
-    {
-        $jobs = Job::with('employer')
-            ->when($req->keyw !== null, function ($query) use ($req) {
-                return $query->join('employers', 'employer_id', '=', 'employers.id')
-                    ->whereRaw('LOWER(employers.name) LIKE ?', ['%' . strtolower($req->keyw) . '%']);
-            })
-            ->when($req->industry_id !== null, function ($query) use ($req) {
-                return $query->join('job_industry', 'jobs.id', '=', 'job_industry.job_id')
-                    ->where('industry_id', $req->industry_id);
-            })
-            ->when($req->location_id !== null, function ($query) use ($req) {
-                return $query->join('job_location', 'jobs.id', '=', 'job_location.job_id')
-                    ->where('location_id', $req->location_id);
-            })
-            ->when($req->salary !== null, function ($query) use ($req) {
-                return $query->where('min_salary', '>=', $req->salary);
-            })
-            ->when($req->jtype_id !== null, function ($query) use ($req) {
-                return $query->where('jtype_id', '=', $req->jtype_id);
-            })
-            ->when($req->jlevel_id !== null, function ($query) use ($req) {
-                return $query->where('jlevel_id', '=', $req->jlevel_id);
-            })
-            ->where('jobs.is_active', 1)
-            ->with('locations')
-            ->get();
-
-        return response()->json([
-            'inf' => $jobs
-        ], 200);
-    }
     public function addLocationInf($job)
     {
         $res = DB::table('job_location')
