@@ -66,7 +66,6 @@ Route::controller(JobController::class)->prefix('jobs')->group(function () {
     Route::post('', 'create');
     Route::post('{id}/update', 'update');
     Route::get('{id}/getJobIndustries', 'getJobIndustries');
-    Route::post('filter', 'filter');
     Route::post('{id}/apply', 'apply')->middleware('jwt');
     Route::get('{id}/checkApplying', 'checkApplying')->middleware('jwt');
 });
