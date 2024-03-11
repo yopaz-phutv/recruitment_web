@@ -1,6 +1,6 @@
 /* color */
 .bg-main {
-  background-color: #0099cc;
+  background-color: #0099cc !important;
 }
 .bg-mlight {
   background-color: #cce4ffa0 !important;
@@ -31,6 +31,9 @@
 .hover-text-main:hover {
   color: #0099cc !important;
 }
+.hover-text-white:hover {
+  color: white !important;
+}
 .hover-link:hover {
   color: blue !important;
 }
@@ -39,13 +42,16 @@
 }
 /* hover background */
 .hover-bg-1:hover {
-  background-color: #e8e2e25c;
+  background-color: #e8e2e25c !important;
 }
 .hover-bg-main:hover {
-  background-color: #0099cc;
+  background-color: #0099cc !important;
 }
 .hover-bg-light:hover {
-  background-color: #cce4ffa0;
+  background-color: #cce4ffa0 !important;
+}
+.hover-bg-primary:hover {
+  background-color: #0a58ca !important;
 }
 /* hover border */
 .hover-border-main:hover {
@@ -163,4 +169,18 @@
 }
 .pointer {
   cursor: pointer;
+}
+.form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #ced4da;
+  outline: 0;
+  box-shadow: none;
+}
+.form-select:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #ced4da;
+  outline: 0;
+  box-shadow: none;
 }

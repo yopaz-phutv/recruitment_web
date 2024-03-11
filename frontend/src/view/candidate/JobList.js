@@ -14,6 +14,7 @@ import dayjs from "dayjs";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import CPagination from "../../components/CPagination";
+import CMulSelect from "../../components/CMulSelect";
 
 function JobList() {
   const nav = useNavigate();
@@ -27,6 +28,7 @@ function JobList() {
   const [totalPage, setTotalPage] = useState(1);
   const [curPage, setCurPage] = useState(1);
   const [filterConditions, setFilterConditions] = useState({});
+  const [kkk, setKkk] = useState([]);
 
   const getJobs = async (page = 1, conditions) => {
     const res = await jobApi.getList({
@@ -60,6 +62,7 @@ function JobList() {
     // console.log(data);
     setFilterConditions(data);
     getJobs(1, data);
+    setCurPage(1);
   };
 
   useEffect(() => {
@@ -71,7 +74,10 @@ function JobList() {
     getAllJlevels();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  useEffect(() => {
+    console.log("kkk::", kkk);
+  }, [kkk]);
+  
   return (
     <div className="pt-3 pb-4" style={{ margin: "0px 100px" }}>
       <form
@@ -172,6 +178,17 @@ function JobList() {
           </button>
         </div>
       </form>
+      <CMulSelect
+        defaultText="mac dinh"
+        items={[
+          {id: 0, text: "op1", value: 1, select: false },
+          {id: 1, text: "op2", value: 2, select: false },
+          {id: 2, text: "op3", value: 3, select: false },
+        ]}
+        // textAtt="key"
+        // valueAtt="value"
+        setOutput={setKkk}
+      />
       <div className="row row-cols-lg-3 mt-4">
         {jobs.length > 0 ? (
           jobs.map((job) => (

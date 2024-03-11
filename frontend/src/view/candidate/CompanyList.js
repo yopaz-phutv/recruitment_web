@@ -24,12 +24,12 @@ function CompanyList() {
     setTotalPage(res.last_page);
   };
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setCurPage(1);
+    e.preventDefault();    
     try {
       setIsLoading(true);
       await getCompanies();
       setIsLoading(false);
+      setCurPage(1);
     } catch (e) {
       setIsLoading(false);
     }
@@ -64,7 +64,7 @@ function CompanyList() {
       <div className="row mt-3">
         {companies.length > 0 ? (
           companies.map((company) => (
-            <div className="col-sm-12 col-lg-4 mb-3 pointer" key={company.id}>
+            <div className="col-sm-12 col-lg-4 mb-3 pointer" key={(`company_${company.id}`)}>
               <div
                 className="card border hover-border-main hover-shadow-sm"
                 style={{ minHeight: "240px" }}
@@ -130,7 +130,7 @@ function CompanyList() {
         totalPage={totalPage}
         curPage={curPage}
         setCurPage={setCurPage}
-        getCompanies={getCompanies}
+        getList={getCompanies}
       />
     </div>
   );
