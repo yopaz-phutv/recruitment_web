@@ -170,6 +170,7 @@
 .pointer {
   cursor: pointer;
 }
+/* custom bootstrap css */
 .form-control:focus {
   color: #212529;
   background-color: #fff;

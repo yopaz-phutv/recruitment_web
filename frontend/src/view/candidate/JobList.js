@@ -77,7 +77,7 @@ function JobList() {
   useEffect(() => {
     console.log("kkk::", kkk);
   }, [kkk]);
-  
+
   return (
     <div className="pt-3 pb-4" style={{ margin: "0px 100px" }}>
       <form
@@ -178,17 +178,16 @@ function JobList() {
           </button>
         </div>
       </form>
-      <CMulSelect
-        defaultText="mac dinh"
-        items={[
-          {id: 0, text: "op1", value: 1, select: false },
-          {id: 1, text: "op2", value: 2, select: false },
-          {id: 2, text: "op3", value: 3, select: false },
-        ]}
-        // textAtt="key"
-        // valueAtt="value"
-        setOutput={setKkk}
-      />
+      {locations.length > 0 && (
+        <CMulSelect
+          className="w-25"
+          defaultText="dia diem"
+          items={locations}
+          textAtt="name"
+          valueAtt="id"
+          setOutput={setKkk}
+        />
+      )}
       <div className="row row-cols-lg-3 mt-4">
         {jobs.length > 0 ? (
           jobs.map((job) => (
