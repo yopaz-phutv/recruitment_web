@@ -125,22 +125,26 @@ function JobList() {
                 </Form.Control.Feedback>
               </Form.Group>
               <div>
-                <CMulSelect
-                  defaultText="Tất cả ngành nghề"
-                  items={industries}
-                  textAtt="name"
-                  valueAtt="id"
-                  setOutput={setSelectedIndustries}
-                />
+                {industries.length > 0 && (
+                  <CMulSelect
+                    defaultText="Tất cả ngành nghề"
+                    items={industries}
+                    textAtt="name"
+                    valueAtt="id"
+                    setOutput={setSelectedIndustries}
+                  />
+                )}
               </div>
               <div>
-                <CMulSelect
-                  defaultText="Tất cả tỉnh thành"
-                  items={locations}
-                  textAtt="name"
-                  valueAtt="id"
-                  setOutput={setSelectedLocations}
-                />
+                {locations.length > 0 && (
+                  <CMulSelect
+                    defaultText="Tất cả tỉnh thành"
+                    items={locations}
+                    textAtt="name"
+                    valueAtt="id"
+                    setOutput={setSelectedLocations}
+                  />
+                )}
               </div>
             </div>
             <div className="row row-cols-lg-4 gap-1 gap-lg-0 mt-2 ps-3">
@@ -171,7 +175,6 @@ function JobList() {
                   <option value="30">Trên 30 triệu</option>
                   <option value="40">Trên 40 triệu</option>
                   <option value="50">Trên 50 triệu</option>
-
                 </select>
               </div>
               <div>

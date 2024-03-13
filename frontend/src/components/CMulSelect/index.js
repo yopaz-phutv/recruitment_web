@@ -18,7 +18,19 @@ const CustomToggle = React.forwardRef(
     </div>
   )
 );
+const convert2SelectOptions = (items, textAtt, valueAtt) => {
+  let temp = [];
+  items?.forEach((item, index) => {
+    temp.push({
+      id: index,
+      text: item[textAtt],
+      value: item[valueAtt],
+      select: false,
+    });
+  });
 
+  return temp;
+};
 export default function CMulSelect({
   className,
   items,
@@ -27,7 +39,9 @@ export default function CMulSelect({
   defaultText,
   setOutput,
 }) {
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState(
+    convert2SelectOptions(items, textAtt, valueAtt)
+  );
   const [curOptions, setCurOptions] = useState([]);
 
   const handleSelect = (option, index) => {
@@ -49,21 +63,6 @@ export default function CMulSelect({
     let tempOutput = tempCurOptions.map((item) => item.value);
     setOutput(tempOutput);
   };
-  useEffect(() => {
-    if (items.length > 0) {
-      let temp = [];
-      items?.forEach((item, index) => {
-        temp.push({
-          id: index,
-          text: item[textAtt],
-          value: item[valueAtt],
-          select: false,
-        });
-      });
-      setOptions(temp);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
 
   return (
     <Dropdown className={className}>
