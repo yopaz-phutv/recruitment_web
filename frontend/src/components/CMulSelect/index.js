@@ -81,7 +81,10 @@ export default function CMulSelect({
           : defaultText}
       </Dropdown.Toggle>
 
-      <Dropdown.Menu className="py-0 w-100 overflow-auto" style={{ maxHeight: "438px" }}>
+      <Dropdown.Menu
+        className="py-0 w-100 overflow-auto"
+        style={{ maxHeight: "438px" }}
+      >
         {options?.map((option, index) => (
           <div
             key={`option_${index}`}
