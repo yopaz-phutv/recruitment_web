@@ -1,6 +1,6 @@
 import "./style.css";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 
@@ -18,19 +18,6 @@ const CustomToggle = React.forwardRef(
     </div>
   )
 );
-const convert2SelectOptions = (items, textAtt, valueAtt) => {
-  let temp = [];
-  items?.forEach((item, index) => {
-    temp.push({
-      id: index,
-      text: item[textAtt],
-      value: item[valueAtt],
-      select: false,
-    });
-  });
-
-  return temp;
-};
 
 export default function CMulSelect({
   className,
@@ -40,9 +27,7 @@ export default function CMulSelect({
   defaultText,
   setOutput,
 }) {
-  const [options, setOptions] = useState(
-    convert2SelectOptions(items, textAtt, valueAtt)
-  );
+  const [options, setOptions] = useState([]);
   const [curOptions, setCurOptions] = useState([]);
 
   const handleSelect = (option, index) => {
@@ -64,10 +49,28 @@ export default function CMulSelect({
     let tempOutput = tempCurOptions.map((item) => item.value);
     setOutput(tempOutput);
   };
+  useEffect(() => {
+    if (items.length > 0) {
+      let temp = [];
+      items?.forEach((item, index) => {
+        temp.push({
+          id: index,
+          text: item[textAtt],
+          value: item[valueAtt],
+          select: false,
+        });
+      });
+      setOptions(temp);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items]);
 
   return (
     <Dropdown className={className}>
-      <Dropdown.Toggle as={CustomToggle} className="trigger text-truncate">
+      <Dropdown.Toggle
+        as={CustomToggle}
+        className="trigger text-truncate pointer"
+      >
         {curOptions.length > 0
           ? curOptions.map((item, index) => (
               <span key={`curOption_${index}`}>
@@ -77,7 +80,8 @@ export default function CMulSelect({
             ))
           : defaultText}
       </Dropdown.Toggle>
-      <Dropdown.Menu className="py-0 w-100">
+
+      <Dropdown.Menu className="py-0 w-100 overflow-auto" style={{ maxHeight: "438px" }}>
         {options?.map((option, index) => (
           <div
             key={`option_${index}`}

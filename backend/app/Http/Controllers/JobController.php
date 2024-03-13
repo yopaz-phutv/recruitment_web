@@ -17,16 +17,17 @@ class JobController extends Controller
         $jobs = Job::with(['employer', 'locations'])
             ->where('jobs.is_active', 1)
             ->when($req->keyword !== null, function ($query) use ($req) {
-                return $query->join('employers', 'employer_id', '=', 'employers.id')
-                    ->whereRaw('LOWER(employers.name) LIKE ?', ['%' . strtolower($req->keyword) . '%']);
+                // return $query->join('employers', 'employer_id', '=', 'employers.id')
+                //     ->whereRaw('LOWER(employers.name) LIKE ?', ['%' . strtolower($req->keyword) . '%']);
+                return $query->whereRaw('LOWER(jobs.jname) LIKE ?', ['%' . strtolower($req->keyword) . '%']);
             })
             ->when($req->industry_id !== null, function ($query) use ($req) {
                 return $query->join('job_industry', 'jobs.id', '=', 'job_industry.job_id')
-                    ->where('industry_id', $req->industry_id);
+                    ->whereIn('industry_id', $req->industry_id);
             })
             ->when($req->location_id !== null, function ($query) use ($req) {
                 return $query->join('job_location', 'jobs.id', '=', 'job_location.job_id')
-                    ->where('location_id', $req->location_id);
+                    ->whereIn('location_id', $req->location_id);
             })
             ->when($req->salary !== null, function ($query) use ($req) {
                 return $query->where('min_salary', '>=', $req->salary);
@@ -39,7 +40,18 @@ class JobController extends Controller
             })
             ->orderByDesc('jobs.updated_at')
             ->select('jobs.*')
+            ->distinct()
             ->paginate(9);
+
+        $jobs = $jobs->toArray();
+        $currentTime = Carbon::now();
+
+        if ($req->posting_period) {
+            $jobs['data'] = array_filter(
+                $jobs['data'],
+                fn ($item) => $currentTime->diffInDays($item['created_at']) <= $req->posting_period
+            );
+        }
 
         return response()->json($jobs);
     }

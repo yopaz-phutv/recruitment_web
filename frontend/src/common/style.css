@@ -122,9 +122,6 @@
 .w-45 {
   width: 45% !important;
 }
-.w-95 {
-  width: 95% !important;
-}
 .w-70 {
   width: 70% !important;
 }
@@ -133,6 +130,12 @@
 }
 .w-85 {
   width: 85% !important;
+}
+.w-90 {
+  width: 90% !important;
+}
+.w-95 {
+  width: 95% !important;
 }
 /* custom cv input, textarea */
 .cv-input {
