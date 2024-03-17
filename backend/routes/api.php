@@ -170,5 +170,6 @@ Route::controller(ResumeController::class)->prefix('resumes')->group(function ()
     Route::get('getByCurrentCandidate', 'getByCurrentCandidate');
     Route::get('{id}/getById', 'getById');
     Route::post('', 'create');
+    Route::post('update', 'update');
     Route::delete('{id}', 'destroy');
 });

@@ -121,6 +121,38 @@ class ResumeController extends Controller
 
         return response()->json("created successfully", 201);
     }
+    public function update(Request $req)
+    {
+        $resume_fields = (array)$req->basicInfor;
+
+        Resume::where('id', $req->resume_id)->update($resume_fields);
+        foreach ($req->educations as $item) {
+            Education::where('id', $item['id'])->update((array)$item);
+        }
+        foreach ($req->experiences as $item) {
+            Experience::where('id', $item['id'])->update((array)$item);
+        }
+        foreach ($req->projects as $item) {
+            Project::where('id', $item['id'])->update((array)$item);
+        }
+        foreach ($req->skills as $item) {
+            Skill::where('id', $item['id'])->update((array)$item);
+        }
+        foreach ($req->certificates as $item) {
+            Certificate::where('id', $item['id'])->update((array)$item);
+        }
+        foreach ($req->prizes as $item) {
+            Prize::where('id', $item['id'])->update((array)$item);
+        }
+        foreach ($req->activities as $item) {
+            Activity::where('id', $item['id'])->update((array)$item);
+        }
+        foreach ($req->others as $item) {
+            Other::where('id', $item['id'])->update((array)$item);
+        }
+
+        return response()->json("updated successfully");
+    }
     public function destroy($id)
     {
         Resume::findOrFail($id)->delete();

@@ -190,7 +190,7 @@ export default function Template1() {
   }, [cvMode, others]);
 
   const formatDate = (str) => {
-    const arr = str.split("/");
+    const arr = str.split(/[/, -]/);
     const len = arr.length;
     if (arr[0].length !== 4) {
       if (len === 2) {
@@ -205,22 +205,18 @@ export default function Template1() {
         arr[2] = temp;
       }
     }
-    return arr.join("-");
+
+    return dayjs(arr.join("-")).format("YYYY-MM-DD");
   };
+
   const formatDateInPart = (part) => {
     part.forEach((item, index, self) => {
       if (item.start_date) self[index].start_date = formatDate(item.start_date);
       if (item.end_date) self[index].end_date = formatDate(item.end_date);
+      if (item.receive_date)
+        self[index].receive_date = formatDate(item.receive_date);
     });
   };
-  // const isEmptyObj = (object) => {
-  //   return Object.keys(object).length === 0;
-  // };
-  // const formatPart = (part) => {
-  //   part.forEach((item, index, self) => {
-  //     if (isEmptyObj(item)) self.splice(index, 1);
-  //   });
-  // };
   const isPresentInParts = (partName) => {
     return parts.findIndex((item) => item === partName) > -1 ? true : false;
   };
@@ -246,14 +242,8 @@ export default function Template1() {
     formatDateInPart(experiences);
     formatDateInPart(projects);
     formatDateInPart(activities);
-    certificates.forEach((item, index, self) => {
-      if (item.receive_date)
-        self[index].receive_date = formatDate(item.receive_date);
-    });
-    prizes.forEach((item, index, self) => {
-      if (item.receive_date)
-        self[index].receive_date = formatDate(item.receive_date);
-    });
+    formatDateInPart(certificates);
+    formatDateInPart(prizes);
     //end: format date
     console.log("skills:", cvSkills);
     console.log("certificates:", certificates);
@@ -263,28 +253,43 @@ export default function Template1() {
     console.log("projects:", projects);
     console.log("activities:", activities);
     console.log("others:", cvOthers);
-    try {
-      const ret = await resumeApi.create({
-        basicInfor: {
-          ...data,
-          dob,
-          avatar: cvMode === "CREATE_1" ? basicInfor.avatar : null,
-        },
-        educations: isPresentInParts("education") ? educations : null,
-        experiences: isPresentInParts("experience") ? experiences : null,
-        projects: isPresentInParts("project") ? projects : null,
-        skills: isPresentInParts("skill") ? skills : null,
-        certificates: isPresentInParts("certificate") ? certificates : null,
-        prizes: isPresentInParts("prize") ? prizes : null,
-        activities: isPresentInParts("activity") ? activities : null,
-        others: isPresentInParts("other") ? others : null,
-      });
-      console.log("result:", ret);
-      toast.success("Tạo mới thành công!");
-      nav("/candidate/resumes");
-    } catch (e) {
-      toast.error("Đã có lỗi xảy ra!");
-      console.error(">>Error:", e.response.data.message);
+    let postData = {
+      basicInfor: {
+        ...data,
+        dob,
+        avatar: cvMode === "CREATE_1" ? basicInfor.avatar : null,
+      },
+      educations: isPresentInParts("education") ? educations : null,
+      experiences: isPresentInParts("experience") ? experiences : null,
+      projects: isPresentInParts("project") ? projects : null,
+      skills: isPresentInParts("skill") ? skills : null,
+      certificates: isPresentInParts("certificate") ? certificates : null,
+      prizes: isPresentInParts("prize") ? prizes : null,
+      activities: isPresentInParts("activity") ? activities : null,
+      others: isPresentInParts("other") ? others : null,
+    };
+    if (cvMode.startsWith("CREATE")) {
+      console.log(postData);    
+      try {
+        await resumeApi.create(postData);
+        toast.success("Tạo mới thành công!");
+        nav("/candidate/resumes");
+      } catch (e) {
+        toast.error("Đã có lỗi xảy ra!");
+        console.error(">>Error:", e.response.data.message);
+      }
+    } else if (cvMode === "EDIT") {
+      postData = {...postData, resume_id: id}
+      console.log(postData);
+      try {
+        const res = await resumeApi.update(postData);
+        console.log('res::', res);
+        toast.success("Cập nhật thành công!");
+        nav("/candidate/resumes");
+      } catch (e) {
+        toast.error("Đã có lỗi xảy ra!");
+        console.error(">>Error:", e.response.data.message);
+      }
     }
   };
 
@@ -1154,7 +1159,7 @@ export default function Template1() {
           <Button
             type="submit"
             variant="outline-primary"
-            size="sm"                        
+            size="sm"
             className="float-end me-3 px-5 py-1"
           >
             <span className="fw-600">Lưu</span>

@@ -11,6 +11,9 @@ const resumeApi = {
   create: (data) => {
     return candidateAxios.post(`${prefix}`, data);
   },
+  update: (data) => {
+    return candidateAxios.post(`${prefix}/update`, data);
+  },
   destroy: (id) => {
     return candidateAxios.delete(`${prefix}/${id}`);
   },

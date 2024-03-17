@@ -26,7 +26,7 @@ function App() {
 
   return (
     <AppContext.Provider value={{ currentPage, setCurrentPage }}>
-      <ToastContainer autoClose={1000} position="bottom-right" />
+      <ToastContainer autoClose={500} position="bottom-right" />
       <BrowserRouter>
         <Routes>
           <Route
