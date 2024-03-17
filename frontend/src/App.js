@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { createContext, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import Home from "./view/candidate/Home";
 import CompanyList from "./view/candidate/CompanyList";
@@ -16,8 +17,7 @@ import Signup from "./view/candidate/auth/Signup";
 import Layout from "./view/candidate/layouts/Layout";
 import Profile from "./view/candidate/management/profile";
 import Resume from "./view/candidate/management/resumes";
-import Template1 from "./view/candidate/management/resumes/templates/template1";
-import { createContext, useState } from "react";
+import Template from "./view/candidate/management/resumes/templates";
 
 export const AppContext = createContext();
 
@@ -54,9 +54,9 @@ function App() {
                           <Route path="resumes" element={<Resume />} />
                           <Route
                             path="resumes/create"
-                            element={<Template1 />}
+                            element={<Template />}
                           />
-                          <Route path="resumes/:id" element={<Template1 />} />
+                          <Route path="resumes/:id" element={<Template />} />
                         </Routes>
                       </CandidateLayout>
                     }
