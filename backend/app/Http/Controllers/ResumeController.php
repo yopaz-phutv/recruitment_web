@@ -126,30 +126,38 @@ class ResumeController extends Controller
         $resume_fields = (array)$req->basicInfor;
 
         Resume::where('id', $req->resume_id)->update($resume_fields);
-        foreach ($req->educations as $item) {
-            Education::where('id', $item['id'])->update((array)$item);
-        }
-        foreach ($req->experiences as $item) {
-            Experience::where('id', $item['id'])->update((array)$item);
-        }
-        foreach ($req->projects as $item) {
-            Project::where('id', $item['id'])->update((array)$item);
-        }
-        foreach ($req->skills as $item) {
-            Skill::where('id', $item['id'])->update((array)$item);
-        }
-        foreach ($req->certificates as $item) {
-            Certificate::where('id', $item['id'])->update((array)$item);
-        }
-        foreach ($req->prizes as $item) {
-            Prize::where('id', $item['id'])->update((array)$item);
-        }
-        foreach ($req->activities as $item) {
-            Activity::where('id', $item['id'])->update((array)$item);
-        }
-        foreach ($req->others as $item) {
-            Other::where('id', $item['id'])->update((array)$item);
-        }
+        if ($req->educations)
+            foreach ($req->educations as $item) {
+                Education::where('id', $item['id'])->update((array)$item);
+            }
+        if ($req->experiences)
+            foreach ($req->experiences as $item) {
+                Experience::where('id', $item['id'])->update((array)$item);
+            }
+        if ($req->projects)
+            foreach ($req->projects as $item) {
+                Project::where('id', $item['id'])->update((array)$item);
+            }
+        if ($req->skills)
+            foreach ($req->skills as $item) {
+                Skill::where('id', $item['id'])->update((array)$item);
+            }
+        if ($req->certificates)
+            foreach ($req->certificates as $item) {
+                Certificate::where('id', $item['id'])->update((array)$item);
+            }
+        if ($req->prizes)
+            foreach ($req->prizes as $item) {
+                Prize::where('id', $item['id'])->update((array)$item);
+            }
+        if ($req->activities)
+            foreach ($req->activities as $item) {
+                Activity::where('id', $item['id'])->update((array)$item);
+            }
+        if ($req->others)
+            foreach ($req->others as $item) {
+                Other::where('id', $item['id'])->update((array)$item);
+            }
 
         return response()->json("updated successfully");
     }
