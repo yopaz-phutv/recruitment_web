@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\EducationController;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\CandidateController;
@@ -20,8 +20,6 @@ use App\Http\Controllers\PrizeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\SkillController;
-use App\Models\CandidateMessage;
-use App\Models\Employer;
 
 /*
 |--------------------------------------------------------------------------

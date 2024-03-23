@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class JobController extends Controller
 {
@@ -157,13 +158,9 @@ class JobController extends Controller
     }
     public function apply(Request $req)
     {
+        $path = uploadFile2GgDrive($req->cv, 'resumes');
+
         $user = Auth::user();
-        $fname = 'cand' . $user->id . '_' . $req->fname;
-        $path =  env('APP_URL') . '/storage/' . $req->file('cv')->storeAs(
-            'cv_images',
-            $fname,
-            'public'
-        );
         DB::table('job_applying')->insert([
             'job_id' => $req->id,
             'candidate_id' => $user->id,
@@ -171,7 +168,7 @@ class JobController extends Controller
             'created_at' => Carbon::now()
         ]);
 
-        return response()->json($path);
+        return response()->json('applied successfully');
     }
     public function checkApplying($job_id)
     {

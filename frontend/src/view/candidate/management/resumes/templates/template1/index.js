@@ -12,33 +12,35 @@ import { useContext, useEffect, useState } from "react";
 import { CandidateContext } from "../../../layouts/CandidateLayout";
 import clsx from "clsx";
 import dayjs from "dayjs";
+import { TemplateContext } from "..";
 
-export default function Template1({
-  basicInfor,
-  fullname,
-  cvEducations,
-  setCvEducations,
-  cvExperiences,
-  setCvExperiences,
-  cvProjects,
-  setCvProjects,
-  cvSkills,
-  setCvSkills,
-  cvCertificates,
-  setCvCertificates,
-  cvPrizes,
-  setCvPrizes,
-  cvActivities,
-  setCvActivities,
-  cvOthers,
-  setCvOthers,
-  parts,
-  register,
-  handleSubmit,
-  errors,
-  onSubmit,
-  handleDownload
-}) {
+export default function Template1() {
+  const {
+    parts,
+    basicInfor,
+    fullname,
+    cvEducations,
+    setCvEducations,
+    cvExperiences,
+    setCvExperiences,
+    cvProjects,
+    setCvProjects,
+    cvSkills,
+    setCvSkills,
+    cvCertificates,
+    setCvCertificates,
+    cvPrizes,
+    setCvPrizes,
+    cvActivities,
+    setCvActivities,
+    cvOthers,
+    setCvOthers,
+    register,
+    handleSubmit,
+    errors,
+    onSubmit,
+    handleDownload,
+  } = useContext(TemplateContext);
   const { cvMode } = useContext(CandidateContext);
 
   const Skill = ({ infor, index, bgColor }) => {

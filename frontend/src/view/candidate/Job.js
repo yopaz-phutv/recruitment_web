@@ -57,6 +57,7 @@ function Job() {
     console.log(file);
 
     await jobApi.apply(id, formData);
+    
     alert("Ứng tuyển thành công!");
     window.location.reload();
   };

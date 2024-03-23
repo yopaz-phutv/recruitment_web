@@ -302,34 +302,37 @@ export default function Template() {
 
   return (
     <TemplateContext.Provider
-      value={{ parts, setParts, partMenu, setPartMenu }}
+      value={{
+        parts,
+        setParts,
+        partMenu,
+        setPartMenu,
+        basicInfor,
+        fullname,
+        cvEducations,
+        setCvEducations,
+        cvExperiences,
+        setCvExperiences,
+        cvProjects,
+        setCvProjects,
+        cvSkills,
+        setCvSkills,
+        cvCertificates,
+        setCvCertificates,
+        cvPrizes,
+        setCvPrizes,
+        cvActivities,
+        setCvActivities,
+        cvOthers,
+        setCvOthers,
+        register,
+        handleSubmit,
+        errors,
+        onSubmit,
+        handleDownload,
+      }}
     >
-      <Template1
-        basicInfor={basicInfor}
-        fullname={fullname}
-        cvEducations={cvEducations}
-        setCvEducations={setCvEducations}
-        cvExperiences={cvExperiences}
-        setCvExperiences={setCvExperiences}
-        cvProjects={cvProjects}
-        setCvProjects={setCvProjects}
-        cvSkills={cvSkills}
-        setCvSkills={setCvSkills}
-        cvCertificates={cvCertificates}
-        setCvCertificates={setCvCertificates}
-        cvPrizes={cvPrizes}
-        setCvPrizes={setCvPrizes}
-        cvActivities={cvActivities}
-        setCvActivities={setCvActivities}
-        cvOthers={cvOthers}
-        setCvOthers={setCvOthers}
-        parts={parts}
-        register={register}
-        handleSubmit={handleSubmit}
-        errors={errors}
-        onSubmit={onSubmit}
-        handleDownload={handleDownload}
-      />
+      <Template1 />
     </TemplateContext.Provider>
   );
 }
