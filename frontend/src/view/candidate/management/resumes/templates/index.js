@@ -37,6 +37,7 @@ export default function Template() {
   } = useForm();
 
   const [fullname, setFullname] = useState("");
+  const [avatarFile, setAvatarFile] = useState();
   const [basicInfor, setBasicInfor] = useState({});
   const [cvEducations, setCvEducations] = useState([{}]);
   const [cvExperiences, setCvExperiences] = useState([{}]);
@@ -237,19 +238,11 @@ export default function Template() {
     formatDateInPart(certificates);
     formatDateInPart(prizes);
     //end: format date
-    console.log("skills:", cvSkills);
-    console.log("certificates:", certificates);
-    console.log("prizes:", prizes);
-    console.log("educations:", educations);
-    console.log("experiences:", experiences);
-    console.log("projects:", projects);
-    console.log("activities:", activities);
-    console.log("others:", cvOthers);
+
     let postData = {
       basicInfor: {
         ...data,
         dob,
-        avatar: cvMode === "CREATE_1" ? basicInfor.avatar : null,
         parts_order: JSON.stringify(parts),
       },
       educations: isPresentInParts("education") ? educations : null,
@@ -261,22 +254,24 @@ export default function Template() {
       activities: isPresentInParts("activity") ? activities : null,
       others: isPresentInParts("other") ? others : null,
     };
+
+    const formData = new FormData();
+    if (cvMode === "EDIT") postData = { ...postData, resume_id: id };
+    formData.append("avatar", avatarFile);
+    formData.append("otherData", JSON.stringify(postData));
+
     if (cvMode.startsWith("CREATE")) {
-      console.log(postData);
       try {
-        await resumeApi.create(postData);
+        await resumeApi.create(formData);
         toast.success("Tạo mới thành công!");
-        nav("/candidate/resumes");
+        // nav("/candidate/resumes");
       } catch (e) {
         toast.error("Đã có lỗi xảy ra!");
         console.error(">>Error:", e.response.data.message);
       }
     } else if (cvMode === "EDIT") {
-      postData = { ...postData, resume_id: id };
-      console.log(postData);
       try {
-        const res = await resumeApi.update(postData);
-        console.log("res::", res);
+        await resumeApi.update(formData);
         toast.success("Cập nhật thành công!");
         nav("/candidate/resumes");
       } catch (e) {
@@ -286,7 +281,6 @@ export default function Template() {
     }
   };
   const handleDownload = async () => {
-    // let doc = new jsPDF("p", "mm", [800, 1400]);
     let cvElement = document.querySelector("#resume");
     let filename = watch("title") + ".jpg";
     let canvas = await html2canvas(cvElement);
@@ -330,6 +324,7 @@ export default function Template() {
         errors,
         onSubmit,
         handleDownload,
+        setAvatarFile,
       }}
     >
       <Template1 />

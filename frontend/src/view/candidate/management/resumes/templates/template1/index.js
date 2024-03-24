@@ -40,6 +40,7 @@ export default function Template1() {
     errors,
     onSubmit,
     handleDownload,
+    setAvatarFile,
   } = useContext(TemplateContext);
   const { cvMode } = useContext(CandidateContext);
 
@@ -860,6 +861,19 @@ export default function Template1() {
         break;
     }
   };
+  const handleDisplayImg = (e) => {
+    console.log('file::', e.target.files[0]);
+    setAvatarFile(e.target.files[0]);
+    var reader = new FileReader();
+    reader.onload = () => {
+      var output = document.getElementById("cv-avatar");
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  };
+  const handleChangeImg = () => {
+    document.getElementById("cv-avatar-upload").click();
+  };
 
   return (
     <>
@@ -906,12 +920,20 @@ export default function Template1() {
         >
           <div className="cv-bg-main ps-1 pe-2" style={{ width: "340px" }}>
             <div className="mt-2 d-flex flex-column align-items-center">
+              <input
+                id="cv-avatar-upload"
+                type="file"
+                className="d-none"
+                onChange={(e) => handleDisplayImg(e)}
+              />
               <img
+                id="cv-avatar"
                 src={basicInfor?.avatar}
                 alt="avatar"
                 width="172px"
                 height="172px"
-                className="rounded-pill"
+                className="rounded-pill pointer"
+                onClick={handleChangeImg}
               />
               <FlexInput
                 placeholder="HỌ TÊN"
