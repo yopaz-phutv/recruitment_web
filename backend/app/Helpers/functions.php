@@ -20,22 +20,24 @@ function formatDateTime($dt)
 
     return $res;
 }
-function uploadFile2GgDrive($file, $folder)
+function uploadFile2GgDrive($file, $folder, $filename = null, $imgThumbnail = false)
 {
-    $filename = $file->getClientOriginalName();
     $ext = $file->getClientOriginalExtension();
-
-    for ($i = strlen($filename) - 1; $filename[$i] != '.'; $i--) {
-    } //to exclude extension
-    $filename = substr($filename, 0, $i) . '_' . time() . '.' . $ext;
-
+    if (!$filename) {
+        $filename = $file->getClientOriginalName();
+        for ($i = strlen($filename) - 1; $filename[$i] != '.'; $i--) {
+        } //to exclude extension
+        $filename = substr($filename, 0, $i) . '_' . time() . '.' . $ext;
+    }
     Storage::putFileAs($folder, $file, $filename);
+    //get url:
     $path = Storage::url($folder . '/' . $filename);
-
-    //get file ID in gg drive:
     $start = strpos($path, 'id=') + strlen('id=');
     $end = strpos($path, '&export=media');
     $fileId = substr($path, $start, $end - $start);
+    if ($imgThumbnail)
+        $ret = 'https://drive.google.com/thumbnail?id=' . $fileId;
+    else $ret = 'https://drive.google.com/file/d/' . $fileId . '/view';
 
-    return 'https://drive.google.com/file/d/' . $fileId . '/view';
+    return $ret;
 }

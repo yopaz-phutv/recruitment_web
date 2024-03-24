@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Prize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PrizeController extends Controller
 {
@@ -47,8 +48,8 @@ class PrizeController extends Controller
         //process saving file:
         $file = $req->file('image');
         if ($file) {
-            $fname = 'prize' . '_' . $prize->id;
-            $path =  env('APP_URL') . '/storage/' . $file->storeAs('prize_images', $fname, 'public');
+            $filename = 'prize' . '_' . $prize->id . '.' . $file->getClientOriginalExtension();
+            $path = uploadFile2GgDrive($file, 'prizes', $filename, true);
             $prize->image = $path;
             $prize->save();
         }
@@ -71,8 +72,13 @@ class PrizeController extends Controller
 
         $file = $req->file('image');
         if ($file) {
-            $fname = 'prize' . '_' . $prize->id;
-            $path =  env('APP_URL') . '/storage/' . $file->storeAs('prize_images', $fname, 'public');
+            foreach (['png', 'jpg', 'jpeg'] as $ext) {
+                $path = 'prizes/prize_' . $req->id . '.' . $ext;
+                if (Storage::fileExists($path))
+                    Storage::delete($path);
+            }
+            $filename = 'prize' . '_' . $prize->id . '.' . $file->getClientOriginalExtension();
+            $path = uploadFile2GgDrive($file, 'prizes', $filename, true);
             $prize->image = $path;
         }
         if ($req->delete_img) {

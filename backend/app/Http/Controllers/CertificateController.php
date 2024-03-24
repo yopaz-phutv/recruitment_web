@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CertificateController extends Controller
 {
@@ -48,8 +49,8 @@ class CertificateController extends Controller
         //process saving file:
         $file = $req->file('image');
         if ($file) {
-            $fname = 'certificate' . '_' . $certificate->id;
-            $path =  env('APP_URL') . '/storage/' . $file->storeAs('certificate_images', $fname, 'public');
+            $filename = 'certificate' . '_' . $certificate->id . '.' . $file->getClientOriginalExtension();
+            $path = uploadFile2GgDrive($file, 'certificates', $filename, true);
             $certificate->image = $path;
             $certificate->save();
         }
@@ -73,8 +74,13 @@ class CertificateController extends Controller
 
         $file = $req->file('image');
         if ($file) {
-            $fname = 'certificate' . '_' . $certificate->id;
-            $path =  env('APP_URL') . '/storage/' . $file->storeAs('certificate_images', $fname, 'public');
+            foreach (['png', 'jpg', 'jpeg'] as $ext) {
+                $path = 'certificates/certificate_' . $req->id . '.' . $ext;
+                if (Storage::fileExists($path))
+                    Storage::delete($path);
+            }
+            $filename = 'certificate' . '_' . $certificate->id . '.' . $file->getClientOriginalExtension();
+            $path = uploadFile2GgDrive($file, 'certificates', $filename, true);
             $certificate->image = $path;
         }
         if ($req->delete_img) {

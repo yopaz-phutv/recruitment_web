@@ -7,6 +7,7 @@ use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CandidateController extends Controller
 {
@@ -41,15 +42,21 @@ class CandidateController extends Controller
 
         $file = $req->file('image');
         if ($file) {
-            $fname = 'avatar_candidate_' . '_' . $candidate->id;
-            $path =  env('APP_URL') . '/storage/' . $file->storeAs('avatar_images', $fname, 'public');
+            //delete old avatar image:
+            foreach (['png', 'jpg', 'jpeg'] as $ext) {
+                $path = 'candidate_avatars/avatar_' . $id . '_0.' . $ext;
+                if (Storage::fileExists($path))
+                    Storage::delete($path);
+            }
+            $filename = 'avatar_' . $id . '_0.' . $file->getClientOriginalExtension();
+            $path = uploadFile2GgDrive($file, 'candidate_avatars', $filename, true);
             $candidate->avatar = $path;
         }
         if ($req->delete_img) {
             $candidate->avatar = NULL;
         }
         $candidate->save();
-        // return response()->json($req);
+
         return response()->json('updated successfully');
     }
 
@@ -59,7 +66,11 @@ class CandidateController extends Controller
             ->join('employers', 'employer_id', '=', 'employers.id')
             ->where('candidate_id', $id)
             ->select(
-                'jobs.id', 'jname', 'employers.name', 'cv_link', 'status',
+                'jobs.id',
+                'jname',
+                'employers.name',
+                'cv_link',
+                'status',
                 DB::raw('DATE_FORMAT(job_applying.created_at, "%d/%m/%Y") as postDate')
             )
             ->orderByDesc('job_applying.created_at')
