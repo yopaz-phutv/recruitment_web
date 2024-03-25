@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Form, Stack, Button } from "react-bootstrap";
-import RequiredMark from "../../../../../../components/form/requiredMark/RequiredMark";
+import RequiredMark from "../../../../../../components/form/requiredMark";
 import educationApi from "../../../../../../api/education";
 import Modal from "react-bootstrap/Modal";
 

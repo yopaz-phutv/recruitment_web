@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
-import RequiredMark from "../../../../../../components/form/requiredMark/RequiredMark";
+import RequiredMark from "../../../../../../components/form/requiredMark";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";

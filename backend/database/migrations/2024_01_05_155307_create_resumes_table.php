@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('resumes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('candidate_id');
+            $table->unsignedInteger('template_id');
             $table->string('title', 60)->nullable();
             $table->string('fullname', 100)->nullable();
             $table->unsignedTinyInteger('gender')->nullable();

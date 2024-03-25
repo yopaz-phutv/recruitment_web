@@ -1,6 +1,5 @@
 import "./style.css";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import defaultAvatar from "./default-avatar-template2.webp";
 import { IoCalendarClear } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
@@ -14,9 +13,10 @@ import clsx from "clsx";
 import dayjs from "dayjs";
 import { TemplateContext } from "..";
 
-export default function Template1() {
+export default function Template2() {
   const {
     parts,
+    setParts,
     basicInfor,
     fullname,
     cvEducations,
@@ -39,6 +39,21 @@ export default function Template1() {
     handleDisplayImg,
   } = useContext(TemplateContext);
   const { cvMode } = useContext(CandidateContext);
+
+  useEffect(() => {
+    setParts([
+      "objective",
+      "experience",
+      "project",
+      "activity",
+      "prize",
+      "personal",
+      "education",
+      "skill",
+      "certificate",
+      "other",
+    ]);
+  }, []);
 
   const Skill = ({ infor, index, bgColor }) => {
     const [name, setName] = useState("");
@@ -84,9 +99,9 @@ export default function Template1() {
     return (
       <div className="content d-flex">
         <FlexInput
-          className="w-20"
+          className="w-25"
           innerClassName={clsx("fw-550 ts-sm", bgColor)}
-          placeholder="Tgian nhận"
+          placeholder="mm/yyyy"
           defaultValue={
             infor.receive_date
               ? dayjs(infor.receive_date).format("MM/YYYY")
@@ -119,9 +134,9 @@ export default function Template1() {
     return (
       <div className="content d-flex">
         <FlexInput
-          className="w-20"
-          innerClassName={clsx("fw-550 ts-sm", bgColor)}
-          placeholder="Tgian nhận"
+          className="w-25"
+          innerClassName={clsx("fw-550", bgColor)}
+          placeholder="mm/yyyy"
           defaultValue={
             infor.receive_date
               ? dayjs(infor.receive_date).format("MM/YYYY")
@@ -168,7 +183,7 @@ export default function Template1() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start cv-border-main">
+      <div className="content">
         <div className="d-flex align-items-center">
           <FlexInput
             className="flex-fill"
@@ -178,9 +193,9 @@ export default function Template1() {
             setCurrent={setSchool}
           />
           <FlexInput
-            className="w-15"
+            style={{ width: "17%" }}
             innerClassName={clsx(
-              "fst-italic text-secondary text-end ts-sm",
+              "fst-italic text-secondary ts-xxs text-end",
               bgColor
             )}
             placeholder="Bắt đầu"
@@ -191,8 +206,8 @@ export default function Template1() {
           />
           -
           <FlexInput
-            className="w-15"
-            innerClassName={clsx("fst-italic text-secondary ts-sm", bgColor)}
+            style={{ width: "17%" }}
+            innerClassName={clsx("fst-italic text-secondary ts-xxs", bgColor)}
             placeholder="Kết thúc"
             defaultValue={
               infor.end_date ? dayjs(infor.end_date).format("YYYY") : null
@@ -249,7 +264,7 @@ export default function Template1() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start cv-border-main">
+      <div className="content">
         <div className="d-flex align-items-center">
           <FlexInput
             className="flex-fill"
@@ -259,11 +274,8 @@ export default function Template1() {
             setCurrent={setName}
           />
           <FlexInput
-            className="w-15"
-            innerClassName={clsx(
-              "fst-italic text-secondary text-end ts-sm",
-              bgColor
-            )}
+            style={{ width: "17%" }}
+            innerClassName={clsx("fst-italic text-secondary ts-xxs text-end", bgColor)}
             placeholder="Bắt đầu"
             defaultValue={
               infor.start_date
@@ -274,8 +286,8 @@ export default function Template1() {
           />
           -
           <FlexInput
-            className="w-15"
-            innerClassName={clsx("fst-italic text-secondary ts-sm", bgColor)}
+            style={{ width: "17%" }}
+            innerClassName={clsx("fst-italic text-secondary ts-xxs", bgColor)}
             placeholder="Kết thúc"
             defaultValue={
               infor.end_date ? dayjs(infor.end_date).format("MM/YYYY") : null
@@ -283,7 +295,6 @@ export default function Template1() {
             setCurrent={setEndDate}
           />
         </div>
-
         <FlexInput
           innerClassName={clsx(bgColor)}
           placeholder="Công ty/Doanh nghiệp"
@@ -344,7 +355,7 @@ export default function Template1() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start cv-border-main">
+      <div className="content">
         <div className="d-flex align-items-center">
           <FlexInput
             className="flex-fill"
@@ -354,11 +365,8 @@ export default function Template1() {
             setCurrent={setName}
           />
           <FlexInput
-            className="w-15"
-            innerClassName={clsx(
-              "fst-italic text-secondary text-end ts-sm",
-              bgColor
-            )}
+            style={{ width: "17%" }}
+            innerClassName={clsx("fst-italic text-secondary ts-xxs text-end", bgColor)}
             placeholder="Bắt đầu"
             defaultValue={
               infor.start_date
@@ -369,8 +377,8 @@ export default function Template1() {
           />
           -
           <FlexInput
-            className="w-15"
-            innerClassName={clsx("fst-italic text-secondary ts-sm", bgColor)}
+            style={{ width: "17%" }}
+            innerClassName={clsx("fst-italic text-secondary ts-xxs", bgColor)}
             placeholder="Kết thúc"
             defaultValue={
               infor.end_date ? dayjs(infor.end_date).format("MM/YYYY") : null
@@ -452,7 +460,7 @@ export default function Template1() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start cv-border-main">
+      <div className="content">
         <div className="d-flex align-items-center">
           <FlexInput
             className="flex-fill"
@@ -462,11 +470,8 @@ export default function Template1() {
             setCurrent={setOrganization}
           />
           <FlexInput
-            className="w-15"
-            innerClassName={clsx(
-              "fst-italic text-secondary text-end ts-sm",
-              bgColor
-            )}
+            style={{ width: "17%" }}
+            innerClassName={clsx("fst-italic text-secondary ts-xxs text-end", bgColor)}
             placeholder="Bắt đầu"
             defaultValue={
               infor.start_date
@@ -477,8 +482,8 @@ export default function Template1() {
           />
           -
           <FlexInput
-            className="w-15"
-            innerClassName={clsx("fst-italic text-secondary ts-sm", bgColor)}
+            style={{ width: "17%" }}
+            innerClassName={clsx("fst-italic text-secondary ts-xxs", bgColor)}
             placeholder="Kết thúc"
             defaultValue={
               !infor.is_present
@@ -544,63 +549,75 @@ export default function Template1() {
   };
   const PersonalPart = ({ bgColor }) => {
     return (
-      <InforPart type="personal">
-        <FlexInput
-          innerClassName={clsx("title", bgColor)}
-          placeholder="Thông tin cá nhân"
-          defaultValue={
-            cvMode === "EDIT" ? basicInfor.personalTitle : "Thông tin cá nhân"
-          }
-          {...register("personalTitle")}
-        />
-        <div className="ms-2">
-          <FlexInput
-            innerClassName={clsx("content", bgColor)}
-            iconLeft={<IoCalendarClear className="mb-1" />}
-            placeholder="Ngày/tháng/năm sinh"
-            defaultValue={
-              cvMode !== "CREATE_0"
-                ? dayjs(basicInfor.dob).format("DD/MM/YYYY")
-                : null
-            }
-            {...register("dob")}
-          />
-          <FlexInput
-            innerClassName={clsx("content", bgColor)}
-            iconLeft={<FaPhoneAlt className="mb-1" />}
-            placeholder="Số điện thoại"
-            defaultValue={cvMode !== "CREATE_0" ? basicInfor.phone : null}
-            {...register("phone")}
-          />
-          <FlexInput
-            innerClassName={clsx("content", bgColor)}
-            iconLeft={<IoMdMail className="mb-1" />}
-            placeholder="Email"
-            defaultValue={cvMode !== "CREATE_0" ? basicInfor.email : null}
-            {...register("email")}
-          />
-          <FlexInput
-            innerClassName={clsx("content", bgColor)}
-            iconLeft={<IoIosLink className="mb-1" />}
-            placeholder="Liên kết"
-            defaultValue={cvMode !== "CREATE_0" ? basicInfor.link : null}
-            {...register("link")}
-          />
-          <FlexInput
-            innerClassName={clsx("content", bgColor)}
-            iconLeft={<MdLocationOn className="fs-5 mb-1" />}
-            placeholder="Địa chỉ"
-            defaultValue={cvMode !== "CREATE_0" ? basicInfor.address : null}
-            {...register("address")}
-          />
+      <InforPart type="personal" className="mb-3">
+        <div className="position-relative mt-2">
+          <div
+            className="cv-bg-main rounded-pill"
+            style={{ height: "200px", width: "38px" }}
+          ></div>
+          <div
+            className="position-absolute w-100 pe-2"
+            style={{ fontSize: "14px", left: "9px", top: "15px" }}
+          >
+            <FlexInput
+              className="mb-2"
+              innerClassName={bgColor}
+              iconLeft={
+                <IoCalendarClear className="fs-5 mb-1 me-3 text-white" />
+              }
+              placeholder="Ngày/tháng/năm sinh"
+              defaultValue={
+                cvMode !== "CREATE_0"
+                  ? dayjs(basicInfor.dob).format("DD/MM/YYYY")
+                  : null
+              }
+              {...register("dob")}
+            />
+            <FlexInput
+              className="mb-2"
+              innerClassName={bgColor}
+              iconLeft={<FaPhoneAlt className="fs-5 mb-1 me-3 text-white" />}
+              placeholder="Số điện thoại"
+              defaultValue={cvMode !== "CREATE_0" ? basicInfor.phone : null}
+              {...register("phone")}
+            />
+            <FlexInput
+              className="mb-2"
+              innerClassName={bgColor}
+              iconLeft={<IoMdMail className="fs-5 mb-1 me-3 text-white" />}
+              placeholder="Email"
+              defaultValue={cvMode !== "CREATE_0" ? basicInfor.email : null}
+              {...register("email")}
+            />
+            <FlexInput
+              className="mb-2"
+              innerClassName={bgColor}
+              iconLeft={<IoIosLink className=" fs-5 mb-1 me-3 text-white" />}
+              placeholder="Liên kết"
+              defaultValue={cvMode !== "CREATE_0" ? basicInfor.link : null}
+              {...register("link")}
+            />
+            <FlexInput
+              className="mb-2"
+              innerClassName={bgColor}
+              iconLeft={
+                <MdLocationOn
+                  className="fs-4 mb-1 text-white"
+                  style={{ marginRight: "14px" }}
+                />
+              }
+              placeholder="Địa chỉ"
+              defaultValue={cvMode !== "CREATE_0" ? basicInfor.address : null}
+              {...register("address")}
+            />
+          </div>
         </div>
-        <hr className="cv-text-main" />
       </InforPart>
     );
   };
   const ObjectivePart = ({ bgColor }) => {
     return (
-      <InforPart type="objective">
+      <InforPart type="objective" className="mb-3">
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Mục tiêu nghề nghiệp"
@@ -617,13 +634,12 @@ export default function Template1() {
           defaultValue={cvMode !== "CREATE_0" ? basicInfor?.objective : null}
           {...register("objective")}
         />
-        <hr className="cv-text-main" />
       </InforPart>
     );
   };
   const SkillPart = ({ bgColor }) => {
     return (
-      <InforPart type="skill">
+      <InforPart type="skill" className="mb-3">
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Các kỹ năng"
@@ -642,13 +658,12 @@ export default function Template1() {
             <Skill infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="cv-text-main" />
       </InforPart>
     );
   };
   const CertificatePart = ({ bgColor }) => {
     return (
-      <InforPart type="certificate">
+      <InforPart type="certificate" className="mb-3">
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Chứng chỉ"
@@ -667,13 +682,12 @@ export default function Template1() {
             <Certificate infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="cv-text-main" />
       </InforPart>
     );
   };
   const PrizePart = ({ bgColor }) => {
     return (
-      <InforPart type="prize">
+      <InforPart type="prize" className="mb-3">
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Giải thưởng"
@@ -692,13 +706,12 @@ export default function Template1() {
             <Prize infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="cv-text-main" />
       </InforPart>
     );
   };
   const EducationPart = ({ bgColor }) => {
     return (
-      <InforPart type="education">
+      <InforPart type="education" className="mb-3">
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Học vấn"
@@ -722,13 +735,12 @@ export default function Template1() {
             <Education infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="cv-text-main" />
       </InforPart>
     );
   };
   const ExperiencePart = ({ bgColor }) => {
     return (
-      <InforPart type="experience">
+      <InforPart type="experience" className="mb-3">
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Kinh nghiệm làm việc"
@@ -750,13 +762,12 @@ export default function Template1() {
             <Experience infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="cv-text-main" />
       </InforPart>
     );
   };
   const ProjectPart = ({ bgColor }) => {
     return (
-      <InforPart type="project">
+      <InforPart type="project" className="mb-3">
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Dự án"
@@ -779,13 +790,12 @@ export default function Template1() {
             <Project infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="cv-text-main" />
       </InforPart>
     );
   };
   const ActivityPart = ({ bgColor }) => {
     return (
-      <InforPart type="activity">
+      <InforPart type="activity" className="mb-3">
         <FlexInput
           innerClassName={clsx("title", bgColor)}
           placeholder="Hoạt động"
@@ -806,14 +816,13 @@ export default function Template1() {
             <Activity infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="cv-text-main" />
       </InforPart>
     );
   };
 
   const OtherPart = ({ bgColor }) => {
     return (
-      <InforPart type="other">
+      <InforPart type="other" className="mb-3">
         {cvOthers.map((item, index) => (
           <ContentItem
             className="mb-1 py-1"
@@ -825,13 +834,12 @@ export default function Template1() {
             <Other infor={item} index={index} bgColor={bgColor} />
           </ContentItem>
         ))}
-        <hr className="cv-text-main" />
       </InforPart>
     );
   };
 
   const renderPart = (index) => {
-    const bgColor = index <= 5 ? "cv-bg-main" : "";
+    const bgColor = index >= 5 ? "cv-bg-light" : "";
     switch (parts[index]) {
       case "personal":
         return <PersonalPart bgColor={bgColor} />;
@@ -864,8 +872,8 @@ export default function Template1() {
       className="mx-auto border mt-4 mb-5 d-flex p-2 shadow-sm"
       style={{ width: "800px" }}
     >
-      <div className="cv-bg-main ps-1 pe-2" style={{ width: "340px" }}>
-        <div className="mt-2 d-flex flex-column align-items-center">
+      <div className="bg-white ps-1 pe-2" style={{ width: "510px" }}>
+        <div className="mt-2 ms-3">
           <input
             id="cv-avatar-upload"
             type="file"
@@ -874,33 +882,33 @@ export default function Template1() {
           />
           <img
             id="cv-avatar"
-            src={basicInfor?.avatar}
+            src={basicInfor.avatar || defaultAvatar}
             alt="avatar"
-            width="172px"
-            height="172px"
-            className="rounded-pill pointer"
+            width="180px"
+            height="186px"
+            className="pointer"
             onClick={() => document.getElementById("cv-avatar-upload").click()}
           />
           <FlexInput
             placeholder="HỌ TÊN"
-            className="mt-2"
-            innerClassName="cv-bg-main h4 cv-text-main text-center text-uppercase"
+            className="mt-2 ms-2"
+            innerClassName="h4 cv-text-main text-uppercase"
             defaultValue={fullname}
             {...register("fullname")}
           />
         </div>
-        <hr className="cv-text-main" />
+        <hr className="text-secondary" />
         {parts.map((_, index) => {
           return (
-            index <= 5 && <div key={`part_${index}`}>{renderPart(index)}</div>
+            index < 5 && <div key={`part_${index}`}>{renderPart(index)}</div>
           );
         })}
       </div>
-      <div className="flex-fill px-1 bg-white">
+      <div className="flex-fill px-1 cv-bg-light">
         <div className="ms-2">
           {parts.map((_, index) => {
             return (
-              index > 5 && <div key={`part_${index}`}>{renderPart(index)}</div>
+              index >= 5 && <div key={`part_${index}`}>{renderPart(index)}</div>
             );
           })}
         </div>

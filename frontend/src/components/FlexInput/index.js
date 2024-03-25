@@ -11,6 +11,8 @@ const FlexInput = React.forwardRef(
       cvStyle = true,
       setCurrent,
       onChange,
+      style,
+      innerStyle,
       ...props
     },
     ref
@@ -31,6 +33,7 @@ const FlexInput = React.forwardRef(
     return (
       <div
         className={clsx("d-flex gap-1 align-items-start z-index-1", className)}
+        style={style}
       >
         <div className="cv-text-main">{iconLeft || null}</div>
         <textarea
@@ -39,11 +42,12 @@ const FlexInput = React.forwardRef(
             cvStyle && "cv-input",
             innerClassName
           )}
+          style={innerStyle}
           rows={1}
           onChange={(e) => {
             if (setCurrent) setCurrent(e.target.value);
             else onChange(e);
-          }}
+          }}          
           ref={ref}
           {...props}
         />

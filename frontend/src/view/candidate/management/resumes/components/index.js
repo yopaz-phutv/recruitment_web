@@ -15,17 +15,6 @@ export const InforPart = ({ children, className, type }) => {
   const [showOp, setShowOp] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
-  const handleDelete = () => {
-    let partTemp = [...parts];
-    let menuTemp = [...partMenu];
-    const curPartIndex = parts.findIndex((item) => item === type);
-    partTemp.splice(curPartIndex, 1);
-    menuTemp.forEach((item) => {
-      if (item.key === type) item.on = false;
-    });
-    setParts(partTemp);
-    setPartMenu(menuTemp);
-  };
   const handleChangePos = (instruction) => {
     let temp = [...parts];
     let curInd = parts.findIndex((item) => item === type);
@@ -47,9 +36,26 @@ export const InforPart = ({ children, className, type }) => {
     if (!currentOp.on) {
       menuTemp[index].on = !currentOp.on;
       partTemp.splice(curPartIndex + 1, 0, currentOp.key);
+      
+      //remove first null value element
+      const firstNullInd = parts.findIndex((item) => item === "");
+      partTemp.splice(firstNullInd, 1);
+
       setPartMenu(menuTemp);
       setParts(partTemp);
     } else toast.info("Thông tin này đã có!");
+  };
+  const handleDelete = () => {
+    let partTemp = [...parts];
+    let menuTemp = [...partMenu];
+    const curPartIndex = parts.findIndex((item) => item === type);
+    // partTemp.splice(curPartIndex, 1);
+    partTemp[curPartIndex] = "";
+    menuTemp.forEach((item) => {
+      if (item.key === type) item.on = false;
+    });
+    setParts(partTemp);
+    setPartMenu(menuTemp);
   };
 
   return (

@@ -63,6 +63,9 @@
 }
 
 /* font size */
+.ts-xxs {
+  font-size: 12px;
+}
 .ts-xs {
   font-size: 12.75px;
 }

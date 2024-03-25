@@ -1,0 +1,17 @@
+.cv-bg-main {
+  background-color: rgb(255 162 17) !important;
+}
+.cv-bg-light {
+  background-color: rgb(251, 233, 205) !important;
+}
+.cv-text-main {
+  color: rgb(255 162 17) !important;
+}
+.title {
+  font-size: 18px;
+  font-weight: 550;
+  color: rgb(255 162 17);
+}
+.content {
+  font-size: 13px;
+}

@@ -6,7 +6,7 @@ import {
   // BsMessenger,
 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import "./layout_style.css";
+import "./style.css";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import authApi from "../../../api/auth";

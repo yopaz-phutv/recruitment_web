@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { BsCheckCircle, BsEye, BsSearch, BsXCircle } from "react-icons/bs";
-import "./custom.css";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { MessagePopup } from "./popup";
@@ -13,7 +12,6 @@ import clsx from "clsx";
 function CandidateList() {
   const {
     register,
-    // formState: { errors },
     handleSubmit,
   } = useForm();
   const [candidates, setCandidates] = useState([]);

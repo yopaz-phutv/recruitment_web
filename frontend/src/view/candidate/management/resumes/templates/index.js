@@ -1,3 +1,5 @@
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import { createContext, useContext, useEffect, useState } from "react";
 import { CandidateContext } from "../../layouts/CandidateLayout";
 import { useForm } from "react-hook-form";
@@ -6,8 +8,9 @@ import resumeApi from "../../../../../api/resume";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Template1 from "./template1";
+// import Template1 from "./template1";
 import html2canvas from "html2canvas";
+import Template2 from "./template2";
 
 export const TemplateContext = createContext();
 
@@ -264,7 +267,7 @@ export default function Template() {
       try {
         await resumeApi.create(formData);
         toast.success("Tạo mới thành công!");
-        // nav("/candidate/resumes");
+        nav("/candidate/resumes");
       } catch (e) {
         toast.error("Đã có lỗi xảy ra!");
         console.error(">>Error:", e.response.data.message);
@@ -279,6 +282,15 @@ export default function Template() {
         console.error(">>Error:", e.response.data.message);
       }
     }
+  };
+  const handleDisplayImg = (e) => {
+    setAvatarFile(e.target.files[0]);
+    var reader = new FileReader();
+    reader.onload = () => {
+      var output = document.getElementById("cv-avatar");
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
   };
   const handleDownload = async () => {
     let cvElement = document.querySelector("#resume");
@@ -320,14 +332,48 @@ export default function Template() {
         cvOthers,
         setCvOthers,
         register,
-        handleSubmit,
         errors,
-        onSubmit,
-        handleDownload,
-        setAvatarFile,
+        handleDisplayImg,
       }}
     >
-      <Template1 />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="clearfix ms-3 py-3 border-top shadow-sm bg-white">
+          <Form.Group className="float-start ms-3 w-20">
+            <Form.Control
+              type="text"
+              aria-label="resume_title"
+              size="sm"
+              placeholder="Tiêu đề hồ sơ"
+              defaultValue={cvMode === "EDIT" ? basicInfor.title : null}
+              className="border-primary"
+              {...register("title", {
+                required: "Vui lòng điền tiêu đề hồ sơ",
+              })}
+              isInvalid={errors.title}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.title?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Button
+            variant="outline-primary"
+            size="sm"
+            className="float-end me-5 px-5 py-1"
+            onClick={handleDownload}
+          >
+            <span className="fw-600">Tải xuống CV</span>
+          </Button>
+          <Button
+            type="submit"
+            variant="outline-primary"
+            size="sm"
+            className="float-end me-3 px-5 py-1"
+          >
+            <span className="fw-600">Lưu</span>
+          </Button>
+        </div>
+        <Template2 />
+      </form>
     </TemplateContext.Provider>
   );
 }
