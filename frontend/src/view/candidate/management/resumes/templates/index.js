@@ -1,6 +1,7 @@
 import { useState } from "react";
 import templateList from "./templateList";
 import TemplatePreviewModal from "./TemplatePreviewModal";
+import TemplatePreview from "./TemplateItem";
 
 export default function TemplateList() {
   const [showModal, setShowModal] = useState(false);
@@ -20,11 +21,7 @@ export default function TemplateList() {
             className="pe-2"
             onClick={() => handleView(item)}
           >
-            <img
-              src={item.image}
-              alt={"template_" + item.id}
-              className="w-100 h-100 border hover-shadow hover-border-main pointer"
-            />
+            <TemplatePreview template={item} />
           </div>
         ))}
       </div>

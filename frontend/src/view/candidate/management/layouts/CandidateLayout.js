@@ -156,6 +156,15 @@ function CandidateLayout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+              currentPage === "/candidate/templates" && "bg-mlight text-main"
+            )}
+            onClick={() => handleChangePage("/candidate/templates")}
+          >
+            Mẫu hồ sơ
+          </div>
+          <div
+            className={clsx(
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
               currentPage === "/candidate/applied-jobs" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/candidate/applied-jobs")}

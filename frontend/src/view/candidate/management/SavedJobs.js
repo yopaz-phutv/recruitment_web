@@ -83,7 +83,7 @@ function SavedJobs() {
                         data-bs-target="#jobDeletingModal"
                         onClick={() => setCurJob(item)}
                       >
-                        <BsTrash3 className="fs-5" />
+                        <BsTrash3 className="fs-5 pointer" />
                       </div>
                     </div>
                   </td>
