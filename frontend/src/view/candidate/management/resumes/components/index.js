@@ -7,9 +7,9 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoMdSettings } from "react-icons/io";
 import { FaCheck } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { TemplateContext } from "../templates";
+import { TemplateContext } from "../templates/common";
 
-export const InforPart = ({ children, className, type }) => {
+export const InforPart = ({ children, className, type, disabled }) => {
   const { parts, setParts, partMenu, setPartMenu } =
     useContext(TemplateContext);
   const [showOp, setShowOp] = useState(false);
@@ -36,7 +36,7 @@ export const InforPart = ({ children, className, type }) => {
     if (!currentOp.on) {
       menuTemp[index].on = !currentOp.on;
       partTemp.splice(curPartIndex + 1, 0, currentOp.key);
-      
+
       //remove first null value element
       const firstNullInd = parts.findIndex((item) => item === "");
       partTemp.splice(firstNullInd, 1);
@@ -65,7 +65,9 @@ export const InforPart = ({ children, className, type }) => {
         showOp && "border border-secondary",
         className
       )}
-      onMouseMove={() => setShowOp(true)}
+      onMouseMove={() => {
+        if (!disabled) setShowOp(true);
+      }}
       onMouseLeave={() => setShowOp(false)}
     >
       {children}
@@ -129,6 +131,7 @@ export const ContentItem = ({
   items,
   setItems,
   menuVaule,
+  disabled,
 }) => {
   const [showOp, setShowOp] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -163,7 +166,9 @@ export const ContentItem = ({
         showOp && "border border-secondary",
         className
       )}
-      onMouseMove={() => setShowOp(true)}
+      onMouseMove={() => {
+        if (!disabled) setShowOp(true);
+      }}
       onMouseLeave={() => setShowOp(false)}
     >
       {customChildren}

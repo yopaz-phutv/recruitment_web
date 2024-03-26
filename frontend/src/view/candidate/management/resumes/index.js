@@ -7,7 +7,6 @@ import { BsEyeFill } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
-import CreateOptionDialog from "./CreateOptionDialog";
 import { useNavigate } from "react-router-dom";
 import { CandidateContext } from "../layouts/CandidateLayout";
 import { toast } from "react-toastify";
@@ -15,7 +14,6 @@ import { toast } from "react-toastify";
 export default function Resume() {
   const { setCvMode } = useContext(CandidateContext);
   const [resumes, setResumes] = useState([]);
-  const [showDialog, setShowDialog] = useState(false);
   const nav = useNavigate();
 
   const getResumes = async () => {
@@ -23,7 +21,7 @@ export default function Resume() {
     setResumes(res);
   };
   const handleCreate = () => {
-    setShowDialog(true);
+    nav("/candidate/templates");
   };
   const handleEdit = (id) => {
     setCvMode("EDIT");
@@ -98,9 +96,9 @@ export default function Resume() {
           </tbody>
         </Table>
         {resumes.length === 0 && <h5 className="my-2">Không có bản ghi nào</h5>}
-        {showDialog && (
+        {/* {showDialog && (
           <CreateOptionDialog show={showDialog} setShow={setShowDialog} />
-        )}
+        )} */}
       </div>
     </div>
   );

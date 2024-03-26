@@ -17,7 +17,8 @@ import Signup from "./view/candidate/auth/Signup";
 import Layout from "./view/candidate/layouts";
 import Profile from "./view/candidate/management/profile";
 import Resume from "./view/candidate/management/resumes";
-import Template from "./view/candidate/management/resumes/templates";
+import Template from "./view/candidate/management/resumes/templates/common";
+import TemplateList from "./view/candidate/management/resumes/templates";
 
 export const AppContext = createContext();
 
@@ -52,10 +53,8 @@ function App() {
                           <Route path="saved-jobs" element={<SavedJobs />} />
                           <Route path="profile" element={<Profile />} />
                           <Route path="resumes" element={<Resume />} />
-                          <Route
-                            path="resumes/create"
-                            element={<Template />}
-                          />
+                          <Route path="templates" element={<TemplateList />} />
+                          <Route path="resumes/create" element={<Template />} />
                           <Route path="resumes/:id" element={<Template />} />
                         </Routes>
                       </CandidateLayout>

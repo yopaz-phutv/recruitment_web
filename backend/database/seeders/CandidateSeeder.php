@@ -26,7 +26,6 @@ class CandidateSeeder extends Seeder
                 'address' => 'Gia Lâm, Hà Nội',
                 'link' => 'https://github.com/tranphu033',
                 'objective' => 'muc tieu',
-                'avatar' => 'avatar.jpg'
             ],
             [
                 'id' => 2,
@@ -40,7 +39,6 @@ class CandidateSeeder extends Seeder
                 'address' => 'Ân Thi, Hưng Yên',
                 'link' => 'kkk',
                 'objective' => 'muc tieu',
-                'avatar' => 'avatar.jpg'
             ],
             [
                 'id' => 3,
@@ -54,7 +52,6 @@ class CandidateSeeder extends Seeder
                 'address' => 'Chương Mỹ, Hà Nội',
                 'link' => 'kkk',
                 'objective' => 'muc tieu',
-                'avatar' => 'avatar.jpg'
             ],
             [
                 'id' => 4,
@@ -68,7 +65,6 @@ class CandidateSeeder extends Seeder
                 'address' => 'Đống Đa, Hà Nội',
                 'link' => 'kkk',
                 'objective' => 'muc tieu',
-                'avatar' => 'avatar.jpg'
             ],
             [
                 'id' => 17,
@@ -82,7 +78,6 @@ class CandidateSeeder extends Seeder
                 'address' => 'Hai Bà Trưng, Hà Nội',
                 'link' => 'kkk',
                 'objective' => 'muc tieu',
-                'avatar' => 'avatar.jpg'
             ],
         ]);
     }

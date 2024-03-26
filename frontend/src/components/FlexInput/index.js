@@ -9,6 +9,7 @@ const FlexInput = React.forwardRef(
       iconLeft,
       iconRight,
       cvStyle = true,
+      disabled = false,
       setCurrent,
       onChange,
       style,
@@ -40,6 +41,7 @@ const FlexInput = React.forwardRef(
           className={clsx(
             "autoresize resize-none overflow-hidden w-100",
             cvStyle && "cv-input",
+            disabled && "remove-cvinput-hover",
             innerClassName
           )}
           style={innerStyle}
@@ -47,8 +49,9 @@ const FlexInput = React.forwardRef(
           onChange={(e) => {
             if (setCurrent) setCurrent(e.target.value);
             else onChange(e);
-          }}          
+          }}
           ref={ref}
+          disabled={disabled}
           {...props}
         />
         <div className="text-main">{iconRight || null}</div>

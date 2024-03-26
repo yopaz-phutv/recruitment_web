@@ -3,19 +3,19 @@ import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 import { IoMdClose } from "react-icons/io";
 import { useContext } from "react";
-import { CandidateContext } from "../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts/CandidateLayout";
 import { useNavigate } from "react-router-dom";
 
-export default function CreateOptionDialog({ show, setShow }) {
+export default function CreateOptionDialog({ show, setShow, templateId }) {
   const { setCvMode } = useContext(CandidateContext);
   const nav = useNavigate();
   const handleSelect = (mode) => {
     setCvMode(mode);
     setShow(false);
-    nav("/candidate/resumes/create");
+    nav("/candidate/resumes/create", { state: { templateId } });
   };
   return (
-    <Modal show={show} onHide={() => setShow(false)}>
+    <Modal show={show} onHide={() => setShow(false)} dialogClassName="shadow">
       <IoMdClose
         className="ms-auto fs-4 me-1 mt-1 pointer"
         onClick={() => setShow(false)}

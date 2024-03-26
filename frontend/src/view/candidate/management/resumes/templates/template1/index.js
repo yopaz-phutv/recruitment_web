@@ -1,6 +1,5 @@
 import "./style.css";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import defaultAvt from "./default-avatar.webp";
 import { IoCalendarClear } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
@@ -12,7 +11,7 @@ import { useContext, useEffect, useState } from "react";
 import { CandidateContext } from "../../../layouts/CandidateLayout";
 import clsx from "clsx";
 import dayjs from "dayjs";
-import { TemplateContext } from "..";
+import { TemplateContext } from "../common";
 
 export default function Template1() {
   const {
@@ -55,12 +54,14 @@ export default function Template1() {
     return (
       <div className="content">
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("fw-550", bgColor)}
           placeholder="Tên kỹ năng"
           defaultValue={infor?.name}
           setCurrent={setName}
         />
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx(bgColor)}
           placeholder="Mô tả"
           defaultValue={infor?.description}
@@ -84,9 +85,10 @@ export default function Template1() {
     return (
       <div className="content d-flex">
         <FlexInput
-          className="w-20"
+          disabled={cvMode === "READ"}
+          className="w-25"
           innerClassName={clsx("fw-550 ts-sm", bgColor)}
-          placeholder="Tgian nhận"
+          placeholder="mm/yyyy"
           defaultValue={
             infor.receive_date
               ? dayjs(infor.receive_date).format("MM/YYYY")
@@ -95,6 +97,7 @@ export default function Template1() {
           setCurrent={setReceiveDate}
         />
         <FlexInput
+          disabled={cvMode === "READ"}
           className="flex-fill"
           innerClassName={clsx(bgColor)}
           placeholder="Tên chứng chỉ"
@@ -119,9 +122,10 @@ export default function Template1() {
     return (
       <div className="content d-flex">
         <FlexInput
-          className="w-20"
+          disabled={cvMode === "READ"}
+          className="w-25"
           innerClassName={clsx("fw-550 ts-sm", bgColor)}
-          placeholder="Tgian nhận"
+          placeholder="mm/yyyy"
           defaultValue={
             infor.receive_date
               ? dayjs(infor.receive_date).format("MM/YYYY")
@@ -130,6 +134,7 @@ export default function Template1() {
           setCurrent={setReceiveDate}
         />
         <FlexInput
+          disabled={cvMode === "READ"}
           className="flex-fill"
           innerClassName={clsx(bgColor)}
           placeholder="Tên giải thưởng"
@@ -171,6 +176,7 @@ export default function Template1() {
       <div className="content border-3 border-start cv-border-main">
         <div className="d-flex align-items-center">
           <FlexInput
+            disabled={cvMode === "READ"}
             className="flex-fill"
             innerClassName={clsx("fw-550", bgColor)}
             placeholder="Trường/Trung tâm"
@@ -178,6 +184,7 @@ export default function Template1() {
             setCurrent={setSchool}
           />
           <FlexInput
+            disabled={cvMode === "READ"}
             className="w-15"
             innerClassName={clsx(
               "fst-italic text-secondary text-end ts-sm",
@@ -191,6 +198,7 @@ export default function Template1() {
           />
           -
           <FlexInput
+            disabled={cvMode === "READ"}
             className="w-15"
             innerClassName={clsx("fst-italic text-secondary ts-sm", bgColor)}
             placeholder="Kết thúc"
@@ -202,6 +210,7 @@ export default function Template1() {
         </div>
         {menu[0].on && (
           <FlexInput
+            disabled={cvMode === "READ"}
             innerClassName={clsx(bgColor)}
             placeholder="Chuyên ngành"
             defaultValue={infor?.major}
@@ -210,6 +219,7 @@ export default function Template1() {
         )}
         {menu[1].on && (
           <FlexInput
+            disabled={cvMode === "READ"}
             innerClassName={clsx(bgColor)}
             placeholder="Mô tả"
             defaultValue={infor?.description}
@@ -252,6 +262,7 @@ export default function Template1() {
       <div className="content border-3 border-start cv-border-main">
         <div className="d-flex align-items-center">
           <FlexInput
+            disabled={cvMode === "READ"}
             className="flex-fill"
             innerClassName={clsx("fw-550", bgColor)}
             placeholder="Vị trí việc làm"
@@ -259,6 +270,7 @@ export default function Template1() {
             setCurrent={setName}
           />
           <FlexInput
+            disabled={cvMode === "READ"}
             className="w-15"
             innerClassName={clsx(
               "fst-italic text-secondary text-end ts-sm",
@@ -274,6 +286,7 @@ export default function Template1() {
           />
           -
           <FlexInput
+            disabled={cvMode === "READ"}
             className="w-15"
             innerClassName={clsx("fst-italic text-secondary ts-sm", bgColor)}
             placeholder="Kết thúc"
@@ -285,6 +298,7 @@ export default function Template1() {
         </div>
 
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx(bgColor)}
           placeholder="Công ty/Doanh nghiệp"
           defaultValue={infor?.company}
@@ -292,6 +306,7 @@ export default function Template1() {
         />
 
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx(bgColor)}
           placeholder="Mô tả"
           defaultValue={infor?.description}
@@ -347,6 +362,7 @@ export default function Template1() {
       <div className="content border-3 border-start cv-border-main">
         <div className="d-flex align-items-center">
           <FlexInput
+            disabled={cvMode === "READ"}
             className="flex-fill"
             innerClassName={clsx("fw-550", bgColor)}
             placeholder="Tên dự án"
@@ -354,6 +370,7 @@ export default function Template1() {
             setCurrent={setName}
           />
           <FlexInput
+            disabled={cvMode === "READ"}
             className="w-15"
             innerClassName={clsx(
               "fst-italic text-secondary text-end ts-sm",
@@ -369,6 +386,7 @@ export default function Template1() {
           />
           -
           <FlexInput
+            disabled={cvMode === "READ"}
             className="w-15"
             innerClassName={clsx("fst-italic text-secondary ts-sm", bgColor)}
             placeholder="Kết thúc"
@@ -379,6 +397,7 @@ export default function Template1() {
           />
         </div>
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("text-capitalize text-secondary ts-sm", bgColor)}
           placeholder="Loại dự án (Cá nhân/Nhóm)"
           defaultValue={infor?.prj_type}
@@ -386,6 +405,7 @@ export default function Template1() {
         />
         {menu[0].on && (
           <FlexInput
+            disabled={cvMode === "READ"}
             innerClassName={clsx("text-decoration-underline", bgColor)}
             placeholder="Liên kết"
             defaultValue={infor?.link}
@@ -394,6 +414,7 @@ export default function Template1() {
         )}
         {menu[1].on && (
           <FlexInput
+            disabled={cvMode === "READ"}
             innerClassName={clsx(bgColor)}
             placeholder="Công việc/Vai trò"
             defaultValue={infor?.role}
@@ -402,6 +423,7 @@ export default function Template1() {
         )}
         {menu[2].on && (
           <FlexInput
+            disabled={cvMode === "READ"}
             innerClassName={clsx(bgColor)}
             placeholder="Công nghệ sử dụng"
             defaultValue={infor?.technologies}
@@ -409,6 +431,7 @@ export default function Template1() {
           />
         )}
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx(bgColor)}
           placeholder="Mô tả"
           defaultValue={infor?.description}
@@ -455,6 +478,7 @@ export default function Template1() {
       <div className="content border-3 border-start cv-border-main">
         <div className="d-flex align-items-center">
           <FlexInput
+            disabled={cvMode === "READ"}
             className="flex-fill"
             innerClassName={clsx("fw-550", bgColor)}
             placeholder="Tên dự án"
@@ -462,6 +486,7 @@ export default function Template1() {
             setCurrent={setOrganization}
           />
           <FlexInput
+            disabled={cvMode === "READ"}
             className="w-15"
             innerClassName={clsx(
               "fst-italic text-secondary text-end ts-sm",
@@ -477,6 +502,7 @@ export default function Template1() {
           />
           -
           <FlexInput
+            disabled={cvMode === "READ"}
             className="w-15"
             innerClassName={clsx("fst-italic text-secondary ts-sm", bgColor)}
             placeholder="Kết thúc"
@@ -491,6 +517,7 @@ export default function Template1() {
           />
         </div>
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("text-secondary ts-sm", bgColor)}
           placeholder="Vị trí/Vai trò"
           defaultValue={infor?.role}
@@ -498,6 +525,7 @@ export default function Template1() {
         />
         {menu[0].on && (
           <FlexInput
+            disabled={cvMode === "READ"}
             innerClassName={clsx("text-decoration-underline", bgColor)}
             placeholder="Liên kết"
             defaultValue={infor?.link}
@@ -505,6 +533,7 @@ export default function Template1() {
           />
         )}
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx(bgColor)}
           placeholder="Mô tả"
           defaultValue={infor?.description}
@@ -528,12 +557,14 @@ export default function Template1() {
     return (
       <div className="content">
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("title", bgColor)}
           placeholder="Khác"
           defaultValue={infor?.name}
           setCurrent={setName}
         />
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx(bgColor)}
           placeholder="Mô tả"
           defaultValue={infor?.description}
@@ -544,8 +575,9 @@ export default function Template1() {
   };
   const PersonalPart = ({ bgColor }) => {
     return (
-      <InforPart type="personal">
+      <InforPart disabled={cvMode === "READ"} type="personal">
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("title", bgColor)}
           placeholder="Thông tin cá nhân"
           defaultValue={
@@ -555,6 +587,7 @@ export default function Template1() {
         />
         <div className="ms-2">
           <FlexInput
+            disabled={cvMode === "READ"}
             innerClassName={clsx("content", bgColor)}
             iconLeft={<IoCalendarClear className="mb-1" />}
             placeholder="Ngày/tháng/năm sinh"
@@ -566,6 +599,7 @@ export default function Template1() {
             {...register("dob")}
           />
           <FlexInput
+            disabled={cvMode === "READ"}
             innerClassName={clsx("content", bgColor)}
             iconLeft={<FaPhoneAlt className="mb-1" />}
             placeholder="Số điện thoại"
@@ -573,6 +607,7 @@ export default function Template1() {
             {...register("phone")}
           />
           <FlexInput
+            disabled={cvMode === "READ"}
             innerClassName={clsx("content", bgColor)}
             iconLeft={<IoMdMail className="mb-1" />}
             placeholder="Email"
@@ -580,6 +615,7 @@ export default function Template1() {
             {...register("email")}
           />
           <FlexInput
+            disabled={cvMode === "READ"}
             innerClassName={clsx("content", bgColor)}
             iconLeft={<IoIosLink className="mb-1" />}
             placeholder="Liên kết"
@@ -587,6 +623,7 @@ export default function Template1() {
             {...register("link")}
           />
           <FlexInput
+            disabled={cvMode === "READ"}
             innerClassName={clsx("content", bgColor)}
             iconLeft={<MdLocationOn className="fs-5 mb-1" />}
             placeholder="Địa chỉ"
@@ -600,8 +637,9 @@ export default function Template1() {
   };
   const ObjectivePart = ({ bgColor }) => {
     return (
-      <InforPart type="objective">
+      <InforPart disabled={cvMode === "READ"} type="objective">
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("title", bgColor)}
           placeholder="Mục tiêu nghề nghiệp"
           defaultValue={
@@ -612,6 +650,7 @@ export default function Template1() {
           {...register("objectiveTitle")}
         />
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("content", bgColor)}
           placeholder="Nội dung"
           defaultValue={cvMode !== "CREATE_0" ? basicInfor?.objective : null}
@@ -623,8 +662,9 @@ export default function Template1() {
   };
   const SkillPart = ({ bgColor }) => {
     return (
-      <InforPart type="skill">
+      <InforPart disabled={cvMode === "READ"} type="skill">
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("title", bgColor)}
           placeholder="Các kỹ năng"
           defaultValue={
@@ -634,6 +674,7 @@ export default function Template1() {
         />
         {cvSkills.map((item, index) => (
           <ContentItem
+            disabled={cvMode === "READ"}
             key={`skill_${index}`}
             index={index}
             items={cvSkills}
@@ -648,8 +689,9 @@ export default function Template1() {
   };
   const CertificatePart = ({ bgColor }) => {
     return (
-      <InforPart type="certificate">
+      <InforPart disabled={cvMode === "READ"} type="certificate">
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("title", bgColor)}
           placeholder="Chứng chỉ"
           defaultValue={
@@ -659,6 +701,7 @@ export default function Template1() {
         />
         {cvCertificates.map((item, index) => (
           <ContentItem
+            disabled={cvMode === "READ"}
             key={`certificate_${index}`}
             index={index}
             items={cvCertificates}
@@ -673,8 +716,9 @@ export default function Template1() {
   };
   const PrizePart = ({ bgColor }) => {
     return (
-      <InforPart type="prize">
+      <InforPart disabled={cvMode === "READ"} type="prize">
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("title", bgColor)}
           placeholder="Giải thưởng"
           defaultValue={
@@ -684,6 +728,7 @@ export default function Template1() {
         />
         {cvPrizes.map((item, index) => (
           <ContentItem
+            disabled={cvMode === "READ"}
             key={`prize_${index}`}
             index={index}
             items={cvPrizes}
@@ -698,8 +743,9 @@ export default function Template1() {
   };
   const EducationPart = ({ bgColor }) => {
     return (
-      <InforPart type="education">
+      <InforPart disabled={cvMode === "READ"} type="education">
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("title", bgColor)}
           placeholder="Học vấn"
           defaultValue={
@@ -709,14 +755,21 @@ export default function Template1() {
         />
         {cvEducations.map((item, index) => (
           <ContentItem
+            disabled={cvMode === "READ"}
             className="mb-1 py-1"
             key={`education_${index}`}
             index={index}
             items={cvEducations}
             setItems={setCvEducations}
             menuVaule={[
-              { name: "Chuyên ngành", on: item.major },
-              { name: "Mô tả", on: item.description },
+              {
+                name: "Chuyên ngành",
+                on: cvMode !== "CREATE_0" ? item.major : true,
+              },
+              {
+                name: "Mô tả",
+                on: cvMode !== "CREATE_0" ? item.description : true,
+              },
             ]}
           >
             <Education infor={item} index={index} bgColor={bgColor} />
@@ -728,8 +781,9 @@ export default function Template1() {
   };
   const ExperiencePart = ({ bgColor }) => {
     return (
-      <InforPart type="experience">
+      <InforPart disabled={cvMode === "READ"} type="experience">
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("title", bgColor)}
           placeholder="Kinh nghiệm làm việc"
           defaultValue={
@@ -741,6 +795,7 @@ export default function Template1() {
         />
         {cvExperiences.map((item, index) => (
           <ContentItem
+            disabled={cvMode === "READ"}
             className="mb-1 py-1"
             key={`experience_${index}`}
             index={index}
@@ -756,8 +811,9 @@ export default function Template1() {
   };
   const ProjectPart = ({ bgColor }) => {
     return (
-      <InforPart type="project">
+      <InforPart disabled={cvMode === "READ"} type="project">
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("title", bgColor)}
           placeholder="Dự án"
           defaultValue={cvMode === "EDIT" ? basicInfor.projectTitle : "Dự án"}
@@ -765,6 +821,7 @@ export default function Template1() {
         />
         {cvProjects.map((item, index) => (
           <ContentItem
+            disabled={cvMode === "READ"}
             className="mb-1 py-1"
             key={`project_${index}`}
             index={index}
@@ -785,8 +842,9 @@ export default function Template1() {
   };
   const ActivityPart = ({ bgColor }) => {
     return (
-      <InforPart type="activity">
+      <InforPart disabled={cvMode === "READ"} type="activity">
         <FlexInput
+          disabled={cvMode === "READ"}
           innerClassName={clsx("title", bgColor)}
           placeholder="Hoạt động"
           defaultValue={
@@ -796,6 +854,7 @@ export default function Template1() {
         />
         {cvActivities.map((item, index) => (
           <ContentItem
+            disabled={cvMode === "READ"}
             className="mb-1 py-1"
             key={`activity_${index}`}
             index={index}
@@ -813,9 +872,10 @@ export default function Template1() {
 
   const OtherPart = ({ bgColor }) => {
     return (
-      <InforPart type="other">
+      <InforPart disabled={cvMode === "READ"} type="other">
         {cvOthers.map((item, index) => (
           <ContentItem
+            disabled={cvMode === "READ"}
             className="mb-1 py-1"
             key={`other_${index}`}
             index={index}
@@ -831,28 +891,28 @@ export default function Template1() {
   };
 
   const renderPart = (index) => {
-    const bgColor = index <= 5 ? "cv-bg-main" : "";
+    const bgColor = index <= 5 ? "cv-bg-main" : "bg-white";
     switch (parts[index]) {
       case "personal":
         return <PersonalPart bgColor={bgColor} />;
       case "objective":
-        return <ObjectivePart bgColor={bgColor} />;
+        return basicInfor.objective ? <ObjectivePart bgColor={bgColor} /> : null;
       case "skill":
-        return <SkillPart bgColor={bgColor} />;
+        return cvSkills.length > 0 ? <SkillPart bgColor={bgColor} /> : null;
       case "certificate":
-        return <CertificatePart bgColor={bgColor} />;
+        return cvCertificates.length > 0 ? <CertificatePart bgColor={bgColor} /> : null;
       case "prize":
-        return <PrizePart bgColor={bgColor} />;
+        return cvPrizes.length > 0 ? <PrizePart bgColor={bgColor} /> : null;
       case "education":
-        return <EducationPart bgColor={bgColor} />;
+        return cvEducations.length > 0 ? <EducationPart bgColor={bgColor} /> : null;
       case "experience":
-        return <ExperiencePart bgColor={bgColor} />;
+        return cvExperiences.length > 0 ? <ExperiencePart bgColor={bgColor} /> : null;
       case "project":
-        return <ProjectPart bgColor={bgColor} />;
+        return cvProjects.length > 0 ? <ProjectPart bgColor={bgColor} /> : null;
       case "activity":
-        return <ActivityPart bgColor={bgColor} />;
+        return cvActivities.length > 0 ? <ActivityPart bgColor={bgColor} /> : null;
       case "other":
-        return <OtherPart bgColor={bgColor} />;
+        return cvOthers.length > 0 ? <OtherPart bgColor={bgColor} /> : null;
       default:
         break;
     }
@@ -861,7 +921,7 @@ export default function Template1() {
   return (
     <div
       id="resume"
-      className="mx-auto border mt-4 mb-5 d-flex p-2 shadow-sm"
+      className="mx-auto border d-flex p-2 shadow-sm"
       style={{ width: "800px" }}
     >
       <div className="cv-bg-main ps-1 pe-2" style={{ width: "340px" }}>
@@ -871,17 +931,19 @@ export default function Template1() {
             type="file"
             className="d-none"
             onChange={(e) => handleDisplayImg(e)}
+            disabled={cvMode === "READ"}
           />
           <img
             id="cv-avatar"
-            src={basicInfor?.avatar}
+            src={basicInfor.avatar || defaultAvt}
             alt="avatar"
             width="172px"
             height="172px"
-            className="rounded-pill pointer"
+            className={clsx("rounded-pill", cvMode !== "READ" && "pointer")}
             onClick={() => document.getElementById("cv-avatar-upload").click()}
           />
           <FlexInput
+            disabled={cvMode === "READ"}
             placeholder="HỌ TÊN"
             className="mt-2"
             innerClassName="cv-bg-main h4 cv-text-main text-center text-uppercase"
