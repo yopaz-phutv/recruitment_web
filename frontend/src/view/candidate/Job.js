@@ -20,6 +20,8 @@ import { MdOutlineAttachMoney } from "react-icons/md";
 import { IoMdPeople } from "react-icons/io";
 import dayjs from "dayjs";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
+import { toast } from "react-toastify";
 
 function Job() {
   const { id } = useParams();
@@ -32,6 +34,7 @@ function Job() {
   });
   const user = useSelector((state) => state.candAuth.current);
   const isAuth = useSelector((state) => state.candAuth.isAuth);
+  const [isLoading, setIsLoading] = useState(false);
   const [isApplied, setIsApplied] = useState(false);
   const [isUpload, setIsUpload] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -51,15 +54,19 @@ function Job() {
   };
 
   const handleApply = async () => {
-    const formData = new FormData();
-    formData.append("cv", file);
-    formData.append("fname", file.name);
-    console.log(file);
-
-    await jobApi.apply(id, formData);
-    
-    alert("Ứng tuyển thành công!");
-    window.location.reload();
+    try {
+      const formData = new FormData();
+      formData.append("cv", file);
+      formData.append("fname", file.name);
+      setIsLoading(true);
+      await jobApi.apply(id, formData);
+      setIsLoading(false);      
+      window.location.reload();
+      toast.success("Ứng tuyển thành công!");
+    } catch (error) {
+      setIsLoading(false);
+      toast.error("Đã có lỗi xảy ra!");
+    }
   };
 
   const getFileInf = (e) => {
@@ -79,9 +86,6 @@ function Job() {
     const data = { status: status };
     await candidateApi.processJobSaving(id, data);
     setIsSaved(!isSaved);
-    setTimeout(() => {
-      alert("Cập nhật thành công!");
-    }, 100);
   };
 
   useEffect(() => {
@@ -124,7 +128,6 @@ function Job() {
                 <div>
                   <div className="">
                     <h4 className="mt-3">{job.jname}</h4>
-                    {/* <p className="text-secondary">{job.employer.name}</p> */}
                   </div>
                   <div className="clearfix mt-3 mb-2">
                     <button
@@ -250,8 +253,10 @@ function Job() {
                                 type="button"
                                 className="btn btn-primary"
                                 onClick={handleApply}
+                                disabled={isLoading}
                               >
-                                Nộp hồ sơ
+                                {isLoading && <Spinner size="sm" className="me-1" />}
+                                {!isLoading ? "Nộp hồ sơ" : "Đang xử lý"}
                               </button>
                               <button
                                 id="close-dialog-btn"

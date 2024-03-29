@@ -6,7 +6,7 @@ import CompanyList from "./view/candidate/CompanyList";
 import Company from "./view/candidate/Company";
 import JobList from "./view/candidate/JobList";
 import Job from "./view/candidate/Job";
-import EmployerLayout from "./view/employer/layouts/Layout";
+import EmployerLayout from "./view/employer/layouts";
 import EmployerLogin from "./view/employer/auth/Login";
 import CandidateList from "./view/employer/candidates/CandidateList";
 import JobManagement from "./view/employer/jobs";

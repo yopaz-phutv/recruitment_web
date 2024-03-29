@@ -21,7 +21,6 @@ class ResumeController extends Controller
     public function getByCurrentCandidate()
     {
         $res = Resume::where('candidate_id', Auth::user()->id)
-            ->select(['id', 'title', 'created_at', 'updated_at'])
             ->get();
 
         return response()->json($res);

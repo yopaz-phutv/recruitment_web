@@ -37,7 +37,7 @@ export default function Skill() {
       {skills?.map((item, index) => (
         <div key={index}>
           <hr />
-          <div className="border-0 border-success border-start ps-3 d-inline-block">
+          <div className="border-0 border-main border-start ps-3 d-inline-block">
             <div className="fw-bold">{item.name}</div>
             <Stack direction="horizontal">
               {Array.from({ length: 5 }, (_, ind) => (

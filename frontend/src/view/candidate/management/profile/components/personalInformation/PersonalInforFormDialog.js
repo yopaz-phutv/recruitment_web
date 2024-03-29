@@ -9,6 +9,8 @@ import Modal from "react-bootstrap/Modal";
 import { FaUser } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import candidateApi from "../../../../../../api/candidate";
+import Spinner from "react-bootstrap/Spinner";
+import { toast } from "react-toastify";
 
 export default function PersonalInforFormDialog({
   isEdit,
@@ -39,6 +41,8 @@ export default function PersonalInforFormDialog({
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const [isLoading, setIsLoading] = useState(false);
   const [isDeleteImg, setIsDeleteImg] = useState(false);
   const handleDisplayImg = (e) => {
     setHasImg(true);
@@ -59,29 +63,34 @@ export default function PersonalInforFormDialog({
     imgInput.value = null;
   };
   const onSubmit = async (data) => {
-    console.log({ data });
-    const formData = new FormData();
-    formData.append("lastname", data.lastname);
-    formData.append("firstname", data.firstname);
-    formData.append("gender", data.gender);
-    formData.append("dob", data.dob);
-    formData.append("phone", data.phone);
-    formData.append("email", data.email);
-    formData.append("address", data.address);
-    formData.append("link", data.link);
-    formData.append("objective", data.objective);
-    if (hasImg) {
-      formData.append("image", data.image[0]);
+    try {
+      const formData = new FormData();
+      formData.append("lastname", data.lastname);
+      formData.append("firstname", data.firstname);
+      formData.append("gender", data.gender);
+      formData.append("dob", data.dob);
+      formData.append("phone", data.phone);
+      formData.append("email", data.email);
+      formData.append("address", data.address);
+      formData.append("link", data.link);
+      formData.append("objective", data.objective);
+      if (hasImg) {
+        formData.append("image", data.image[0]);
+      }
+      if (isDeleteImg) {
+        formData.append("delete_img", 1);
+      }
+      //send request:
+      setIsLoading(true);
+      await candidateApi.update(formData);
+      setIsLoading(false);
+      toast.success("Cập nhật thành công!");
+      await getPersonal();
+      setIsEdit(false);
+    } catch (error) {
+      setIsLoading(false);
+      toast.error("Đã có lỗi xảy ra!");
     }
-    if (isDeleteImg) {
-      formData.append("delete_img", 1);
-    }
-    //send request:
-    const res = await candidateApi.update(formData);
-    console.log("kq::", res);
-    alert("Cập nhật thành công!");
-    await getPersonal();
-    setIsEdit(false);
   };
   useEffect(() => {
     if (personal.avatar) setHasImg(true);
@@ -280,8 +289,10 @@ export default function PersonalInforFormDialog({
               size="sm"
               type="submit"
               className="ms-auto"
+              disabled={isLoading}
             >
-              Lưu
+              {isLoading && <Spinner size="sm" className="me-1" />}
+              {!isLoading ? "Lưu" : "Đang xử lý"}
             </Button>
             <Button
               variant="danger"

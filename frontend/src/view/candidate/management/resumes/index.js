@@ -23,9 +23,11 @@ export default function Resume() {
   const handleCreate = () => {
     nav("/candidate/templates");
   };
-  const handleEdit = (id) => {
+  const handleEdit = (item) => {
     setCvMode("EDIT");
-    nav(`/candidate/resumes/${id}`);
+    nav(`/candidate/resumes/${item.id}`, {
+      state: { templateId: item.template_id },
+    });
   };
   const handleDelete = async (id) => {
     const choice = window.confirm("Bạn có chắc muốn xóa bản ghi này?");
@@ -83,7 +85,7 @@ export default function Resume() {
                       <BsEyeFill className="text-secondary pointer" />
                       <MdEdit
                         className="text-primary pointer"
-                        onClick={() => handleEdit(item.id)}
+                        onClick={() => handleEdit(item)}
                       />
                       <MdDelete
                         className="text-danger pointer"
@@ -96,9 +98,6 @@ export default function Resume() {
           </tbody>
         </Table>
         {resumes.length === 0 && <h5 className="my-2">Không có bản ghi nào</h5>}
-        {/* {showDialog && (
-          <CreateOptionDialog show={showDialog} setShow={setShowDialog} />
-        )} */}
       </div>
     </div>
   );

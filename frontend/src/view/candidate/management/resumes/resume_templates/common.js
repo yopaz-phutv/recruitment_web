@@ -95,6 +95,7 @@ export default function Template({
 
     setParts(partsOrder);
     setBasicInfor(res.basicInfor);
+    templateId = res.basicInfor.template_id
 
     if (res.skills.length > 0) {
       setCvSkills(res.skills);
@@ -268,6 +269,7 @@ export default function Template({
       basicInfor: {
         ...data,
         dob,
+        template_id: templateId,
         parts_order: JSON.stringify(parts),
       },
       educations: isPresentInParts("education") ? educations : null,

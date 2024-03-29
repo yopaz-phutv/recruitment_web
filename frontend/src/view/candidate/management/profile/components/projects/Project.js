@@ -37,7 +37,7 @@ export default function Project() {
       {projects?.map((item, index) => (
         <div key={index}>
           <hr />
-          <div className="border-0 border-success border-start ps-3 d-inline-block">
+          <div className="border-0 border-main border-start ps-3 d-inline-block">
             <div className="fw-bold">{item.name}</div>
             <div className="text-secondary ts-smd">{item.company}</div>
             {item.start_date || item.start_date ? (

@@ -190,10 +190,9 @@ function Layout(props) {
                     bellMsgs.map((item, index) => (
                       <div
                         key={"bell_msg" + index}
-                        style={{ cursor: "pointer" }}
                         onClick={() => handleReadMsg(item)}
                         className={
-                          "text-wrap px-2 py-1 hover-bg-1" + msgStyles[index]
+                          "text-wrap px-3 py-2 hover-bg-1 pointer" + msgStyles[index]
                         }
                       >
                         {item.name}

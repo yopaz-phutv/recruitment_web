@@ -38,7 +38,7 @@ export default function Certificate() {
       {certificates?.map((item, index) => (
         <div key={index}>
           <hr />
-          <div className="border-0 border-success border-start ps-3 d-inline-block">
+          <div className="border-0 border-main border-start ps-3 d-inline-block">
             <div className="fw-bold">{item.name}</div>
             <div>
               <span className="text-secondary ts-xs">

@@ -74,12 +74,12 @@ function JobManagement() {
 
   return (
     <>
-      <div className="bg-white ms-4 mt-3" style={{ height: "90%" }}>
+      <div className="bg-white ms-4 mt-3 pb-3">
         <div className="pt-3" style={{ marginLeft: "45px" }}>
           <h5 className="text-main">Danh sách việc làm</h5>
           <div className="clearfix my-3" style={{ width: "93%" }}>
             <form
-              className=" float-start"
+              className="float-start"
               style={{ width: "35%" }}
               onSubmit={handleSubmit(getJobList)}
             >

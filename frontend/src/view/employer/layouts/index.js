@@ -19,7 +19,7 @@ function Layout(props) {
   const { currentPage, setCurrentPage } = useContext(AppContext);
 
   const company = useSelector((state) => state.employerAuth.current.employer);
-  const isAuth = useSelector((state) => state.employerAuth.isAuth);
+  // const isAuth = useSelector((state) => state.employerAuth.isAuth);
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
@@ -48,9 +48,9 @@ function Layout(props) {
 
   return (
     <>
-      <nav className="navbar border-bottom shadow-sm fixed-top">
+      <nav className="navbar border-bottom shadow-sm fixed-top bg-white">
         <div className="navbar-brand ms-3 text-secondary">Recruitment</div>
-        <div className="dropdown" style={{ cursor: "pointer" }}>
+        <div className="dropdown pointer">
           <div
             className="d-flex align-items-center me-5 dropdown-toggle"
             data-bs-toggle="dropdown"
@@ -69,7 +69,7 @@ function Layout(props) {
         className="d-flex flex-column flex-lg-row"
         style={{ marginTop: "57px" }}
       >
-        <div className="ts-smd fw-500 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-bottom border-lg-end">
+        <div className=" ts-smd fw-500 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-bottom border-lg-end">
           <div className="text-center text-main border-lg-bottom py-3 px-2 fw-500">
             {company && company.name}
           </div>

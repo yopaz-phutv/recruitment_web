@@ -38,7 +38,7 @@ export default function Activity() {
       {activities?.map((item, index) => (
         <div key={index}>
           <hr />
-          <div className="border-0 border-success border-start ps-3 d-inline-block">
+          <div className="border-0 border-main border-start ps-3 d-inline-block">
             <div className="fw-bold">{item.organization}</div>
             <div className="ts-smd text-secondary">{item.role}</div>
             {item.start_date || item.start_date ? (

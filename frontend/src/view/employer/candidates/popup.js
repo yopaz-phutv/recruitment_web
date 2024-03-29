@@ -8,6 +8,7 @@ import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useSelector } from "react-redux";
 import { emailjsConfig } from "../../../services";
+import Spinner from "react-bootstrap/Spinner";
 
 function MessagePopup({
   candidate,
@@ -34,14 +35,18 @@ function MessagePopup({
   } = useForm();
   const requiredMsg = "Không được để trống!";
   const [isSendMail, setIsSendMail] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       await employerApi.processApplying({ ...candidate, ...data });
-
+      setIsLoading(false);
       toast.success("Gửi thông báo thành công!");
       getCandidateList();
       setShowDialog(false);
     } catch (e) {
+      setIsLoading(false);
       toast.error("Gửi thông báo thất bại!");
     }
     if (isSendMail) {
@@ -127,8 +132,14 @@ function MessagePopup({
             </Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex gap-2 justify-content-end mt-3 me-3">
-            <Button type="submit" variant="primary" size="sm">
-              Xác nhận
+            <Button
+              type="submit"
+              variant="primary"
+              size="sm"
+              disabled={isLoading}
+            >
+              {isLoading && <Spinner size="sm" className="me-1" />}
+              {!isLoading ? "Xác nhận" : "Đang xử lý"}
             </Button>
             <Button variant="secondary" size="sm" onClick={handleClose}>
               Hủy
