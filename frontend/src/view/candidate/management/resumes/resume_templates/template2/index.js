@@ -672,10 +672,10 @@ export default function Template2() {
           placeholder="Mục tiêu nghề nghiệp"
           defaultValue={
             cvMode === "EDIT"
-              ? basicInfor.objectivetitle2
+              ? basicInfor.objectiveTitle
               : "Mục tiêu nghề nghiệp"
           }
-          {...register("objectivetitle2")}
+          {...register("objectiveTitle")}
         />
         <FlexInput
           disabled={cvMode === "READ"}
@@ -695,9 +695,9 @@ export default function Template2() {
           innerClassName={clsx("title2", bgColor)}
           placeholder="Các kỹ năng"
           defaultValue={
-            cvMode === "EDIT" ? basicInfor.skilltitle2 : "Các kỹ năng"
+            cvMode === "EDIT" ? basicInfor.skillTitle : "Các kỹ năng"
           }
-          {...register("skilltitle2")}
+          {...register("skillTitle")}
         />
         {cvSkills.map((item, index) => (
           <ContentItem
@@ -725,9 +725,9 @@ export default function Template2() {
           innerClassName={clsx("title2", bgColor)}
           placeholder="Chứng chỉ"
           defaultValue={
-            cvMode === "EDIT" ? basicInfor.certificatetitle2 : "Chứng chỉ"
+            cvMode === "EDIT" ? basicInfor.certificateTitle : "Chứng chỉ"
           }
-          {...register("certificatetitle2")}
+          {...register("certificateTitle")}
         />
         {cvCertificates.map((item, index) => (
           <ContentItem
@@ -751,9 +751,9 @@ export default function Template2() {
           innerClassName={clsx("title2", bgColor)}
           placeholder="Giải thưởng"
           defaultValue={
-            cvMode === "EDIT" ? basicInfor.prizetitle2 : "Giải thưởng"
+            cvMode === "EDIT" ? basicInfor.prizeTitle : "Giải thưởng"
           }
-          {...register("prizetitle2")}
+          {...register("prizeTitle")}
         />
         {cvPrizes.map((item, index) => (
           <ContentItem
@@ -777,9 +777,9 @@ export default function Template2() {
           innerClassName={clsx("title2", bgColor)}
           placeholder="Học vấn"
           defaultValue={
-            cvMode === "EDIT" ? basicInfor.educationtitle2 : "Học vấn"
+            cvMode === "EDIT" ? basicInfor.educationTitle : "Học vấn"
           }
-          {...register("educationtitle2")}
+          {...register("educationTitle")}
         />
         {cvEducations.map((item, index) => (
           <ContentItem
@@ -813,10 +813,10 @@ export default function Template2() {
           placeholder="Kinh nghiệm làm việc"
           defaultValue={
             cvMode === "EDIT"
-              ? basicInfor.experiencetitle2
+              ? basicInfor.experienceTitle
               : "Kinh nghiệm làm việc"
           }
-          {...register("experiencetitle2")}
+          {...register("experienceTitle")}
         />
         {cvExperiences.map((item, index) => (
           <ContentItem
@@ -840,8 +840,8 @@ export default function Template2() {
           disabled={cvMode === "READ"}
           innerClassName={clsx("title2", bgColor)}
           placeholder="Dự án"
-          defaultValue={cvMode === "EDIT" ? basicInfor.projecttitle2 : "Dự án"}
-          {...register("projecttitle2")}
+          defaultValue={cvMode === "EDIT" ? basicInfor.projectTitle : "Dự án"}
+          {...register("projectTitle")}
         />
         {cvProjects.map((item, index) => (
           <ContentItem
@@ -871,9 +871,9 @@ export default function Template2() {
           innerClassName={clsx("title2", bgColor)}
           placeholder="Hoạt động"
           defaultValue={
-            cvMode === "EDIT" ? basicInfor.activitytitle2 : "Hoạt động"
+            cvMode === "EDIT" ? basicInfor.activityTitle : "Hoạt động"
           }
-          {...register("activitytitle2")}
+          {...register("activityTitle")}
         />
         {cvActivities.map((item, index) => (
           <ContentItem
