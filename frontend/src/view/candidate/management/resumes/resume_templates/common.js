@@ -1,5 +1,6 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 import sample from "./sample";
 import { createContext, useContext, useEffect, useState } from "react";
 import { CandidateContext } from "../../layouts/CandidateLayout";
@@ -51,6 +52,7 @@ export default function Template({
     reset,
   } = useForm();
 
+  const [isSaveLoading, setIsSaveLoading] = useState(false);
   const [fullname, setFullname] = useState("");
   const [avatarFile, setAvatarFile] = useState(null);
   const [basicInfor, setBasicInfor] = useState({});
@@ -90,12 +92,14 @@ export default function Template({
   const [partMenu, setPartMenu] = useState(defaultPartMenu);
 
   const getEditResume = async () => {
-    const res = await resumeApi.getById(id);
+    let res = await resumeApi.getById(id);
+    const avatar = await resumeApi.getAvatar(id);
+    res.basicInfor = { ...res.basicInfor, avatar };
     const partsOrder = JSON.parse(res.parts_order);
 
     setParts(partsOrder);
     setBasicInfor(res.basicInfor);
-    templateId = res.basicInfor.template_id
+    templateId = res.basicInfor.template_id;
 
     if (res.skills.length > 0) {
       setCvSkills(res.skills);
@@ -240,7 +244,7 @@ export default function Template({
     return parts.findIndex((item) => item === partName) > -1 ? true : false;
   };
   const onSubmit = async (data) => {
-    console.log({ data });
+    setIsSaveLoading(true);
     var dob = "";
     if (data.dob) {
       const [dobDay, dobMonth, dobYear] = data.dob.split("/");
@@ -264,14 +268,15 @@ export default function Template({
     formatDateInPart(certificates);
     formatDateInPart(prizes);
     //end: format date
-
+    const image = await getImgData();
     let postData = {
       basicInfor: {
         ...data,
         dob,
         template_id: templateId,
         parts_order: JSON.stringify(parts),
-        avatar: !avatarFile && cvMode === 'CREATE_1' ? personal.avatar : null
+        avatar: !avatarFile && cvMode === "CREATE_1" ? personal.avatar : null,
+        image,
       },
       educations: isPresentInParts("education") ? educations : null,
       experiences: isPresentInParts("experience") ? experiences : null,
@@ -285,24 +290,28 @@ export default function Template({
 
     const formData = new FormData();
     if (cvMode === "EDIT") postData = { ...postData, resume_id: id };
-     formData.append("avatar", avatarFile);
+    if (avatarFile) formData.append("avatar", avatarFile);
     formData.append("otherData", JSON.stringify(postData));
 
     if (cvMode.startsWith("CREATE")) {
       try {
         await resumeApi.create(formData);
+        setIsSaveLoading(false);
         toast.success("Tạo mới thành công!");
         nav("/candidate/resumes");
       } catch (e) {
+        setIsSaveLoading(false);
         toast.error("Đã có lỗi xảy ra!");
         console.error(">>Error:", e.response.data.message);
       }
     } else if (cvMode === "EDIT") {
       try {
         await resumeApi.update(formData);
+        setIsSaveLoading(false);
         toast.success("Cập nhật thành công!");
         nav("/candidate/resumes");
       } catch (e) {
+        setIsSaveLoading(false);
         toast.error("Đã có lỗi xảy ra!");
         console.error(">>Error:", e.response.data.message);
       }
@@ -317,14 +326,18 @@ export default function Template({
     };
     reader.readAsDataURL(e.target.files[0]);
   };
-  const handleDownload = async () => {
+  const getImgData = async () => {
     let cvElement = document.querySelector("#resume");
-    let filename = watch("title") + ".jpg";
     let canvas = await html2canvas(cvElement);
-    let data = canvas.toDataURL("image/jpg");
+
+    return canvas.toDataURL("image/jpg");
+  };
+
+  const handleDownload = async () => {
+    let filename = watch("title") + ".jpg";
     let link = document.createElement("a");
 
-    link.href = data;
+    link.href = await getImgData();
     link.download = filename;
     document.body.appendChild(link);
     link.click();
@@ -394,8 +407,12 @@ export default function Template({
               variant="outline-primary"
               size="sm"
               className="float-end me-3 px-5 py-1"
+              disabled={isSaveLoading}
             >
-              <span className="fw-600">Lưu</span>
+              {isSaveLoading && <Spinner size="sm" className="me-1" />}
+              <span className="fw-600">
+                {!isSaveLoading ? "Lưu" : "Đang xử lý"}
+              </span>
             </Button>
           </div>
           <div className="mt-4">

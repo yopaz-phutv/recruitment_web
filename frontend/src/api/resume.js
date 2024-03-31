@@ -8,6 +8,9 @@ const resumeApi = {
   getById: (id) => {
     return candidateAxios.get(`${prefix}/${id}/getById`);
   },
+  getAvatar: (id) => {
+    return candidateAxios.get(`${prefix}/${id}/getAvatar`);
+  },
   create: (data) => {
     return candidateAxios.post(`${prefix}`, data);
   },

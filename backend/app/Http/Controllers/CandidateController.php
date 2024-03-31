@@ -20,9 +20,10 @@ class CandidateController extends Controller
     }
     public function getCurrentAvatar()
     {
-        $candidate = Candidate::find(Auth::user()->id);
-
-        return Storage::get($candidate->avatar);
+        $path = Candidate::find(Auth::user()->id)->avatar;
+        if ($path)
+            return Storage::get($path);
+        else return response()->json();
     }
 
     public function update(Request $req)

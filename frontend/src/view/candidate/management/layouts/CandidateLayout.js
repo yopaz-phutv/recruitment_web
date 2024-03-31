@@ -35,9 +35,8 @@ function CandidateLayout(props) {
 
   const getPersonal = async () => {
     let res = await candidateApi.getCurrent();
-    const avatar = await candidateApi.getCurrentAvatar();
-    res = { ...res, avatar };
-    console.log("basicInfor:", res);
+    let avatar = await candidateApi.getCurrentAvatar();
+    if (avatar.length > 0 ) res = {...res, avatar}
     setPersonal(res);
   };
   const getEducations = async () => {

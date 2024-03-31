@@ -2,20 +2,20 @@ import { useContext, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import jobApi from "../../api/job";
-import industryApi from "../../api/industry";
-import locationApi from "../../api/location";
-import jtypeApi from "../../api/jtype";
-import jlevelApi from "../../api/jlevel";
-import { AppContext } from "../../App";
+import jobApi from "../../../api/job";
+import industryApi from "../../../api/industry";
+import locationApi from "../../../api/location";
+import jtypeApi from "../../../api/jtype";
+import jlevelApi from "../../../api/jlevel";
+import { AppContext } from "../../../App";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { MdLocationOn } from "react-icons/md";
 import dayjs from "dayjs";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import Spinner from "react-bootstrap/Spinner";
-import CPagination from "../../components/CPagination";
-import CMulSelect from "../../components/CMulSelect";
+import CPagination from "../../../components/CPagination";
+import CMulSelect from "../../../components/CMulSelect";
 import Form from "react-bootstrap/Form";
 
 function JobList() {

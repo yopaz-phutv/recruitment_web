@@ -1,7 +1,7 @@
 import "./job.css";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { AiFillHeart, AiOutlineHeart, AiOutlinePlus } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import {
   BsCalendar2Check,
   BsCalendarEvent,
@@ -10,17 +10,16 @@ import {
   BsFillPeopleFill,
   BsFillPersonFill,
   BsPersonWorkspace,
-  BsUpload,
 } from "react-icons/bs";
 import { FaIndustry } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import jobApi from "../../api/job";
-import candidateApi from "../../api/candidate";
+import jobApi from "../../../api/job";
+import candidateApi from "../../../api/candidate";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { IoMdPeople } from "react-icons/io";
 import dayjs from "dayjs";
 import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
+import AppyingDialog from "./ApplyingDialog";
 import { toast } from "react-toastify";
 
 function Job() {
@@ -34,11 +33,10 @@ function Job() {
   });
   const user = useSelector((state) => state.candAuth.current);
   const isAuth = useSelector((state) => state.candAuth.isAuth);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [showDialog, setShowDialog] = useState(false);
   const [isApplied, setIsApplied] = useState(false);
-  const [isUpload, setIsUpload] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [file, setFile] = useState();
   const [industries, setIndustries] = useState([]);
 
   const getJobInf = async () => {
@@ -53,28 +51,11 @@ function Job() {
     console.log("is applying?", res.value);
   };
 
-  const handleApply = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("cv", file);
-      formData.append("fname", file.name);
-      setIsLoading(true);
-      await jobApi.apply(id, formData);
-      setIsLoading(false);      
-      window.location.reload();
-      toast.success("Ứng tuyển thành công!");
-    } catch (error) {
-      setIsLoading(false);
-      toast.error("Đã có lỗi xảy ra!");
-    }
-  };
-
-  const getFileInf = (e) => {
-    setFile(e.target.files[0]);
-  };
   const checkLoggedIn = () => {
     if (!isAuth) {
-      alert("Vui lòng đăng nhập!");
+      toast.error("Vui lòng đăng nhập!");
+    } else {
+      setShowDialog(true);
     }
   };
   const checkJobSaved = async () => {
@@ -132,8 +113,6 @@ function Job() {
                   <div className="clearfix mt-3 mb-2">
                     <button
                       className="btn btn-primary ts-sm"
-                      data-bs-toggle={isAuth ? "modal" : ""}
-                      data-bs-target={isAuth ? "#applying_dialog" : ""}
                       disabled={isApplied === true}
                       onClick={checkLoggedIn}
                     >
@@ -154,122 +133,13 @@ function Job() {
                       )}
                     </button>
                     {isAuth && (
-                      <div className="modal fade" id="applying_dialog">
-                        <div
-                          className="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-scrollable"
-                          style={{ width: "60%" }}
-                        >
-                          <div className="modal-content">
-                            <div className="modal-header border-bottom-0">
-                              <button
-                                type="button"
-                                className="btn-close btn btn-sm"
-                                data-bs-dismiss="modal"
-                              ></button>
-                            </div>
-                            <div className="modal-body ps-5">
-                              <div className="">
-                                <span style={{ fontSize: "15px" }}>
-                                  Ứng tuyển vào vị trí
-                                </span>
-                                <br />
-                                <h4>{job.jname}</h4>
-                                <span
-                                  className="text-secondary"
-                                  style={{ fontSize: "15px" }}
-                                >
-                                  {job.employer.name}
-                                </span>
-                              </div>
-
-                              <form className="mt-3" style={{ width: "65%" }}>
-                                <div>
-                                  <label htmlFor="fullname">Họ và tên</label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    name="fullname"
-                                    placeholder={
-                                      user &&
-                                      user.name.lastname +
-                                        " " +
-                                        user.name.firstname
-                                    }
-                                    disabled
-                                  />
-                                </div>
-                                <div className="mt-2">
-                                  <label htmlFor="email">Email</label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    name="email"
-                                    placeholder={user && user.email}
-                                    disabled
-                                  />
-                                </div>
-                              </form>
-                              <div className="mt-3">
-                                Hồ sơ của bạn:
-                                <br />
-                                <div className="">
-                                  <button
-                                    type="button"
-                                    className="btn btn-outline-primary mt-2 w-50"
-                                    disabled={isUpload && true}
-                                    onClick={() => {
-                                      document
-                                        .getElementById("close-dialog-btn")
-                                        .click();
-                                      nav("/candidate/resumes");
-                                    }}
-                                  >
-                                    <AiOutlinePlus /> Tạo hồ sơ trực tuyến
-                                  </button>
-                                  <br />
-                                  <button
-                                    type="button"
-                                    className="btn btn-outline-primary mt-3 w-50"
-                                    onClick={() => {
-                                      setIsUpload(!isUpload);
-                                    }}
-                                  >
-                                    <BsUpload /> Tải lên hồ sơ có sẵn
-                                  </button>
-                                  {isUpload && (
-                                    <div>
-                                      <input
-                                        type="file"
-                                        className="form-control mt-3 w-50"
-                                        onChange={getFileInf}
-                                      />
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                            <div className="modal-footer border-top-0">
-                              <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={handleApply}
-                                disabled={isLoading}
-                              >
-                                {isLoading && <Spinner size="sm" className="me-1" />}
-                                {!isLoading ? "Nộp hồ sơ" : "Đang xử lý"}
-                              </button>
-                              <button
-                                id="close-dialog-btn"
-                                type="button"
-                                className="btn btn-danger"
-                                data-bs-dismiss="modal"
-                              >
-                                Đóng
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <AppyingDialog
+                        show={showDialog}
+                        setShow={setShowDialog}
+                        job={job}
+                        user={user}
+                        jobId={id}
+                      />
                     )}
                   </div>
                 </div>

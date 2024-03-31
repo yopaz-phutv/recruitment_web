@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('activityTitle', 60)->nullable();
             $table->text('cv_link')->nullable();
             $table->json('parts_order')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
