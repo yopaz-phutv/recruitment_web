@@ -52,7 +52,7 @@ export default function Template({
   } = useForm();
 
   const [fullname, setFullname] = useState("");
-  const [avatarFile, setAvatarFile] = useState();
+  const [avatarFile, setAvatarFile] = useState(null);
   const [basicInfor, setBasicInfor] = useState({});
   const [cvEducations, setCvEducations] = useState([{}]);
   const [cvExperiences, setCvExperiences] = useState([{}]);
@@ -271,6 +271,7 @@ export default function Template({
         dob,
         template_id: templateId,
         parts_order: JSON.stringify(parts),
+        avatar: !avatarFile && cvMode === 'CREATE_1' ? personal.avatar : null
       },
       educations: isPresentInParts("education") ? educations : null,
       experiences: isPresentInParts("experience") ? experiences : null,
@@ -284,7 +285,7 @@ export default function Template({
 
     const formData = new FormData();
     if (cvMode === "EDIT") postData = { ...postData, resume_id: id };
-    formData.append("avatar", avatarFile);
+     formData.append("avatar", avatarFile);
     formData.append("otherData", JSON.stringify(postData));
 
     if (cvMode.startsWith("CREATE")) {
