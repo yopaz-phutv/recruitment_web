@@ -21,7 +21,7 @@ function CandidateLayout(props) {
   const nav = useNavigate();
   const { currentPage, setCurrentPage } = useContext(AppContext);
   const isAuth = useSelector((state) => state.candAuth.isAuth);
-  
+
   const [personal, setPersonal] = useState({});
   const [educations, setEducations] = useState([]);
   const [experiences, setExperiences] = useState([]);
@@ -34,7 +34,10 @@ function CandidateLayout(props) {
   const [cvMode, setCvMode] = useState("CREATE_0");
 
   const getPersonal = async () => {
-    const res = await candidateApi.getCurrent();
+    let res = await candidateApi.getCurrent();
+    const avatar = await candidateApi.getCurrentAvatar();
+    res = { ...res, avatar };
+    console.log("basicInfor:", res);
     setPersonal(res);
   };
   const getEducations = async () => {

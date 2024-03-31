@@ -50,7 +50,7 @@ class CertificateController extends Controller
         $file = $req->file('image');
         if ($file) {
             $filename = 'certificate' . '_' . $certificate->id . '.' . $file->getClientOriginalExtension();
-            $path = uploadFile2GgDrive($file, 'certificates', $filename, true);
+            $path = uploadFile2GgDrive($file, 'certificates', $filename, ['isThumbnail' => true]);
             $certificate->image = $path;
             $certificate->save();
         }
@@ -80,7 +80,7 @@ class CertificateController extends Controller
                     Storage::delete($path);
             }
             $filename = 'certificate' . '_' . $certificate->id . '.' . $file->getClientOriginalExtension();
-            $path = uploadFile2GgDrive($file, 'certificates', $filename, true);
+            $path = uploadFile2GgDrive($file, 'certificates', $filename, ['isThumbnail' => true]);
             $certificate->image = $path;
         }
         if ($req->delete_img) {

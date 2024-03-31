@@ -20,8 +20,15 @@ function formatDateTime($dt)
 
     return $res;
 }
-function uploadFile2GgDrive($file, $folder, $filename = null, $imgThumbnail = false)
-{
+function uploadFile2GgDrive(
+    $file,
+    $folder,
+    $filename = null,
+    $option = ['isThumbnail' => false, 'isText' => false]
+) {
+    $isThumbnail = isset($option['isThumbnail']) && $option['isThumbnail'];
+    $isText = isset($option['isText']) && $option['isText'];
+
     $ext = $file->getClientOriginalExtension();
     if (!$filename) {
         $filename = $file->getClientOriginalName();
@@ -29,14 +36,20 @@ function uploadFile2GgDrive($file, $folder, $filename = null, $imgThumbnail = fa
         } //to exclude extension
         $filename = substr($filename, 0, $i) . '_' . time() . '.' . $ext;
     }
-    Storage::putFileAs($folder, $file, $filename);
+    if ($isText) {
+        $file = 'data:image/' . $file->getClientOriginalExtension() . ';base64,' .
+            base64_encode(file_get_contents($file));
+        Storage::put($folder . '/' . $filename, $file);
+    } else Storage::putFileAs($folder, $file, $filename);
+    
     //get url:
     $path = Storage::url($folder . '/' . $filename);
     $start = strpos($path, 'id=') + strlen('id=');
     $end = strpos($path, '&export=media');
     $fileId = substr($path, $start, $end - $start);
-    if ($imgThumbnail)
+    if ($isThumbnail)
         $ret = 'https://drive.google.com/thumbnail?id=' . $fileId;
+    else if ($isText) $ret = $folder . '/' . $filename;
     else $ret = 'https://drive.google.com/file/d/' . $fileId . '/view';
 
     return $ret;

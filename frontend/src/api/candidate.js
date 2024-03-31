@@ -11,6 +11,9 @@ const candidateApi = {
   getCurrent: () => {
     return candidateAxios.get(`${prefix}/getCurrent`);
   },
+  getCurrentAvatar: () => {
+    return candidateAxios.get(`${prefix}/getCurrentAvatar`);
+  },
   getAppliedJobs: (id) => {
     return candidateAxios.get(`${prefix}/${id}/getAppliedJobs`);
   },

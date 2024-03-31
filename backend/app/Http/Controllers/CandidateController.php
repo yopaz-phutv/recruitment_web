@@ -11,18 +11,18 @@ use Illuminate\Support\Facades\Storage;
 
 class CandidateController extends Controller
 {
-    // public function show($id)
-    // {
-    //     $candidate = Candidate::find($id);
-
-    //     return response()->json($candidate);
-    // }
     public function getCurrent()
     {
         $id = Auth::user()->id;
         $candidate = Candidate::find($id);
 
-        return response()->json($candidate);
+        return $candidate;
+    }
+    public function getCurrentAvatar()
+    {
+        $candidate = Candidate::find(Auth::user()->id);
+
+        return Storage::get($candidate->avatar);
     }
 
     public function update(Request $req)
@@ -43,13 +43,13 @@ class CandidateController extends Controller
         $file = $req->file('image');
         if ($file) {
             //delete old avatar image:
-            foreach (['png', 'jpg', 'jpeg'] as $ext) {
+            foreach (['png', 'jpg', 'jpeg', ''] as $ext) {
                 $path = 'candidate_avatars/avatar_' . $id . '_0.' . $ext;
                 if (Storage::fileExists($path))
                     Storage::delete($path);
             }
-            $filename = 'avatar_' . $id . '_0.' . $file->getClientOriginalExtension();
-            $path = uploadFile2GgDrive($file, 'candidate_avatars', $filename, true);
+            $filename = 'avatar_' . $id . '_0';
+            $path = uploadFile2GgDrive($file, 'candidate_avatars', $filename, ['isText' => true]);
             $candidate->avatar = $path;
         }
         if ($req->delete_img) {

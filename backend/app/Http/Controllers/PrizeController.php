@@ -49,7 +49,7 @@ class PrizeController extends Controller
         $file = $req->file('image');
         if ($file) {
             $filename = 'prize' . '_' . $prize->id . '.' . $file->getClientOriginalExtension();
-            $path = uploadFile2GgDrive($file, 'prizes', $filename, true);
+            $path = uploadFile2GgDrive($file, 'prizes', $filename, ['isThumbnail' => true]);
             $prize->image = $path;
             $prize->save();
         }
@@ -78,7 +78,7 @@ class PrizeController extends Controller
                     Storage::delete($path);
             }
             $filename = 'prize' . '_' . $prize->id . '.' . $file->getClientOriginalExtension();
-            $path = uploadFile2GgDrive($file, 'prizes', $filename, true);
+            $path = uploadFile2GgDrive($file, 'prizes', $filename, ['isThumbnail' => true]);
             $prize->image = $path;
         }
         if ($req->delete_img) {

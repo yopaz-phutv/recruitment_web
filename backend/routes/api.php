@@ -72,6 +72,7 @@ Route::controller(CandidateController::class)->prefix('candidates')->group(funct
     // Route::get('', 'index');
     // Route::get('{id}', 'show')->middleware('jwt');
     Route::get('getCurrent', 'getCurrent')->middleware('jwt');
+    Route::get('getCurrentAvatar', 'getCurrentAvatar')->middleware('jwt');
     Route::post('update', 'update');
     Route::get('{id}/getAppliedJobs', 'getAppliedJobs');
     Route::get('{id}/getSavedJobs', 'getSavedJobs');

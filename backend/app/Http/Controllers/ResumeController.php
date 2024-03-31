@@ -48,7 +48,7 @@ class ResumeController extends Controller
 
         if ($file) {
             $filename = 'avatar_' . $candidate_id . '_' . $resume_id . '.' . $file->getClientOriginalExtension();
-            $path = uploadFile2GgDrive($file, 'candidate_avatars', $filename, true);
+            $path = uploadFile2GgDrive($file, 'candidate_avatars', $filename, ['isThumbnail' => true]);
             Resume::where('id', $resume_id)->update(['avatar' => $path]);
         }
 
@@ -144,7 +144,7 @@ class ResumeController extends Controller
                     Storage::delete($path);
             }
             $filename = 'avatar_' . $candidate_id . '_' . $resume_id . '.' . $file->getClientOriginalExtension();
-            $path = uploadFile2GgDrive($file, 'candidate_avatars', $filename, true);
+            $path = uploadFile2GgDrive($file, 'candidate_avatars', $filename, ['isThumbnail' => true]);
             $resume_fields['avatar'] = $path;
         }
 
