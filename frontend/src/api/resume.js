@@ -11,6 +11,9 @@ const resumeApi = {
   getAvatar: (id) => {
     return candidateAxios.get(`${prefix}/${id}/getAvatar`);
   },
+  getImage: (id) => {
+    return candidateAxios.get(`${prefix}/${id}/getImage`);
+  },
   create: (data) => {
     return candidateAxios.post(`${prefix}`, data);
   },

@@ -12,6 +12,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import templateList from "./templateList";
+import { srcToFile } from "../../../../../common/functions";
 
 export const TemplateContext = createContext();
 
@@ -268,7 +269,11 @@ export default function Template({
     formatDateInPart(certificates);
     formatDateInPart(prizes);
     //end: format date
+
     const image = await getImgData();
+    const resumeFile = await srcToFile(image, 'resumeImage.png', 'image/png');
+    console.log({resumeFile});
+
     let postData = {
       basicInfor: {
         ...data,
@@ -276,7 +281,7 @@ export default function Template({
         template_id: templateId,
         parts_order: JSON.stringify(parts),
         avatar: !avatarFile && cvMode === "CREATE_1" ? personal.avatar : null,
-        image,
+        // image,
       },
       educations: isPresentInParts("education") ? educations : null,
       experiences: isPresentInParts("experience") ? experiences : null,
@@ -291,6 +296,7 @@ export default function Template({
     const formData = new FormData();
     if (cvMode === "EDIT") postData = { ...postData, resume_id: id };
     if (avatarFile) formData.append("avatar", avatarFile);
+    formData.append("resume_file", resumeFile);
     formData.append("otherData", JSON.stringify(postData));
 
     if (cvMode.startsWith("CREATE")) {

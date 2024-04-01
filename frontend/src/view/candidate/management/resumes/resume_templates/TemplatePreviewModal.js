@@ -12,9 +12,6 @@ export default function TemplatePreviewModal({ show, setShow, templateId }) {
     htmlToImage
       .toPng(node)
       .then((dataUrl) => {
-        // var img = new Image();
-        // img.src = dataUrl;
-        // document.body.appendChild(img);
         let filename = `template_${templateId}.png`;
         let link = document.createElement("a");
         link.href = dataUrl;
@@ -35,7 +32,7 @@ export default function TemplatePreviewModal({ show, setShow, templateId }) {
         onHide={() => setShow(false)}
         scrollable
         size="xl"
-        fullscreen="md-down"
+        fullscreen="lg-down"
       >
         <Modal.Header closeButton>
           <Modal.Title className="w-100 text-center">

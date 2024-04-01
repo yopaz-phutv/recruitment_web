@@ -158,7 +158,10 @@ class JobController extends Controller
     }
     public function apply(Request $req)
     {
-        $path = uploadFile2GgDrive($req->cv, 'resumes');
+        $path = "";
+        if ($req->hasFile('cv'))
+            $path = uploadFile2GgDrive($req->cv, 'resumes');
+        else if ($req->cv_link) $path = $req->cv_link;
 
         $user = Auth::user();
         DB::table('job_applying')->insert([
