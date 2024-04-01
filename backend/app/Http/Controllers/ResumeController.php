@@ -40,12 +40,6 @@ class ResumeController extends Controller
 
         return Storage::get($resume->avatar);
     }
-    public function getImage($id)
-    {
-        $resume = Resume::find($id);
-
-        return Storage::get($resume->image);
-    }
     public function create(Request $req)
     {
         $candidate_id = Auth::user()->id;
