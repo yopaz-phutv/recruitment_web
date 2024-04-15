@@ -26,7 +26,7 @@ class JobSeeder extends Seeder
                 'max_salary' => null,
                 'yoe' => 8,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 Job Purpose
 
@@ -89,7 +89,7 @@ class JobSeeder extends Seeder
 
                 -  Bachelor’s or Master\'s degree in Technology, Business, Banking and Finance or relevant discipline
 
-                -  Project management certification in PMP, PgMP will be advantageous'),
+                -  Project management certification in PMP, PgMP will be advantageous',
                 'expire_at' => '2023-08-31',
                 'is_hot' => 1,
                 'is_active' => 1,
@@ -107,11 +107,11 @@ class JobSeeder extends Seeder
                 'max_salary' => 17,
                 'yoe' => null,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 Responsibilities include but are not limited to:
                 - Advise customers on financial services (bond, fund, stock and TCBS particular products).
-                - Build and implement campaigns (loyalty, minigames…) to have a flexible approach to customer needs.
+                - Build and implement campaigns (loyalty, minigames...) to have a flexible approach to customer needs.
                 - Analyze, propose, implement and optimize the customer journey
                 - Handle and solve all customer requests, complains via phones, livechat, facebook, face to face ...
                 - Create and maintain the knowledge base on TCBS website, iWealth Club (video, infographic, gif, story...)
@@ -124,7 +124,7 @@ class JobSeeder extends Seeder
                 - Ielts above 6.0.
                 - Patience and problem-solving ability.
                 - Customer-oriented attitude.
-                - Outstanding communication skills.'),
+                - Outstanding communication skills.',
                 'expire_at' => '2023-08-20',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -142,7 +142,7 @@ class JobSeeder extends Seeder
                 'max_salary' => null,
                 'yoe' => 5,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 Responsibilities:
 
@@ -207,7 +207,7 @@ class JobSeeder extends Seeder
 
                 - Experience with Adobe tools, such as Adobe CS, Adobe Illustrator, Adobe Target, etc, is a big plus
 
-                - Good at English is a plus'),
+                - Good at English is a plus',
                 'expire_at' => '2023-08-21',
                 'is_hot' => 1,
                 'is_active' => 1,
@@ -225,7 +225,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 25,
                 'yoe' => 3,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 1. Tư vấn, tham mưu cho BGĐ TT CNTT về công tác thiết kế đồ họa UX/UI trong phần mềm
 
@@ -255,7 +255,7 @@ class JobSeeder extends Seeder
                 Được ký hợp đồng lao động và tham gia các loại bảo hiểm theo quy định của Nhà nước.
                 Được đào tạo tại công ty hoặc tham gia các khóa đào tạo nâng cao, bổ ích bên ngoài.
                 Cơ hội tham gia nhiều hoạt động văn hóa, thể dục, thể thao, giải trí.
-                Chính sách du lịch, nghỉ dưỡng, khám sức khỏe định kỳ cho CBNV.'),
+                Chính sách du lịch, nghỉ dưỡng, khám sức khỏe định kỳ cho CBNV.',
                 'expire_at' => '2023-08-22',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -273,7 +273,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 60,
                 'yoe' => 5,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 • Quản lý tiến độ làm việc của toàn bộ dự án.
 
@@ -309,7 +309,7 @@ class JobSeeder extends Seeder
 
                 -  Cơ hội tham gia nhiều hoạt động văn hóa, thể dục, thể thao, giải trí.
 
-                -  Chính sách du lịch, nghỉ dưỡng, khám sức khỏe định kỳ cho CBNV.'),
+                -  Chính sách du lịch, nghỉ dưỡng, khám sức khỏe định kỳ cho CBNV.',
                 'expire_at' => '2023-08-20',
                 'is_hot' => 1,
                 'is_active' => 1,
@@ -327,7 +327,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 40,
                 'yoe' => 4,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 - Lập trình trong các dự án phần mềm sử dụng ngôn ngữ Java trong tổng công ty, bao gồm các sản phẩm phục vụ quản lý điều hành kinh doanh, quản lý bán hàng, chăm sóc khách hàng và quản trị doanh nghiệp (ERP)
 
@@ -382,7 +382,7 @@ class JobSeeder extends Seeder
 
                 - Tham gia nhiều hoạt động văn hóa, thể dục, thể thao, giải trí.
 
-                - Chính sách du lịch, nghỉ dưỡng, khám sức khỏe định kỳ cho CBNV.'),
+                - Chính sách du lịch, nghỉ dưỡng, khám sức khỏe định kỳ cho CBNV.',
                 'expire_at' => '2023-08-21',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -400,7 +400,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 23,
                 'yoe' => 3,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 Chịu trách nhiệm sửa đổi, bổ sung, cập nhật các tài liệu tổ chức như: Sơ đồ tổ chức, Racis, chức năng nhiệm vụ, mô tả công việc, phân quyền, ủy quyền.
                 Tham gia xây dựng, rà soát sửa đổi, cập nhật các chính sách, văn bản quy định về tổ chức và nhân sự đảm bảo phù hợp với định hướng phát triển của Công ty.
@@ -417,7 +417,7 @@ class JobSeeder extends Seeder
                 Kỹ năng giao tiếp, làm việc độc lập và làm việc nhóm tốt.
                 Tư duy logic, kỹ năng phân tích và tổng hợp tốt.
                 Chủ động, sáng tạo, chịu được áp lực cao trong công việc.
-                Có khả năng đọc hiểu tốt các tài liệu bằng Tiếng Anh; Thành thạo tin học văn phòng, sử dụng phần mềm Quản trị nhân sự thành thạo.'),
+                Có khả năng đọc hiểu tốt các tài liệu bằng Tiếng Anh; Thành thạo tin học văn phòng, sử dụng phần mềm Quản trị nhân sự thành thạo.',
                 'expire_at' => '2023-08-22',
                 'is_hot' => 1,
                 'is_active' => 1,
@@ -435,7 +435,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 15,
                 'yoe' => 0,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 Công việc chính:
 
@@ -460,7 +460,7 @@ class JobSeeder extends Seeder
 
                 - Sức khỏe tốt
 
-                - Không yêu cầu kinh nghiệm, trình độ'),
+                - Không yêu cầu kinh nghiệm, trình độ',
                 'expire_at' => '2023-08-21',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -478,7 +478,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 10,
                 'yoe' => 0,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 Theo dõi tiến độ xử lý đơn hàng trên phần mềm.
                 Xác nhận các thanh toán chuyển khoản của khách hàng.
@@ -491,7 +491,7 @@ class JobSeeder extends Seeder
                 Uư tiên ứng viên đã có kinh nghiệm vị trí tương đương về ngành dược.
                 Biết sử dụng các phần mềm ứng dụng (word, excel, phần mềm quản lý bán hàng...).
                 Kỹ năng giao tiếp, chủ động trong công việc.
-                Chủ động, có trách nhiệm trong công việc.'),
+                Chủ động, có trách nhiệm trong công việc.',
                 'expire_at' => '2023-08-23',
                 'is_hot' => 1,
                 'is_active' => 1,
@@ -509,19 +509,19 @@ class JobSeeder extends Seeder
                 'max_salary' => 20,
                 'yoe' => 2,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 Thiết kế UI/UX cho App, Website, Systerm và các sản phẩm khác theo tiêu chí thân thiện với người dùng.
-                Phối hợp chặt chẽ với các bộ phận liên quan (Customer, Marketing, Development, QA,…) để lựa chọn phương án thiết kế UX xuyên suốt dự án sản phẩm/dịch vụ.
+                Phối hợp chặt chẽ với các bộ phận liên quan (Customer, Marketing, Development, QA,...) để lựa chọn phương án thiết kế UX xuyên suốt dự án sản phẩm/dịch vụ.
                 Nghiên cứu và cập nhật các xu hướng thiết kế UI/UX hiện nay.
                 YÊU CẦU CÔNG VIỆC
                 Có ít nhất 1 năm kinh nghiệm ở vị trí tương đương.
                 Có khiếu thẩm mỹ tốt, nhận diện và biết sắp xếp bố cục hợp lý.
                 Sử dụng thành thạo các phần mềm thiết kế ( Photoshop, Figma, Sketch,...).
-                Sử dụng thành thạo công cụ dựng Prototype sản phẩm ( Invisionapp, Marvel, Framer…).
+                Sử dụng thành thạo công cụ dựng Prototype sản phẩm ( Invisionapp, Marvel, Framer...).
                 Thành thạo trong việc thiết kế 3D.
                 Có kinh nghiệm thiết kế nhân vật, game.
-                Có kiến thức về HTML/CSS là một lợi thế.'),
+                Có kiến thức về HTML/CSS là một lợi thế.',
                 'expire_at' => '2023-08-25',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -539,7 +539,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 50,
                 'yoe' => 5,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 - Understand and optimize user requirements
                 - Participate in all stages of the system development life cycle
@@ -558,7 +558,7 @@ class JobSeeder extends Seeder
                 - Experience in software development, Java Technologies/framework: Spring/Spring boot/ Oracle/SQL database.
                 - Experience in working with major system in Sales / Logistic is a plus.
                 - Strong English skills in verbal and communication.
-                - Experience in Jenkins, AWS is a plus.'),
+                - Experience in Jenkins, AWS is a plus.',
                 'expire_at' => '2023-08-21',
                 'is_hot' => 1,
                 'is_active' => 1,
@@ -576,7 +576,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 16,
                 'yoe' => 1,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 - Develop media strategies, propose and plan media budgets
                 - Execute, analyze, and optimize advertisement both on-site (ecommerce platforms: Shopee, Lazada, Tiki, etc.) and off-site (Facebook, Google, etc.)
@@ -591,7 +591,7 @@ class JobSeeder extends Seeder
                 - Preferential treatment for those with experience in E-commerce
                 - Effective in time management, planning and execution
                 - Creative and proactive mindset and a good team player
-                - Strong sense of urgency and ability to work in a fast-paced environment'),
+                - Strong sense of urgency and ability to work in a fast-paced environment',
                 'expire_at' => '2023-08-22',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -609,7 +609,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 30,
                 'yoe' => 1,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 - Tiếp nhận/xử lý các yêu cầu từ các phòng và ban lãnh đạo công ty.
 
@@ -634,7 +634,7 @@ class JobSeeder extends Seeder
 
                 - Có tinh thần trách nhiệm trong công việc và tính tự giác cao, có thể làm việc độc lập hoặc theo nhóm.
 
-                - Toeic >= 500.'),
+                - Toeic >= 500.',
                 'expire_at' => '2023-08-16',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -652,7 +652,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 15,
                 'yoe' => 0,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 Duy trì hệ thống Đại lý Cty đang kinh doanh: Phụ trách 1 vùng khách hàng riêng: hoàn thành chỉ tiêu doanh số, thị phần khu vực mình phụ trách.
                 Chịu trách nhiệm mở hệ thống đại lý mới.
@@ -677,7 +677,7 @@ class JobSeeder extends Seeder
                 Khả năng khai thác, tạo dựng các mối quan hệ.
                 Có tính kỷ luật cao, có ý thức làm việc tập thể tốt.
                 Khả năng làm việc nhóm, chịu được áp lực công việc.
-                Trung thực, nhanh nhẹn, chu đáo, ham học hỏi.'),
+                Trung thực, nhanh nhẹn, chu đáo, ham học hỏi.',
                 'expire_at' => '2023-08-17',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -695,7 +695,7 @@ class JobSeeder extends Seeder
                 'max_salary' => null,
                 'yoe' => 0,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 - Điều hành Phòng Kinh doanh Khu vực Phía Bắc.
                 - Chịu trách nhiệm doanh thu và nợ.
@@ -723,7 +723,7 @@ class JobSeeder extends Seeder
 
                 + Các bằng cấp liên quan
 
-                - Địa điểm làm việc tại: Lô DM7-6, Điểm Tiểu Thủ Công Nghiệp Làng Nghề Vạn Phúc, Hà Đông, TP.Hà Nội'),
+                - Địa điểm làm việc tại: Lô DM7-6, Điểm Tiểu Thủ Công Nghiệp Làng Nghề Vạn Phúc, Hà Đông, TP.Hà Nội',
                 'expire_at' => '2023-08-18',
                 'is_hot' => 1,
                 'is_active' => 1,
@@ -742,7 +742,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 15,
                 'yoe' => 2,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 - Thực hiện tìm kiếm khách hàng, bán hàng dịch vụ Logistics.
                 - Xây dựng giá cước, cơ chế kinh doanh, phương án cung cấp dịch vụ cho khách hàng.
@@ -753,7 +753,7 @@ class JobSeeder extends Seeder
                 - Tốt nghiệp Đại học chuyên ngành kinh tế, thương mại.
                 - Hiểu biết về dịch vụ Logistics và nghiệp vụ xuất - nhập khẩu.
                 - Ưu tiên ứng viên đã có kinh nghiệm làm kinh doanh dịch vụ Logistics, xuất nhập khẩu.
-                - Chỉ tuyển nam.'),
+                - Chỉ tuyển nam.',
                 'expire_at' => '2023-08-19',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -772,7 +772,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 15,
                 'yoe' => 2,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 Địa điểm làm việc: Huyện Văn Lâm, Tỉnh Hưng Yên, TP. Cần Thơ
 
@@ -803,7 +803,7 @@ class JobSeeder extends Seeder
                 - Được hưởng đầy đủ BHXH, BHYT và BHTN theo Luật lao động hiện hành. Gói chăm sóc sức khỏe riêng theo chế độ của công ty.
                 - Nghỉ phép năm theo quy định.
                 - Môi trường làm việc chuyên nghiệp, năng động, sáng tạo, được đào tạo với các chuyên gia huấn luyện, cơ hội thăng tiến cao.
-                - Tham gia các hoạt động chung của Công ty: Du lịch, ca nhạc, thể thao, Team Building...'),
+                - Tham gia các hoạt động chung của Công ty: Du lịch, ca nhạc, thể thao, Team Building...',
                 'expire_at' => '2023-08-20',
                 'is_hot' => 1,
                 'is_active' => 1,
@@ -821,7 +821,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 27,
                 'yoe' => 2,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 • Phát triển mới các modules, chức năng, bảo trì phần mềm kế toán.
 
@@ -848,11 +848,11 @@ class JobSeeder extends Seeder
                 Lương cứng: upto 27 triệu/tháng
                 Được làm việc trong môi trường chuyên nghiệp, trẻ trung, năng động.
                 Đóng  BHXH, BHYT, BHTN theo quy định của nhà nước
-                Thưởng các ngày lễ, tết, sinh nhật (1/1, 30/4,1/5,1/6, 2/9, Trung thu,…….)
-                Khám sức khỏe, du lịch, teambuilding, ……theo quy định công ty
+                Thưởng các ngày lễ, tết, sinh nhật (1/1, 30/4,1/5,1/6, 2/9, Trung thu,...)
+                Khám sức khỏe, du lịch, teambuilding, ...theo quy định công ty
                 Chế độ hiếu/hỉ; ốm đau theo quy định công ty
                 Cơ hội làm việc với các chuyên gia Hàn Quốc
-                Cơ hội học tiếng Hàn miễn phí'),
+                Cơ hội học tiếng Hàn miễn phí',
                 'expire_at' => '2023-08-15',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -870,7 +870,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 16,
                 'yoe' => 3,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 Thiết kế testcase cho phần mềm dựa trên tài liệu yêu cầu, tài liệu đặc tả và thiết kế (Phần mềm ERP)
                 Thực hiện test dựa trên testplan và testcase
@@ -894,11 +894,11 @@ class JobSeeder extends Seeder
                 Cơ hội phát triển lên TestLead
                 Được làm việc trong môi trường chuyên nghiệp, trẻ trung, năng động.
                 Đóng  BHXH, BHYT, BHTN theo quy định của nhà nước
-                Thưởng các ngày lễ, tết, sinh nhật (1/1, 30/4,1/5,1/6, 2/9, Trung thu,…….)
-                Khám sức khỏe, du lịch, teambuilding, ……theo quy định công ty
+                Thưởng các ngày lễ, tết, sinh nhật (1/1, 30/4,1/5,1/6, 2/9, Trung thu,...)
+                Khám sức khỏe, du lịch, teambuilding, ...theo quy định công ty
                 Chế độ hiếu/hỉ; ốm đau theo quy định công ty
                 Cơ hội làm việc với các chuyên gia Hàn Quốc
-                Cơ hội học tiếng Hàn miễn phí'),
+                Cơ hội học tiếng Hàn miễn phí',
                 'expire_at' => '2023-08-16',
                 'is_hot' => 1,
                 'is_active' => 1,
@@ -916,16 +916,16 @@ class JobSeeder extends Seeder
                 'max_salary' => 30,
                 'yoe' => 3,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 InfoPlus cung cấp các giải pháp thiết bị công nghệ thông tin của các hãng như: Secui, Piolink, Genians, Duruan, Netand, Jirasoft,..
 
-                Cụ thể là các giải pháp network, security: firewall, IPS, Anti-DDos, ADS, WAF, Cloud Security Switch, NAC, e-DRM, ….
+                Cụ thể là các giải pháp network, security: firewall, IPS, Anti-DDos, ADS, WAF, Cloud Security Switch, NAC, e-DRM, ....
 
                 - Tìm kiếm, thực hiện Maketing, khai thác và phát triển các cơ hội kinh doanh với các khách hàng tiềm năng là các reseller
                 - Thực hiện bán sản phẩm, quản lí và hỗ trợ cho Reseller
 
-                - Quản lí tiến độ và các mốc quan trọng của dự án. Làm việc với các bên liên quan như nhà cung cấp, khách hàng, bộ phận bán hàng… để triển khai dự án
+                - Quản lí tiến độ và các mốc quan trọng của dự án. Làm việc với các bên liên quan như nhà cung cấp, khách hàng, bộ phận bán hàng... để triển khai dự án
                 - Phân tích & dự báo tình hình khách hàng, thị trường, đề xuất các đối sách cần thiết kịp thời.
 
                 -Chi tiết công việc sẽ trao đổi kỹ hơn khi phỏng vấn.
@@ -949,15 +949,15 @@ class JobSeeder extends Seeder
 
                 Đóng BHXH, BHYT, BHTN theo quy định của nhà nước
 
-                Thưởng các ngày lễ, tết, sinh nhật (1/1, 30/4,1/5,1/6, 2/9, Trung thu,…….)
+                Thưởng các ngày lễ, tết, sinh nhật (1/1, 30/4,1/5,1/6, 2/9, Trung thu,...)
 
-                Khám sức khỏe, teambuilding, ……theo quy định công ty
+                Khám sức khỏe, teambuilding, ...theo quy định công ty
 
                 Chế độ hiếu/hỉ; ốm đau theo quy định công ty
 
                 Cơ hội làm việc với các chuyên gia Hàn Quốc
 
-                Cơ hội học tiếng Hàn miễn phí'),
+                Cơ hội học tiếng Hàn miễn phí',
                 'expire_at' => '2023-08-17',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -975,7 +975,7 @@ class JobSeeder extends Seeder
                 'max_salary' => 30,
                 'yoe' => 1,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 Triển khai upsales cùng Chuyên viên Quan hệ Khách hàng (RM SME) đối với danh mục Khách hàng hiện hữu đồng thời phát triển bán mới các KH có nhu cầu sử dụng dịch vụ TTTM thông qua:
                 - Xây dựng các giải pháp bán hàng tư vấn về sản phẩm TTTM và ngoại hối cho khách hàng;
@@ -983,12 +983,12 @@ class JobSeeder extends Seeder
                 Thiết lập mối quan hệ hiệu quả và chuyên nghiệp với nhân sự chủ chốt của khách hàng TTTM thuộc danh mục được phân giao.
                 Xử lý vướng mắc trong quá trình cung cấp sản phẩm, dịch vụ TTTM tới khách hàng kịp thời thông qua phối hợp với các bộ phận, phòng ban liên quan.
                 Cập nhật nâng cao kiến thức về nghiệp vụ thương mại quốc tế, sản phẩm TTTM, chính sách và quy trình của ngân hàng.
-                Thu thập, phản hồi thông tin (các điểm chưa cạnh tranh, lỗ hổng của sản phẩm…) cũng như đề xuất các sáng kiến cải tiến.
+                Thu thập, phản hồi thông tin (các điểm chưa cạnh tranh, lỗ hổng của sản phẩm...) cũng như đề xuất các sáng kiến cải tiến.
                 Hướng dẫn cho RM SME tại Chi nhánh về hồ sơ, kỹ năng tư vấn TTTM.
                 YÊU CẦU CÔNG VIỆC
-                Cử nhân chuyên ngành Thanh toán quốc tế, Ngân hàng, Kinh tế đối ngoại, Tài chính ngân hàng …
+                Cử nhân chuyên ngành Thanh toán quốc tế, Ngân hàng, Kinh tế đối ngoại, Tài chính ngân hàng ...
                 TOEIC 450 trở lên hoặc chứng chỉ tương đương
-                Hiểu biết về hoạt động kinh doanh Tài Chính, tiền tệ, ngân hàng, thanh toán quốc tế, tài trợ thương mại, xuất nhập khẩu.v..v...'),
+                Hiểu biết về hoạt động kinh doanh Tài Chính, tiền tệ, ngân hàng, thanh toán quốc tế, tài trợ thương mại, xuất nhập khẩu.v..v...',
                 'expire_at' => '2023-08-18',
                 'is_hot' => 1,
                 'is_active' => 1,
@@ -1006,9 +1006,9 @@ class JobSeeder extends Seeder
                 'max_salary' => 15,
                 'yoe' => 8,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
-                Thực hiện công tác bán hàng tại sàn giao dịch chi nhánh: tư vấn và bán các sản phẩm, dịch vụ của MB cho Khách hàng cá nhân bao gồm: Huy động vốn, tài khoản thanh toán, thẻ, ngân hàng điện tử… Bán chéo sản phẩm dịch vụ của MB…
+                Thực hiện công tác bán hàng tại sàn giao dịch chi nhánh: tư vấn và bán các sản phẩm, dịch vụ của MB cho Khách hàng cá nhân bao gồm: Huy động vốn, tài khoản thanh toán, thẻ, ngân hàng điện tử... Bán chéo sản phẩm dịch vụ của MB...
                 Thực hiện cung cấp dịch vụ tại sàn giao dịch chi nhánh
                 Tiếp nhận và giải quyết khiếu nại, thắc mắc của khách hàng, hỗ trợ khách hàng; chào đón, phân luồng và tư vấn khách hàng
                 Thực hiện các công việc khác theo phân công của Cán bộ quản lý trực tiếp phù hợp với năng lực và phạm vi công việc.
@@ -1018,9 +1018,9 @@ class JobSeeder extends Seeder
                 Ưu tiên ứng viên có kinh nghiệm  ở vị trí quan hệ khách hàng/Giao dịch viên/Chăm sóc khách hàng/Nhân viên kinh doanh...
                 Kỹ năng bán hàng, kỹ năng giao tiếp tốt
                 Ngoại hình khá (Nam cao 1m68 trở lên, nữ cao 1m58 trở lên)
-                Thành thạo tin học văn phòng cơ bản (word, excel, outlook…)
+                Thành thạo tin học văn phòng cơ bản (word, excel, outlook...)
                 Ưu tiên ứng viên có ngoại ngữ tốt
-                Địa điểm làm việc: MB Bình Tân - Số 435 - 441 Đường số 7, P Bình Trị Đông B, Q Bình Tân, Tp HCM'),
+                Địa điểm làm việc: MB Bình Tân - Số 435 - 441 Đường số 7, P Bình Trị Đông B, Q Bình Tân, Tp HCM',
                 'expire_at' => '2023-08-19',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -1038,7 +1038,7 @@ class JobSeeder extends Seeder
                 'max_salary' => null,
                 'yoe' => 8,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 Execute and report on the results of Inbound Marketing activities: SEO, SEM, Social Media, Email Marketing, Landing pages, etc.
                 Plan and organize physical events and virtual events professionally.
@@ -1064,7 +1064,7 @@ class JobSeeder extends Seeder
                 Opportunity to work in global projects of fast-developing companies and be a part of innovation, big SAP projects.
                 13th-month salary.
                 Participating fully in benefits according to regulations and policies of the company.
-                Other company benefits include participating in comprehensive Citek care insurance, annual domestic or international travel, and annual medical examination…
+                Other company benefits include participating in comprehensive Citek care insurance, annual domestic or international travel, and annual medical examination...
                 Participate in the training program to improve knowledge about SAP ERP, B2B, techniques.
                 Young, dynamic, and friendly working environment.
                 Location
@@ -1075,7 +1075,7 @@ class JobSeeder extends Seeder
                 According to the company\'s regulations
                 Working Time
 
-                From Monday to Friday: 8h30 - 17h30 (Lunch Break 12h00 - 13h00 )'),
+                From Monday to Friday: 8h30 - 17h30 (Lunch Break 12h00 - 13h00 )',
                 'expire_at' => '2023-08-19',
                 'is_hot' => 1,
                 'is_active' => 1,
@@ -1093,7 +1093,7 @@ class JobSeeder extends Seeder
                 'max_salary' => null,
                 'yoe' => 5,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
                 The opening is for Presales of Oracle NetSuite:
 
@@ -1146,7 +1146,7 @@ class JobSeeder extends Seeder
                 According to the company\'s regulations
                 Working Time
 
-                From Monday to Friday: 8h30 - 17h30 (Lunch Break 12h00 - 13h00 )'),
+                From Monday to Friday: 8h30 - 17h30 (Lunch Break 12h00 - 13h00 )',
                 'expire_at' => '2023-08-20',
                 'is_hot' => 0,
                 'is_active' => 1,
@@ -1164,22 +1164,22 @@ class JobSeeder extends Seeder
                 'max_salary' => null,
                 'yoe' => 0,
                 'gender' => null,
-                'description' => htmlspecialchars('
+                'description' => '
                 MÔ TẢ CÔNG VIỆC
-                Lên ý tưởng, sản xuất và tối ưu nội dung (text, image, video) trên Website và các kênh Social như Facebook, Linkedin, YouTube, TikTok,…
+                Lên ý tưởng, sản xuất và tối ưu nội dung (text, image, video) trên Website và các kênh Social như Facebook, Linkedin, YouTube, TikTok,...
                 Tham gia tổ chức các sự kiện online và offline
                 Đóng góp ý tưởng sáng tạo cho từng chiến dịch Marketing
                 Cập nhật các tin tức về thị trường, xu hướng mới
                 YÊU CẦU CÔNG VIỆC
-                Sinh viên năm cuối/mới tốt nghiệp chuyên ngành Marketing, PR, Ngoại ngữ, Kinh tế, QTKD, Thương mại điện tử,…
-                Thích viết lách, có kiến thức nền tảng về Marketing: SEO, Website, content,…
+                Sinh viên năm cuối/mới tốt nghiệp chuyên ngành Marketing, PR, Ngoại ngữ, Kinh tế, QTKD, Thương mại điện tử,...
+                Thích viết lách, có kiến thức nền tảng về Marketing: SEO, Website, content,...
                 Khả năng giao tiếp và đọc hiểu Anh văn tốt (tối thiểu 550 Toeic)
                 Có khả năng thiết kế và chỉnh sửa video cơ bản, ưu tiên có khả năng thiết kế trên Canva, Ps, Ai
                 Có kinh nghiệm phát triển nội dung trên kênh social và xây dựng cộng đồng là một lợi thế.
                 Năng động, sáng tạo, chủ động học hỏi và cầu tiến.
                 Tinh thần trách nhiệm cao, cẩn thận trong công việc.
                 Yêu thích và có định hướng phát triển lâu dài trong lĩnh vực Marketing
-                Khả năng làm việc nhóm tốt, có khả năng phân tích và phản biện tốt'),
+                Khả năng làm việc nhóm tốt, có khả năng phân tích và phản biện tốt',
                 'expire_at' => '2023-08-21',
                 'is_hot' => 1,
                 'is_active' => 1,

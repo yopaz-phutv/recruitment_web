@@ -21,9 +21,17 @@ return new class extends Migration
             $table->char('phone', 10)->nullable();
             $table->string('email');
             $table->string('address')->nullable();
+            $table->unsignedBigInteger('location_id')->nullable();
             $table->text('link')->nullable();
-            $table->text('objective')->nullable();
             $table->text('avatar')->nullable();
+            $table->text('objective')->nullable();
+            $table->string('desired_job', 100)->nullable();
+            $table->unsignedBigInteger('desired_industry_id')->nullable();
+            $table->unsignedBigInteger('desired_jtype_id')->nullable();
+            $table->unsignedBigInteger('desired_jlevel_id')->nullable();
+            $table->unsignedInteger('desired_min_salary')->nullable();
+            $table->unsignedInteger('desired_max_salary')->nullable();
+            $table->unsignedTinyInteger('job_yoe')->nullable();
             $table->timestamps();
         });
     }

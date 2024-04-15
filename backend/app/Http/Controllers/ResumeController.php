@@ -37,8 +37,9 @@ class ResumeController extends Controller
     public function getAvatar($id)
     {
         $resume = Resume::find($id);
-
-        return Storage::get($resume->avatar);
+        if ($resume->avatar)
+            return Storage::get($resume->avatar);
+        else return response()->json(null);
     }
     public function create(Request $req)
     {

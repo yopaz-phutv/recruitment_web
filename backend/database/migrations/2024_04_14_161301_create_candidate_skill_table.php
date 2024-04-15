@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('job_skill', function (Blueprint $table) {
-            $table->unsignedBigInteger('job_id');
+        Schema::create('candidate_skill', function (Blueprint $table) {
+            $table->unsignedBigInteger('candidate_id');
             $table->unsignedBigInteger('jskill_id');
-            $table->unsignedBigInteger('or_jskill_id');
-            $table->primary(['job_id', 'jskill_id']);
+            $table->primary(['candidate_id', 'jskill_id']);
         });
     }
 
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('job_skill');
+        Schema::dropIfExists('candidate_skill');
     }
 };

@@ -95,7 +95,9 @@ export default function Template({
   const getEditResume = async () => {
     let res = await resumeApi.getById(id);
     const avatar = await resumeApi.getAvatar(id);
-    res.basicInfor = { ...res.basicInfor, avatar };
+    if (Object.keys(avatar).length !== 0) {
+      res.basicInfor = { ...res.basicInfor, avatar };
+    }
     const partsOrder = JSON.parse(res.parts_order);
 
     setParts(partsOrder);
@@ -271,8 +273,8 @@ export default function Template({
     //end: format date
 
     const image = await getImgData();
-    const resumeFile = await srcToFile(image, 'resumeImage.png', 'image/png');
-    console.log({resumeFile});
+    const resumeFile = await srcToFile(image, "resumeImage.png", "image/png");
+    console.log({ resumeFile });
 
     let postData = {
       basicInfor: {
