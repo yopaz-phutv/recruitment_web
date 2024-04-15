@@ -25,8 +25,8 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->text('logo');
             $table->text('image')->nullable();
-            $table->boolean('is_hot');
-            $table->boolean('is_active');
+            $table->boolean('is_hot')->default(0);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }
