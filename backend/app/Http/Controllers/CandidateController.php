@@ -118,6 +118,30 @@ class CandidateController extends Controller
             ])->delete();
         }
 
+        // if ($req->status) {
+        //     $job_id = $req->job_id;
+        //     $saved_job_ids = DB::table('saved_jobs')
+        //         ->where('candidate_id', $candidate_id)
+        //         ->pluck('job_id')
+        //         ->toArray();
+
+        //     $other_candidate_ids = DB::table('saved_jobs')
+        //         ->where('job_id', $job_id)
+        //         ->pluck('candidate_id');
+
+        //     $similar_job_ids = DB::table('saved_jobs')
+        //         ->whereIn('candidate_id', $other_candidate_ids)
+        //         ->distinct()
+        //         ->orderBy('job_id')
+        //         ->pluck('job_id');
+        //     foreach ($similar_job_ids as $job_id) {
+        //         if(!in_array($job_id, $saved_job_ids)) {
+        //             $recommend_job_ids[] = $job_id;
+        //         }
+        //     }
+
+        //     return $recommend_job_ids;
+        // }
         return response()->json('Updated successfully');
     }
 }

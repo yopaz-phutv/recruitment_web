@@ -65,7 +65,8 @@ function Job() {
   };
   const handleClickSaveBtn = async (status) => {
     const data = { status: status };
-    await candidateApi.processJobSaving(id, data);
+    const res = await candidateApi.processJobSaving(id, data);
+    console.log('res::', res);
     setIsSaved(!isSaved);
   };
 
