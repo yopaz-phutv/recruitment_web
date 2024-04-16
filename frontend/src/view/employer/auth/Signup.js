@@ -58,7 +58,7 @@ export default function Signup() {
           <h5 className="text-center text-main mb-1">
             Đăng ký tài khoản Nhà tuyển dụng
           </h5>
-          <Link className="ps-5 ts-sm text-decoration-none">
+          <Link to="/employer/login" className="ps-5 ts-sm text-decoration-none">
             Quay lại trang Đăng nhập
           </Link>
         </div>
