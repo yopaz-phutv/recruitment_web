@@ -61,9 +61,11 @@ function Login() {
           className="border px-4 py-3 rounded shadow"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <h4 className="mb-3 text-center">Nhà tuyển dụng đăng nhập</h4>
-          <div>
-            <label htmlFor="email" className="mb-1">
+          <h5 className="mb-3 text-center text-main">
+            Nhà tuyển dụng đăng nhập
+          </h5>
+          <div className="ts-smd">
+            <label htmlFor="email" className="mb-1 fw-500">
               Email{required_mark}
             </label>
             <input
@@ -75,8 +77,8 @@ function Login() {
             />
             {errors.email && required_error}
           </div>
-          <div className="mt-2">
-            <label htmlFor="passwd" className="mb-1">
+          <div className="mt-2 ts-smd">
+            <label htmlFor="passwd" className="mb-1 fw-500">
               Password{required_mark}
             </label>
             <div className="input-group">

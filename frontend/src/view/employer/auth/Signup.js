@@ -63,9 +63,9 @@ export default function Signup() {
           </Link>
         </div>
         <div className="px-5 py-2">
-          <div className="fw-600 ts-lg">1. Thông tin tài khoản</div>
+          <div className="fw-500 ts-lg">1. Thông tin tài khoản</div>
           <Form.Group className="ts-smd">
-            <Form.Label className="mb-1 fw-600">Email</Form.Label>
+            <Form.Label className="mb-1 fw-500">Email</Form.Label>
             <RequiredMark />
             <Form.Control
               type="text"
@@ -78,7 +78,7 @@ export default function Signup() {
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mt-1 ts-smd">
-            <Form.Label className="mb-1 fw-600">Mật khẩu</Form.Label>
+            <Form.Label className="mb-1 fw-500">Mật khẩu</Form.Label>
             <RequiredMark />
             <Form.Control
               type="text"
@@ -91,7 +91,7 @@ export default function Signup() {
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mt-1 ts-smd">
-            <Form.Label className="mb-1 fw-600">Nhập lại mật khẩu</Form.Label>
+            <Form.Label className="mb-1 fw-500">Nhập lại mật khẩu</Form.Label>
             <RequiredMark />
             <Form.Control
               type="text"
@@ -103,9 +103,9 @@ export default function Signup() {
               {errors.re_password?.message}
             </Form.Control.Feedback>
           </Form.Group>
-          <div className="fw-600 ts-lg mt-3">2. Thông tin người liên hệ</div>
+          <div className="fw-500 ts-lg mt-3">2. Thông tin người liên hệ</div>
           <Form.Group className="mt-1 ts-smd">
-            <Form.Label className="mb-1 fw-600">Họ tên</Form.Label>
+            <Form.Label className="mb-1 fw-500">Họ tên</Form.Label>
             <RequiredMark />
             <Form.Control
               type="text"
@@ -118,7 +118,7 @@ export default function Signup() {
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mt-1 ts-smd">
-            <Form.Label className="mb-1 fw-600">Số điện thoại</Form.Label>
+            <Form.Label className="mb-1 fw-500">Số điện thoại</Form.Label>
             <RequiredMark />
             <Form.Control
               type="text"
@@ -130,9 +130,9 @@ export default function Signup() {
               {errors.phone?.message}
             </Form.Control.Feedback>
           </Form.Group>
-          <div className="fw-600 ts-lg mt-3">3. Thông tin công ty</div>
+          <div className="fw-500 ts-lg mt-3">3. Thông tin công ty</div>
           <Form.Group className="mt-1 ts-smd">
-            <Form.Label className="mb-1 fw-600">Tên công ty</Form.Label>
+            <Form.Label className="mb-1 fw-500">Tên công ty</Form.Label>
             <RequiredMark />
             <Form.Control
               type="text"
@@ -145,11 +145,11 @@ export default function Signup() {
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mt-1 ts-smd">
-            <Form.Label className="mb-1 fw-600">Mã số thuế</Form.Label>
+            <Form.Label className="mb-1 fw-500">Mã số thuế</Form.Label>
             <Form.Control type="text" size="sm" {...register("tax_code")} />
           </Form.Group>
           <Form.Group className="ts-smd mt-3 d-flex align-items-center">
-            <Form.Label className="mb-1 fw-600 me-3">Số nhân sự</Form.Label>
+            <Form.Label className="mb-1 fw-500 me-3">Số nhân sự</Form.Label>
             <Form.Control
               type="number"
               size="sm"
@@ -165,7 +165,7 @@ export default function Signup() {
             />
             &nbsp;nhân viên
           </Form.Group>
-          <Form.Label className="mb-1 fw-600">Địa chỉ</Form.Label>
+          <Form.Label className="mb-1 fw-500">Địa chỉ</Form.Label>
           <RequiredMark />
           <Form.Group className="ts-smd">
             <Form.Select
@@ -200,7 +200,7 @@ export default function Signup() {
             </Form.Control.Feedback>
           </Form.Group>
           {/* <Form.Group className="mt-1 ts-smd">
-          <Form.Label className="mb-1 fw-600">Email</Form.Label>
+          <Form.Label className="mb-1 fw-500">Email</Form.Label>
           <RequiredMark />
           <Form.Control
             type="text"
