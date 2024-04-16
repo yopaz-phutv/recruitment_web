@@ -1,3 +1,4 @@
+import "./login.css";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -30,7 +31,7 @@ function Login() {
       .login(inf)
       .then((res) => {
         localStorage.setItem("employer_jwt", res.authorization.token);
-        toast.success("Đăng nhập thành công!");    
+        toast.success("Đăng nhập thành công!");
       })
       .catch(() => {
         setMsg("Email hoặc mật khẩu không chính xác!");
@@ -51,7 +52,11 @@ function Login() {
 
   return (
     <>
-      <div className="mx-auto" style={{ marginTop: "150px", width: "30%" }}>
+      <div
+        id="employer-login-form"
+        className="mx-auto w-30"
+        style={{ marginTop: "150px" }}
+      >
         <form
           className="border px-4 py-3 rounded shadow"
           onSubmit={handleSubmit(onSubmit)}
@@ -93,11 +98,13 @@ function Login() {
             {errors.password && required_error}
           </div>
           {msg && <div className="text-danger text-center mt-2">{msg}</div>}
-          <button type="submit" className="btn btn-primary w-100 mt-2">
+          <button type="submit" className="btn btn-primary w-100 mt-3">
             Đăng nhập
-            {isLoading && <div className="spinner-border spinner-border-sm ms-1"></div>}
+            {isLoading && (
+              <div className="spinner-border spinner-border-sm ms-1"></div>
+            )}
           </button>
-          <div className="mt-2 text-center">
+          <div className="mt-1 text-center">
             <Link to={`#`} className="text-decoration-none">
               Quên mật khẩu
             </Link>
@@ -105,7 +112,7 @@ function Login() {
           <hr />
           <div className="text-center">
             Bạn là nhà tuyển dụng mới?&nbsp;
-            <Link to='/employer/signup' className="text-decoration-none">
+            <Link to="/employer/signup" className="text-decoration-none">
               Đăng ký tài khoản
             </Link>
           </div>

@@ -1,6 +1,6 @@
 @media screen and (max-width: 992px) {
-    #employer-signup-form {
-        width: 70% !important;
+    #employer-login-form {
+        width: 50% !important;
     }
 }
 .page-bg {
