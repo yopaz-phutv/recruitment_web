@@ -15,6 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id')->primary();
             $table->unsignedBigInteger('user_id');
             $table->string('name', 150);
+            $table->string('tax_code', 20);
             $table->string('address');
             $table->unsignedInteger('min_employees')->nullable();
             $table->unsignedInteger('max_employees')->nullable();

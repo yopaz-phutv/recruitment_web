@@ -131,19 +131,6 @@ export default function Signup() {
           </Form.Group>
           <div className="fw-600 ts-lg">3. Thông tin công ty</div>
           <Form.Group className="mt-1">
-            <Form.Label className="mb-1 fw-600 ts-smd">Email</Form.Label>
-            <RequiredMark />
-            <Form.Control
-              type="text"
-              size="sm"
-              {...register("email")}
-              isInvalid={errors.email}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.email?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mt-1">
             <Form.Label className="mb-1 fw-600 ts-smd">Tên công ty</Form.Label>
             <RequiredMark />
             <Form.Control
@@ -169,18 +156,23 @@ export default function Signup() {
               {errors.tax_code?.message}
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group className="mt-1">
-            <Form.Label className="mb-1 fw-600 ts-smd">Số nhân sự</Form.Label>
-            <RequiredMark />
+          <Form.Group className="mt-3 d-flex align-items-center">
+            <Form.Label className="mb-1 fw-600 ts-smd w-30">
+              Số nhân sự
+            </Form.Label>
             <Form.Control
-              type="text"
+              type="number"
               size="sm"
-              {...register("employee_num")}
-              isInvalid={errors.employee_num}
+              className="w-30"
+              {...register("min_employees")}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.employee_num?.message}
-            </Form.Control.Feedback>
+            <span className="mx-1">---</span>
+            <Form.Control
+              type="number"
+              size="sm"
+              className="w-30"
+              {...register("min_employees")}
+            />
           </Form.Group>
           <Form.Group className="mt-1">
             <Form.Label className="mb-1 fw-600 ts-smd">Địa chỉ</Form.Label>
@@ -206,6 +198,19 @@ export default function Signup() {
             />
             <Form.Control.Feedback type="invalid">
               {errors.industries?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mt-1">
+            <Form.Label className="mb-1 fw-600 ts-smd">Email</Form.Label>
+            <RequiredMark />
+            <Form.Control
+              type="text"
+              size="sm"
+              {...register("email")}
+              isInvalid={errors.email}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.email?.message}
             </Form.Control.Feedback>
           </Form.Group>
           {/* <Form.Group className="mt-1">
