@@ -17,9 +17,9 @@ class UserRegister
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(public $user)
     {
-        //
+        
     }
 
     /**
@@ -27,10 +27,10 @@ class UserRegister
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
-    {
-        return [
-            new PrivateChannel('channel-name'),
-        ];
-    }
+    // public function broadcastOn(): array
+    // {
+    //     return [
+    //         new PrivateChannel('channel-name'),
+    //     ];
+    // }
 }

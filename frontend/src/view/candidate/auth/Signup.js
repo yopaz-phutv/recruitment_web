@@ -38,6 +38,7 @@ function Signup() {
         }
       } catch (error) {
         toast.error("Email đã tồn tại trong hệ thống!");
+        console.log('error::', error.response.data.message);
       }
   };
 

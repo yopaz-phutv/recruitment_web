@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\UserRegister;
 use App\Models\User;
 use App\Models\Candidate;
 use Illuminate\Http\Request;
@@ -65,30 +66,12 @@ class AuthController extends Controller
             'role' => $request->role,
             'is_active' => 1
         ]);
+        $user_infor = $request->except(['password']);
+        $user_infor['id'] = $user->id;
+        // update detail information:
+        UserRegister::dispatch($user_infor);
 
-        if ($request->role == 1) {
-            Candidate::create([
-                'id' => $user->id,
-                'user_id' => $user->id,
-                'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'email' => $request->email
-            ]);
-        }
-
-        // $credentials = $request->only('email', 'password');
-        // $token = Auth::attempt($credentials);
-        // if ($user->role == 1) {
-        //     $user['name'] = [
-        //         'firstname' => $request->firstname,
-        //         'lastname' => $request->lastname
-        //     ];
-        // }
-
-        return response()->json([
-            'message' => 'User created successfully',
-            'user' => $user,
-        ], 201);
+        return response()->json('created successfully', 201);
     }
 
     public function me()
