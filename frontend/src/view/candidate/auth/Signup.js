@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { AiFillWarning } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import authApi from "../../../api/auth";
+import { toast } from "react-toastify";
 
 function Signup() {
   const required_field = <span className="text-danger fw-bold">*</span>;
@@ -25,17 +26,19 @@ function Signup() {
       </div>
     );
   };
-  const onSubmit = async (use_inf) => {
-    console.log(use_inf);
-    try {
-      await authApi.register(use_inf);
-      alert('Đăng ký thành công!\nNhấn "OK" để quay về trang chủ');
-      if (window.location.pathname === "/sign-up") {
-        navigate("/");
+  const onSubmit = async (user) => {
+    delete user.re_password;
+    user.role = 1;
+    console.log(user);
+      try {
+        await authApi.register(user);
+        toast.success('Đăng ký thành công!');
+        if (window.location.pathname === "/sign-up") {
+          navigate("/");
+        }
+      } catch (error) {
+        toast.error("Email đã tồn tại trong hệ thống!");
       }
-    } catch (error) {
-      alert("Email đã tồn tại trong hệ thống!");
-    }
   };
 
   return (
@@ -154,31 +157,10 @@ function Signup() {
                 <button
                   type="submit"
                   className="btn btn-primary d-block mx-auto"
-                  // data-bs-toggle="modal"
-                  // data-bs-target="#signup_msg"
                 >
                   Gửi
                 </button>
               </div>
-              {/* {!errors && (
-                                <div className="modal" id="signup_msg">
-                                <div className="modal-dialog">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h4 className="modal-title">Modal Heading</h4>
-                                            <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <div className="modal-body">
-                                            Modal body..
-                                        </div>
-                                        <div className="modal-footer">
-                                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            )}                             */}
             </form>
           </div>
         </div>

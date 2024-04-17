@@ -41,7 +41,6 @@ class AuthController extends Controller
                 ->where('users.id', $user->id)
                 ->select('firstname', 'lastname')
                 ->first();
-            // dd($name->firstname);
             $user['name'] = $name;
         }
 
@@ -57,27 +56,25 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            // 'firstname' => 'required|string|max:100',
-            // 'lastname' => 'required|string|max:100',
-            'email' => 'email|max:255|unique:users',
-            // 'password' => 'required|string|min:6',
+            'email' => 'unique:users',
         ]);
 
-        User::create([
+        $user = User::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 1,
+            'role' => $request->role,
             'is_active' => 1
         ]);
 
-        $user = User::orderBy('id', 'desc')->first();
-        Candidate::create([
-            'id' => $user->id,
-            'user_id' => $user->id,
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
-            'email' => $request->email
-        ]);
+        if ($request->role == 1) {
+            Candidate::create([
+                'id' => $user->id,
+                'user_id' => $user->id,
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'email' => $request->email
+            ]);
+        }
 
         // $credentials = $request->only('email', 'password');
         // $token = Auth::attempt($credentials);
@@ -91,10 +88,6 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'User created successfully',
             'user' => $user,
-            // 'authorization' => [
-            //     'token' => $token,
-            //     'type' => 'bearer',
-            // ]
         ], 201);
     }
 
