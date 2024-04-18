@@ -20,6 +20,9 @@ import Resume from "./view/candidate/management/resumes";
 import Template from "./view/candidate/management/resumes/resume_templates/common";
 import TemplateList from "./view/candidate/management/resumes/resume_templates";
 import EmployerSignup from "./view/employer/auth/Signup";
+import AdminLogin from "./view/admin/auth/Login";
+import AdminLayout from "./view/admin/layouts";
+import EmployerList from "./view/admin/employers";
 
 export const AppContext = createContext();
 
@@ -78,6 +81,17 @@ function App() {
           />
           <Route path="employer/login" element={<EmployerLogin />} />
           <Route path="employer/signup" element={<EmployerSignup />} />
+          <Route
+            path="admin/*"
+            element={
+              <AdminLayout>
+                <Routes>
+                  <Route path="employers" element={<EmployerList />} />
+                </Routes>
+              </AdminLayout>
+            }
+          />
+          <Route path="admin/login" element={<AdminLogin />} />
         </Routes>
       </BrowserRouter>
     </AppContext.Provider>

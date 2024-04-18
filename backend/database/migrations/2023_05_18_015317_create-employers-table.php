@@ -24,10 +24,9 @@ return new class extends Migration
             $table->string('phone', 15)->nullable();
             $table->string('website')->nullable();
             $table->longText('description')->nullable();
-            $table->text('logo');
+            $table->text('logo')->nullable();
             $table->text('image')->nullable();
             $table->boolean('is_hot')->default(0);
-            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

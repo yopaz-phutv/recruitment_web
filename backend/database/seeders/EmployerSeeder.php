@@ -29,7 +29,6 @@ class EmployerSeeder extends Seeder
                 'logo' => 'https://images.careerbuilder.vn/employers/10451/136x136/93152logotcb_1200x1200-min.png',
                 'image' => 'https://images.careerbuilder.vn/employers/10451/93125cover-jobportal-career-min.jpg',
                 'is_hot' => 1,
-                'is_active' => 1
             ],
 
             [
@@ -46,7 +45,6 @@ class EmployerSeeder extends Seeder
                 'logo' => 'https://images.careerbuilder.vn/employer_folders/lot9/219639/136x136/85835202104_logoquychuan.png',
                 'image' => 'https://images.careerbuilder.vn/employer_folders/lot9/219639/102456covercb.png',
                 'is_hot' => 1,
-                'is_active' => 1
             ],
 
             [
@@ -63,7 +61,6 @@ class EmployerSeeder extends Seeder
                 'logo' => 'https://images.careerbuilder.vn/employer_folders/lot4/111334/148x148/114411eu.png',
                 'image' => 'https://images.careerbuilder.vn/content/news/1.jpg',
                 'is_hot' => 0,
-                'is_active' => 1
             ],
 
             [
@@ -84,7 +81,6 @@ class EmployerSeeder extends Seeder
                 'logo' => 'https://images.careerbuilder.vn/employer_folders/lot9/264429/148x148/115827logo_meta_512px.png',
                 'image' => 'https://images.careerbuilder.vn/employer_folders/lot9/264429/1158271.jpg',
                 'is_hot' => 1,
-                'is_active' => 1
             ],
 
             [
@@ -103,7 +99,6 @@ class EmployerSeeder extends Seeder
                 'logo' => 'https://images.careerbuilder.vn/employer_folders/lot7/245427/148x148/112822logo.jpg',
                 'image' => 'https://images.careerbuilder.vn/employer_folders/lot7/245427/104838673cba7d136be135b87a.jpg',
                 'is_hot' => 1,
-                'is_active' => 1
             ],
 
             [
@@ -124,7 +119,6 @@ class EmployerSeeder extends Seeder
                 'logo' => 'https://images.careerbuilder.vn/employers/62360/136x136/829573481_logo_logo1999834398.jpg',
                 'image' => 'https://images.careerbuilder.vn/content/news/1.jpg',
                 'is_hot' => 0,
-                'is_active' => 1
             ],
 
             [
@@ -141,7 +135,6 @@ class EmployerSeeder extends Seeder
                 'logo' => 'https://images.careerbuilder.vn/employer_folders/lot3/190883/136x136/145650logo2020.jpg',
                 'image' => 'https://images.careerbuilder.vn/employer_folders/lot3/190883/18413222e15f6617c1ea9fb3d0.jpg',
                 'is_hot' => 0,
-                'is_active' => 1
             ],
 
             [
@@ -167,7 +160,6 @@ class EmployerSeeder extends Seeder
                 'logo' => 'https://images.careerbuilder.vn/employer_folders/lot1/259301/136x136/223536logo.png',
                 'image' => 'https://images.careerbuilder.vn/employer_folders/lot1/259301/112059z3955788243583_9d776633691b479180b4ca7506345eae.jpg',
                 'is_hot' => 1,
-                'is_active' => 1
             ],
 
             [
@@ -186,7 +178,6 @@ class EmployerSeeder extends Seeder
                 'logo' => 'https://images.careerbuilder.vn/employer_folders/lot0/99440/136x136/134506mb-logo-main-01.png',
                 'image' => 'https://images.careerbuilder.vn/employer_folders/lot0/99440/185944anhbialinkedinpage-01-01.png',
                 'is_hot' => 0,
-                'is_active' => 1
             ],
 
             [
@@ -207,7 +198,6 @@ class EmployerSeeder extends Seeder
                 'logo' => 'https://images.careerbuilder.vn/employer_folders/lot6/253886/136x136/163706logo-2x.png',
                 'image' => 'https://images.careerbuilder.vn/content/news/1.jpg',
                 'is_hot' => 0,
-                'is_active' => 1
             ],
 
         ]);

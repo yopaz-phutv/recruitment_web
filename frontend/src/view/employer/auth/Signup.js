@@ -1,5 +1,5 @@
 import "./signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -7,9 +7,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import RequiredMark from "../../../components/form/requiredMark";
 import useGetAllLocations from "../../../hooks/useGetAllLocations";
+import authApi from "../../../api/auth";
+import { toast } from "react-toastify";
 
 export default function Signup() {
   const locations = useGetAllLocations();
+  const nav = useNavigate();
 
   const requiredMsg = "Không được để trống";
   const schema = yup.object({
@@ -34,6 +37,7 @@ export default function Signup() {
     location_ids: yup.array().min(1, requiredMsg),
     address: yup.string().required(requiredMsg),
   });
+
   const {
     register,
     formState: { errors },
@@ -42,8 +46,21 @@ export default function Signup() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log("form data:", data);
+    try {
+      delete data.password;
+      data.role = 2;
+      await authApi.register(data);
+      toast.success("Đăng ký thành công!");
+      nav("/employer/login");
+    } catch (error) {
+      let errorMsg = "Đã có lỗi xảy ra!";
+      const emailError = error.response.data.errors.email;
+      if (emailError) errorMsg = "Email đã tồn tại trong hệ thống!";
+      toast.error(errorMsg, { position: "top-right" });
+      console.log("error::", error.response.data.message);
+    }
   };
 
   return (
@@ -58,7 +75,10 @@ export default function Signup() {
           <h5 className="text-center text-main mb-1">
             Đăng ký tài khoản Nhà tuyển dụng
           </h5>
-          <Link to="/employer/login" className="ps-5 ts-sm text-decoration-none">
+          <Link
+            to="/employer/login"
+            className="ps-5 ts-sm text-decoration-none"
+          >
             Quay lại trang Đăng nhập
           </Link>
         </div>
@@ -161,7 +181,7 @@ export default function Signup() {
               type="number"
               size="sm"
               className="w-20"
-              {...register("min_employees")}
+              {...register("max_employees")}
             />
             &nbsp;nhân viên
           </Form.Group>
@@ -169,8 +189,9 @@ export default function Signup() {
           <RequiredMark />
           <Form.Group className="ts-smd">
             <Form.Select
-              size="sm"
               className="w-35 mb-2"
+              style={{ height: "105px" }}
+              size="sm"
               multiple
               aria-label="employer locations"
               {...register("location_ids")}
@@ -199,19 +220,6 @@ export default function Signup() {
               {errors.address?.message}
             </Form.Control.Feedback>
           </Form.Group>
-          {/* <Form.Group className="mt-1 ts-smd">
-          <Form.Label className="mb-1 fw-500">Email</Form.Label>
-          <RequiredMark />
-          <Form.Control
-            type="text"
-            size="sm"
-            {...register("email")}
-            isInvalid={errors.email}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.email?.message}
-          </Form.Control.Feedback>
-        </Form.Group> */}
           <Button type="submit" className="w-100 my-3">
             Đăng ký
           </Button>

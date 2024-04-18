@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EducationController;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,18 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('getMe', 'me');
 });
 
+Route::controller(CandidateController::class)->prefix('candidates')->group(function () {
+    // Route::get('', 'index');
+    // Route::get('{id}', 'show')->middleware('jwt');
+    Route::get('getCurrent', 'getCurrent')->middleware('jwt');
+    Route::get('getCurrentAvatar', 'getCurrentAvatar')->middleware('jwt');
+    Route::post('update', 'update');
+    Route::get('{id}/getAppliedJobs', 'getAppliedJobs');
+    Route::get('{id}/getSavedJobs', 'getSavedJobs');
+    Route::post('{job_id}/processJobSaving', 'processJobSaving');
+    Route::get('{job_id}/checkJobSaved', 'checkJobSaved');
+});
+
 Route::controller(EmployerController::class)->prefix('companies')->group(function () {
     Route::get('', 'index');
     Route::get('{id}/getByID', 'show');
@@ -57,6 +70,11 @@ Route::controller(EmployerController::class)->prefix('companies')->group(functio
     Route::post('{job_id}/changeJobStatus', 'changeJobStatus');
 });
 
+Route::controller(AdminController::class)->prefix('admin')->group(function () {
+    Route::get('getEmployerList', 'getEmployerList');
+    Route::get('getEmployerRequest', 'getEmployerRequest');
+});
+
 Route::controller(JobController::class)->prefix('jobs')->group(function () {
     Route::get('', 'index');
     Route::get('{id}/getByID', 'show');
@@ -66,18 +84,6 @@ Route::controller(JobController::class)->prefix('jobs')->group(function () {
     Route::get('{id}/getJobIndustries', 'getJobIndustries');
     Route::post('{id}/apply', 'apply')->middleware('jwt');
     Route::get('{id}/checkApplying', 'checkApplying')->middleware('jwt');
-});
-
-Route::controller(CandidateController::class)->prefix('candidates')->group(function () {
-    // Route::get('', 'index');
-    // Route::get('{id}', 'show')->middleware('jwt');
-    Route::get('getCurrent', 'getCurrent')->middleware('jwt');
-    Route::get('getCurrentAvatar', 'getCurrentAvatar')->middleware('jwt');
-    Route::post('update', 'update');
-    Route::get('{id}/getAppliedJobs', 'getAppliedJobs');
-    Route::get('{id}/getSavedJobs', 'getSavedJobs');
-    Route::post('{job_id}/processJobSaving', 'processJobSaving');
-    Route::get('{job_id}/checkJobSaved', 'checkJobSaved');
 });
 
 Route::controller(IndustryController::class)->prefix('industries')->group(function () {
@@ -173,3 +179,4 @@ Route::controller(ResumeController::class)->prefix('resumes')->group(function ()
     Route::post('update', 'update');
     Route::delete('{id}', 'destroy');
 });
+

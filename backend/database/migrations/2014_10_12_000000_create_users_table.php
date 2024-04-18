@@ -19,6 +19,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->unsignedTinyInteger('role');
             $table->boolean('is_active');
+            $table->boolean('is_accepted')->default(1);
             $table->timestamps();
         });
     }

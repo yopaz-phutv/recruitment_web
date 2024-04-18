@@ -1,0 +1,8 @@
+@media screen and (max-width: 992px) {
+    #employer-login-form {
+        width: 50% !important;
+    }
+}
+.page-bg {
+    background-color: #eceff2dd;
+}
