@@ -81,8 +81,8 @@ export default function Signup() {
   }, []);
 
   return (
-    <div className="page-bg py-5 vh-100">
-      {!employerId ? (
+    <div className="page-bg py-5">
+      {!employerId || isEdit ? (
         <Form
           id="employer-signup-form"
           noValidate
@@ -108,6 +108,7 @@ export default function Signup() {
               <Form.Control
                 type="text"
                 size="sm"
+                defaultValue={isEdit ? employer.user.email : null}
                 {...register("email")}
                 isInvalid={errors.email}
               />
@@ -141,13 +142,14 @@ export default function Signup() {
                 {errors.re_password?.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <div className="fw-500 ts-lg mt-3">2. Thông tin người liên hệ</div>
+            <div className="fw-500 ts-lg mt-3">2. Thông tin liên hệ</div>
             <Form.Group className="mt-1 ts-smd">
-              <Form.Label className="mb-1 fw-500">Họ tên</Form.Label>
+              <Form.Label className="mb-1 fw-500">Người liên hệ</Form.Label>
               <RequiredMark />
               <Form.Control
                 type="text"
                 size="sm"
+                defaultValue={isEdit ? employer.contact_name : null}
                 {...register("contact_name")}
                 isInvalid={errors.contact_name}
               />
@@ -161,6 +163,7 @@ export default function Signup() {
               <Form.Control
                 type="text"
                 size="sm"
+                defaultValue={isEdit ? employer.phone : null}
                 {...register("phone")}
                 isInvalid={errors.phone}
               />
@@ -175,6 +178,7 @@ export default function Signup() {
               <Form.Control
                 type="text"
                 size="sm"
+                defaultValue={isEdit ? employer.name : null}
                 {...register("name")}
                 isInvalid={errors.name}
               />
@@ -184,7 +188,12 @@ export default function Signup() {
             </Form.Group>
             <Form.Group className="mt-1 ts-smd">
               <Form.Label className="mb-1 fw-500">Mã số thuế</Form.Label>
-              <Form.Control type="text" size="sm" {...register("tax_code")} />
+              <Form.Control
+                type="text"
+                size="sm"
+                defaultValue={isEdit ? employer.tax_code : null}
+                {...register("tax_code")}
+              />
             </Form.Group>
             <Form.Group className="ts-smd mt-3 d-flex align-items-center">
               <Form.Label className="mb-1 fw-500 me-3">Số nhân sự</Form.Label>
@@ -192,6 +201,7 @@ export default function Signup() {
                 type="number"
                 size="sm"
                 className="w-20"
+                defaultValue={isEdit ? employer.min_employees : null}
                 {...register("min_employees")}
               />
               <span className="mx-1">---</span>
@@ -199,6 +209,7 @@ export default function Signup() {
                 type="number"
                 size="sm"
                 className="w-20"
+                defaultValue={isEdit ? employer.max_employees : null}
                 {...register("max_employees")}
               />
               &nbsp;nhân viên
@@ -216,7 +227,13 @@ export default function Signup() {
                 isInvalid={errors.location_ids}
               >
                 {locations?.map((item) => (
-                  <option key={item.id} value={item.id}>
+                  <option
+                    key={item.id}
+                    value={item.id}
+                    selected={employer.locations
+                      ?.map((loc) => loc.id)
+                      .includes(item.id)}
+                  >
                     {item.name}
                   </option>
                 ))}
@@ -231,6 +248,7 @@ export default function Signup() {
                 size="sm"
                 aria-label="employer address"
                 placeholder="Nhập địa chỉ cụ thể"
+                defaultValue={isEdit ? employer.address : null}
                 {...register("address")}
                 isInvalid={errors.address}
               />
@@ -238,13 +256,29 @@ export default function Signup() {
                 {errors.address?.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Button type="submit" className="w-100 my-3">
-              Đăng ký
-            </Button>
+            {!isEdit ? (
+              <Button type="submit" className="w-100 my-3">
+                Đăng ký
+              </Button>
+            ) : (
+              <div className="d-flex gap-2 my-3">
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  className="w-40"
+                  onClick={() => setIsEdit(false)}
+                >
+                  Quay lại
+                </Button>
+                <Button size="sm" className="w-60">
+                  Cập nhật thông tin đăng ký
+                </Button>
+              </div>
+            )}
           </div>
         </Form>
       ) : (
-        <RegisterPreview employer={employer} />
+        <RegisterPreview employer={employer} setIsEdit={setIsEdit} />
       )}
     </div>
   );

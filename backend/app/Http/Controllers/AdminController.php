@@ -38,11 +38,13 @@ class AdminController extends Controller
     {
         $id = $req->id;
         $type = $req->type;
+
         if ($type == 0) {
-            User::where('id', $id)->update(['is_accepted' => 0]);
+            $update_data = ['is_denied' => 1];
         } else if ($type == 1) {
-            User::where('id', $id)->update(['is_active' => 1, 'is_accepted' => 1]);
+            $update_data = ['is_active' => 1, 'is_accepted' => 1];
         }
+        User::where('id', $id)->update($update_data);
 
         return response()->json('updated successfully');
     }

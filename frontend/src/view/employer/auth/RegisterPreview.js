@@ -1,12 +1,25 @@
 import Button from "react-bootstrap/Button";
+import { IoIosArrowBack } from "react-icons/io";
+import { Link } from "react-router-dom";
 
-export default function RegisterPreview({ employer }) {
+export default function RegisterPreview({ employer, setIsEdit }) {
   return (
     <div
-      className="border mx-auto p-3 shadow bg-white rounded"
+      className="border mx-auto p-3 shadow bg-white rounded position-relative"
       style={{ width: "740px" }}
     >
-      <h5 className="text-center text-main pb-2">Thông tin đã đăng ký</h5>
+      <Link
+        to="/employer/login"
+        className="position-absolute top-0 ts-sm text-decoration-none"
+        style={{ left: "5px" }}
+      >
+        <IoIosArrowBack style={{ marginBottom: "1px" }} />
+        Đăng nhập
+      </Link>
+      <div className="ts-smd text-success text-center">
+        Vui lòng đợi admin duyệt thông tin tài khoản nhà tuyển dụng của bạn!
+      </div>
+      <h5 className="text-center text-main mt-2 pb-2">Thông tin đã đăng ký</h5>
       <div className="d-flex">
         <div className="fw-600 w-20">Tên:</div>
         {employer.name}
@@ -47,7 +60,12 @@ export default function RegisterPreview({ employer }) {
         <div className="fw-600 w-20">Địa chỉ:</div>
         <div className="w-80 whitespace-preline">{employer.address}</div>
       </div>
-      <Button className="mt-3 px-5 d-block mx-auto">Sửa thông tin</Button>
+      <Button
+        className="mt-3 px-5 d-block mx-auto"
+        onClick={() => setIsEdit(true)}
+      >
+        Sửa thông tin
+      </Button>
     </div>
   );
 }

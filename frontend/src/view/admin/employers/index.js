@@ -8,6 +8,7 @@ import { WiMoonAltNew } from "react-icons/wi";
 import { BsCheckCircle, BsEye, BsXCircle } from "react-icons/bs";
 import AcceptModal from "./AcceptModal";
 import ViewModal from "./ViewModal";
+import RejectModal from "./RejectModal";
 
 export default function EmployerList() {
   const [employers, setEmployers] = useState([]);
@@ -144,6 +145,12 @@ export default function EmployerList() {
           </tbody>
         </Table>
         {/* {resumes.length === 0 && <h5 className="my-2">Không có bản ghi nào</h5>} */}
+        <ViewModal
+          show={showViewModal}
+          setShow={setShowViewModal}
+          employer={curEmployer}
+          curTabInd={curTabInd}
+        />
         <AcceptModal
           show={showAcceptModal}
           setShow={setShowAcceptModal}
@@ -152,11 +159,13 @@ export default function EmployerList() {
           getEmployers={getEmployers}
           getRequests={getRequests}
         />
-        <ViewModal
-          show={showViewModal}
-          setShow={setShowViewModal}
+        <RejectModal
+          show={showRejectModal}
+          setShow={setShowRejectModal}
           employer={curEmployer}
-          curTabInd={curTabInd}
+          setCurTabInd={setCurTabInd}
+          getEmployers={getEmployers}
+          getRequests={getRequests}
         />
       </div>
     </div>
