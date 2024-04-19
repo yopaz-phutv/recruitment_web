@@ -26,7 +26,6 @@ class EmployerController extends Controller
 
         return response()->json($res);
     }
-
     public function show($id)
     {
         $employer = Employer::find($id);
@@ -38,7 +37,12 @@ class EmployerController extends Controller
             ], 404);
         }
     }
+    public function getDetail($id)
+    {
+        $employer = Employer::with(['user', 'locations'])->find($id);
 
+        return response()->json($employer);
+    }
     public function destroy($id)
     {
         if (Employer::find($id))

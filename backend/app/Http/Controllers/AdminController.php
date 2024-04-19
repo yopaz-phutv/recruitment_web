@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +22,7 @@ class AdminController extends Controller
 
         return response()->json($employers);
     }
-    public function getEmployerRequest()
+    public function getEmployerRequests()
     {
         $employers =
             Employer::with('locations')
@@ -32,5 +33,17 @@ class AdminController extends Controller
             ->paginate(10);
 
         return response()->json($employers);
+    }
+    public function handleRequest(Request $req)
+    {
+        $id = $req->id;
+        $type = $req->type;
+        if ($type == 0) {
+            User::where('id', $id)->update(['is_accepted' => 0]);
+        } else if ($type == 1) {
+            User::where('id', $id)->update(['is_active' => 1, 'is_accepted' => 1]);
+        }
+
+        return response()->json('updated successfully');
     }
 }

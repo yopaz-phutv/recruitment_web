@@ -1,5 +1,5 @@
 import "./signup.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -9,8 +9,13 @@ import RequiredMark from "../../../components/form/requiredMark";
 import useGetAllLocations from "../../../hooks/useGetAllLocations";
 import authApi from "../../../api/auth";
 import { toast } from "react-toastify";
+import RegisterPreview from "./RegisterPreview";
+import { useEffect, useState } from "react";
+import employerApi from "../../../api/employer";
 
 export default function Signup() {
+  const loc = useLocation();
+  const employerId = loc.state?.employerId;
   const locations = useGetAllLocations();
   const nav = useNavigate();
 
@@ -49,7 +54,7 @@ export default function Signup() {
   const onSubmit = async (data) => {
     console.log("form data:", data);
     try {
-      delete data.password;
+      delete data.re_password;
       data.role = 2;
       await authApi.register(data);
       toast.success("Đăng ký thành công!");
@@ -63,168 +68,184 @@ export default function Signup() {
     }
   };
 
+  const [employer, setEmployer] = useState({});
+  const [isEdit, setIsEdit] = useState(false);
+  const getDetail = async () => {
+    const res = await employerApi.getDetail(employerId);
+    setEmployer(res);
+  };
+
+  useEffect(() => {
+    if (employerId) getDetail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <div className="page-bg py-5">
-      <Form
-        id="employer-signup-form"
-        noValidate
-        onSubmit={handleSubmit(onSubmit)}
-        className="border mx-auto w-40 shadow bg-white rounded"
-      >
-        <div className="border-bottom pt-3 pb-1">
-          <h5 className="text-center text-main mb-1">
-            Đăng ký tài khoản Nhà tuyển dụng
-          </h5>
-          <Link
-            to="/employer/login"
-            className="ps-5 ts-sm text-decoration-none"
-          >
-            Quay lại trang Đăng nhập
-          </Link>
-        </div>
-        <div className="px-5 py-2">
-          <div className="fw-500 ts-lg">1. Thông tin tài khoản</div>
-          <Form.Group className="ts-smd">
-            <Form.Label className="mb-1 fw-500">Email</Form.Label>
-            <RequiredMark />
-            <Form.Control
-              type="text"
-              size="sm"
-              {...register("email")}
-              isInvalid={errors.email}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.email?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mt-1 ts-smd">
-            <Form.Label className="mb-1 fw-500">Mật khẩu</Form.Label>
-            <RequiredMark />
-            <Form.Control
-              type="text"
-              size="sm"
-              {...register("password")}
-              isInvalid={errors.password}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.password?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mt-1 ts-smd">
-            <Form.Label className="mb-1 fw-500">Nhập lại mật khẩu</Form.Label>
-            <RequiredMark />
-            <Form.Control
-              type="text"
-              size="sm"
-              {...register("re_password")}
-              isInvalid={errors.re_password}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.re_password?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <div className="fw-500 ts-lg mt-3">2. Thông tin người liên hệ</div>
-          <Form.Group className="mt-1 ts-smd">
-            <Form.Label className="mb-1 fw-500">Họ tên</Form.Label>
-            <RequiredMark />
-            <Form.Control
-              type="text"
-              size="sm"
-              {...register("contact_name")}
-              isInvalid={errors.contact_name}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.contact_name?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mt-1 ts-smd">
-            <Form.Label className="mb-1 fw-500">Số điện thoại</Form.Label>
-            <RequiredMark />
-            <Form.Control
-              type="text"
-              size="sm"
-              {...register("phone")}
-              isInvalid={errors.phone}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.phone?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <div className="fw-500 ts-lg mt-3">3. Thông tin công ty</div>
-          <Form.Group className="mt-1 ts-smd">
-            <Form.Label className="mb-1 fw-500">Tên công ty</Form.Label>
-            <RequiredMark />
-            <Form.Control
-              type="text"
-              size="sm"
-              {...register("name")}
-              isInvalid={errors.name}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.name?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mt-1 ts-smd">
-            <Form.Label className="mb-1 fw-500">Mã số thuế</Form.Label>
-            <Form.Control type="text" size="sm" {...register("tax_code")} />
-          </Form.Group>
-          <Form.Group className="ts-smd mt-3 d-flex align-items-center">
-            <Form.Label className="mb-1 fw-500 me-3">Số nhân sự</Form.Label>
-            <Form.Control
-              type="number"
-              size="sm"
-              className="w-20"
-              {...register("min_employees")}
-            />
-            <span className="mx-1">---</span>
-            <Form.Control
-              type="number"
-              size="sm"
-              className="w-20"
-              {...register("max_employees")}
-            />
-            &nbsp;nhân viên
-          </Form.Group>
-          <Form.Label className="mb-1 fw-500">Địa chỉ</Form.Label>
-          <RequiredMark />
-          <Form.Group className="ts-smd">
-            <Form.Select
-              className="w-35 mb-2"
-              style={{ height: "105px" }}
-              size="sm"
-              multiple
-              aria-label="employer locations"
-              {...register("location_ids")}
-              isInvalid={errors.location_ids}
+    <div className="page-bg py-5 vh-100">
+      {!employerId ? (
+        <Form
+          id="employer-signup-form"
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+          className="border mx-auto w-40 shadow bg-white rounded"
+        >
+          <div className="border-bottom pt-3 pb-1">
+            <h5 className="text-center text-main mb-1">
+              Đăng ký tài khoản Nhà tuyển dụng
+            </h5>
+            <Link
+              to="/employer/login"
+              className="ps-5 ts-sm text-decoration-none"
             >
-              {locations?.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </Form.Select>
-            <Form.Control.Feedback type="invalid">
-              {errors.location_ids?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mt-2 ts-smd">
-            <Form.Control
-              as="textarea"
-              size="sm"
-              aria-label="employer address"
-              placeholder="Nhập địa chỉ cụ thể"
-              {...register("address")}
-              isInvalid={errors.address}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.address?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Button type="submit" className="w-100 my-3">
-            Đăng ký
-          </Button>
-        </div>
-      </Form>
+              Quay lại trang Đăng nhập
+            </Link>
+          </div>
+          <div className="px-5 py-2">
+            <div className="fw-500 ts-lg">1. Thông tin tài khoản</div>
+            <Form.Group className="ts-smd">
+              <Form.Label className="mb-1 fw-500">Email</Form.Label>
+              <RequiredMark />
+              <Form.Control
+                type="text"
+                size="sm"
+                {...register("email")}
+                isInvalid={errors.email}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.email?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mt-1 ts-smd">
+              <Form.Label className="mb-1 fw-500">Mật khẩu</Form.Label>
+              <RequiredMark />
+              <Form.Control
+                type="text"
+                size="sm"
+                {...register("password")}
+                isInvalid={errors.password}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.password?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mt-1 ts-smd">
+              <Form.Label className="mb-1 fw-500">Nhập lại mật khẩu</Form.Label>
+              <RequiredMark />
+              <Form.Control
+                type="text"
+                size="sm"
+                {...register("re_password")}
+                isInvalid={errors.re_password}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.re_password?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <div className="fw-500 ts-lg mt-3">2. Thông tin người liên hệ</div>
+            <Form.Group className="mt-1 ts-smd">
+              <Form.Label className="mb-1 fw-500">Họ tên</Form.Label>
+              <RequiredMark />
+              <Form.Control
+                type="text"
+                size="sm"
+                {...register("contact_name")}
+                isInvalid={errors.contact_name}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.contact_name?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mt-1 ts-smd">
+              <Form.Label className="mb-1 fw-500">Số điện thoại</Form.Label>
+              <RequiredMark />
+              <Form.Control
+                type="text"
+                size="sm"
+                {...register("phone")}
+                isInvalid={errors.phone}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.phone?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <div className="fw-500 ts-lg mt-3">3. Thông tin công ty</div>
+            <Form.Group className="mt-1 ts-smd">
+              <Form.Label className="mb-1 fw-500">Tên công ty</Form.Label>
+              <RequiredMark />
+              <Form.Control
+                type="text"
+                size="sm"
+                {...register("name")}
+                isInvalid={errors.name}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.name?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mt-1 ts-smd">
+              <Form.Label className="mb-1 fw-500">Mã số thuế</Form.Label>
+              <Form.Control type="text" size="sm" {...register("tax_code")} />
+            </Form.Group>
+            <Form.Group className="ts-smd mt-3 d-flex align-items-center">
+              <Form.Label className="mb-1 fw-500 me-3">Số nhân sự</Form.Label>
+              <Form.Control
+                type="number"
+                size="sm"
+                className="w-20"
+                {...register("min_employees")}
+              />
+              <span className="mx-1">---</span>
+              <Form.Control
+                type="number"
+                size="sm"
+                className="w-20"
+                {...register("max_employees")}
+              />
+              &nbsp;nhân viên
+            </Form.Group>
+            <Form.Label className="mb-1 fw-500">Địa chỉ</Form.Label>
+            <RequiredMark />
+            <Form.Group className="ts-smd">
+              <Form.Select
+                className="w-35 mb-2"
+                style={{ height: "105px" }}
+                size="sm"
+                multiple
+                aria-label="employer locations"
+                {...register("location_ids")}
+                isInvalid={errors.location_ids}
+              >
+                {locations?.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                {errors.location_ids?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mt-2 ts-smd">
+              <Form.Control
+                as="textarea"
+                size="sm"
+                aria-label="employer address"
+                placeholder="Nhập địa chỉ cụ thể"
+                {...register("address")}
+                isInvalid={errors.address}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.address?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Button type="submit" className="w-100 my-3">
+              Đăng ký
+            </Button>
+          </div>
+        </Form>
+      ) : (
+        <RegisterPreview employer={employer} />
+      )}
     </div>
   );
 }

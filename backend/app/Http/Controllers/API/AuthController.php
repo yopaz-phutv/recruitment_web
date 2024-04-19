@@ -67,7 +67,10 @@ class AuthController extends Controller
             'role' => $request->role,
             'is_active' => 1,
         ];
-        if ($request->role == 2) $user_data['is_accepted'] = 0;
+        if ($request->role == 2) {
+            $user_data['is_accepted'] = 0;
+            $user_data['is_active'] = 0;
+        }
         $user = User::create($user_data);
 
         // update detail information:

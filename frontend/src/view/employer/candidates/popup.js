@@ -60,7 +60,7 @@ function MessagePopup({
       try {
         await emailjs.send(
           emailjsConfig.serviceId,
-          emailjsConfig.templateId1,
+          emailjsConfig.templates.templateId1,
           templateParams,
           emailjsConfig.publicKey
         );

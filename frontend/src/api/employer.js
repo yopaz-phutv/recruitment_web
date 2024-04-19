@@ -12,6 +12,9 @@ const employerApi = {
   getById: (id) => {
     return commonAxios.get(`${prefix}/${id}/getByID`);
   },
+  getDetail: (id) => {
+    return commonAxios.get(`${prefix}/${id}/getDetail`);
+  },
   getHotList: () => {
     return commonAxios.get(`${prefix}/getHotList`);
   },

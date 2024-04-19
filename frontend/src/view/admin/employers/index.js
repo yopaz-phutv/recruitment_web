@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import adminApi from "../../../api/admin";
 import dayjs from "dayjs";
 import clsx from "clsx";
 import { WiMoonAltNew } from "react-icons/wi";
-import { BsCheckCircle, BsXCircle } from "react-icons/bs";
+import { BsCheckCircle, BsEye, BsXCircle } from "react-icons/bs";
+import AcceptModal from "./AcceptModal";
+import ViewModal from "./ViewModal";
 
 export default function EmployerList() {
   const [employers, setEmployers] = useState([]);
+  const [curEmployer, setCurEmployer] = useState({});
   const [curTabInd, setCurTabInd] = useState(0);
-  const [hasNewRequest, setHasNewRequest] = useState(true);
   const [requests, setRequests] = useState([]);
   const [curList, setCurList] = useState([]);
+  const [showAcceptModal, setShowAcceptModal] = useState(false);
+  const [showRejectModal, setShowRejectModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false);
 
   const getEmployers = async () => {
     const res = await adminApi.getEmployerList();
@@ -25,11 +29,15 @@ export default function EmployerList() {
   };
   const handleChangeTab = (index) => {
     setCurTabInd(index);
-    if (index === 1) setHasNewRequest(false);
   };
-  const handleClickActionBtn = (employer, type) => {
+  const handleClickActionBtn = (item, type) => {
+    setCurEmployer(item);
     if (type === "ACCEPT") {
+      setShowAcceptModal(true);
     } else if (type === "REJECT") {
+      setShowRejectModal(true);
+    } else if (type === "VIEW") {
+      setShowViewModal(true);
     }
   };
 
@@ -59,17 +67,15 @@ export default function EmployerList() {
           <div
             className={clsx(
               "position-relative pointer border border-bottom-0 border-start-0 border-main px-4 py-1",
-              curTabInd === 1
-                ? "bg-mlight text-main"
-                : hasNewRequest && "text-danger"
+              curTabInd === 1 && "bg-mlight text-main"
             )}
             onClick={() => handleChangeTab(1)}
           >
             Yêu cầu đăng ký
-            {hasNewRequest && (
+            {requests.length > 0 && (
               <WiMoonAltNew
-                className="position-absolute text-danger"
-                style={{ top: "8px", left: "5px" }}
+                className="position-absolute text-danger ts-xxs"
+                style={{ top: "9px", left: "6px" }}
               />
             )}
           </div>
@@ -82,7 +88,7 @@ export default function EmployerList() {
               <th className="fw-500">Email</th>
               <th className="fw-500">Điện thoại</th>
               <th className="fw-500">Ngày đăng ký</th>
-              <th className="fw-500">Trạng thái</th>
+              {curTabInd === 0 && <th className="fw-500">Trạng thái</th>}
               <th className="fw-500">Hành động</th>
             </tr>
           </thead>
@@ -101,36 +107,57 @@ export default function EmployerList() {
                 <td>{item.email} </td>
                 <td>{item.phone} </td>
                 <td>{dayjs(item.register_time).format("DD/MM/YYYY")}</td>
+                {curTabInd === 0 && (
+                  <td>
+                    <Form.Check
+                      type="switch"
+                      aria-label="switch"
+                      defaultChecked={item.is_active}
+                    />
+                  </td>
+                )}
                 <td>
-                  <Form.Check
-                    type="switch"
-                    aria-label="switch"
-                    defaultChecked={item.is_active}
-                  />
-                </td>
-                <td>
-                  {curTabInd === 1 && (
-                    <div>
-                      <span
-                        className="pointer"
-                        onClick={() => handleClickActionBtn(item, "ACCEPT")}
-                      >
-                        <BsCheckCircle className="text-success" />
-                      </span>
-                      <span
-                        className="pointer"
-                        onClick={() => handleClickActionBtn(item, "REJECT")}
-                      >
-                        <BsXCircle className="ms-2 text-danger" />
-                      </span>
-                    </div>
-                  )}
+                  <div className="ms-2 d-flex gap-2">
+                    <BsEye
+                      type="button"
+                      className="text-primary ts-md"
+                      onClick={() => handleClickActionBtn(item, "VIEW")}
+                    />
+                    {curTabInd === 1 && (
+                      <>
+                        <BsCheckCircle
+                          type="button"
+                          className="text-success"
+                          onClick={() => handleClickActionBtn(item, "ACCEPT")}
+                        />
+                        <BsXCircle
+                          type="button"
+                          className="text-danger"
+                          onClick={() => handleClickActionBtn(item, "REJECT")}
+                        />
+                      </>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
         {/* {resumes.length === 0 && <h5 className="my-2">Không có bản ghi nào</h5>} */}
+        <AcceptModal
+          show={showAcceptModal}
+          setShow={setShowAcceptModal}
+          employer={curEmployer}
+          setCurTabInd={setCurTabInd}
+          getEmployers={getEmployers}
+          getRequests={getRequests}
+        />
+        <ViewModal
+          show={showViewModal}
+          setShow={setShowViewModal}
+          employer={curEmployer}
+          curTabInd={curTabInd}
+        />
       </div>
     </div>
   );

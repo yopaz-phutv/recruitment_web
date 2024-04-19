@@ -27,20 +27,22 @@ function Login() {
   const onSubmit = async (inf) => {
     inf.role = 2;
     setIsLoading(true);
-    await authApi
-      .login(inf)
-      .then((res) => {
+    try {
+      const res = await authApi.login(inf);
+      if (res.user.is_accepted === 0)
+        nav("/employer/signup", { state: { employerId: res.user.id } });
+      else {
         localStorage.setItem("employer_jwt", res.authorization.token);
         toast.success("Đăng nhập thành công!");
-      })
-      .catch(() => {
-        setMsg("Email hoặc mật khẩu không chính xác!");
-      });
+        await authApi.getMe(2).then((res) => {
+          dispatch(employerAuthActions.setUser(res));
+          nav("/employer");
+        });
+      }
+    } catch (error) {
+      setMsg("Email hoặc mật khẩu không chính xác!");
+    }
     setIsLoading(false);
-    await authApi.getMe(2).then((res) => {
-      dispatch(employerAuthActions.setUser(res));
-      nav("/employer");
-    });
   };
 
   useEffect(() => {

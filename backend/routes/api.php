@@ -61,6 +61,7 @@ Route::controller(CandidateController::class)->prefix('candidates')->group(funct
 Route::controller(EmployerController::class)->prefix('companies')->group(function () {
     Route::get('', 'index');
     Route::get('{id}/getByID', 'show');
+    Route::get('{id}/getDetail', 'getDetail');
     Route::get('getHotList', 'getHotList');
     Route::delete('{id}', 'destroy');
     Route::get('{id}/getComJobs', 'getComJobs');
@@ -72,7 +73,8 @@ Route::controller(EmployerController::class)->prefix('companies')->group(functio
 
 Route::controller(AdminController::class)->prefix('admin')->group(function () {
     Route::get('getEmployerList', 'getEmployerList');
-    Route::get('getEmployerRequest', 'getEmployerRequest');
+    Route::get('getEmployerRequests', 'getEmployerRequests');
+    Route::patch('handleRequest', 'handleRequest');
 });
 
 Route::controller(JobController::class)->prefix('jobs')->group(function () {

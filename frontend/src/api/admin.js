@@ -6,7 +6,10 @@ const adminApi = {
     return adminAxios.get(`${prefix}/getEmployerList`);
   },
   getEmployerRequests: () => {
-    return adminAxios.get(`${prefix}/getEmployerRequest`);
+    return adminAxios.get(`${prefix}/getEmployerRequests`);
+  },
+  handleRequest: (params) => {
+    return adminAxios.patch(`${prefix}/handleRequest`, params);
   },
 }
 
