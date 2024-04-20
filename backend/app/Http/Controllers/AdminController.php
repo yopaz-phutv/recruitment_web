@@ -22,12 +22,15 @@ class AdminController extends Controller
 
         return response()->json($employers);
     }
-    public function getEmployerRequests()
+    public function getEmployerRequests(Request $req)
     {
         $employers =
             Employer::with('locations')
             ->join('users', 'user_id', '=', 'users.id')
-            ->where('is_accepted', 0)
+            ->where([
+                ['is_accepted', '=', $req->is_accepted],
+                ['is_denied', '=', $req->is_denied]
+            ])
             ->select('employers.*', 'email', DB::raw('users.created_at as register_time'))
             ->orderByDesc('register_time')
             ->paginate(10);
