@@ -23,6 +23,7 @@ import EmployerSignup from "./view/employer/auth/Signup";
 import AdminLogin from "./view/admin/auth/Login";
 import AdminLayout from "./view/admin/layouts";
 import EmployerList from "./view/admin/employers";
+import EmployerDetail from "./view/employer/detail";
 
 export const AppContext = createContext();
 
@@ -75,6 +76,7 @@ function App() {
                 <Routes>
                   <Route path="candidates" element={<CandidateList />} />
                   <Route path="jobs" element={<JobManagement />} />
+                  <Route path="detail" element={<EmployerDetail />} />
                 </Routes>
               </EmployerLayout>
             }

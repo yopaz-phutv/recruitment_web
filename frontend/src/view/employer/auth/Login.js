@@ -29,10 +29,10 @@ function Login() {
     setIsLoading(true);
     try {
       const res = await authApi.login(inf);
+      localStorage.setItem("employer_jwt", res.authorization.token);
       if (res.user.is_accepted === 0)
-        nav("/employer/signup", { state: { employerId: res.user.id } });
+        nav("/employer/signup", { state: { wait: 1 } });
       else {
-        localStorage.setItem("employer_jwt", res.authorization.token);
         toast.success("Đăng nhập thành công!");
         await authApi.getMe(2).then((res) => {
           dispatch(employerAuthActions.setUser(res));

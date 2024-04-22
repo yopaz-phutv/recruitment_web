@@ -61,7 +61,8 @@ Route::controller(CandidateController::class)->prefix('candidates')->group(funct
 Route::controller(EmployerController::class)->prefix('companies')->group(function () {
     Route::get('', 'index');
     Route::get('{id}/getByID', 'show');
-    Route::get('{id}/getDetail', 'getDetail');
+    Route::post('update', 'update');
+    Route::get('getDetail', 'getDetail');
     Route::get('getHotList', 'getHotList');
     Route::delete('{id}', 'destroy');
     Route::get('{id}/getComJobs', 'getComJobs');

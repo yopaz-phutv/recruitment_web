@@ -1,21 +1,35 @@
 import Button from "react-bootstrap/Button";
 import { IoIosArrowBack } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import authApi from "../../../api/auth";
+import { employerAuthActions } from "../../../redux/slices/employerAuthSlice";
 
 export default function RegisterPreview({ employer, setIsEdit }) {
+  const nav = useNavigate();
+  const dispatch = useDispatch()
+
+  const handleQuit = async () => {
+    await authApi.logout(2);
+    dispatch(employerAuthActions.logout());
+    localStorage.removeItem("employer_jwt");
+    nav("/employer/login");
+  };
+
   return (
     <div
       className="border mx-auto p-3 shadow bg-white rounded position-relative"
       style={{ width: "740px" }}
     >
-      <Link
+      <div
         to="/employer/login"
-        className="position-absolute top-0 ts-sm text-decoration-none"
+        className="position-absolute top-0 ts-sm text-primary pointer"
         style={{ left: "5px" }}
+        onClick={handleQuit}
       >
         <IoIosArrowBack style={{ marginBottom: "1px" }} />
         Đăng nhập
-      </Link>
+      </div>
       <div className="ts-smd text-success text-center">
         Vui lòng đợi admin duyệt thông tin tài khoản nhà tuyển dụng của bạn!
       </div>
@@ -62,9 +76,12 @@ export default function RegisterPreview({ employer, setIsEdit }) {
       </div>
       <Button
         className="mt-3 px-5 d-block mx-auto"
-        onClick={() => setIsEdit(true)}
+        onClick={() => {
+          if (!employer.user?.is_denied) setIsEdit(true);
+          else nav("/employer/signup");
+        }}
       >
-        Sửa thông tin
+        {!employer.user?.is_denied ? "Sửa thông tin" : "Đăng ký mới"}
       </Button>
     </div>
   );

@@ -11,6 +11,8 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 // use Illuminate\Support\Facades\Redis;
 
 class EmployerController extends Controller
@@ -37,8 +39,60 @@ class EmployerController extends Controller
             ], 404);
         }
     }
-    public function getDetail($id)
+    public function update(Request $req)
     {
+        $employer_id = Auth::user()->id;
+        $update_data = $req->except(['location_ids', 'logo_file', 'delete_logo', 'image_file', 'delete_image']);
+
+        if ($req->hasFile('logo_file')) {
+            $logo_file = $req->file('logo_file');
+            //delete old logo:
+            foreach (['png', 'jpg', 'jpeg'] as $ext) {
+                $path = 'employer_logos/logo_' . $employer_id . '.' . $ext;
+                if (Storage::fileExists($path))
+                    Storage::delete($path);
+            }
+            $filename = 'logo_' . $employer_id . '.' . $logo_file->getClientOriginalExtension();
+            $path = uploadFile2GgDrive($logo_file, 'employer_logos', $filename, ['isThumbnail' => true]);
+            $update_data['logo'] = $path;
+        }
+        if ($req->hasFile('image_file')) {
+            $image_file = $req->file('image_file');
+            //delete old image:
+            foreach (['png', 'jpg', 'jpeg'] as $ext) {
+                $path = 'employer_images/image_' . $employer_id . '.' . $ext;
+                if (Storage::fileExists($path))
+                    Storage::delete($path);
+            }
+            $filename = 'image_' . $employer_id . '.' . $image_file->getClientOriginalExtension();
+            $path = uploadFile2GgDrive($image_file, 'employer_images', $filename, ['isThumbnail' => true]);
+            $update_data['image'] = $path;
+        }
+        if ($req->has('delete_logo')) $update_data['logo'] = null;
+        if ($req->has('delete_image')) $update_data['image'] = null;
+
+        //update employers table:
+        Employer::find($employer_id)->update($update_data);
+
+        //update employer_location table:
+        $location_ids = explode(',', $req->location_ids);
+        $employer_location_data = [];
+        for ($i = 0; $i < count($location_ids); $i++) {
+            $employer_location_data[$i] = [
+                'employer_id' => $employer_id,
+                'location_id' => $location_ids[$i]
+            ];
+        }
+        DB::table('employer_location')
+            ->where('employer_id', $employer_id)
+            ->delete();
+        DB::table('employer_location')->insert($employer_location_data);
+
+        return response()->json('updated successfully');
+    }
+    public function getDetail()
+    {
+        $id = Auth::user()->id;
         $employer = Employer::with(['user', 'locations'])->find($id);
 
         return response()->json($employer);

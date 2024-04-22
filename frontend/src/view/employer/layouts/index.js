@@ -17,10 +17,8 @@ import clsx from "clsx";
 function Layout(props) {
   const nav = useNavigate();
   const { currentPage, setCurrentPage } = useContext(AppContext);
-
-  const company = useSelector((state) => state.employerAuth.current.employer);
-  // const isAuth = useSelector((state) => state.employerAuth.isAuth);
   const dispatch = useDispatch();
+  const company = useSelector((state) => state.employerAuth.current.employer);
 
   const handleLogout = async () => {
     await authApi.logout(2);
@@ -105,9 +103,9 @@ function Layout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "#" && "bg-mlight text-main"
+              currentPage === "/employer/detail" && "bg-mlight text-main"
             )}
-            onClick={() => handleChangePage("#")}
+            onClick={() => handleChangePage("/employer/detail")}
           >
             <AiFillProfile className="fs-5 me-1" /> Công ty
           </div>

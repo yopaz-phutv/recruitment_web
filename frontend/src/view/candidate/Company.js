@@ -30,11 +30,11 @@ function Company() {
 
   return (
     <>
-      <div className="container image-container d-flex justify-content-center">
+      <div className="container d-flex justify-content-center">
         <img
           src={infor.image}
           className="mt-3"
-          style={{ maxWidth: "93%", maxHeight: "400px" }}
+          style={{ width: "93%", maxHeight: "400px" }}
           alt={infor.name}
         />
       </div>

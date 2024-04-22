@@ -1,0 +1,5 @@
+@media screen and (max-width: 768px) {
+    #employer-edit-form {
+        width: 90% !important;
+    }
+}

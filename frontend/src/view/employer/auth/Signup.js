@@ -15,7 +15,7 @@ import employerApi from "../../../api/employer";
 
 export default function Signup() {
   const loc = useLocation();
-  const employerId = loc.state?.employerId;
+  const wait = loc.state?.wait;
   const locations = useGetAllLocations();
   const nav = useNavigate();
 
@@ -51,11 +51,18 @@ export default function Signup() {
     resolver: yupResolver(schema),
   });
 
+  const [employer, setEmployer] = useState({});
+  const [isEdit, setIsEdit] = useState(false);
+  const getDetail = async () => {
+    const res = await employerApi.getDetail();
+    setEmployer(res);
+  };
+
   const onSubmit = async (data) => {
     console.log("form data:", data);
+    delete data.re_password;
+    data.role = 2;
     try {
-      delete data.re_password;
-      data.role = 2;
       await authApi.register(data);
       toast.success("Đăng ký thành công!");
       nav("/employer/login");
@@ -68,21 +75,14 @@ export default function Signup() {
     }
   };
 
-  const [employer, setEmployer] = useState({});
-  const [isEdit, setIsEdit] = useState(false);
-  const getDetail = async () => {
-    const res = await employerApi.getDetail(employerId);
-    setEmployer(res);
-  };
-
   useEffect(() => {
-    if (employerId) getDetail();
+    if (wait) getDetail();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="page-bg py-5">
-      {!employerId || isEdit ? (
+      {!wait || isEdit ? (
         <Form
           id="employer-signup-form"
           noValidate
