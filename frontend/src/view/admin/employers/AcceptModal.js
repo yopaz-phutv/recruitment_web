@@ -14,7 +14,7 @@ export default function AcceptModal({
   employer,
   setCurTabInd,
   getEmployers,
-  getRequests,
+  getRequestsAmount,
 }) {
   const nav = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -32,12 +32,12 @@ export default function AcceptModal({
       nav("/admin/employers");
       setCurTabInd(0);
       await getEmployers();
-      await getRequests();
+      await getRequestsAmount();
     } catch (error) {
       setIsLoading(false);
       toast.error("Đã có lỗi xảy ra!");
     }
-    const title = 'Đăng ký thành công';
+    const title = "Đăng ký thành công";
     const content = `Tài khoản nhà tuyển dụng "${employer.name}" đã được kích hoạt thành công.\n
     Vui lòng đăng nhập vào hệ thống để hoàn thiện thông tin!`;
     const templateParams = {

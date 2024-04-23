@@ -1,11 +1,10 @@
-import Button from "react-bootstrap/Button";
 import { IoIosArrowBack } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import authApi from "../../../api/auth";
 import { employerAuthActions } from "../../../redux/slices/employerAuthSlice";
 
-export default function RegisterPreview({ employer, setIsEdit }) {
+export default function RegisterPreview({ employer }) {
   const nav = useNavigate();
   const dispatch = useDispatch()
 
@@ -74,7 +73,7 @@ export default function RegisterPreview({ employer, setIsEdit }) {
         <div className="fw-600 w-20">Địa chỉ:</div>
         <div className="w-80 whitespace-preline">{employer.address}</div>
       </div>
-      <Button
+      {/* <Button
         className="mt-3 px-5 d-block mx-auto"
         onClick={() => {
           if (!employer.user?.is_denied) setIsEdit(true);
@@ -82,7 +81,7 @@ export default function RegisterPreview({ employer, setIsEdit }) {
         }}
       >
         {!employer.user?.is_denied ? "Sửa thông tin" : "Đăng ký mới"}
-      </Button>
+      </Button> */}
     </div>
   );
 }

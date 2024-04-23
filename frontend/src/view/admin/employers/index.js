@@ -10,35 +10,51 @@ import { BsCheckCircle, BsEye, BsXCircle } from "react-icons/bs";
 import AcceptModal from "./AcceptModal";
 import ViewModal from "./ViewModal";
 import RejectModal from "./RejectModal";
+import CPagination from "../../../components/CPagination";
+import { toast } from "react-toastify";
 
 export default function EmployerList() {
   const [employers, setEmployers] = useState([]);
+  const [requestsAmount, setRequestsAmount] = useState(0);
   const [curEmployer, setCurEmployer] = useState({});
   const [curTabInd, setCurTabInd] = useState(0);
-  const [requests, setRequests] = useState([]);
-  const [curList, setCurList] = useState([]);
-  const [isDenied, setIsDenied] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [showAcceptModal, setShowAcceptModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
+  const [status, setStatus] = useState({ is_accepted: 1, is_denied: 0 });
 
-  const getEmployers = async () => {
+  const [totalPage, setTotalPage] = useState(1);
+  const [curPage, setCurPage] = useState(1);
+
+  const getEmployers = async (page = 1) => {
     setIsLoading(true);
-    const res = await adminApi.getEmployerList();
+    const res = await adminApi.getEmployerList({
+      ...status,
+      page,
+    });
     setEmployers(res.data);
+    setTotalPage(res.last_page);
     setIsLoading(false);
   };
-  const getRequests = async (params = { is_accepted: 0, is_denied: 0 }) => {
-    setIsLoading(true);
-    const res = await adminApi.getEmployerRequests(params);
-    setRequests(res.data);
-    setIsLoading(false);
+  const getRequestsAmount = async () => {
+    const res = await adminApi.getEmployerList({
+      is_accepted: 0,
+      is_denied: 0,
+    });
+    setRequestsAmount(res.total);
   };
   const handleChangeTab = (index) => {
     setCurTabInd(index);
   };
+  useEffect(() => {
+    if (curTabInd === 0) {
+      setStatus({ is_accepted: 1, is_denied: 0 });
+    } else if (curTabInd === 1) {
+      setStatus({ is_accepted: 0, is_denied: 0 });
+    }
+  }, [curTabInd]);
   const handleClickActionBtn = (item, type) => {
     setCurEmployer(item);
     if (type === "ACCEPT") {
@@ -51,26 +67,30 @@ export default function EmployerList() {
   };
   const handleChangeStatus = async (e) => {
     const status = e.target.value;
-    let params = null;
     if (status === "0") {
-      params = { is_accepted: 0, is_denied: 0 };
+      setStatus({ ...status, is_denied: 0 });
     } else if (status === "1") {
-      setIsDenied(true);
-      params = { is_accepted: 0, is_denied: 1 };
+      setStatus({ ...status, is_denied: 1 });
     }
-    await getRequests(params);
-    if (status === "0") {
-      setIsDenied(false);
+  };
+  const handleChangeActiveStatus = async (user_id, is_active) => {
+    try {
+      await adminApi.changeAccActiveStatus({
+        user_id,
+        is_active: !is_active,
+      });
+      toast.success("Cập nhật thành công!");
+    } catch (error) {
+      toast.error("Đã có lỗi xảy ra!");
     }
   };
 
   useEffect(() => {
-    if (curTabInd === 0) setCurList(employers);
-    else if (curTabInd === 1) setCurList(requests);
-  }, [curTabInd, employers, requests]);
-  useEffect(() => {
     getEmployers();
-    getRequests();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status]);
+  useEffect(() => {
+    getRequestsAmount();
   }, []);
 
   return (
@@ -95,7 +115,7 @@ export default function EmployerList() {
             onClick={() => handleChangeTab(1)}
           >
             Yêu cầu đăng ký
-            {!isDenied && requests.length > 0 ? (
+            {requestsAmount > 0 ? (
               <WiMoonAltNew
                 className="position-absolute text-danger ts-xxs"
                 style={{ top: "9px", left: "6px" }}
@@ -113,7 +133,7 @@ export default function EmployerList() {
               onChange={handleChangeStatus}
             >
               <option value="0">Chưa duyệt</option>
-              <option value="1" selected={isDenied}>
+              <option value="1" selected={status.is_denied}>
                 Đã từ chối
               </option>
             </Form.Select>
@@ -133,7 +153,7 @@ export default function EmployerList() {
           </thead>
           {!isLoading && (
             <tbody className="ts-sm">
-              {curList?.map((item) => (
+              {employers?.map((item) => (
                 <tr key={item.id}>
                   <td>{item.name} </td>
                   <td>
@@ -153,6 +173,9 @@ export default function EmployerList() {
                         type="switch"
                         aria-label="switch"
                         defaultChecked={item.is_active}
+                        onClick={() =>
+                          handleChangeActiveStatus(item.id, item.is_active)
+                        }
                       />
                     </td>
                   )}
@@ -163,7 +186,7 @@ export default function EmployerList() {
                         className="text-primary ts-md"
                         onClick={() => handleClickActionBtn(item, "VIEW")}
                       />
-                      {curTabInd === 1 && !isDenied ? (
+                      {curTabInd === 1 && !status.is_denied ? (
                         <>
                           <BsCheckCircle
                             type="button"
@@ -189,8 +212,16 @@ export default function EmployerList() {
             <Spinner size="sm" className="me-1" />
             Đang tải...
           </div>
+        ) : employers.length === 0 ? (
+          <h5 className="my-2">Không có bản ghi nào</h5>
         ) : (
-          curList.length === 0 && <h5 className="my-2">Không có bản ghi nào</h5>
+          <CPagination
+            className="justify-content-center"
+            totalPage={totalPage}
+            curPage={curPage}
+            setCurPage={setCurPage}
+            getList={getEmployers}
+          />
         )}
         <ViewModal
           show={showViewModal}
@@ -204,7 +235,7 @@ export default function EmployerList() {
           employer={curEmployer}
           setCurTabInd={setCurTabInd}
           getEmployers={getEmployers}
-          getRequests={getRequests}
+          getRequestsAmount={getRequestsAmount}
         />
         <RejectModal
           show={showRejectModal}
@@ -212,7 +243,7 @@ export default function EmployerList() {
           employer={curEmployer}
           setCurTabInd={setCurTabInd}
           getEmployers={getEmployers}
-          getRequests={getRequests}
+          getRequestsAmount={getRequestsAmount}
         />
       </div>
     </div>

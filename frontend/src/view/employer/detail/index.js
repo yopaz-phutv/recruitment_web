@@ -2,7 +2,7 @@ import "./edit-form.css";
 import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
 import employerApi from "../../../api/employer";
-import EmployerDetailView from "./EmployerDetailView";
+import EmployerDetailView from "../../../components/EmployerDetailView";
 import EditForm from "./EditForm";
 
 export default function EmployerDetail() {

@@ -3,18 +3,18 @@ import adminAxios from "./adminAxios";
 
 const prefix = "/admin";
 const adminApi = {
-  getEmployerList: () => {
-    return adminAxios.get(`${prefix}/getEmployerList`);
-  },
-  getEmployerRequests: (params) => {
+  getEmployerList: (params) => {
     return adminAxios.get(
-      `${prefix}/getEmployerRequests?${queryString.stringify(params, {
+      `${prefix}/getEmployerList?${queryString.stringify(params, {
         arrayFormat: "index",
       })}`
     );
   },
   handleRequest: (params) => {
     return adminAxios.patch(`${prefix}/handleRequest`, params);
+  },
+  changeAccActiveStatus: (params) => {
+    return adminAxios.patch(`${prefix}/changeAccActiveStatus`, params);
   },
 };
 

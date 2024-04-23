@@ -16,7 +16,7 @@ export default function RejectModal({
   employer,
   setCurTabInd,
   getEmployers,
-  getRequests,
+  getRequestsAmount
 }) {
   const nav = useNavigate();
   const {
@@ -39,7 +39,7 @@ export default function RejectModal({
       nav("/admin/employers");
       setCurTabInd(0);
       await getEmployers();
-      await getRequests();
+      await getRequestsAmount();
     } catch (error) {
       setIsLoading(false);
       toast.error("Đã có lỗi xảy ra!");

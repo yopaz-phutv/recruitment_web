@@ -20,7 +20,9 @@ class EmployerController extends Controller
     public function index(Request $request)
     {
         $keyw = $request->query('keyword');
-        $query = Employer::query();
+        $query = Employer::query()
+            ->join('users', 'user_id', '=', 'users.id')
+            ->where('users.is_active', 1);
         if ($keyw) {
             $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyw) . '%']);
         }

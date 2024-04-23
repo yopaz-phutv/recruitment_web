@@ -52,7 +52,6 @@ export default function Signup() {
   });
 
   const [employer, setEmployer] = useState({});
-  const [isEdit, setIsEdit] = useState(false);
   const getDetail = async () => {
     const res = await employerApi.getDetail();
     setEmployer(res);
@@ -82,7 +81,7 @@ export default function Signup() {
 
   return (
     <div className="page-bg py-5">
-      {!wait || isEdit ? (
+      {!wait ? (
         <Form
           id="employer-signup-form"
           noValidate
@@ -108,7 +107,7 @@ export default function Signup() {
               <Form.Control
                 type="text"
                 size="sm"
-                defaultValue={isEdit ? employer.user.email : null}
+                // defaultValue={isEdit ? employer.user.email : null}
                 {...register("email")}
                 isInvalid={errors.email}
               />
@@ -149,7 +148,7 @@ export default function Signup() {
               <Form.Control
                 type="text"
                 size="sm"
-                defaultValue={isEdit ? employer.contact_name : null}
+                // defaultValue={isEdit ? employer.contact_name : null}
                 {...register("contact_name")}
                 isInvalid={errors.contact_name}
               />
@@ -163,7 +162,7 @@ export default function Signup() {
               <Form.Control
                 type="text"
                 size="sm"
-                defaultValue={isEdit ? employer.phone : null}
+                // defaultValue={isEdit ? employer.phone : null}
                 {...register("phone")}
                 isInvalid={errors.phone}
               />
@@ -178,7 +177,7 @@ export default function Signup() {
               <Form.Control
                 type="text"
                 size="sm"
-                defaultValue={isEdit ? employer.name : null}
+                // defaultValue={isEdit ? employer.name : null}
                 {...register("name")}
                 isInvalid={errors.name}
               />
@@ -191,7 +190,7 @@ export default function Signup() {
               <Form.Control
                 type="text"
                 size="sm"
-                defaultValue={isEdit ? employer.tax_code : null}
+                // defaultValue={isEdit ? employer.tax_code : null}
                 {...register("tax_code")}
               />
             </Form.Group>
@@ -201,7 +200,7 @@ export default function Signup() {
                 type="number"
                 size="sm"
                 className="w-20"
-                defaultValue={isEdit ? employer.min_employees : null}
+                // defaultValue={isEdit ? employer.min_employees : null}
                 {...register("min_employees")}
               />
               <span className="mx-1">---</span>
@@ -209,7 +208,7 @@ export default function Signup() {
                 type="number"
                 size="sm"
                 className="w-20"
-                defaultValue={isEdit ? employer.max_employees : null}
+                // defaultValue={isEdit ? employer.max_employees : null}
                 {...register("max_employees")}
               />
               &nbsp;nhân viên
@@ -248,7 +247,7 @@ export default function Signup() {
                 size="sm"
                 aria-label="employer address"
                 placeholder="Nhập địa chỉ cụ thể"
-                defaultValue={isEdit ? employer.address : null}
+                // defaultValue={isEdit ? employer.address : null}
                 {...register("address")}
                 isInvalid={errors.address}
               />
@@ -256,11 +255,11 @@ export default function Signup() {
                 {errors.address?.message}
               </Form.Control.Feedback>
             </Form.Group>
-            {!isEdit ? (
-              <Button type="submit" className="w-100 my-3">
-                Đăng ký
-              </Button>
-            ) : (
+            {/* {!isEdit ? ( */}
+            <Button type="submit" className="w-100 my-3">
+              Đăng ký
+            </Button>
+            {/* ) : (
               <div className="d-flex gap-2 my-3">
                 <Button
                   size="sm"
@@ -274,11 +273,11 @@ export default function Signup() {
                   Cập nhật thông tin đăng ký
                 </Button>
               </div>
-            )}
+            )} */}
           </div>
         </Form>
       ) : (
-        <RegisterPreview employer={employer} setIsEdit={setIsEdit} />
+        <RegisterPreview employer={employer} />
       )}
     </div>
   );
