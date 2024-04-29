@@ -17,6 +17,7 @@ import Spinner from "react-bootstrap/Spinner";
 import CPagination from "../../../components/CPagination";
 import CMulSelect from "../../../components/CMulSelect";
 import Form from "react-bootstrap/Form";
+import TagInput from "../../../components/TagInput";
 
 function JobList() {
   const nav = useNavigate();
@@ -223,6 +224,7 @@ function JobList() {
           </div>
         </div>
       </Form>
+      <TagInput className="mt-2" />
       <div className="row row-cols-lg-3 mt-4">
         {jobs.length > 0 ? (
           jobs.map((job) => (

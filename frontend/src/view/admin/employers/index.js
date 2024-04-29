@@ -73,12 +73,9 @@ export default function EmployerList() {
       setStatus({ ...status, is_denied: 1 });
     }
   };
-  const handleChangeActiveStatus = async (user_id, is_active) => {
+  const handleChangeActiveStatus = async (user_id) => {
     try {
-      await adminApi.changeAccActiveStatus({
-        user_id,
-        is_active: !is_active,
-      });
+      await adminApi.changeAccActiveStatus({ user_id });
       toast.success("Cập nhật thành công!");
     } catch (error) {
       toast.error("Đã có lỗi xảy ra!");
@@ -173,9 +170,7 @@ export default function EmployerList() {
                         type="switch"
                         aria-label="switch"
                         defaultChecked={item.is_active}
-                        onClick={() =>
-                          handleChangeActiveStatus(item.id, item.is_active)
-                        }
+                        onClick={() => handleChangeActiveStatus(item.id)}
                       />
                     </td>
                   )}

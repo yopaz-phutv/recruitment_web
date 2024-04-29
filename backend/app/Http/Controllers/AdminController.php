@@ -41,7 +41,8 @@ class AdminController extends Controller
     }
     public function changeAccActiveStatus(Request $req)
     {
-        User::where('id', $req->user_id)->update(['is_active' => $req->is_active]);
+        $curr_is_active = User::where('id', $req->user_id)->pluck('is_active')[0];
+        User::where('id', $req->user_id)->update(['is_active' => 1 - $curr_is_active]);
 
         return response()->json('updated successfully');
     }
