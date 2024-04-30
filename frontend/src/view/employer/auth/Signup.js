@@ -16,7 +16,7 @@ import employerApi from "../../../api/employer";
 export default function Signup() {
   const loc = useLocation();
   const wait = loc.state?.wait;
-  const locations = useGetAllLocations();
+  const { locations } = useGetAllLocations();
   const nav = useNavigate();
 
   const requiredMsg = "Không được để trống";

@@ -29,7 +29,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
     resolver: yupResolver(schema),
   });
 
-  const locations = useGetAllLocations();
+  const { locations } = useGetAllLocations();
   const [isLoading, setIsLoading] = useState(false);
   const [changeLogo, setChangeLogo] = useState(false);
   const [deleteCurLogo, setDeleteCurLogo] = useState(false);

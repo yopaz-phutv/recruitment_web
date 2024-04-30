@@ -38,6 +38,7 @@ export default function CMulSelect({
   valueAtt,
   defaultText,
   setOutput,
+  contentWidth
 }) {
   const [options, setOptions] = useState(
     convert2SelectOptions(items, textAtt, valueAtt)
@@ -82,7 +83,7 @@ export default function CMulSelect({
 
       <Dropdown.Menu
         className="py-0 w-100 overflow-auto"
-        style={{ maxHeight: "438px" }}
+        style={{ maxHeight: "438px", minWidth: contentWidth || "" }}
       >
         {options?.map((option, index) => (
           <div

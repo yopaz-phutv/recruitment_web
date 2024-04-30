@@ -1,7 +1,13 @@
 import { useState } from "react";
 import clsx from "clsx";
 
-export default function TagInput({ className, maxTag = 10, listWord = [], setListWord }) {
+export default function TagInput({
+  className,
+  maxTag = 10,
+  listWord = [],
+  setListWord,
+  placeholder,
+}) {
   const [curWord, setCurWord] = useState([]);
   const [showMaxTagMsg, setShowMaxTagMsg] = useState(false);
 
@@ -47,6 +53,7 @@ export default function TagInput({ className, maxTag = 10, listWord = [], setLis
           type="text"
           className="border-0 w-100"
           style={{ width: "180px", outline: "none" }}
+          placeholder={listWord.length === 0 ? placeholder : null}
           onChange={(e) => setCurWord(e.target.value)}
           onKeyDown={(e) => handleEnter(e.key)}
         />

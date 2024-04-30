@@ -1,6 +1,7 @@
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
+import InputGroup from "react-bootstrap/InputGroup";
 import RequiredMark from "../../../../../../components/form/requiredMark";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,6 +12,10 @@ import { useEffect, useState } from "react";
 import candidateApi from "../../../../../../api/candidate";
 import Spinner from "react-bootstrap/Spinner";
 import { toast } from "react-toastify";
+import useGetAllLocations from "../../../../../../hooks/useGetAllLocations";
+import useGetAllIndustries from "../../../../../../hooks/useGetAllIndustries";
+import useGetAllJtypes from "../../../../../../hooks/useGetAllJtypes";
+import useGetAllJlevels from "../../../../../../hooks/useGetAllJlevels";
 
 export default function PersonalInforFormDialog({
   isEdit,
@@ -31,6 +36,7 @@ export default function PersonalInforFormDialog({
       .required(requiredMsg)
       .matches(/^[0-9]{10}$/, "Sai định dạng số điện thoại"),
     email: yup.string().email("Sai định dạng email").required(requiredMsg),
+    location_id: yup.string().required(requiredMsg),
     address: yup.string().required(requiredMsg),
     link: yup.string().url("Sai định dạng URL"),
   });
@@ -42,8 +48,14 @@ export default function PersonalInforFormDialog({
     resolver: yupResolver(schema),
   });
 
+  const { locations: locationList } = useGetAllLocations();
+  const { industries: industryList } = useGetAllIndustries();
+  const { jtypes: jtypeList } = useGetAllJtypes();
+  const { jlevels: jlevelList } = useGetAllJlevels();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteImg, setIsDeleteImg] = useState(false);
+
   const handleDisplayImg = (e) => {
     setHasImg(true);
     setIsDeleteImg(false);
@@ -103,7 +115,7 @@ export default function PersonalInforFormDialog({
       onHide={() => setIsEdit(false)}
       centered
       size="lg"
-      fullscreen="md-down"
+      fullscreen="lg-down"
     >
       <Modal.Header closeButton>
         <Modal.Title>Thông tin cá nhân</Modal.Title>
@@ -246,6 +258,23 @@ export default function PersonalInforFormDialog({
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mt-2">
+              <Form.Label className="fw-600">Tỉnh thành</Form.Label>
+              <RequiredMark />
+              <Form.Select
+                size="sm"
+                {...register("location_id")}
+                isInvalid={errors.location_id}
+              >
+                <option value={null}>Chọn tỉnh thành</option>
+                {locationList?.map((item) => (
+                  <option key={item.id}>{item.name}</option>
+                ))}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                {errors.location_id?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mt-2">
               <Form.Label className="fw-600">Địa chỉ</Form.Label>
               <RequiredMark />
               <Form.Control
@@ -283,6 +312,77 @@ export default function PersonalInforFormDialog({
               {...register("objective")}
             />
           </Form.Group>
+          <div className="ts-lg fw-500 mt-3">
+            *Thông tin vị trí việc làm mong muốn
+          </div>
+          <div className="row row-cols-md-2 row-cols-sm-1">
+            <Form.Group className="mt-2">
+              <Form.Label className="fw-600">Vị trí việc làm</Form.Label>
+              <Form.Control
+                size="sm"
+                type="text"
+                {...register("desired_job")}
+                defaultValue={personal.desired_job}
+              />
+            </Form.Group>
+            <Form.Group className="mt-2">
+              <Form.Label className="fw-600">Ngành nghề</Form.Label>
+              <Form.Select size="sm" {...register("industry_id")}>
+                <option value="">Chọn ngành nghề</option>
+                {industryList?.map((item) => (
+                  <option key={item.id}>{item.name}</option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mt-2">
+              <Form.Label className="fw-600">Hình thức</Form.Label>
+              <Form.Select size="sm" {...register("jtype_id")}>
+                <option value="">Chọn hình thức</option>
+                {jtypeList?.map((item) => (
+                  <option key={item.id}>{item.name}</option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mt-2">
+              <Form.Label className="fw-600">Cấp bậc</Form.Label>
+              <Form.Select size="sm" {...register("jlevel_id")}>
+                <option value="">Chọn cấp bậc</option>
+                {jlevelList?.map((item) => (
+                  <option key={item.id}>{item.name}</option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mt-2">
+              <Form.Label className="fw-600">Mức lương</Form.Label>
+              <InputGroup className="align-items-center">
+                <Form.Control
+                  type="number"
+                  size="sm"
+                  className="border-end-0"
+                  {...register("desired_min_salary")}
+                />
+                <div className="border-top border-bottom">
+                  ---
+                </div>
+                <Form.Control
+                  type="number"
+                  size="sm"
+                  className="border-start-0 me-1"
+                  {...register("desired_max_salary")}
+                />
+                <small>triệu VNĐ</small>
+              </InputGroup>
+            </Form.Group>
+            <Form.Group className="mt-2">
+              <Form.Label className="fw-600">Số năm kinh nghiệm</Form.Label>
+              <Form.Control
+                size="sm"
+                type="number"
+                {...register("job_yoe")}
+                defaultValue={personal.desired_yoe}
+              />
+            </Form.Group>
+          </div>
           <Stack direction="horizontal" gap={3} className="mt-3">
             <Button
               variant="outline-primary"

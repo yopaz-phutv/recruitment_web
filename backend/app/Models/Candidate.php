@@ -55,4 +55,16 @@ class Candidate extends Model
     {
         return $this->hasMany(Resume::class);
     }
+    public function industry()
+    {
+        return $this->hasOne(Industry::class, 'id', 'desired_industry_id');
+    }
+    public function jtype()
+    {
+        return $this->hasOne(Jtype::class, 'id', 'desired_jtype_id');
+    }
+    public function jlevel()
+    {
+        return $this->hasOne(Jlevel::class, 'id', 'desired_jlevel_id');
+    }
 }

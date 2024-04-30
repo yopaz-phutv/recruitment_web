@@ -175,7 +175,7 @@ function Job() {
                         {job.min_salary} - {job.max_salary} triệu VND
                       </span>
                     ) : (
-                      <span>Cạnh tranh</span>
+                      <span>Thỏa thuận</span>
                     )}
                   </div>
                 </div>

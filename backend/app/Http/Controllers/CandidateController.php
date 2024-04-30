@@ -14,7 +14,7 @@ class CandidateController extends Controller
     public function getCurrent()
     {
         $id = Auth::user()->id;
-        $candidate = Candidate::find($id);
+        $candidate = Candidate::with(['industry', 'jtype', 'jlevel'])->find($id);
 
         return $candidate;
     }

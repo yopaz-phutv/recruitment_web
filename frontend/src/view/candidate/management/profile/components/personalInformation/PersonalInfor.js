@@ -10,8 +10,8 @@ export default function PersonalInfor() {
   const { personal, getPersonal } = useContext(CandidateContext);
   const [isEdit, setIsEdit] = useState(false);
   const [hasImg, setHasImg] = useState(false);
-  const none = <span>Chưa có</span>;
-  const itemStyle = "border-0 border-bottom w-95 pb-1";
+  const none = <span>Chưa cập nhật</span>;
+  const itemStyle = "border-bottom border-1 w-95 pb-1";
 
   const handleEdit = () => {
     setIsEdit(true);
@@ -104,7 +104,35 @@ export default function PersonalInfor() {
           </div>
         </div>
       </div>
-      <div className="clearfix">
+      <div className="ts-17 fw-500 mt-3">Thông tin vị trí việc làm mong muốn</div>
+      <div className="row row-cols-md-2 row-cols-sm-1 mt-1">
+        <ProfileItem title="Vị trí việc làm">
+          {personal.desired_job || none}
+        </ProfileItem>
+        <ProfileItem title="Ngành nghề">
+          {personal.industry?.name || none}
+        </ProfileItem>
+        <ProfileItem title="Hình thức">
+          {personal.jtype?.name || none}
+        </ProfileItem>
+        <ProfileItem title="Cấp bậc">
+          {personal.jlevel?.name || none}
+        </ProfileItem>
+        <ProfileItem title="Mức lương">
+          {personal.desired_min_salary ? (
+            <span>
+              {personal.desired_min_salary} - {personal.desired_max_salary}{" "}
+              triệu VND
+            </span>
+          ) : (
+            <span>{none}</span>
+          )}
+        </ProfileItem>
+        <ProfileItem title="Số năm kinh nghiệm">
+          {personal.job_yoe || none}
+        </ProfileItem>
+      </div>
+      <div className="clearfix mt-2">
         <Button
           variant="outline-primary"
           size="sm"
@@ -127,3 +155,14 @@ export default function PersonalInfor() {
     </FrameLayout>
   );
 }
+
+const ProfileItem = ({ children, title }) => {
+  return (
+    <div>
+      <div className="border-bottom border-1 w-95 pb-1">
+        <span className="ts-sm text-secondary">{title}</span> <br />
+        <span className="ts-smd fw-500">{children}</span>
+      </div>
+    </div>
+  );
+};

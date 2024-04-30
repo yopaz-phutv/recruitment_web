@@ -5,6 +5,7 @@ import {
   BsFillPersonFill,
   // BsMessenger,
 } from "react-icons/bs";
+import { RiUserSearchFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 import { useContext, useEffect } from "react";
@@ -67,7 +68,7 @@ function Layout(props) {
         className="d-flex flex-column flex-lg-row"
         style={{ marginTop: "57px" }}
       >
-        <div className=" ts-smd fw-500 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-bottom border-lg-end">
+        <div className="ts-smd fw-500 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-bottom border-lg-end">
           <div className="text-center text-main border-lg-bottom py-3 px-2 fw-500">
             {company && company.name}
           </div>
@@ -99,6 +100,15 @@ function Layout(props) {
             onClick={() => handleChangePage("/employer/candidates")}
           >
             <BsFillPeopleFill className="fs-5 me-1" /> Ứng viên
+          </div>
+          <div
+            className={clsx(
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+              currentPage === "/employer/find-candidates" && "bg-mlight text-main"
+            )}
+            onClick={() => handleChangePage("/employer/find-candidates")}
+          >
+            <RiUserSearchFill className="fs-5 me-1" /> Tìm kiếm ứng viên
           </div>
           <div
             className={clsx(

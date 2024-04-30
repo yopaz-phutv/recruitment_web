@@ -72,7 +72,7 @@ function CandidateList() {
           Danh sách ứng viên
         </h5>
         <Tab.Container onSelect={(k) => setStep(k)}>
-          <Nav className="bg-mlight w-50 mx-auto pb-1 justify-content-center border">
+          <Nav className="mx-auto pb-1 justify-content-center">
             <Nav.Item>
               <Nav.Link eventKey="step1">
                 <span className={makeTabStyle("step1")}>Duyệt hồ sơ</span>

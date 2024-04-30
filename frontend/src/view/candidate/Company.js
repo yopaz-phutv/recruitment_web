@@ -129,7 +129,7 @@ function Company() {
                         {job.min_salary} - {job.max_salary} triệu VND
                       </span>
                     ) : (
-                      <span>Cạnh tranh</span>
+                      <span>Thỏa thuận</span>
                     )}
                     <br />
                     <span className="fw-500">Địa điểm:</span>&nbsp;
