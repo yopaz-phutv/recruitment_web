@@ -70,6 +70,7 @@ Route::controller(EmployerController::class)->prefix('companies')->group(functio
     Route::get('getCandidateList', 'getCandidateList')->middleware('jwt');
     Route::post('processApplying', 'processApplying')->middleware('jwt');
     Route::post('{job_id}/changeJobStatus', 'changeJobStatus');
+    Route::get('findCandidates', 'findCandidates');
 });
 
 Route::controller(AdminController::class)->prefix('admin')->group(function () {

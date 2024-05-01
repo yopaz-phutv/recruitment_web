@@ -104,7 +104,9 @@ export default function PersonalInfor() {
           </div>
         </div>
       </div>
-      <div className="ts-17 fw-500 mt-3">Thông tin vị trí việc làm mong muốn</div>
+      <div className="ts-17 fw-500 mt-3">
+        Thông tin vị trí việc làm mong muốn
+      </div>
       <div className="row row-cols-md-2 row-cols-sm-1 mt-1">
         <ProfileItem title="Vị trí việc làm">
           {personal.desired_job || none}
@@ -129,7 +131,11 @@ export default function PersonalInfor() {
           )}
         </ProfileItem>
         <ProfileItem title="Số năm kinh nghiệm">
-          {personal.job_yoe || none}
+          {personal.job_yoe === 0
+            ? "Dưới 1 năm"
+            : personal.job_yoe > 0
+            ? personal.job_yoe
+            : none}
         </ProfileItem>
       </div>
       <div className="clearfix mt-2">

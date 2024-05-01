@@ -38,8 +38,17 @@ class CandidateController extends Controller
         $candidate->phone = $req->phone;
         $candidate->email = $req->email;
         $candidate->address = $req->address;
+        $candidate->location_id = $req->location_id;
         $candidate->link = $req->link;
         $candidate->objective = $req->objective;
+
+        if ($req->has('desired_job')) $candidate->desired_job = $req->desired_job;
+        if ($req->has('industry_id')) $candidate->industry_id = $req->industry_id;
+        if ($req->has('jtype_id')) $candidate->jtype_id = $req->jtype_id;
+        if ($req->has('jlevel_id')) $candidate->jlevel_id = $req->jlevel_id;
+        if ($req->has('desired_min_salary')) $candidate->desired_min_salary = $req->desired_min_salary;
+        if ($req->has('desired_max_salary')) $candidate->desired_max_salary = $req->desired_max_salary;
+        if ($req->has('job_yoe')) $candidate->job_yoe = $req->job_yoe;
 
         $file = $req->file('image');
         if ($file) {

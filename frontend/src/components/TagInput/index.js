@@ -7,6 +7,7 @@ export default function TagInput({
   listWord = [],
   setListWord,
   placeholder,
+  size,
 }) {
   const [curWord, setCurWord] = useState([]);
   const [showMaxTagMsg, setShowMaxTagMsg] = useState(false);
@@ -33,7 +34,13 @@ export default function TagInput({
   };
 
   return (
-    <div className={clsx("form-control d-flex gap-2 flex-wrap", className)}>
+    <div
+      className={clsx(
+        "form-control d-flex gap-2 flex-wrap",
+        size === "sm" && "form-control-sm",
+        className
+      )}
+    >
       {listWord.length > 0 &&
         listWord.map((item, index) => (
           <div key={index} className="border ps-2 pe-3 position-relative">

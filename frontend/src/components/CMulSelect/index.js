@@ -38,7 +38,8 @@ export default function CMulSelect({
   valueAtt,
   defaultText,
   setOutput,
-  contentWidth
+  contentWidth,
+  size,
 }) {
   const [options, setOptions] = useState(
     convert2SelectOptions(items, textAtt, valueAtt)
@@ -69,7 +70,10 @@ export default function CMulSelect({
     <Dropdown className={className}>
       <Dropdown.Toggle
         as={CustomToggle}
-        className="trigger text-truncate pointer"
+        className={clsx(
+          "trigger text-truncate pointer",
+          size === "sm" && "form-select-sm"
+        )}
       >
         {curOptions.length > 0
           ? curOptions.map((item, index) => (
@@ -82,7 +86,10 @@ export default function CMulSelect({
       </Dropdown.Toggle>
 
       <Dropdown.Menu
-        className="py-0 w-100 overflow-auto"
+        className={clsx(
+          "py-0 w-100 overflow-auto",
+          size === "sm" && "ts-sm"
+        )}
         style={{ maxHeight: "438px", minWidth: contentWidth || "" }}
       >
         {options?.map((option, index) => (

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\NotifyCandidateEvent;
+use App\Models\Candidate;
 use App\Models\CandidateMessage;
 use App\Models\Employer;
 use App\Models\Job;
@@ -249,5 +250,39 @@ class EmployerController extends Controller
             ->update(['is_active' => $req->status]);
 
         return response()->json('Updated successfully');
+    }
+    public function findCandidates(Request $req)
+    {
+        $query = Candidate::query();
+        if ($req->filled('location_ids')) {
+            $query->whereIn('location_id', $req->location_ids);
+        }
+        if ($req->filled('desired_industry_ids')) {
+            $query->whereIn('desired_industry_id', $req->industry_ids);
+        }
+        if ($req->filled('jtype_id')) {
+            $query->where('desired_jtype_id', $req->jtype_id);
+        }
+        if ($req->filled('jlevel_id')) {
+            $query->where('desired_jlevel_id', $req->jlevel_id);
+        }
+        if ($req->filled('gender')) {
+            $query->where('gender', $req->gender);
+        }
+        if ($req->filled('min_age')) {
+            $query->whereRaw(
+                'DATE_FORMAT(NOW(), "%Y") - DATE_FORMAT(dob, "%Y") BETWEEN ? AND ?',
+                [$req->min_age, $req->max_age]
+            );
+        }
+        if ($req->filled('job_yoe')) {
+            if ($req->job_yoe > 5)
+                $query->where('job_yoe', ">=", $req->job_yoe);
+            else $query->where('job_yoe', $req->job_yoe);
+        }
+
+        $candidates = $query->get();
+
+        return response()->json($candidates);
     }
 }

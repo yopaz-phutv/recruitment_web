@@ -36,16 +36,20 @@ export default function PersonalInforFormDialog({
       .required(requiredMsg)
       .matches(/^[0-9]{10}$/, "Sai định dạng số điện thoại"),
     email: yup.string().email("Sai định dạng email").required(requiredMsg),
-    location_id: yup.string().required(requiredMsg),
+    location_id: yup.string().required("Vui lòng chọn"),
     address: yup.string().required(requiredMsg),
     link: yup.string().url("Sai định dạng URL"),
   });
   const {
     register,
+    watch,
     formState: { errors },
     handleSubmit,
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      location_id: personal.location_id,
+    },
   });
 
   const { locations: locationList } = useGetAllLocations();
@@ -75,6 +79,7 @@ export default function PersonalInforFormDialog({
     imgInput.value = null;
   };
   const onSubmit = async (data) => {
+    console.log({ data });
     try {
       const formData = new FormData();
       formData.append("lastname", data.lastname);
@@ -84,6 +89,7 @@ export default function PersonalInforFormDialog({
       formData.append("phone", data.phone);
       formData.append("email", data.email);
       formData.append("address", data.address);
+      formData.append("location_id", data.location_id);
       formData.append("link", data.link);
       formData.append("objective", data.objective);
       if (hasImg) {
@@ -92,9 +98,24 @@ export default function PersonalInforFormDialog({
       if (isDeleteImg) {
         formData.append("delete_img", 1);
       }
-      //send request:
+
+      if (data.desired_job) formData.append("desired_job", data.desired_job);
+      if (data.desired_industry_id)
+        formData.append("desired_industry_id", data.desired_industry_id);
+      if (data.desired_jtype_id)
+        formData.append("desired_jtype_id", data.desired_jtype_id);
+      if (data.desired_jlevel_id)
+        formData.append("desired_jlevel_id", data.desired_jlevel_id);
+      if (data.desired_min_salary)
+        formData.append("desired_min_salary", data.desired_min_salary);
+      if (data.desired_max_salary)
+        formData.append("desired_max_salary", data.desired_max_salary);
+      if (data.isLessThan1) formData.append("job_yoe", 0);
+      else if (data.job_yoe) formData.append("job_yoe", data.job_yoe);
+      // send request:
       setIsLoading(true);
-      await candidateApi.update(formData);
+      const res = await candidateApi.update(formData);
+      console.log({ res });
       setIsLoading(false);
       toast.success("Cập nhật thành công!");
       await getPersonal();
@@ -265,9 +286,15 @@ export default function PersonalInforFormDialog({
                 {...register("location_id")}
                 isInvalid={errors.location_id}
               >
-                <option value={null}>Chọn tỉnh thành</option>
+                <option value="">Chọn tỉnh thành</option>
                 {locationList?.map((item) => (
-                  <option key={item.id}>{item.name}</option>
+                  <option
+                    key={item.id}
+                    value={item.id}
+                    selected={item.id === personal.location_id}
+                  >
+                    {item.name}
+                  </option>
                 ))}
               </Form.Select>
               <Form.Control.Feedback type="invalid">
@@ -327,60 +354,87 @@ export default function PersonalInforFormDialog({
             </Form.Group>
             <Form.Group className="mt-2">
               <Form.Label className="fw-600">Ngành nghề</Form.Label>
-              <Form.Select size="sm" {...register("industry_id")}>
+              <Form.Select size="sm" {...register("desired_industry_id")}>
                 <option value="">Chọn ngành nghề</option>
                 {industryList?.map((item) => (
-                  <option key={item.id}>{item.name}</option>
+                  <option
+                    key={item.id}
+                    selected={item.id === personal.desired_industry_id}
+                  >
+                    {item.name}
+                  </option>
                 ))}
               </Form.Select>
             </Form.Group>
             <Form.Group className="mt-2">
               <Form.Label className="fw-600">Hình thức</Form.Label>
-              <Form.Select size="sm" {...register("jtype_id")}>
+              <Form.Select size="sm" {...register("desired_jtype_id")}>
                 <option value="">Chọn hình thức</option>
                 {jtypeList?.map((item) => (
-                  <option key={item.id}>{item.name}</option>
+                  <option
+                    key={item.id}
+                    selected={item.id === personal.desired_jtype_id}
+                  >
+                    {item.name}
+                  </option>
                 ))}
               </Form.Select>
             </Form.Group>
             <Form.Group className="mt-2">
               <Form.Label className="fw-600">Cấp bậc</Form.Label>
-              <Form.Select size="sm" {...register("jlevel_id")}>
+              <Form.Select size="sm" {...register("desired_jlevel_id")}>
                 <option value="">Chọn cấp bậc</option>
                 {jlevelList?.map((item) => (
-                  <option key={item.id}>{item.name}</option>
+                  <option
+                    key={item.id}
+                    selected={item.id === personal.desired_jlevel_id}
+                  >
+                    {item.name}
+                  </option>
                 ))}
               </Form.Select>
             </Form.Group>
             <Form.Group className="mt-2">
               <Form.Label className="fw-600">Mức lương</Form.Label>
-              <InputGroup className="align-items-center">
+              <InputGroup size="sm" className="align-items-center">
                 <Form.Control
                   type="number"
-                  size="sm"
-                  className="border-end-0"
+                  className="border-end-0 text-center"
+                  defaultValue={personal.desired_min_salary}
                   {...register("desired_min_salary")}
                 />
-                <div className="border-top border-bottom">
-                  ---
-                </div>
+                <InputGroup.Text className="bg-white">---</InputGroup.Text>
                 <Form.Control
                   type="number"
-                  size="sm"
-                  className="border-start-0 me-1"
+                  className="border-start-0 text-center"
+                  defaultValue={personal.desired_max_salary}
                   {...register("desired_max_salary")}
                 />
-                <small>triệu VNĐ</small>
+                <InputGroup.Text>triệu VNĐ</InputGroup.Text>
               </InputGroup>
             </Form.Group>
             <Form.Group className="mt-2">
               <Form.Label className="fw-600">Số năm kinh nghiệm</Form.Label>
-              <Form.Control
-                size="sm"
-                type="number"
-                {...register("job_yoe")}
-                defaultValue={personal.desired_yoe}
-              />
+              <div className="d-flex align-items-center ts-sm">
+                <Form.Check
+                  type="checkbox"
+                  label="Dưới 1 năm"
+                  className="w-40"
+                  defaultChecked={personal.job_yoe === 0}
+                  {...register("isLessThan1")}            
+                />
+                {!watch("isLessThan1") && (
+                  <InputGroup size="sm">
+                    <Form.Control
+                      type="number"
+                      className="text-center"
+                      {...register("job_yoe")}
+                      defaultValue={personal.job_yoe}
+                    />
+                    <InputGroup.Text>năm</InputGroup.Text>
+                  </InputGroup>
+                )}
+              </div>
             </Form.Group>
           </div>
           <Stack direction="horizontal" gap={3} className="mt-3">

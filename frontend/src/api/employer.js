@@ -43,5 +43,10 @@ const employerApi = {
   changeJobStatus: (job_id, data) => {
     return employerAxios.post(`${prefix}/${job_id}/changeJobStatus`, data);
   },
+  findCandidates: (params) => {
+    return employerAxios.get(
+      `${prefix}/findCandidates?${queryString.stringify(params, { arrayFormat: "index" })}`
+    );
+  },
 };
 export default employerApi;
