@@ -254,10 +254,10 @@ class EmployerController extends Controller
     public function findCandidates(Request $req)
     {
         $query = Candidate::query();
-        if ($req->filled('location_ids')) {
+        if ($req->has('location_ids')) {
             $query->whereIn('location_id', $req->location_ids);
         }
-        if ($req->filled('desired_industry_ids')) {
+        if ($req->has('desired_industry_ids')) {
             $query->whereIn('desired_industry_id', $req->industry_ids);
         }
         if ($req->filled('jtype_id')) {
@@ -280,7 +280,9 @@ class EmployerController extends Controller
                 $query->where('job_yoe', ">=", $req->job_yoe);
             else $query->where('job_yoe', $req->job_yoe);
         }
-
+        if ($req->filled('skill_text')) {
+            $query->whereRaw("MATCH(skill_text) AGAINST ('$req->skill_text' IN NATURAL LANGUAGE MODE)");
+        }
         $candidates = $query->get();
 
         return response()->json($candidates);

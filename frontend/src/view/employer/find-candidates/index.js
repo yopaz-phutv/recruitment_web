@@ -34,9 +34,18 @@ export default function FindingCandidates() {
 
   const onSubmit = async (data) => {
     setIsLoading(true);
-    data.skills = skills;
-    data.location_ids = locationIds;
-    data.industry_ids = industryIds;
+    for (let key in data) {
+      if (!data[key]) delete data[key];
+    }
+    if (skills.length > 0) {
+      var skillText = "";
+      skills.forEach((item) => {
+        skillText += item + " ";
+      });
+      data.skill_text = skillText;
+    }
+    if (locationIds.length > 0) data.location_ids = locationIds;
+    if (industryIds.length > 0) data.industry_ids = industryIds;
     console.log({ data });
     try {
       const res = await employerApi.findCandidates(data);
@@ -55,7 +64,7 @@ export default function FindingCandidates() {
       <h5 className="mb-2 pt-3 text-main">
         Tìm kiếm ứng viên theo tiêu chí việc làm
       </h5>
-      <Form noValidate className="mt-3" onSubmit={handleSubmit(onSubmit)}>
+      <Form noValidate className="mt-3">
         <div className="row row-cols-4 row-cols-lg-">
           {!isLoadingLocations && (
             <CMulSelect
@@ -166,10 +175,10 @@ export default function FindingCandidates() {
             placeholder="Nhập các kỹ năng"
           />
           <Button
-            type="submit"
             size="sm"
             className="bg-main ms-2"
             style={{ width: "180px" }}
+            onClick={handleSubmit(onSubmit)}
           >
             {isLoading ? <Spinner size="sm" /> : <BsSearch className="fs-5" />}
             <span> Tìm kiếm</span>
