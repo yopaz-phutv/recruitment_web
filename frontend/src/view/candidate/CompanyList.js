@@ -11,7 +11,6 @@ import Spinner from "react-bootstrap/Spinner";
 
 function CompanyList() {
   const nav = useNavigate();
-  const { setCurrentPage } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
   const [companies, setCompanies] = useState([]);
   const [comKey, setComKey] = useState("");
@@ -39,7 +38,6 @@ function CompanyList() {
   };
 
   useEffect(() => {
-    setCurrentPage("companies");
     getCompanies();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

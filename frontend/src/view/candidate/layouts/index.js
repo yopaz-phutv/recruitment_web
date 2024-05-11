@@ -24,7 +24,7 @@ function Layout(props) {
   const [showBellDialog, setShowBellDialog] = useState(false);
   const [showListMsg, setShowListMsg] = useState(false);
   const [curNotification, setCurNotification] = useState({});
-  const { currentPage, setCurrentPage } = useContext(AppContext);
+  const { curUrl, setCurUrl } = useContext(AppContext);
 
   const dispatch = useDispatch();
   const candidate = useSelector((state) => state.candAuth.current);
@@ -58,6 +58,7 @@ function Layout(props) {
     }
     // nav(`/jobs/${inf.job_id}`);
   };
+
   useEffect(() => {
     let msg_styles = [];
     for (let i = 0; i < bellMsgs.length; i++) {
@@ -80,6 +81,7 @@ function Layout(props) {
     dispatch(candAuthActions.setCurrentCandidate(res));
   };
   useEffect(() => {
+    setCurUrl(window.location.pathname);
     if (localStorage.getItem("candidate_jwt")) {
       getMe();
     }
@@ -119,27 +121,27 @@ function Layout(props) {
           <Link
             className="nav-link ms-2 pe-2 ts-xl pb-1"
             to="/"
-            onClick={() => setCurrentPage("home")}
+            onClick={() => setCurUrl("/")}
           >
             Recruitment
           </Link>
           <Link
             className={clsx(
               "nav-link py-3 px-2",
-              currentPage === "companies" && "text-main"
+              curUrl === "companies" && "text-main"
             )}
             to="/companies"
-            onClick={() => setCurrentPage("companies")}
+            onClick={() => setCurUrl("/companies")}
           >
             Công ty
           </Link>
           <Link
             className={clsx(
               "nav-link py-3 px-2",
-              currentPage === "jobs" && "text-main"
+              curUrl === "jobs" && "text-main"
             )}
             to="/jobs"
-            onClick={() => setCurrentPage("jobs")}
+            onClick={() => setCurUrl("/jobs")}
           >
             Việc làm
           </Link>

@@ -289,7 +289,7 @@ class EmployerController extends Controller
             'resumes.*',
             DB::raw('locations.name AS location'),
             'desired_job'
-        )->get();
+        )->paginate(9);
 
         return response()->json($candidates);
     }

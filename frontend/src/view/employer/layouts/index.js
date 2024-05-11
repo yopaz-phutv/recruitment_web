@@ -17,7 +17,7 @@ import clsx from "clsx";
 
 function Layout(props) {
   const nav = useNavigate();
-  const { currentPage, setCurrentPage } = useContext(AppContext);
+  const { curUrl, setCurUrl } = useContext(AppContext);
   const dispatch = useDispatch();
   const company = useSelector((state) => state.employerAuth.current.employer);
 
@@ -33,10 +33,11 @@ function Layout(props) {
   };
   const handleChangePage = (url) => {
     nav(url);
-    setCurrentPage(url);
+    setCurUrl(url);
   };
 
   useEffect(() => {
+    setCurUrl(window.location.pathname)
     if (!localStorage.getItem("employer_jwt")) {
       nav("/employer/login");
     } else {
@@ -75,7 +76,7 @@ function Layout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/employer" && "bg-mlight text-main"
+              curUrl === "/employer" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/employer")}
           >
@@ -85,7 +86,7 @@ function Layout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/employer/jobs" && "bg-mlight text-main"
+              curUrl === "/employer/jobs" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/employer/jobs")}
           >
@@ -95,7 +96,7 @@ function Layout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/employer/candidates" && "bg-mlight text-main"
+              curUrl === "/employer/candidates" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/employer/candidates")}
           >
@@ -104,7 +105,7 @@ function Layout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/employer/find-candidates" && "bg-mlight text-main"
+              curUrl === "/employer/find-candidates" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/employer/find-candidates")}
           >
@@ -113,7 +114,7 @@ function Layout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/employer/detail" && "bg-mlight text-main"
+              curUrl === "/employer/detail" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/employer/detail")}
           >

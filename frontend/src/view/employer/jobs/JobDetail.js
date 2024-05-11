@@ -21,7 +21,7 @@ function JobDetail({ inf, jtypes, jlevels, industries, locations }) {
     const keys = Object.keys(job_inf);
     for (let i = 0; i < keys.length; i++) {
       let key = keys[i];
-      if (job_inf[key] === "") {
+      if (key !== "yoe" && job_inf[key] === "") {
         delete job_inf[key];
       }
       if (key === "salaryOpt") {
@@ -42,7 +42,7 @@ function JobDetail({ inf, jtypes, jlevels, industries, locations }) {
         }
       }
     }
-    console.log(job_inf);
+    
     await jobApi.update(inf.id, job_inf);
     alert("Cập nhật thành công!");
     window.location.reload();
@@ -54,7 +54,7 @@ function JobDetail({ inf, jtypes, jlevels, industries, locations }) {
 
   return (
     <div className="modal modal-xl fade" id="jobDetail">
-      <div className="modal-dialog modal-fullscreen-md-down modal-dialog-scrollable">
+      <div className="modal-dialog modal-fullscreen-lg-down modal-dialog-scrollable">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="ms-2">Thông tin chi tiết việc làm</h5>

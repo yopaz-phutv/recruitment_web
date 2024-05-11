@@ -29,10 +29,10 @@ import FindingCandidates from "./view/employer/find-candidates";
 export const AppContext = createContext();
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("home");
+  const [curUrl, setCurUrl] = useState("/");
 
   return (
-    <AppContext.Provider value={{ currentPage, setCurrentPage }}>
+    <AppContext.Provider value={{ curUrl, setCurUrl }}>
       <ToastContainer autoClose={500} position="bottom-right" />
       <BrowserRouter>
         <Routes>

@@ -54,7 +54,15 @@ function JobManagement() {
   const handleClickActBtn = (job_inf, type) => {
     setCurJob(job_inf);
     if (type === "SEARCH") {
-      nav('/employer/find-candidates', {state: {}})
+      const stateValue = {
+        locationIds: job_inf.locations.map((item) => item.id),
+        industryIds: job_inf.industries.map((item) => item.id),
+        gender: job_inf.gender,
+        jtypeId: job_inf.jtype_id,
+        jlevelId: job_inf.jlevel_id,
+        yoe: job_inf.yoe,
+      };
+      nav("/employer/find-candidates", { state: stateValue });
     }
   };
   const handleClickSwitchBtn = async ({ job_id, status, index }) => {

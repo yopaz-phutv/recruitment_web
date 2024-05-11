@@ -19,7 +19,7 @@ export const CandidateContext = createContext();
 
 function CandidateLayout(props) {
   const nav = useNavigate();
-  const { currentPage, setCurrentPage } = useContext(AppContext);
+  const { curUrl, setCurUrl } = useContext(AppContext);
   const isAuth = useSelector((state) => state.candAuth.isAuth);
 
   const [personal, setPersonal] = useState({});
@@ -71,7 +71,13 @@ function CandidateLayout(props) {
     const res = await otherApi.getByCurrentCandidateProfile();
     setOthers(res);
   };
+  const handleChangePage = (url) => {
+    nav(url);
+    setCurUrl(url);
+  };
+
   useEffect(() => {
+    setCurUrl(window.location.pathname);
     if (isAuth) {
       getPersonal();
       getEducations();
@@ -83,11 +89,8 @@ function CandidateLayout(props) {
       getActivities();
       getOthers();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
-  const handleChangePage = (url) => {
-    nav(url);
-    setCurrentPage(url);
-  };
 
   return (
     <CandidateContext.Provider
@@ -131,7 +134,7 @@ function CandidateLayout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/candidate" && "bg-mlight text-main"
+              curUrl === "/candidate" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/candidate")}
           >
@@ -140,7 +143,7 @@ function CandidateLayout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/candidate/profile" && "bg-mlight text-main"
+              curUrl === "/candidate/profile" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/candidate/profile")}
           >
@@ -149,7 +152,7 @@ function CandidateLayout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/candidate/resumes" && "bg-mlight text-main"
+              curUrl === "/candidate/resumes" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/candidate/resumes")}
           >
@@ -158,7 +161,7 @@ function CandidateLayout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/candidate/templates" && "bg-mlight text-main"
+              curUrl === "/candidate/templates" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/candidate/templates")}
           >
@@ -167,7 +170,7 @@ function CandidateLayout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/candidate/applied-jobs" && "bg-mlight text-main"
+              curUrl === "/candidate/applied-jobs" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/candidate/applied-jobs")}
           >
@@ -176,7 +179,7 @@ function CandidateLayout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              currentPage === "/candidate/saved-jobs" && "bg-mlight text-main"
+              curUrl === "/candidate/saved-jobs" && "bg-mlight text-main"
             )}
             onClick={() => handleChangePage("/candidate/saved-jobs")}
           >

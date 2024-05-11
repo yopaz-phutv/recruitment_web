@@ -16,6 +16,8 @@ import employerApi from "../../../api/employer";
 import resumeApi from "../../../api/resume";
 import CandidateItem from "./CandidateItem";
 import ResumeModal from "./ResumeModal";
+import { useLocation } from "react-router-dom";
+import CPagination from "../../../components/CPagination";
 
 export default function FindingCandidates() {
   // nganh nghe, dia diem, gioi tinh, độ tuổi, trinh do, ki nang
@@ -31,12 +33,37 @@ export default function FindingCandidates() {
   const [isLoading, setIsLoading] = useState(false);
   const [curResume, setCurResume] = useState({});
   const [showResumeModal, setShowResumeModal] = useState(false);
+  const [totalPage, setTotalPage] = useState(0);
+  const [curPage, setCurPage] = useState(1);
 
+  const location = useLocation();
+  const searchCondition = location.state;
+  const job_yoe = searchCondition?.yoe;
+  const formatedJobYoe = !job_yoe ? null : job_yoe > 5 ? 6 : job_yoe;
   const {
     register,
     handleSubmit,
     // formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      gender: searchCondition?.gender,
+      jtype_id: searchCondition?.jtypeId,
+      jlevel_id: searchCondition?.jlevelId,
+      job_yoe: formatedJobYoe,
+    },
+  });
+
+  const fetchCandidates = async (page = 1, data) => {
+    const res = await employerApi.findCandidates({ ...data, page });
+    var resumeList = res.data;
+    setResumes(resumeList);
+    setTotalPage(res.last_page);
+    for (let i = 0; i < resumeList.length; i++) {
+      const avtSrc = await resumeApi.getAvatar(resumeList[i].id);
+      resumeList[i].avtSrc = avtSrc.length === 0 ? null : avtSrc;
+    }
+    setResumes(resumeList);
+  };
 
   const onSubmit = async (data) => {
     setIsLoading(true);
@@ -52,14 +79,8 @@ export default function FindingCandidates() {
     }
     if (locationIds.length > 0) data.location_ids = locationIds;
     if (industryIds.length > 0) data.industry_ids = industryIds;
-console.log({data});
-    var res = await employerApi.findCandidates(data);
-    setResumes(res);
-    for (let i = 0; i < res.length; i++) {
-      const avtSrc = await resumeApi.getAvatar(res[i].id);
-      res[i].avtSrc = avtSrc.length === 0 ? null : avtSrc;
-    }
-    setResumes(res);
+    console.log({ data });
+    await fetchCandidates(1, data)
     setIsLoading(false);
   };
 
@@ -82,7 +103,7 @@ console.log({data});
               valueAtt="id"
               defaultText="Tất cả tỉnh thành"
               setOutput={setLocationIds}
-              defaultValue={[1,2,3]}
+              defaultValue={searchCondition?.locationIds}
             />
           )}
           {!isLoadingIndustries && (
@@ -95,13 +116,18 @@ console.log({data});
               valueAtt="id"
               defaultText="Tất cả ngành nghề"
               setOutput={setIndustryIds}
+              defaultValue={searchCondition?.industryIds}
             />
           )}
           <div>
             <Form.Select size="sm" className="mb-2" {...register("gender")}>
               <option value="">Giới tính</option>
-              <option value="0">Nam</option>
-              <option value="1">Nữ</option>
+              <option value="0" selected={searchCondition?.gender === 0}>
+                Nam
+              </option>
+              <option value="1" selected={searchCondition?.gender === 1}>
+                Nữ
+              </option>
             </Form.Select>
           </div>
           <div className="d-flex align-items-center mb-2">
@@ -127,8 +153,12 @@ console.log({data});
           <div className="mb-2">
             <Form.Select size="sm" {...register("jtype_id")}>
               <option value="">Tất cả hình thức</option>
-              {jlevels.map((item) => (
-                <option key={item.id} value={item.id}>
+              {jtypes.map((item) => (
+                <option
+                  key={item.id}
+                  value={item.id}
+                  selected={searchCondition?.jtypeId === item.id}
+                >
                   {item.name}
                 </option>
               ))}
@@ -137,8 +167,12 @@ console.log({data});
           <div className="mb-2">
             <Form.Select size="sm" {...register("jlevel_id")}>
               <option value="">Tất cả cấp bậc</option>
-              {jtypes.map((item) => (
-                <option key={item.id} value={item.id}>
+              {jlevels.map((item) => (
+                <option
+                  key={item.id}
+                  value={item.id}
+                  selected={searchCondition?.jlevelId === item.id}
+                >
                   {item.name}
                 </option>
               ))}
@@ -147,7 +181,11 @@ console.log({data});
           <div className="mb-2">
             <Form.Select size="sm" {...register("job_yoe")}>
               {expLevel.map((item) => (
-                <option key={item.name} value={item.value}>
+                <option
+                  key={item.name}
+                  value={item.value}
+                  selected={formatedJobYoe === item.value}
+                >
                   {item.name}
                 </option>
               ))}
@@ -214,6 +252,15 @@ console.log({data});
           </div>
         ))}
       </div>
+      {resumes.length > 0 && (
+        <CPagination
+          className="mt-2 justify-content-center"
+          totalPage={totalPage}
+          curPage={curPage}
+          setCurPage={setCurPage}
+          getList={fetchCandidates}
+        />
+      )}
       <ResumeModal
         show={showResumeModal}
         setShow={setShowResumeModal}
