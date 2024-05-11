@@ -13,6 +13,9 @@ import useGetAllJtypes from "../../../hooks/useGetAllJtypes";
 import useGetAllJlevels from "../../../hooks/useGetAllJlevels";
 import { expLevel } from "../../../common/constant";
 import employerApi from "../../../api/employer";
+import resumeApi from "../../../api/resume";
+import CandidateItem from "./CandidateItem";
+import ResumeModal from "./ResumeModal";
 
 export default function FindingCandidates() {
   // nganh nghe, dia diem, gioi tinh, độ tuổi, trinh do, ki nang
@@ -24,7 +27,10 @@ export default function FindingCandidates() {
   const [locationIds, setLocationIds] = useState([]);
   const [industryIds, setIndustryIds] = useState([]);
   const [skills, setSkills] = useState([]);
+  const [resumes, setResumes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [curResume, setCurResume] = useState({});
+  const [showResumeModal, setShowResumeModal] = useState(false);
 
   const {
     register,
@@ -46,14 +52,15 @@ export default function FindingCandidates() {
     }
     if (locationIds.length > 0) data.location_ids = locationIds;
     if (industryIds.length > 0) data.industry_ids = industryIds;
-    console.log({ data });
-    try {
-      const res = await employerApi.findCandidates(data);
-      console.log({ res });
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
+console.log({data});
+    var res = await employerApi.findCandidates(data);
+    setResumes(res);
+    for (let i = 0; i < res.length; i++) {
+      const avtSrc = await resumeApi.getAvatar(res[i].id);
+      res[i].avtSrc = avtSrc.length === 0 ? null : avtSrc;
     }
+    setResumes(res);
+    setIsLoading(false);
   };
 
   return (
@@ -65,7 +72,7 @@ export default function FindingCandidates() {
         Tìm kiếm ứng viên theo tiêu chí việc làm
       </h5>
       <Form noValidate className="mt-3">
-        <div className="row row-cols-4 row-cols-lg-">
+        <div className="row row-cols-4">
           {!isLoadingLocations && (
             <CMulSelect
               size="sm"
@@ -75,6 +82,7 @@ export default function FindingCandidates() {
               valueAtt="id"
               defaultText="Tất cả tỉnh thành"
               setOutput={setLocationIds}
+              defaultValue={[1,2,3]}
             />
           )}
           {!isLoadingIndustries && (
@@ -176,15 +184,41 @@ export default function FindingCandidates() {
           />
           <Button
             size="sm"
-            className="bg-main ms-2"
+            className="bg-main ms-2 border-0 d-flex align-items-center justify-content-center gap-1"
             style={{ width: "180px" }}
+            disabled={isLoading}
             onClick={handleSubmit(onSubmit)}
           >
             {isLoading ? <Spinner size="sm" /> : <BsSearch className="fs-5" />}
-            <span> Tìm kiếm</span>
+            <span>Tìm kiếm</span>
           </Button>
         </div>
       </Form>
+      <div className="mt-4 ts-sm text-main">
+        Có {resumes.length} ứng viên phù hợp
+      </div>
+      <div className="mt-2 row row-cols-2 row-cols-lg-3">
+        {resumes.map((item) => (
+          <div
+            key={item.id}
+            onClick={() => {
+              setCurResume(item);
+              setShowResumeModal(true);
+            }}
+          >
+            <CandidateItem infor={item} />
+            {/* <CandidateItem key={item.id} infor={item} />
+            <CandidateItem key={item.id} infor={item} />
+            <CandidateItem key={item.id} infor={item} />
+            <CandidateItem key={item.id} infor={item} /> */}
+          </div>
+        ))}
+      </div>
+      <ResumeModal
+        show={showResumeModal}
+        setShow={setShowResumeModal}
+        imageSrc={curResume.image}
+      />
     </div>
   );
 }

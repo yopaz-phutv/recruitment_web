@@ -10,9 +10,10 @@ import resumeApi from "../../../../../api/resume";
 import { toast } from "react-toastify";
 import { useParams, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import html2canvas from "html2canvas";
 import templateList from "./templateList";
 import { srcToFile } from "../../../../../common/functions";
+import { jsPDF } from "jspdf";
+import * as htmlToImage from "html-to-image";
 
 export const TemplateContext = createContext();
 
@@ -274,7 +275,11 @@ export default function Template({
 
     const image = await getImgData();
     const resumeFile = await srcToFile(image, "resumeImage.png", "image/png");
-    console.log({ resumeFile });
+
+    var skillText = "";
+    skills.forEach((item) => {
+      skillText += item.name + " " + item.description + "";
+    });
 
     let postData = {
       basicInfor: {
@@ -283,7 +288,7 @@ export default function Template({
         template_id: templateId,
         parts_order: JSON.stringify(parts),
         avatar: !avatarFile && cvMode === "CREATE_1" ? personal.avatar : null,
-        // image,
+        skill_text: skillText,
       },
       educations: isPresentInParts("education") ? educations : null,
       experiences: isPresentInParts("experience") ? experiences : null,
@@ -336,20 +341,23 @@ export default function Template({
   };
   const getImgData = async () => {
     let cvElement = document.querySelector("#resume");
-    let canvas = await html2canvas(cvElement);
+    let imgData = await htmlToImage.toPng(cvElement);
 
-    return canvas.toDataURL("image/jpg");
+    return imgData;
   };
 
   const handleDownload = async () => {
-    let filename = watch("title") + ".jpg";
-    let link = document.createElement("a");
+    let filename = watch("title") + ".pdf";
+    // let link = document.createElement("a");
 
-    link.href = await getImgData();
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const imgData = await getImgData();
+    // link.download = filename;
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+    const pdf = new jsPDF();
+    pdf.addImage(imgData, "PNG", 0, 0);
+    pdf.save(filename);
   };
 
   return (

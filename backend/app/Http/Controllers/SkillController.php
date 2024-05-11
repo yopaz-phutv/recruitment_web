@@ -36,15 +36,15 @@ class SkillController extends Controller
 
         return response()->json($res);
     }
-    public function updateSkillText()
-    {
-        $user_id = Auth::user()->id;
-        $text = Candidate::join('skills', 'candidates.id', '=', 'candidate_id')
-            ->where('user_id', $user_id)
-            ->selectRaw("CONCAT_WS(' ', GROUP_CONCAT(' ', skills.description), GROUP_CONCAT(' ', skills.name)) AS skill_text")
-            ->first()->skill_text;
-        Candidate::where('user_id', $user_id)->update(['skill_text' => $text]);
-    }
+    // public function updateSkillText()
+    // {
+    //     $user_id = Auth::user()->id;
+    //     $text = Candidate::join('skills', 'candidates.id', '=', 'candidate_id')
+    //         ->where('user_id', $user_id)
+    //         ->selectRaw("CONCAT_WS(' ', GROUP_CONCAT(' ', skills.description), GROUP_CONCAT(' ', skills.name)) AS skill_text")
+    //         ->first()->skill_text;
+    //     Candidate::where('user_id', $user_id)->update(['skill_text' => $text]);
+    // }
     public function create(Request $req)
     {
         $candidate_id = Auth::user()->id;
@@ -56,7 +56,8 @@ class SkillController extends Controller
             "proficiency" => $proficiency,
             "description" => $req->description,
         ]);
-        $this->updateSkillText();
+        // $this->updateSkillText();
+
         return response()->json("created successfully");
     }
     public function update(Request $req)
@@ -64,7 +65,7 @@ class SkillController extends Controller
         $update_fields = $req->all();
         Skill::where('id', $req->id)->update($update_fields);
 
-        $this->updateSkillText();
+        // $this->updateSkillText();
 
         return response()->json('updated successfully');
     }

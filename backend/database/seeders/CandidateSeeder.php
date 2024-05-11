@@ -34,6 +34,7 @@ class CandidateSeeder extends Seeder
                 'desired_min_salary' => 3,
                 'desired_max_salary' => 5,
                 'job_yoe' => 1,
+                'public_resume_id' => 1
             ],
             [
                 'id' => 2,
@@ -55,6 +56,7 @@ class CandidateSeeder extends Seeder
                 'desired_min_salary' => 3,
                 'desired_max_salary' => 5,
                 'job_yoe' => 1,
+                'public_resume_id' => null
             ],
             [
                 'id' => 3,
@@ -76,6 +78,7 @@ class CandidateSeeder extends Seeder
                 'desired_min_salary' => 3,
                 'desired_max_salary' => 5,
                 'job_yoe' => 1,
+                'public_resume_id' => null
             ],
             [
                 'id' => 4,
@@ -97,6 +100,7 @@ class CandidateSeeder extends Seeder
                 'desired_min_salary' => 3,
                 'desired_max_salary' => 5,
                 'job_yoe' => 1,
+                'public_resume_id' => null
             ],
             [
                 'id' => 17,
@@ -118,6 +122,7 @@ class CandidateSeeder extends Seeder
                 'desired_min_salary' => 3,
                 'desired_max_salary' => 5,
                 'job_yoe' => 1,
+                'public_resume_id' => null
             ],
         ]);
     }

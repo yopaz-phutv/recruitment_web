@@ -1,6 +1,6 @@
 import "./style.css";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 
@@ -40,6 +40,7 @@ export default function CMulSelect({
   setOutput,
   contentWidth,
   size,
+  defaultValue = [],
 }) {
   const [options, setOptions] = useState(
     convert2SelectOptions(items, textAtt, valueAtt)
@@ -66,6 +67,27 @@ export default function CMulSelect({
     setOutput(tempOutput);
   };
 
+  useEffect(() => {
+    if (defaultValue.length > 0) {
+      setOutput(defaultValue);
+      const tempOptions = [...options];
+      const tempCurOptions = [];
+      options.forEach((item, index) => {
+        if (defaultValue.includes(item.value)) {
+          tempOptions[index].select = true;
+          tempCurOptions.push({
+            id: item.id,
+            text: item.text,
+            value: item.value,
+          });
+        }
+      });
+      setOptions(tempOptions);
+      setCurOptions(tempCurOptions);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Dropdown className={className}>
       <Dropdown.Toggle
@@ -77,7 +99,7 @@ export default function CMulSelect({
       >
         {curOptions.length > 0
           ? curOptions.map((item, index) => (
-              <span key={`curOption_${index}`}>
+              <span key={item.id}>
                 {item.text}
                 {index < curOptions.length - 1 && ", "}
               </span>
@@ -86,10 +108,7 @@ export default function CMulSelect({
       </Dropdown.Toggle>
 
       <Dropdown.Menu
-        className={clsx(
-          "py-0 w-100 overflow-auto",
-          size === "sm" && "ts-sm"
-        )}
+        className={clsx("py-0 w-100 overflow-auto", size === "sm" && "ts-sm")}
         style={{ maxHeight: "438px", minWidth: contentWidth || "" }}
       >
         {options?.map((option, index) => (

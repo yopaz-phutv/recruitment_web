@@ -1,5 +1,7 @@
 import { BsEye, BsSearch } from "react-icons/bs";
+import { RiUserSearchFill } from "react-icons/ri";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
 import { useForm } from "react-hook-form";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -13,6 +15,8 @@ import locationApi from "../../../api/location";
 import employerApi from "../../../api/employer";
 
 function JobManagement() {
+  const nav = useNavigate()
+
   const [jobs, setJobs] = useState([]);
   const [curJob, setCurJob] = useState({ industries: [], locations: [] });
   const [jtypes, setJtypes] = useState([]);
@@ -47,8 +51,11 @@ function JobManagement() {
     const res = await employerApi.getJobList(company.id, searchKey);
     setJobs(res);
   };
-  const handleClickActBtn = (job_inf) => {
+  const handleClickActBtn = (job_inf, type) => {
     setCurJob(job_inf);
+    if (type === "SEARCH") {
+      nav('/employer/find-candidates', {state: {}})
+    }
   };
   const handleClickSwitchBtn = async ({ job_id, status, index }) => {
     let temp_jobs = [...jobs];
@@ -105,7 +112,10 @@ function JobManagement() {
               Tạo mới
             </button>
           </div>
-          <table className="table border text-center shadow-sm" style={{ width: "93%" }}>
+          <table
+            className="table border text-center shadow-sm"
+            style={{ width: "93%" }}
+          >
             <thead className="table-primary ts-smd">
               <tr>
                 <th style={{ width: "25%" }}>Tên</th>
@@ -143,13 +153,12 @@ function JobManagement() {
                         />
                       </div>
                     </td>
-                    <td style={{ fontSize: "17px" }}>
+                    <td className="ts-17">
                       <BsEye
-                        className="text-primary"
-                        style={{ cursor: "pointer" }}
+                        className="text-primary pointer"
                         data-bs-toggle="modal"
                         data-bs-target="#jobDetail"
-                        onClick={() => handleClickActBtn(item)}
+                        onClick={() => handleClickActBtn(item, "VIEW")}
                       />
                       {/* <BsTrash3
                       className="ms-2 text-danger"
@@ -157,6 +166,10 @@ function JobManagement() {
                       data-bs-toggle="modal"
                       data-bs-target="#jobDeleting"
                     /> */}
+                      <RiUserSearchFill
+                        className="ms-1 text-primary pointer"
+                        onClick={() => handleClickActBtn(item, "SEARCH")}
+                      />
                     </td>
                   </tr>
                 ))}

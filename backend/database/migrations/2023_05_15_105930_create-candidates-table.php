@@ -32,7 +32,7 @@ return new class extends Migration
             $table->unsignedInteger('desired_min_salary')->nullable();
             $table->unsignedInteger('desired_max_salary')->nullable();
             $table->unsignedTinyInteger('job_yoe')->nullable();
-            $table->text('skill_text')->nullable();
+            $table->unsignedBigInteger('public_resume_id')->nullable();
             $table->timestamps();
         });
     }

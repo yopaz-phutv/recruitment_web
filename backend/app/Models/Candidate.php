@@ -55,6 +55,10 @@ class Candidate extends Model
     {
         return $this->hasMany(Resume::class);
     }
+    public function location()
+    {
+        return $this->hasOne(Location::class, 'id', 'location_id');
+    }
     public function industry()
     {
         return $this->hasOne(Industry::class, 'id', 'desired_industry_id');

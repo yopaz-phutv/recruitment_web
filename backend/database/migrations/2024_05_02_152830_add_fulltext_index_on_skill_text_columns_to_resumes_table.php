@@ -12,8 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('candidates', function (Blueprint $table) {            
-           DB::statement("ALTER TABLE candidates ADD FULLTEXT skill_ft (skill_text)");
+        Schema::table('resumes', function (Blueprint $table) {            
+           DB::statement("ALTER TABLE resumes ADD FULLTEXT skill_ft (skill_text)");
         });
     }
 
@@ -22,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('candidates', function (Blueprint $table) {
-            DB::statement("ALTER TABLE candidates DROP INDEX skill_ft");
+        Schema::table('resumes', function (Blueprint $table) {
+            DB::statement("ALTER TABLE resumes DROP INDEX skill_ft");
         });
     }
 };

@@ -896,21 +896,31 @@ export default function Template1() {
       case "personal":
         return <PersonalPart bgColor={bgColor} />;
       case "objective":
-        return basicInfor.objective ? <ObjectivePart bgColor={bgColor} /> : null;
+        return basicInfor.objective ? (
+          <ObjectivePart bgColor={bgColor} />
+        ) : null;
       case "skill":
         return cvSkills.length > 0 ? <SkillPart bgColor={bgColor} /> : null;
       case "certificate":
-        return cvCertificates.length > 0 ? <CertificatePart bgColor={bgColor} /> : null;
+        return cvCertificates.length > 0 ? (
+          <CertificatePart bgColor={bgColor} />
+        ) : null;
       case "prize":
         return cvPrizes.length > 0 ? <PrizePart bgColor={bgColor} /> : null;
       case "education":
-        return cvEducations.length > 0 ? <EducationPart bgColor={bgColor} /> : null;
+        return cvEducations.length > 0 ? (
+          <EducationPart bgColor={bgColor} />
+        ) : null;
       case "experience":
-        return cvExperiences.length > 0 ? <ExperiencePart bgColor={bgColor} /> : null;
+        return cvExperiences.length > 0 ? (
+          <ExperiencePart bgColor={bgColor} />
+        ) : null;
       case "project":
         return cvProjects.length > 0 ? <ProjectPart bgColor={bgColor} /> : null;
       case "activity":
-        return cvActivities.length > 0 ? <ActivityPart bgColor={bgColor} /> : null;
+        return cvActivities.length > 0 ? (
+          <ActivityPart bgColor={bgColor} />
+        ) : null;
       case "other":
         return cvOthers.length > 0 ? <OtherPart bgColor={bgColor} /> : null;
       default:
@@ -925,7 +935,7 @@ export default function Template1() {
       style={{ width: "800px" }}
     >
       <div className="cv-bg-main ps-1 pe-2" style={{ width: "340px" }}>
-        <div className="mt-2 d-flex flex-column align-items-center">
+        <div className="mt-2 mx-auto" style={{ width: "172px", height: "auto" }}>
           <input
             id="cv-avatar-upload"
             type="file"
@@ -937,20 +947,22 @@ export default function Template1() {
             id="cv-avatar"
             src={basicInfor.avatar || defaultAvt}
             alt="avatar"
-            width="172px"
-            height="172px"
-            className={clsx("rounded-pill", cvMode !== "READ" && "pointer")}
+            className={clsx(
+              "rounded-pill w-100 h-100",
+              cvMode !== "READ" && "pointer"
+            )}
+            style={{ objectFit: "cover", aspectRatio: "1/1" }}
             onClick={() => document.getElementById("cv-avatar-upload").click()}
           />
-          <FlexInput
-            disabled={cvMode === "READ"}
-            placeholder="HỌ TÊN"
-            className="mt-2"
-            innerClassName="cv-bg-main h4 cv-text-main text-center text-uppercase"
-            defaultValue={fullname}
-            {...register("fullname")}
-          />
         </div>
+        <FlexInput
+          disabled={cvMode === "READ"}
+          placeholder="HỌ TÊN"
+          className="mt-2"
+          innerClassName="cv-bg-main h4 cv-text-main text-center text-uppercase"
+          defaultValue={fullname}
+          {...register("fullname")}
+        />
         <hr className="cv-text-main" />
         {parts.map((_, index) => {
           return (

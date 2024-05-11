@@ -38,6 +38,7 @@ return new class extends Migration
             $table->text('cv_link')->nullable();
             $table->json('parts_order')->nullable();
             $table->string('image')->nullable();
+            $table->text('skill_text')->nullable();
             $table->timestamps();
         });
     }

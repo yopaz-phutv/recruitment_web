@@ -37,9 +37,11 @@ class ResumeController extends Controller
     public function getAvatar($id)
     {
         $resume = Resume::find($id);
-        if ($resume->avatar)
-            return Storage::get($resume->avatar);
-        else return response()->json(null);
+        if (!empty($resume)) {
+            if ($resume->avatar)
+                return Storage::get($resume->avatar);
+            else return response()->json(null);
+        } else return response()->json(null);
     }
     public function create(Request $req)
     {
@@ -173,6 +175,7 @@ class ResumeController extends Controller
         }
         //save resume file to gg drive
         if ($resume_file) {
+            
             $filename = 'resume_' . $resume_id . '.png';
             $path = 'resumes/' . $filename;
             if (Storage::exists($path)) Storage::delete($path);

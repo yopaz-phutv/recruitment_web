@@ -56,7 +56,7 @@ class EmployerController extends Controller
                     Storage::delete($path);
             }
             $filename = 'logo_' . $employer_id . '.' . $logo_file->getClientOriginalExtension();
-            $path = uploadFile2GgDrive($logo_file, 'employer_logos', $filename, ['isThumbnail' => true]);
+            $path = uploadFile2GgDrive($logo_file, 'employer_logos', $filename, ['isImage' => true]);
             $update_data['logo'] = $path;
         }
         if ($req->hasFile('image_file')) {
@@ -68,7 +68,7 @@ class EmployerController extends Controller
                     Storage::delete($path);
             }
             $filename = 'image_' . $employer_id . '.' . $image_file->getClientOriginalExtension();
-            $path = uploadFile2GgDrive($image_file, 'employer_images', $filename, ['isThumbnail' => true]);
+            $path = uploadFile2GgDrive($image_file, 'employer_images', $filename, ['isImage' => true]);
             $update_data['image'] = $path;
         }
         if ($req->has('delete_logo')) $update_data['logo'] = null;
@@ -253,7 +253,9 @@ class EmployerController extends Controller
     }
     public function findCandidates(Request $req)
     {
-        $query = Candidate::query();
+        $query = Candidate::query()
+            ->join('resumes', 'public_resume_id', '=', 'resumes.id')
+            ->join('locations', 'location_id', '=', 'locations.id');
         if ($req->has('location_ids')) {
             $query->whereIn('location_id', $req->location_ids);
         }
@@ -266,12 +268,12 @@ class EmployerController extends Controller
         if ($req->filled('jlevel_id')) {
             $query->where('desired_jlevel_id', $req->jlevel_id);
         }
-        if ($req->filled('gender')) {
+        if ($req->filled('resumes.gender')) {
             $query->where('gender', $req->gender);
         }
         if ($req->filled('min_age')) {
             $query->whereRaw(
-                'DATE_FORMAT(NOW(), "%Y") - DATE_FORMAT(dob, "%Y") BETWEEN ? AND ?',
+                'DATE_FORMAT(NOW(), "%Y") - DATE_FORMAT(resumes.dob, "%Y") BETWEEN ? AND ?',
                 [$req->min_age, $req->max_age]
             );
         }
@@ -283,7 +285,11 @@ class EmployerController extends Controller
         if ($req->filled('skill_text')) {
             $query->whereRaw("MATCH(skill_text) AGAINST ('$req->skill_text' IN NATURAL LANGUAGE MODE)");
         }
-        $candidates = $query->get();
+        $candidates = $query->select(
+            'resumes.*',
+            DB::raw('locations.name AS location'),
+            'desired_job'
+        )->get();
 
         return response()->json($candidates);
     }

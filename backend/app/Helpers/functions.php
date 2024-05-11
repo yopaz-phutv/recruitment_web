@@ -24,9 +24,9 @@ function uploadFile2GgDrive(
     $file,
     $folder,
     $filename = null,
-    $option = ['isThumbnail' => false, 'isText' => false]
+    $option = ['isImage' => false, 'isText' => false]
 ) {
-    $isThumbnail = isset($option['isThumbnail']) && $option['isThumbnail'];
+    $isImage = isset($option['isImage']) && $option['isImage'];
     $isText = isset($option['isText']) && $option['isText'];
 
     $ext = $file->getClientOriginalExtension();
@@ -47,8 +47,8 @@ function uploadFile2GgDrive(
     $start = strpos($path, 'id=') + strlen('id=');
     $end = strpos($path, '&export=media');
     $fileId = substr($path, $start, $end - $start);
-    if ($isThumbnail)
-        $ret = 'https://drive.google.com/thumbnail?id=' . $fileId;
+    if ($isImage)
+        $ret = "https://lh3.googleusercontent.com/d/{$fileId}?authuser=0";
     else if ($isText) $ret = $folder . '/' . $filename;
     else $ret = 'https://drive.google.com/file/d/' . $fileId . '/view';
 
