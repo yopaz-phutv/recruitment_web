@@ -285,12 +285,22 @@ class EmployerController extends Controller
         if ($req->filled('skill_text')) {
             $query->whereRaw("MATCH(skill_text) AGAINST ('$req->skill_text' IN NATURAL LANGUAGE MODE)");
         }
-        $candidates = $query->select(
+        $resumes = $query->select(
             'resumes.*',
             DB::raw('locations.name AS location'),
             'desired_job'
-        )->paginate(9);
+        )->paginate(9)->toArray();
 
-        return response()->json($candidates);
+        $employer_id = Auth::user()->id;
+        for ($i=0; $i < count($resumes['data']); $i++) {
+            $candidate = $resumes['data'][$i];
+            $res = DB::table('saved_candidates')->where([
+                ['employer_id', '=', $employer_id],
+                ['candidate_id', '=', $candidate['candidate_id']]
+            ])->get()->toArray();
+            $resumes['data'][$i]['is_saved'] = count($res) > 0;
+        }
+
+        return response()->json($resumes);
     }
 }

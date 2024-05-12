@@ -25,6 +25,7 @@ import AdminLayout from "./view/admin/layouts";
 import EmployerList from "./view/admin/employers";
 import EmployerDetail from "./view/employer/detail";
 import FindingCandidates from "./view/employer/find-candidates";
+import AdminCandidateList from "./view/admin/candidates";
 
 export const AppContext = createContext();
 
@@ -91,6 +92,7 @@ function App() {
               <AdminLayout>
                 <Routes>
                   <Route path="employers" element={<EmployerList />} />
+                  <Route path="candidates" element={<AdminCandidateList />} />
                 </Routes>
               </AdminLayout>
             }

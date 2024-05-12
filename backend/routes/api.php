@@ -78,6 +78,7 @@ Route::controller(AdminController::class)->prefix('admin')->group(function () {
     Route::get('getEmployerList', 'getEmployerList');
     Route::patch('handleRequest', 'handleRequest');
     Route::patch('changeAccActiveStatus', 'changeAccActiveStatus');
+    Route::get('getCandidateList', 'getCandidateList');
 });
 
 Route::controller(JobController::class)->prefix('jobs')->group(function () {

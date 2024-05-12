@@ -10,10 +10,7 @@ import Tab from "react-bootstrap/Tab";
 import clsx from "clsx";
 
 function CandidateList() {
-  const {
-    register,
-    handleSubmit,
-  } = useForm();
+  // loc ho so theo: vi tri ung tuyen, tinh thanh, 
   const [candidates, setCandidates] = useState([]);
   const [curCandidate, setCurCandidate] = useState({});
   const [keyword, setKeyword] = useState("");
@@ -22,6 +19,8 @@ function CandidateList() {
   const [showDialog, setShowDialog] = useState(false);
 
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
+
+  const { register, handleSubmit } = useForm();
 
   const makeTabStyle = (tabName) => {
     return clsx(
@@ -40,7 +39,7 @@ function CandidateList() {
     getCandidateList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyword, status]);
-  
+
   useEffect(() => {
     if (step === "step1") setStatus("WAITING");
     else if (step === "step2") setStatus("BROWSING_INTERVIEW");
@@ -133,6 +132,9 @@ function CandidateList() {
                 </Form.Select>
               </div>
             )}
+            {/* {step === "step1" && status !== "RESUME_FAILED" ? (
+              <ResumeFilter />
+            ) : null} */}
           </Form>
           <div className="mt-3" style={{ width: "90%" }}>
             <table className="table table-borderless border text-center shadow-sm">

@@ -12,16 +12,28 @@ class AdminController extends Controller
 {
     public function getEmployerList(Request $req)
     {
-        $employers =
-            Employer::with('locations')
+        $keyword = $req->query('keyword');
+
+        $query = Employer::query()
+            ->with('locations')
             ->join('users', 'user_id', '=', 'users.id')
             ->where([
                 ['is_accepted', '=', $req->is_accepted],
                 ['is_denied', '=', $req->is_denied]
-            ])
-            ->select('employers.*', 'email', DB::raw('users.created_at as register_time '), 'is_active')
-            ->orderByDesc('register_time')
-            ->paginate(10);
+            ]);
+        if ($keyword) {
+            $query->whereRaw("LOWER(name) LIKE ?", ['%' . strtolower($keyword) . '%'])
+                ->orWhereRaw("LOWER(users.email) LIKE ?", ['%' . strtolower($keyword) . '%'])
+                ->orWhereRaw("LOWER(phone) LIKE ?", ['%' . strtolower($keyword) . '%']);
+        }
+        $employers = $query->select(
+            'employers.*',
+            'email',
+            DB::raw('users.created_at as register_time '),
+            'is_active'
+        )
+        ->orderByDesc('register_time')
+        ->paginate(10);
 
         return response()->json($employers);
     }
@@ -45,5 +57,26 @@ class AdminController extends Controller
         User::where('id', $req->user_id)->update(['is_active' => 1 - $curr_is_active]);
 
         return response()->json('updated successfully');
+    }
+    public function getCandidateList(Request $req)
+    {
+        $keyword = $req->query('keyword');
+
+        $query = User::query()
+            ->join('candidates', 'users.id', '=', 'user_id')
+            ->where('role', 1);
+        if ($keyword) {
+            $query->whereRaw("LOWER(CONCAT_WS(' ', lastname, firstname)) LIKE ?", ['%' . strtolower($keyword) . '%'])
+                  ->orWhereRaw("LOWER(users.email) LIKE ?", ['%' . strtolower($keyword) . '%'])
+                  ->orWhereRaw("LOWER(phone) LIKE ?", ['%' . strtolower($keyword) . '%']);
+        }
+        $candidates = $query->select(
+            'users.*',
+            'phone',
+            DB::raw("CONCAT_WS(' ', lastname, firstname) AS fullname")
+        )
+        ->paginate(10);
+
+        return response()->json($candidates);
     }
 }

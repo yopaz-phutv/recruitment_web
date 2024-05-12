@@ -16,6 +16,13 @@ const adminApi = {
   changeAccActiveStatus: (params) => {
     return adminAxios.patch(`${prefix}/changeAccActiveStatus`, params);
   },
+  getCandidateList: (params) => {
+    return adminAxios.get(
+      `${prefix}/getCandidateList?${queryString.stringify(params, {
+        arrayFormat: "index",
+      })}`
+    );
+  },
 };
 
 export default adminApi;

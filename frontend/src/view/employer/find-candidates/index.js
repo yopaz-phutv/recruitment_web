@@ -80,7 +80,7 @@ export default function FindingCandidates() {
     if (locationIds.length > 0) data.location_ids = locationIds;
     if (industryIds.length > 0) data.industry_ids = industryIds;
     console.log({ data });
-    await fetchCandidates(1, data)
+    await fetchCandidates(1, data);
     setIsLoading(false);
   };
 
@@ -237,14 +237,14 @@ export default function FindingCandidates() {
       </div>
       <div className="mt-2 row row-cols-2 row-cols-lg-3">
         {resumes.map((item) => (
-          <div
-            key={item.id}
-            onClick={() => {
-              setCurResume(item);
-              setShowResumeModal(true);
-            }}
-          >
-            <CandidateItem infor={item} />
+          <div key={item.id}>
+            <CandidateItem
+              infor={item}
+              handleViewDetail={() => {
+                setCurResume(item);
+                setShowResumeModal(true);
+              }}
+            />
             {/* <CandidateItem key={item.id} infor={item} />
             <CandidateItem key={item.id} infor={item} />
             <CandidateItem key={item.id} infor={item} />

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
 import adminApi from "../../../api/admin";
 import dayjs from "dayjs";
 import clsx from "clsx";
 import { WiMoonAltNew } from "react-icons/wi";
-import { BsCheckCircle, BsEye, BsXCircle } from "react-icons/bs";
+import { BsCheckCircle, BsEye, BsSearch, BsXCircle } from "react-icons/bs";
 import AcceptModal from "./AcceptModal";
 import ViewModal from "./ViewModal";
 import RejectModal from "./RejectModal";
@@ -19,6 +20,7 @@ export default function EmployerList() {
   const [curEmployer, setCurEmployer] = useState({});
   const [curTabInd, setCurTabInd] = useState(0);
 
+  const [keyword, setKeyword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showAcceptModal, setShowAcceptModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
@@ -33,11 +35,13 @@ export default function EmployerList() {
     const res = await adminApi.getEmployerList({
       ...status,
       page,
+      keyword
     });
     setEmployers(res.data);
     setTotalPage(res.last_page);
     setIsLoading(false);
   };
+
   const getRequestsAmount = async () => {
     const res = await adminApi.getEmployerList({
       is_accepted: 0,
@@ -45,16 +49,11 @@ export default function EmployerList() {
     });
     setRequestsAmount(res.total);
   };
+
   const handleChangeTab = (index) => {
     setCurTabInd(index);
   };
-  useEffect(() => {
-    if (curTabInd === 0) {
-      setStatus({ is_accepted: 1, is_denied: 0 });
-    } else if (curTabInd === 1) {
-      setStatus({ is_accepted: 0, is_denied: 0 });
-    }
-  }, [curTabInd]);
+
   const handleClickActionBtn = (item, type) => {
     setCurEmployer(item);
     if (type === "ACCEPT") {
@@ -73,6 +72,7 @@ export default function EmployerList() {
       setStatus({ ...status, is_denied: 1 });
     }
   };
+
   const handleChangeActiveStatus = async (user_id) => {
     try {
       await adminApi.changeAccActiveStatus({ user_id });
@@ -82,18 +82,31 @@ export default function EmployerList() {
     }
   };
 
+  const handleSearch = async () => {
+    await getEmployers();
+  };
+
   useEffect(() => {
     getEmployers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
+
   useEffect(() => {
     getRequestsAmount();
   }, []);
 
+  useEffect(() => {
+    if (curTabInd === 0) {
+      setStatus({ is_accepted: 1, is_denied: 0 });
+    } else if (curTabInd === 1) {
+      setStatus({ is_accepted: 0, is_denied: 0 });
+    }
+  }, [curTabInd]);
+
   return (
     <div className="vh-100 pt-4 px-4">
       <div className="bg-white py-3 ps-5">
-        <h4 className="text-main">Danh sách nhà tuyển dụng</h4>
+        <h4 className="text-main">Danh sách tài khoản nhà tuyển dụng</h4>
         <div className="mt-3 border-bottom d-flex border-main w-95 ts-smd fw-600 text-secondary">
           <div
             className={clsx(
@@ -120,6 +133,22 @@ export default function EmployerList() {
             ) : null}
           </div>
         </div>
+        {curTabInd === 0 && (
+          <InputGroup size="sm" className="mt-3 w-50">
+            <Form.Control
+              type="text"
+              className="border-end-0"
+              placeholder="Nhập tên, email, số điện thoại"
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+            <InputGroup.Text
+              className="bg-white pointer"
+              onClick={handleSearch}
+            >
+              <BsSearch />
+            </InputGroup.Text>
+          </InputGroup>
+        )}
         {curTabInd === 1 && (
           <div>
             <Form.Select
@@ -136,7 +165,7 @@ export default function EmployerList() {
             </Form.Select>
           </div>
         )}
-        <Table hover className="w-95 shadow-sm mt-2">
+        <Table hover className="w-95 shadow-sm mt-3">
           <thead className="table-primary ts-smd">
             <tr>
               <th className="fw-500 w-30">Tên</th>

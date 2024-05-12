@@ -14,3 +14,7 @@ export const toSrcFromGgImgLink = (imgLink) => {
 
   return `https://lh3.googleusercontent.com/d/${arr[imgFileIdIndex]}?authuser=0`;
 };
+
+export const isNullObject = (object) => {
+  return Object.keys(object).length === 0;
+};
