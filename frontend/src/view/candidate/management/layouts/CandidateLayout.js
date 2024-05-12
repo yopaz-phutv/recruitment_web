@@ -36,7 +36,7 @@ function CandidateLayout(props) {
   const getPersonal = async () => {
     let res = await candidateApi.getCurrent();
     let avatar = await candidateApi.getCurrentAvatar();
-    if (avatar.length > 0 ) res = {...res, avatar}
+    if (avatar.length > 0) res = { ...res, avatar };
     setPersonal(res);
   };
   const getEducations = async () => {
@@ -89,7 +89,7 @@ function CandidateLayout(props) {
       getActivities();
       getOthers();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
 
   return (
@@ -127,63 +127,65 @@ function CandidateLayout(props) {
       }}
     >
       <div className="d-flex flex-column flex-lg-row">
-        <div className="ts-smd fw-500 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-end">
-          <div className="text-center text-main border-bottom py-3 px-2 ts-lg fw-500">
-            Tài khoản của tôi
-          </div>
-          <div
-            className={clsx(
-              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              curUrl === "/candidate" && "bg-mlight text-main"
-            )}
-            onClick={() => handleChangePage("/candidate")}
-          >
-            Dashboard
-          </div>
-          <div
-            className={clsx(
-              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              curUrl === "/candidate/profile" && "bg-mlight text-main"
-            )}
-            onClick={() => handleChangePage("/candidate/profile")}
-          >
-            Profile cá nhân
-          </div>
-          <div
-            className={clsx(
-              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              curUrl === "/candidate/resumes" && "bg-mlight text-main"
-            )}
-            onClick={() => handleChangePage("/candidate/resumes")}
-          >
-            Quản lý hồ sơ
-          </div>
-          <div
-            className={clsx(
-              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              curUrl === "/candidate/templates" && "bg-mlight text-main"
-            )}
-            onClick={() => handleChangePage("/candidate/templates")}
-          >
-            Mẫu hồ sơ
-          </div>
-          <div
-            className={clsx(
-              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              curUrl === "/candidate/applied-jobs" && "bg-mlight text-main"
-            )}
-            onClick={() => handleChangePage("/candidate/applied-jobs")}
-          >
-            Việc làm đã nộp
-          </div>
-          <div
-            className={clsx(
-              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-              curUrl === "/candidate/saved-jobs" && "bg-mlight text-main"
-            )}
-            onClick={() => handleChangePage("/candidate/saved-jobs")}
-          >
-            Việc làm đã lưu
+        <div className="ts-smd fw-500 text-secondary menu-part-wrapper bg-white">
+          <div className="d-flex flex-row flex-lg-column border-end sticky-top top-0">
+            <div className="text-center text-main border-bottom py-3 px-2 ts-lg fw-500">
+              Tài khoản của tôi
+            </div>
+            <div
+              className={clsx(
+                "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+                curUrl === "/candidate" && "bg-mlight text-main"
+              )}
+              onClick={() => handleChangePage("/candidate")}
+            >
+              Dashboard
+            </div>
+            <div
+              className={clsx(
+                "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+                curUrl === "/candidate/profile" && "bg-mlight text-main"
+              )}
+              onClick={() => handleChangePage("/candidate/profile")}
+            >
+              Profile cá nhân
+            </div>
+            <div
+              className={clsx(
+                "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+                curUrl === "/candidate/resumes" && "bg-mlight text-main"
+              )}
+              onClick={() => handleChangePage("/candidate/resumes")}
+            >
+              Quản lý hồ sơ
+            </div>
+            <div
+              className={clsx(
+                "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+                curUrl === "/candidate/templates" && "bg-mlight text-main"
+              )}
+              onClick={() => handleChangePage("/candidate/templates")}
+            >
+              Mẫu hồ sơ
+            </div>
+            <div
+              className={clsx(
+                "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+                curUrl === "/candidate/applied-jobs" && "bg-mlight text-main"
+              )}
+              onClick={() => handleChangePage("/candidate/applied-jobs")}
+            >
+              Việc làm đã nộp
+            </div>
+            <div
+              className={clsx(
+                "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+                curUrl === "/candidate/saved-jobs" && "bg-mlight text-main"
+              )}
+              onClick={() => handleChangePage("/candidate/saved-jobs")}
+            >
+              Việc làm đã lưu
+            </div>
           </div>
         </div>
         <div className="content-part">{props.children}</div>

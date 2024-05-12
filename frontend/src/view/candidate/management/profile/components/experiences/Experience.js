@@ -36,6 +36,7 @@ export default function Experience() {
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
+      titleId="profile-experience"
     >
       {experiences?.map((item, index) => (
         <div key={index}>

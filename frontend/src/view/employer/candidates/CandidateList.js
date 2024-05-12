@@ -40,6 +40,7 @@ function CandidateList() {
     getCandidateList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyword, status]);
+  
   useEffect(() => {
     if (step === "step1") setStatus("WAITING");
     else if (step === "step2") setStatus("BROWSING_INTERVIEW");

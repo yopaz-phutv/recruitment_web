@@ -34,6 +34,7 @@ export default function Education() {
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
+      titleId="profile-education"
     >
       {educations?.map((item, index) => (
         <div key={index}>

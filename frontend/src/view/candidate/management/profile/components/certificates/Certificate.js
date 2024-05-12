@@ -34,6 +34,7 @@ export default function Certificate() {
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
+      titleId="profile-certificate"
     >
       {certificates?.map((item, index) => (
         <div key={index}>

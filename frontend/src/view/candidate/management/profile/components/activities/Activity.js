@@ -34,6 +34,7 @@ export default function Activity() {
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
+      titleId="profile-activity"
     >
       {activities?.map((item, index) => (
         <div key={index}>

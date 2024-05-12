@@ -33,6 +33,7 @@ export default function Project() {
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
+      titleId="profile-project"
     >
       {projects?.map((item, index) => (
         <div key={index}>

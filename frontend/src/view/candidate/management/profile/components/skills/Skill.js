@@ -33,6 +33,7 @@ export default function Skill() {
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
+      titleId="profile-skill"
     >
       {skills?.map((item, index) => (
         <div key={index}>

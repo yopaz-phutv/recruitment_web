@@ -153,4 +153,17 @@ class CandidateController extends Controller
         // }
         return response()->json('Updated successfully');
     }
+    public function updatePublicResume(Request $req) {
+        $candidate_id = Auth::user()->id;
+        if ($req->has('not_public')) {
+            $resume_id = null;
+        }
+        else {
+            $resume_id = $req->resume_id;
+        }
+
+        Candidate::where('id', $candidate_id)->update(['public_resume_id' => $resume_id]);
+
+        return response()->json('updated successfully');
+    }
 }

@@ -1,6 +1,7 @@
 @media screen and (min-width: 992px) {
     .menu-part {
-        width: 20%;        
+        width: 20%;
+        min-height: 672px;
     }
     .content-part {
         width: 80%;

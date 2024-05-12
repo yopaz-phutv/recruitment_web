@@ -1,11 +1,10 @@
 @media screen and (min-width: 992px) {
-    .menu-part {
-        width: 20%;
-        height: 100vh;        
+    .menu-part-wrapper {
+        width: 20%;        
     }
     .content-part {
         width: 80%;
-        height: 100vh;
-        overflow-y: auto;
+        /* height: 100vh; */
+        /* overflow-y: auto; */
     }
 }

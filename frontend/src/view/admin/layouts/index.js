@@ -11,7 +11,7 @@ import clsx from "clsx";
 
 function Layout(props) {
   const nav = useNavigate();
-  const { currentPage, setCurrentPage } = useContext(AppContext);
+  const { curUrl, setCurUrl } = useContext(AppContext);
 
   // const company = useSelector((state) => state.adminAuth.current.admin);
   const dispatch = useDispatch();
@@ -26,12 +26,13 @@ function Layout(props) {
     const res = await authApi.getMe(0);
     dispatch(adminAuthActions.setUser(res));
   };
-  const handleChangePage = (url) => {
+  const handleChangeUrl = (url) => {
     nav(url);
-    setCurrentPage(url);
+    setCurUrl(url);
   };
 
   useEffect(() => {
+    setCurUrl(window.location.pathname)
     if (!localStorage.getItem("admin_jwt")) {
       nav("/admin/login");
     } else {
@@ -67,9 +68,9 @@ function Layout(props) {
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 py-2 pointer hover-bg-light hover-text-main",
-              currentPage === "/admin" && "bg-mlight text-main"
+              curUrl === "/admin" && "bg-mlight text-main"
             )}
-            onClick={() => handleChangePage("/admin")}
+            onClick={() => handleChangeUrl("/admin")}
           >
             <AiTwotoneAppstore className="fs-5 me-1" />
             Dashboard
@@ -77,18 +78,18 @@ function Layout(props) {
           <div
             className={clsx(
               "ps-lg-5 py-lg-2 px-2 py-2 pointer hover-bg-light hover-text-main",
-              currentPage === "/admin/employers" && "bg-mlight text-main"
+              curUrl === "/admin/employers" && "bg-mlight text-main"
             )}
-            onClick={() => handleChangePage("/admin/employers")}
+            onClick={() => handleChangeUrl("/admin/employers")}
           >
             Nhà tuyển dụng
           </div>
           <div
             className={clsx(
               "ps-lg-5 py-lg-2 px-2 py-2 pointer hover-bg-light hover-text-main",
-              currentPage === "/admin/candidates" && "bg-mlight text-main"
+              curUrl === "/admin/candidates" && "bg-mlight text-main"
             )}
-            onClick={() => handleChangePage("/admin/candidates")}
+            onClick={() => handleChangeUrl("/admin/candidates")}
           >
             Ứng viên
           </div>

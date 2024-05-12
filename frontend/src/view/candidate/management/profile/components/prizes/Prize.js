@@ -33,6 +33,7 @@ export default function Prize() {
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
+      titleId="profile-prize"
     >
       {prizes?.map((item, index) => (
         <div key={index}>

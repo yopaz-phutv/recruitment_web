@@ -56,6 +56,7 @@ Route::controller(CandidateController::class)->prefix('candidates')->group(funct
     Route::get('{id}/getSavedJobs', 'getSavedJobs');
     Route::post('{job_id}/processJobSaving', 'processJobSaving');
     Route::get('{job_id}/checkJobSaved', 'checkJobSaved');
+    Route::post('updatePublicResume', 'updatePublicResume');
 });
 
 Route::controller(EmployerController::class)->prefix('companies')->group(function () {

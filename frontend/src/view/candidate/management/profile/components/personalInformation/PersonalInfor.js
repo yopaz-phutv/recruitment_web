@@ -18,7 +18,7 @@ export default function PersonalInfor() {
   };
 
   return (
-    <FrameLayout title="Thông tin cá nhân" hasaddbtn={false} className="mt-4">
+    <FrameLayout title="Thông tin cá nhân" hasaddbtn={false} titleId="profile-personal">
       <hr />
       <div className="d-flex gap-5 flex-wrap align-items-center">
         <div className="ms-4" style={{ width: "150px", height: "150px" }}>
