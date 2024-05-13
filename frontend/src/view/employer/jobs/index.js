@@ -1,8 +1,8 @@
+import "./style.css";
 import { BsEye, BsSearch } from "react-icons/bs";
 import { RiUserSearchFill } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./style.css";
 import { useForm } from "react-hook-form";
 import { AiOutlinePlus } from "react-icons/ai";
 import JobDetail from "./JobDetail";
@@ -24,7 +24,7 @@ function JobManagement() {
   const [industries, setIndustries] = useState([]);
   const [locations, setLocations] = useState([]);
   const { register, handleSubmit } = useForm();
-  const company = useSelector((state) => state.employerAuth.current.employer);
+  // const company = useSelector((state) => state.employerAuth.current.employer);
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
 
   const getAllJtypes = async () => {
@@ -48,7 +48,7 @@ function JobManagement() {
   const getJobList = async (data) => {
     let searchKey = "";
     if (data) searchKey = data.searchKey;
-    const res = await employerApi.getJobList(company.id, searchKey);
+    const res = await employerApi.getJobList(searchKey);
     setJobs(res);
   };
   const handleClickActBtn = (job_inf, type) => {

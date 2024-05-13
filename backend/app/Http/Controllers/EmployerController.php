@@ -8,6 +8,7 @@ use App\Models\CandidateMessage;
 use App\Models\Employer;
 use App\Models\Job;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -224,11 +225,13 @@ class EmployerController extends Controller
     }
     public function getJobList(Request $req)
     {
+        $employer_id = Auth::user()->id;
         $keyword = $req->query('keyword');
+
         $jobs = Job::with(['industries', 'locations'])
             ->join('jtypes', 'jtype_id', '=', 'jtypes.id')
             ->join('jlevels', 'jlevel_id', '=', 'jlevels.id')
-            ->where('employer_id', '=', $req->id)
+            ->where('employer_id', '=', $employer_id)
             ->when($keyword != null, function ($query) use ($keyword) {
                 return $query->where(function ($query2) use ($keyword) {
                     $query2->whereRaw('LOWER(jname) LIKE ?', ['%' . strtolower($keyword) . '%'])
@@ -292,7 +295,7 @@ class EmployerController extends Controller
         )->paginate(9)->toArray();
 
         $employer_id = Auth::user()->id;
-        for ($i=0; $i < count($resumes['data']); $i++) {
+        for ($i = 0; $i < count($resumes['data']); $i++) {
             $candidate = $resumes['data'][$i];
             $res = DB::table('saved_candidates')->where([
                 ['employer_id', '=', $employer_id],
@@ -303,4 +306,57 @@ class EmployerController extends Controller
 
         return response()->json($resumes);
     }
+    public function handleSavingCandidate(Request $req)
+    {
+        $user = Auth::user();
+
+        DB::table('saved_candidates')
+            ->where([
+                ['employer_id', $user->id],
+                ['candidate_id', $req->candidate_id]
+            ])
+            ->delete();
+
+        if (!$req->has('delete')) {
+            $insert_data = [];
+            if ($req->has('job_none')) {
+                $insert_data[] = [
+                    'employer_id' => $user->id,
+                    'candidate_id' => $req->candidate_id,
+                    'job_id' => 0,
+                    'created_at' => Carbon::now()
+                ];
+            } else {
+                foreach ($req->job_ids as $job_id) {
+                    $insert_data[] = [
+                        'employer_id' => $user->id,
+                        'candidate_id' => $req->candidate_id,
+                        'job_id' => $job_id,
+                        'created_at' => Carbon::now()
+                    ];
+                }
+            }
+
+            DB::table('saved_candidates')->insert($insert_data);
+
+            return response()->json('created successfully', 201);
+        }
+        return response()->json('deleted successfully');
+    }
+    // public function unSaveCandidate(Request $req)
+    // {
+    //     try {
+    //         $user = getCurUser(2);
+    //         DB::table('saved_candidates')
+    //             ->where([
+    //                 ['employer_id', $user->id],
+    //                 ['candidate_id', $req->candidate_id]
+    //             ])
+    //             ->delete();
+
+    //         return response()->json('deleted successfully');
+    //     } catch (Exception $e) {
+    //         return response()->json($e->getMessage(), $e->getCode());
+    //     }
+    // }
 }

@@ -67,11 +67,12 @@ Route::controller(EmployerController::class)->prefix('companies')->group(functio
     Route::get('getHotList', 'getHotList');
     Route::delete('{id}', 'destroy');
     Route::get('{id}/getComJobs', 'getComJobs');
-    Route::get('{id}/getJobList', 'getJobList');
+    Route::get('getJobList', 'getJobList');
     Route::get('getCandidateList', 'getCandidateList')->middleware('jwt');
     Route::post('processApplying', 'processApplying')->middleware('jwt');
     Route::post('{job_id}/changeJobStatus', 'changeJobStatus');
     Route::get('findCandidates', 'findCandidates');
+    Route::post('handleSavingCandidate', 'handleSavingCandidate');
 });
 
 Route::controller(AdminController::class)->prefix('admin')->group(function () {

@@ -1,8 +1,18 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+function getCurUser(int $role) : object
+{
+    $user = Auth::user();
+
+    if ($user->role != $role) {
+        throw new Exception('no permission', 405);
+    }
+    else return $user;
+}
 function array2String($arr)
 {
     $string = "";
@@ -41,7 +51,7 @@ function uploadFile2GgDrive(
             base64_encode(file_get_contents($file));
         Storage::put($folder . '/' . $filename, $file);
     } else Storage::putFileAs($folder, $file, $filename);
-    
+
     //get url:
     $path = Storage::url($folder . '/' . $filename);
     $start = strpos($path, 'id=') + strlen('id=');

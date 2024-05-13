@@ -4,7 +4,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import { useForm } from "react-hook-form";
 import useGetAllLocations from "../../../hooks/useGetAllLocations";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CMulSelect from "../../../components/CMulSelect";
 import useGetAllIndustries from "../../../hooks/useGetAllIndustries";
 import TagInput from "../../../components/TagInput";
@@ -18,10 +18,9 @@ import CandidateItem from "./CandidateItem";
 import ResumeModal from "./ResumeModal";
 import { useLocation } from "react-router-dom";
 import CPagination from "../../../components/CPagination";
+import SelectJobModal from "./SelectJobModal";
 
 export default function FindingCandidates() {
-  // nganh nghe, dia diem, gioi tinh, độ tuổi, trinh do, ki nang
-  // tim kiem theo tieu chi cong viec cua nha tuyen dung
   const { locations, isLoading: isLoadingLocations } = useGetAllLocations();
   const { industries, isLoading: isLoadingIndustries } = useGetAllIndustries();
   const { jtypes } = useGetAllJtypes();
@@ -35,6 +34,8 @@ export default function FindingCandidates() {
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [totalPage, setTotalPage] = useState(0);
   const [curPage, setCurPage] = useState(1);
+  const [jobs, setJobs] = useState([]);
+  const [showSelectJobModal, setShowSelectJobModal] = useState(false);
 
   const location = useLocation();
   const searchCondition = location.state;
@@ -83,6 +84,25 @@ export default function FindingCandidates() {
     await fetchCandidates(1, data);
     setIsLoading(false);
   };
+
+  const getOwnJobs = async () => {
+    const res = await employerApi.getJobList();
+    setJobs(res);
+  };
+
+  const updateBookmark = (candidate_id) => {
+    if (!candidate_id) candidate_id = curResume.candidate_id
+    const resumesTemp = [...resumes];
+    const index = resumesTemp.findIndex(
+      (item) => item.candidate_id === candidate_id
+    );
+    resumesTemp[index].is_saved = !resumesTemp[index].is_saved;
+    setResumes(resumesTemp);
+  };
+
+  useEffect(() => {
+    getOwnJobs();
+  }, []);
 
   return (
     <div
@@ -244,11 +264,10 @@ export default function FindingCandidates() {
                 setCurResume(item);
                 setShowResumeModal(true);
               }}
+              setShowSelectJobModal={setShowSelectJobModal}
+              setCurResume={setCurResume}
+              updateBookmark={updateBookmark}
             />
-            {/* <CandidateItem key={item.id} infor={item} />
-            <CandidateItem key={item.id} infor={item} />
-            <CandidateItem key={item.id} infor={item} />
-            <CandidateItem key={item.id} infor={item} /> */}
           </div>
         ))}
       </div>
@@ -261,11 +280,22 @@ export default function FindingCandidates() {
           getList={fetchCandidates}
         />
       )}
-      <ResumeModal
-        show={showResumeModal}
-        setShow={setShowResumeModal}
-        imageSrc={curResume.image}
-      />
+      {showResumeModal && (
+        <ResumeModal
+          show={showResumeModal}
+          setShow={setShowResumeModal}
+          imageSrc={curResume.image}
+        />
+      )}
+      {showSelectJobModal && (
+        <SelectJobModal
+          show={showSelectJobModal}
+          setShow={setShowSelectJobModal}
+          jobs={jobs}
+          curResume={curResume}
+          updateBookmark={updateBookmark}
+        />
+      )}
     </div>
   );
 }

@@ -5,8 +5,26 @@ import defaultAvt from "../../../assets/images/default-avatar.webp";
 import dayjs from "dayjs";
 import { isNullObject } from "../../../common/functions";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import employerApi from "../../../api/employer";
 
-export default function CandidateItem({ infor, handleViewDetail }) {
+export default function CandidateItem({
+  infor,
+  handleViewDetail,
+  setShowSelectJobModal,
+  setCurResume,
+  updateBookmark
+}) {
+  const handleSaveCandidate = async () => {
+    setCurResume(infor);
+    if (infor.is_saved) {
+      await employerApi.handleSavingCandidate({
+        candidate_id: infor.candidate_id,
+        delete: 1,
+      });
+      updateBookmark(infor.candidate_id)
+    } else setShowSelectJobModal(true);
+  };
+
   return (
     <div className="pe-3 mb-2">
       <div className="position-relative">
@@ -50,7 +68,7 @@ export default function CandidateItem({ infor, handleViewDetail }) {
         <button
           className="position-absolute border-0 bg-white"
           style={{ top: "4px", right: "9px" }}
-          onClick={() => console.log("kkk")}
+          onClick={handleSaveCandidate}
         >
           {infor.is_saved ? (
             <AiFillHeart className="text-danger" />
