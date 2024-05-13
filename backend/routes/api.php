@@ -73,6 +73,7 @@ Route::controller(EmployerController::class)->prefix('companies')->group(functio
     Route::post('{job_id}/changeJobStatus', 'changeJobStatus');
     Route::get('findCandidates', 'findCandidates');
     Route::post('handleSavingCandidate', 'handleSavingCandidate');
+    Route::get('getSavedCandidates', 'getSavedCandidates');
 });
 
 Route::controller(AdminController::class)->prefix('admin')->group(function () {

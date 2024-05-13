@@ -296,10 +296,10 @@ class EmployerController extends Controller
 
         $employer_id = Auth::user()->id;
         for ($i = 0; $i < count($resumes['data']); $i++) {
-            $candidate = $resumes['data'][$i];
+            $resume = $resumes['data'][$i];
             $res = DB::table('saved_candidates')->where([
                 ['employer_id', '=', $employer_id],
-                ['candidate_id', '=', $candidate['candidate_id']]
+                ['resume_id', '=', $resume['id']]
             ])->get()->toArray();
             $resumes['data'][$i]['is_saved'] = count($res) > 0;
         }
@@ -313,7 +313,7 @@ class EmployerController extends Controller
         DB::table('saved_candidates')
             ->where([
                 ['employer_id', $user->id],
-                ['candidate_id', $req->candidate_id]
+                ['resume_id', $req->resume_id]
             ])
             ->delete();
 
@@ -322,7 +322,7 @@ class EmployerController extends Controller
             if ($req->has('job_none')) {
                 $insert_data[] = [
                     'employer_id' => $user->id,
-                    'candidate_id' => $req->candidate_id,
+                    'resume_id' => $req->resume_id,
                     'job_id' => 0,
                     'created_at' => Carbon::now()
                 ];
@@ -330,7 +330,7 @@ class EmployerController extends Controller
                 foreach ($req->job_ids as $job_id) {
                     $insert_data[] = [
                         'employer_id' => $user->id,
-                        'candidate_id' => $req->candidate_id,
+                        'resume_id' => $req->resume_id,
                         'job_id' => $job_id,
                         'created_at' => Carbon::now()
                     ];
@@ -343,20 +343,12 @@ class EmployerController extends Controller
         }
         return response()->json('deleted successfully');
     }
-    // public function unSaveCandidate(Request $req)
-    // {
-    //     try {
-    //         $user = getCurUser(2);
-    //         DB::table('saved_candidates')
-    //             ->where([
-    //                 ['employer_id', $user->id],
-    //                 ['candidate_id', $req->candidate_id]
-    //             ])
-    //             ->delete();
+    // public function getSavedCandidates(Request $req) {
+    //     $employer_id = Auth::user()->id;
 
-    //         return response()->json('deleted successfully');
-    //     } catch (Exception $e) {
-    //         return response()->json($e->getMessage(), $e->getCode());
-    //     }
+    //     DB::table('saved-candidates')
+    //         ->join('candidates', 'candidate_id', '=', 'candidates.id')
+    //         ->where('employer_id', $employer_id)
+    //         ->select()
     // }
 }

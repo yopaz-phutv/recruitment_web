@@ -8,20 +8,20 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import employerApi from "../../../api/employer";
 
 export default function CandidateItem({
-  infor,
+  resume,
   handleViewDetail,
   setShowSelectJobModal,
   setCurResume,
-  updateBookmark
+  updateBookmark,
 }) {
   const handleSaveCandidate = async () => {
-    setCurResume(infor);
-    if (infor.is_saved) {
+    setCurResume(resume);
+    if (resume.is_saved) {
       await employerApi.handleSavingCandidate({
-        candidate_id: infor.candidate_id,
+        resume_id: resume.id,
         delete: 1,
       });
-      updateBookmark(infor.candidate_id)
+      updateBookmark(resume.id);
     } else setShowSelectJobModal(true);
   };
 
@@ -35,9 +35,9 @@ export default function CandidateItem({
           <div className="w-25">
             <img
               src={
-                !infor.avtSrc || isNullObject(infor.avtSrc)
+                !resume.avtSrc || isNullObject(resume.avtSrc)
                   ? defaultAvt
-                  : infor.avtSrc
+                  : resume.avtSrc
               }
               alt=""
               className="w-100 h-100"
@@ -46,22 +46,22 @@ export default function CandidateItem({
           </div>
           <div className="flex-fill ts-sm">
             <span className="fw-600 text-capitalize ts-smd">
-              {infor.fullname}
+              {resume.fullname}
             </span>
-            <div className="text-secondary">{infor.desired_job} </div>
+            <div className="text-secondary">{resume.desired_job} </div>
             <div className="d-flex align-items-center gap-1">
               <IoCalendarClear fontSize="16px" className="text-main" />
-              {dayjs(infor.dob).format("DD/MM/YYYY")}
+              {dayjs(resume.dob).format("DD/MM/YYYY")}
               <div className="d-inline-block ms-3">
                 <div className="d-flex align-items-center gap-1">
                   <FaPhoneAlt fontSize="16px" className="text-main" />
-                  {infor.phone}
+                  {resume.phone}
                 </div>
               </div>
             </div>
             <div className="d-flex align-items-center gap-1">
               <MdLocationOn fontSize="19px" className="text-main" />
-              {infor.location}
+              {resume.location}
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function CandidateItem({
           style={{ top: "4px", right: "9px" }}
           onClick={handleSaveCandidate}
         >
-          {infor.is_saved ? (
+          {resume.is_saved ? (
             <AiFillHeart className="text-danger" />
           ) : (
             <AiOutlineHeart />

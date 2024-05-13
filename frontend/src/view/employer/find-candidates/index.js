@@ -80,7 +80,7 @@ export default function FindingCandidates() {
     }
     if (locationIds.length > 0) data.location_ids = locationIds;
     if (industryIds.length > 0) data.industry_ids = industryIds;
-    console.log({ data });
+
     await fetchCandidates(1, data);
     setIsLoading(false);
   };
@@ -90,12 +90,10 @@ export default function FindingCandidates() {
     setJobs(res);
   };
 
-  const updateBookmark = (candidate_id) => {
-    if (!candidate_id) candidate_id = curResume.candidate_id
+  const updateBookmark = (resume_id) => {
+    if (!resume_id) resume_id = curResume.id;
     const resumesTemp = [...resumes];
-    const index = resumesTemp.findIndex(
-      (item) => item.candidate_id === candidate_id
-    );
+    const index = resumesTemp.findIndex((item) => item.id === resume_id);
     resumesTemp[index].is_saved = !resumesTemp[index].is_saved;
     setResumes(resumesTemp);
   };
@@ -103,6 +101,9 @@ export default function FindingCandidates() {
   useEffect(() => {
     getOwnJobs();
   }, []);
+  useEffect(() => {
+    console.log({ resumes });
+  }, [resumes]);
 
   return (
     <div
@@ -256,20 +257,21 @@ export default function FindingCandidates() {
         Có {resumes.length} ứng viên phù hợp
       </div>
       <div className="mt-2 row row-cols-2 row-cols-lg-3">
-        {resumes.map((item) => (
-          <div key={item.id}>
-            <CandidateItem
-              infor={item}
-              handleViewDetail={() => {
-                setCurResume(item);
-                setShowResumeModal(true);
-              }}
-              setShowSelectJobModal={setShowSelectJobModal}
-              setCurResume={setCurResume}
-              updateBookmark={updateBookmark}
-            />
-          </div>
-        ))}
+        {resumes.length > 0 &&
+          resumes.map((item) => (
+            <div key={item.id}>
+              <CandidateItem
+                resume={item}
+                handleViewDetail={() => {
+                  setCurResume(item);
+                  setShowResumeModal(true);
+                }}
+                setShowSelectJobModal={setShowSelectJobModal}
+                setCurResume={setCurResume}
+                updateBookmark={updateBookmark}
+              />
+            </div>
+          ))}
       </div>
       {resumes.length > 0 && (
         <CPagination

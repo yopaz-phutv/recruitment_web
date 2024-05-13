@@ -26,6 +26,7 @@ import EmployerList from "./view/admin/employers";
 import EmployerDetail from "./view/employer/detail";
 import FindingCandidates from "./view/employer/find-candidates";
 import AdminCandidateList from "./view/admin/candidates";
+import SavedCandidates from "./view/employer/saved-candidates";
 
 export const AppContext = createContext();
 
@@ -77,8 +78,9 @@ function App() {
               <EmployerLayout>
                 <Routes>
                   <Route path="candidates" element={<CandidateList />} />
-                  <Route path="find-candidates" element={<FindingCandidates />} />
                   <Route path="jobs" element={<JobManagement />} />
+                  <Route path="find-candidates" element={<FindingCandidates />} />
+                  <Route path="saved-candidates" element={<SavedCandidates />} />
                   <Route path="detail" element={<EmployerDetail />} />
                 </Routes>
               </EmployerLayout>

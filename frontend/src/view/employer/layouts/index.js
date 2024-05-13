@@ -1,3 +1,4 @@
+import "./style.css";
 import { AiFillProfile, AiTwotoneAppstore } from "react-icons/ai";
 import {
   BsFillBriefcaseFill,
@@ -5,9 +6,9 @@ import {
   BsFillPersonFill,
   // BsMessenger,
 } from "react-icons/bs";
+import { FaUserCheck } from "react-icons/fa6";
 import { RiUserSearchFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import "./style.css";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import authApi from "../../../api/auth";
@@ -70,13 +71,13 @@ function Layout(props) {
         style={{ marginTop: "57px" }}
       >
         <div className="ts-smd fw-500 text-secondary menu-part bg-white border-lg-end">
-          <div className="sticky-top top-0 d-flex flex-row flex-lg-column">
-            <div className="text-center text-main border-lg-bottom py-3 px-2 fw-500">
+          <div className="sticky-top top-0 d-flex flex-row flex-wrap flex-lg-column">
+            <div className="text-center text-main border-lg-bottom py-2 py-lg-3 px-2 fw-500">
               {company && company.name}
             </div>
             <div
               className={clsx(
-                "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+                "d-flex align-items-center ps-lg-5 py-2 px-2 pointer hover-bgt-light",
                 curUrl === "/employer" && "bg-mlight text-main"
               )}
               onClick={() => handleChangePage("/employer")}
@@ -86,7 +87,7 @@ function Layout(props) {
             </div>
             <div
               className={clsx(
-                "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+                "d-flex align-items-center ps-lg-5 py-2 px-2 pointer hover-bgt-light",
                 curUrl === "/employer/jobs" && "bg-mlight text-main"
               )}
               onClick={() => handleChangePage("/employer/jobs")}
@@ -96,7 +97,7 @@ function Layout(props) {
             </div>
             <div
               className={clsx(
-                "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+                "d-flex align-items-center ps-lg-5 py-2 px-2 pointer hover-bgt-light",
                 curUrl === "/employer/candidates" && "bg-mlight text-main"
               )}
               onClick={() => handleChangePage("/employer/candidates")}
@@ -105,7 +106,7 @@ function Layout(props) {
             </div>
             <div
               className={clsx(
-                "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+                "d-flex align-items-center ps-lg-5 py-2 px-2 pointer hover-bgt-light",
                 curUrl === "/employer/find-candidates" && "bg-mlight text-main"
               )}
               onClick={() => handleChangePage("/employer/find-candidates")}
@@ -114,7 +115,16 @@ function Layout(props) {
             </div>
             <div
               className={clsx(
-                "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
+                "d-flex align-items-center ps-lg-5 py-2 px-2 pointer hover-bgt-light",
+                curUrl === "/employer/saved-candidates" && "bg-mlight text-main"
+              )}
+              onClick={() => handleChangePage("/employer/saved-candidates")}
+            >
+              <FaUserCheck className="fs-5 me-1" /> Ứng viên đã đánh dấu
+            </div>
+            <div
+              className={clsx(
+                "d-flex align-items-center ps-lg-5 py-2 px-2 pointer hover-bgt-light",
                 curUrl === "/employer/detail" && "bg-mlight text-main"
               )}
               onClick={() => handleChangePage("/employer/detail")}

@@ -32,7 +32,8 @@ export default function Profile() {
     useState(false);
   const [isPublic, setIsPublic] = useState(false);
   const [selectNewResume, setSelectNewResume] = useState(false);
-  const [isLoadingUpdatePublicResume, setIsLoadingUpdatePublicResume] = useState(false);
+  const [isLoadingUpdatePublicResume, setIsLoadingUpdatePublicResume] =
+    useState(false);
   const [resumes, setResumes] = useState([]);
   const [curResume, setCurResume] = useState({});
 
@@ -40,15 +41,16 @@ export default function Profile() {
     const res = await resumeApi.getByCurrentCandidate();
     setResumes(res);
   };
-  const handleChangePublicResume = async () => {
+  const handleChangePublicResume = async (publicState) => {
+    if (!publicState) publicState = isPublic;
     setIsLoadingUpdatePublicResume(true);
     let data = {};
-    if (!isPublic) data.not_public = 1;
+    if (!publicState) data.not_public = 1;
     else data.resume_id = curResume.id;
 
     await candidateApi.updatePublicResume(data);
     setIsLoadingUpdatePublicResume(false);
-    setSelectNewResume(false)
+    setSelectNewResume(false);
   };
 
   useEffect(() => {
@@ -72,13 +74,6 @@ export default function Profile() {
     }
   }, [isAuth]);
 
-  useEffect(() => {
-    if (isAuth) {
-      handleChangePublicResume()
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth, isPublic])
-
   return (
     <div className="px-lg-4 pt-4 pb-5">
       <div className="d-flex">
@@ -101,7 +96,9 @@ export default function Profile() {
         <div className="flex-fill ps-3">
           <div className="bg-white rounded sticky-top" style={{ top: "62px" }}>
             <div id="profile-part-list" className="pt-2 pb-1">
-              <div className="border-bottom text-center fw-bold pb-1">Danh mục</div>
+              <div className="border-bottom text-center fw-bold pb-1">
+                Danh mục
+              </div>
               {partList.map((item, index) => (
                 <a
                   key={index}
@@ -120,7 +117,10 @@ export default function Profile() {
                   className="d-inline ms-2"
                   defaultChecked={isPublic}
                   onClick={() => {
-                    if (isPublic) setSelectNewResume(false);
+                    if (isPublic) {
+                      setSelectNewResume(false);
+                      handleChangePublicResume(!isPublic);
+                    }
                     setIsPublic(!isPublic);
                   }}
                 />

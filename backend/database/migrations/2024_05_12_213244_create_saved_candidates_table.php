@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('saved_candidates', function (Blueprint $table) {
             $table->unsignedBigInteger('employer_id');
-            $table->unsignedBigInteger('candidate_id');
+            $table->unsignedBigInteger('resume_id');
             $table->unsignedBigInteger('job_id')->default(0);
             $table->dateTime('created_at');
-            $table->primary(['employer_id', 'candidate_id', 'job_id']);
+            $table->primary(['employer_id', 'resume_id', 'job_id']);
         });
     }
 
