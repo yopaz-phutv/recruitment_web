@@ -1,7 +1,44 @@
-import Form from "react-bootstrap/Form";
+import { useEffect, useState } from "react";
+import Dropdown from "react-bootstrap/Dropdown";
+import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
+import { BsEye, BsTrash3 } from "react-icons/bs";
+import employerApi from "../../../api/employer";
+import { useSelector } from "react-redux";
+import dayjs from "dayjs";
+import CTooltip from "../../../components/CTooltip";
+import useGetJobsByEmployer from "../../../hooks/useGetJobsByEmployer";
 
 export default function SavedCandidates() {
+  const isAuth = useSelector((state) => state.employerAuth.isAuth);
+  const { jobs } = useGetJobsByEmployer();
+  const [resumes, setResumes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  // const [curJobId, setCurJobId] = useState(null)
+
+  const getResumeList = async () => {
+    setIsLoading(true);
+    const res = await employerApi.getSavedCandidates();
+    setResumes(res);
+    setIsLoading(false);
+  };
+
+  const handleDelete = async (resume_id, index) => {
+    const choice = window.confirm("Bạn có chắc muốn xóa bản ghi này?");
+    if (choice) {
+      await employerApi.handleSavingCandidate({ resume_id, delete: 1 });
+      let resumesTemp = [...resumes];
+      resumesTemp.splice(index, 1);
+      setResumes(resumesTemp);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuth) {
+      getResumeList();
+    }
+  }, [isAuth]);
+
   return (
     <div
       className="bg-white ms-4 mt-3 pb-2"
@@ -11,16 +48,66 @@ export default function SavedCandidates() {
       <Table hover className="shadow-sm mt-3" style={{ width: "98%" }}>
         <thead className="table-primary ts-smd">
           <tr>
-            <th className="fw-500 w-20">Tên</th>
-            <th className="fw-500 w-20">Email</th>
+            <th className="fw-500">Tên</th>
+            <th className="fw-500 w-25">
+              <Dropdown>
+                <Dropdown.Toggle as="div" className="border pointer">
+                  Vị trí
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="ts-sm py-0">
+                  {jobs.map((item) => (
+                    <Dropdown.Item key={item.id}>{item.jname}</Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </th>
             <th className="fw-500">Điện thoại</th>
-            <th className="fw-500">Đăng ký lúc</th>
-            <th className="fw-500">Cập nhật lúc</th>
-            <th className="fw-500">Trạng thái</th>
+            <th className="fw-500 w-15">Email</th>
+            <th className="fw-500">Đã lưu lúc</th>
+            <th className="fw-500">Hành động</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        {!isLoading && (
+          <tbody className="ts-sm">
+            {resumes.map((item, index) => (
+              <tr key={item.id}>
+                <td className="text-capitalize">{item.fullname}</td>
+                <td>
+                  {item.jobs.length > 0
+                    ? item.jobs.map((job, index, self) => (
+                        <div key={job.id}>
+                          {job.jname}
+                          {index !== self.length && ", "}
+                        </div>
+                      ))
+                    : "Chưa xác định"}
+                </td>
+                <td>{item.phone}</td>
+                <td>{item.email}</td>
+                <td>{dayjs(item.saved_time).format("DD/MM/YYYY HH:mm")}</td>
+                <td>
+                  <div className="d-flex gap-2 ts-md">
+                    <CTooltip text="Xem hồ sơ">
+                      <a href={item.image} target="_blank" rel="noreferrer">
+                        <BsEye className="text-main pointer" />
+                      </a>
+                    </CTooltip>
+                    <div onClick={() => handleDelete(item.id, index)}>
+                      <BsTrash3 className="text-danger pointer" />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        )}
       </Table>
+      {isLoading && (
+        <div className="ts-lg text-secondary d-flex align-items-center">
+          <Spinner size="sm" className="me-1" />
+          Đang tải...
+        </div>
+      )}
     </div>
   );
 }

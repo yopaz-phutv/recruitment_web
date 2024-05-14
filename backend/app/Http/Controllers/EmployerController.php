@@ -343,12 +343,27 @@ class EmployerController extends Controller
         }
         return response()->json('deleted successfully');
     }
-    // public function getSavedCandidates(Request $req) {
-    //     $employer_id = Auth::user()->id;
+    public function getSavedCandidates(Request $req)
+    {
+        $employer_id = Auth::user()->id;
 
-    //     DB::table('saved-candidates')
-    //         ->join('candidates', 'candidate_id', '=', 'candidates.id')
-    //         ->where('employer_id', $employer_id)
-    //         ->select()
-    // }
+        $resumes = DB::table('saved_candidates')
+            ->join('resumes', 'resume_id', '=', 'resumes.id')
+            ->where('employer_id', $employer_id)
+            ->select('resumes.*', DB::raw('saved_candidates.created_at AS saved_time'))
+            ->oldest()
+            ->distinct()
+            ->get();
+        for ($i = 0; $i < count($resumes); $i++) {
+            $resume = $resumes[$i];
+            $jobs = DB::table('saved_candidates')
+                ->join('jobs', 'job_id', '=', 'jobs.id')
+                ->where('resume_id', $resume->id)
+                ->select('jobs.id', 'jname')
+                ->get();
+            $resumes[$i]->jobs = $jobs;
+        }
+
+        return response()->json($resumes);
+    }
 }

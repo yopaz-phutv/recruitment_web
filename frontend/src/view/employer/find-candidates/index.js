@@ -19,6 +19,7 @@ import ResumeModal from "./ResumeModal";
 import { useLocation } from "react-router-dom";
 import CPagination from "../../../components/CPagination";
 import SelectJobModal from "./SelectJobModal";
+import useGetJobsByEmployer from "../../../hooks/useGetJobsByEmployer";
 
 export default function FindingCandidates() {
   const { locations, isLoading: isLoadingLocations } = useGetAllLocations();
@@ -34,7 +35,7 @@ export default function FindingCandidates() {
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [totalPage, setTotalPage] = useState(0);
   const [curPage, setCurPage] = useState(1);
-  const [jobs, setJobs] = useState([]);
+  const { jobs } = useGetJobsByEmployer();
   const [showSelectJobModal, setShowSelectJobModal] = useState(false);
 
   const location = useLocation();
@@ -85,11 +86,6 @@ export default function FindingCandidates() {
     setIsLoading(false);
   };
 
-  const getOwnJobs = async () => {
-    const res = await employerApi.getJobList();
-    setJobs(res);
-  };
-
   const updateBookmark = (resume_id) => {
     if (!resume_id) resume_id = curResume.id;
     const resumesTemp = [...resumes];
@@ -97,13 +93,6 @@ export default function FindingCandidates() {
     resumesTemp[index].is_saved = !resumesTemp[index].is_saved;
     setResumes(resumesTemp);
   };
-
-  useEffect(() => {
-    getOwnJobs();
-  }, []);
-  useEffect(() => {
-    console.log({ resumes });
-  }, [resumes]);
 
   return (
     <div

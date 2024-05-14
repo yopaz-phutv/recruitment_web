@@ -53,5 +53,8 @@ const employerApi = {
   handleSavingCandidate: (data) => {
     return employerAxios.post(`${prefix}/handleSavingCandidate`, data);
   },
+  getSavedCandidates: () => {
+    return employerAxios.get(`${prefix}/getSavedCandidates`);
+  }
 };
 export default employerApi;
