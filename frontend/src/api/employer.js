@@ -30,7 +30,7 @@ const employerApi = {
   getComJobs: (id) => {
     return commonAxios.get(`${prefix}/${id}/getComJobs`);
   },
-  getJobList: (keyword = '') => {
+  getJobList: (keyword = "") => {
     return employerAxios.get(`${prefix}/getJobList?keyword=${keyword}`);
   },
   getCandidateList: (keyword, status) => {
@@ -53,8 +53,12 @@ const employerApi = {
   handleSavingCandidate: (data) => {
     return employerAxios.post(`${prefix}/handleSavingCandidate`, data);
   },
-  getSavedCandidates: () => {
-    return employerAxios.get(`${prefix}/getSavedCandidates`);
-  }
+  getSavedCandidates: (params) => {
+    return employerAxios.get(
+      `${prefix}/getSavedCandidates?${queryString.stringify(params, {
+        arrayFormat: "index",
+      })}`
+    );
+  },
 };
 export default employerApi;

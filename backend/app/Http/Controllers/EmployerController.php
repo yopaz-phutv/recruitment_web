@@ -346,10 +346,14 @@ class EmployerController extends Controller
     public function getSavedCandidates(Request $req)
     {
         $employer_id = Auth::user()->id;
+        $job_id = $req->job_id;
 
         $resumes = DB::table('saved_candidates')
             ->join('resumes', 'resume_id', '=', 'resumes.id')
             ->where('employer_id', $employer_id)
+            ->when($job_id !== null, function ($query) use ($req) {
+                return $query->where('job_id', $req->job_id);
+            })
             ->select('resumes.*', DB::raw('saved_candidates.created_at AS saved_time'))
             ->oldest()
             ->distinct()

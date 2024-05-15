@@ -16,9 +16,9 @@ export default function SavedCandidates() {
   const [isLoading, setIsLoading] = useState(false);
   // const [curJobId, setCurJobId] = useState(null)
 
-  const getResumeList = async () => {
-    setIsLoading(true);
-    const res = await employerApi.getSavedCandidates();
+  const getResumeList = async (jobId) => {
+    setIsLoading(true);    
+    const res = await employerApi.getSavedCandidates({ job_id: jobId });
     setResumes(res);
     setIsLoading(false);
   };
@@ -37,6 +37,7 @@ export default function SavedCandidates() {
     if (isAuth) {
       getResumeList();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
 
   return (
@@ -55,8 +56,19 @@ export default function SavedCandidates() {
                   Vị trí
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="ts-sm py-0">
+                  <Dropdown.Item onClick={async () => await getResumeList()}>
+                    Tất cả vị trí
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={async () => await getResumeList(0)}>
+                    Chưa xác định
+                  </Dropdown.Item>
                   {jobs.map((item) => (
-                    <Dropdown.Item key={item.id}>{item.jname}</Dropdown.Item>
+                    <Dropdown.Item
+                      key={item.id}
+                      onClick={async () => await getResumeList(item.id)}
+                    >
+                      {item.jname}
+                    </Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
               </Dropdown>
@@ -102,11 +114,13 @@ export default function SavedCandidates() {
           </tbody>
         )}
       </Table>
-      {isLoading && (
+      {isLoading ? (
         <div className="ts-lg text-secondary d-flex align-items-center">
           <Spinner size="sm" className="me-1" />
           Đang tải...
         </div>
+      ) : (
+        resumes.length === 0 && <h5>Không có bản ghi nào</h5>
       )}
     </div>
   );
