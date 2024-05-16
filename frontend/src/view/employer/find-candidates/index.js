@@ -4,7 +4,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import { useForm } from "react-hook-form";
 import useGetAllLocations from "../../../hooks/useGetAllLocations";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CMulSelect from "../../../components/CMulSelect";
 import useGetAllIndustries from "../../../hooks/useGetAllIndustries";
 import TagInput from "../../../components/TagInput";

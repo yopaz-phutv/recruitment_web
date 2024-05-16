@@ -41,8 +41,8 @@ export default function Profile() {
     const res = await resumeApi.getByCurrentCandidate();
     setResumes(res);
   };
-  const handleChangePublicResume = async (publicState) => {
-    if (!publicState) publicState = isPublic;
+  const handleChangePublicResume = async (publicState = null) => {
+    if (publicState === null) publicState = isPublic;
     setIsLoadingUpdatePublicResume(true);
     let data = {};
     if (!publicState) data.not_public = 1;

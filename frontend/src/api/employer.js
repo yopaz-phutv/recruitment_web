@@ -60,5 +60,8 @@ const employerApi = {
       })}`
     );
   },
+  sendRecommendToCandidate: (data) => {
+    return employerAxios.post(`${prefix}/sendRecommendToCandidate`, data);
+  }
 };
 export default employerApi;

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('candidate_messages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('candidate_id');
-            $table->unsignedBigInteger('job_id');
+            $table->unsignedBigInteger('job_id')->nullable();
             $table->string('name');
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->text('content');
             $table->boolean('isRead')->default(0);
             $table->timestamps();

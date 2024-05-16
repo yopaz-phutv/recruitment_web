@@ -3,11 +3,14 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
 import { BsEye, BsTrash3 } from "react-icons/bs";
+import { IoIosSend } from "react-icons/io";
 import employerApi from "../../../api/employer";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import CTooltip from "../../../components/CTooltip";
 import useGetJobsByEmployer from "../../../hooks/useGetJobsByEmployer";
+import clsx from "clsx";
+import { toast } from "react-toastify";
 
 export default function SavedCandidates() {
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
@@ -17,10 +20,14 @@ export default function SavedCandidates() {
   // const [curJobId, setCurJobId] = useState(null)
 
   const getResumeList = async (jobId) => {
-    setIsLoading(true);    
-    const res = await employerApi.getSavedCandidates({ job_id: jobId });
-    setResumes(res);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const res = await employerApi.getSavedCandidates({ job_id: jobId });
+      setResumes(res);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDelete = async (resume_id, index) => {
@@ -30,6 +37,18 @@ export default function SavedCandidates() {
       let resumesTemp = [...resumes];
       resumesTemp.splice(index, 1);
       setResumes(resumesTemp);
+    }
+  };
+
+  const handleSendRecommend = async (resume, index) => {
+    try {
+      await employerApi.sendRecommendToCandidate(resume);
+      let resumesTemp = [...resumes]
+      resumesTemp[index].is_send_noti = 1
+      setResumes(resumesTemp)
+      toast.success("Gửi thành công!");
+    } catch (error) {
+      toast.error("Đã có lỗi xảy ra!");
     }
   };
 
@@ -89,7 +108,7 @@ export default function SavedCandidates() {
                     ? item.jobs.map((job, index, self) => (
                         <div key={job.id}>
                           {job.jname}
-                          {index !== self.length && ", "}
+                          {index !== self.length -1 && ", "}
                         </div>
                       ))
                     : "Chưa xác định"}
@@ -107,6 +126,28 @@ export default function SavedCandidates() {
                     <div onClick={() => handleDelete(item.id, index)}>
                       <BsTrash3 className="text-danger pointer" />
                     </div>
+                    <CTooltip
+                      text={clsx(
+                        "Gửi thông báo gợi ý việc làm tới ứng viên: ",
+                        item.is_send_noti ? "Đã gửi" : "Chưa gửi"
+                      )}
+                    >
+                      <div
+                        onClick={() => {
+                          if (!item.is_send_noti) handleSendRecommend(item, index);
+                        }}
+                      >
+                        <IoIosSend
+                          fontSize="18px"
+                          className={clsx(
+                            "pointer",
+                            item.is_send_noti
+                              ? "text-secondary"
+                              : "text-success"
+                          )}
+                        />
+                      </div>
+                    </CTooltip>
                   </div>
                 </td>
               </tr>

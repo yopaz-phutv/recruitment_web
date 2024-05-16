@@ -34,7 +34,7 @@ class CandidateSeeder extends Seeder
                 'desired_min_salary' => 3,
                 'desired_max_salary' => 5,
                 'job_yoe' => 1,
-                'public_resume_id' => 1
+                'public_resume_id' => null
             ],
             [
                 'id' => 2,

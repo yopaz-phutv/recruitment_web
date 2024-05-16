@@ -8,11 +8,11 @@ import authApi from "../../../api/auth";
 import candMsgApi from "../../../api/candidateMessage";
 import { candAuthActions } from "../../../redux/slices/candAuthSlice";
 import Login from "../auth/Login";
-import Pusher from "pusher-js";
 import BellDialog from "./BellDialog";
 import Stack from "react-bootstrap/Stack";
 import { AppContext } from "../../../App";
 import clsx from "clsx";
+import InnerHTML from 'dangerously-set-html-content'
 
 const user_icon = process.env.PUBLIC_URL + "/image/user_icon.png";
 
@@ -24,7 +24,7 @@ function Layout(props) {
   const [showBellDialog, setShowBellDialog] = useState(false);
   const [showListMsg, setShowListMsg] = useState(false);
   const [curNotification, setCurNotification] = useState({});
-  const { curUrl, setCurUrl } = useContext(AppContext);
+  const { curUrl, setCurUrl, pusher } = useContext(AppContext);
 
   const dispatch = useDispatch();
   const candidate = useSelector((state) => state.candAuth.current);
@@ -91,10 +91,6 @@ function Layout(props) {
   useEffect(() => {
     if (isAuth) {
       getAllMessages();
-      let pusher = new Pusher("5b0ac1136aca9c77eadb", {
-        cluster: "ap1",
-        encrypted: true,
-      });
       let channelName = `candidate-channel_${candidate.id}`;
       let channel = pusher.subscribe(channelName);
       channel.bind("notification-event", (data) => {
@@ -197,7 +193,7 @@ function Layout(props) {
                           "text-wrap px-3 py-2 hover-bg-1 pointer" + msgStyles[index]
                         }
                       >
-                        {item.name}
+                        <InnerHTML html={item.name} />
                       </div>
                     ))
                   ) : (

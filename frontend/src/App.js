@@ -1,6 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createContext, useState } from "react";
 import { ToastContainer } from "react-toastify";
+
+import Pusher from "pusher-js";
+
 import Home from "./view/candidate/Home";
 import CompanyList from "./view/candidate/CompanyList";
 import Company from "./view/candidate/Company";
@@ -32,9 +35,13 @@ export const AppContext = createContext();
 
 function App() {
   const [curUrl, setCurUrl] = useState("/");
+  let pusher = new Pusher("5b0ac1136aca9c77eadb", {
+    cluster: "ap1",
+    encrypted: true,
+  });
 
   return (
-    <AppContext.Provider value={{ curUrl, setCurUrl }}>
+    <AppContext.Provider value={{ curUrl, setCurUrl, pusher }}>
       <ToastContainer autoClose={500} position="bottom-right" />
       <BrowserRouter>
         <Routes>

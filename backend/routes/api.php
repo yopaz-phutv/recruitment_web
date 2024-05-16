@@ -74,6 +74,7 @@ Route::controller(EmployerController::class)->prefix('companies')->group(functio
     Route::get('findCandidates', 'findCandidates');
     Route::post('handleSavingCandidate', 'handleSavingCandidate');
     Route::get('getSavedCandidates', 'getSavedCandidates');
+    Route::post('sendRecommendToCandidate', 'sendRecommendToCandidate');
 });
 
 Route::controller(AdminController::class)->prefix('admin')->group(function () {

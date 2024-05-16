@@ -35,4 +35,8 @@ class Job extends Model
     {
         return $this->hasMany(CandidateMessage::class);
     }
+    public function saved_candidates()
+    {
+        return $this->belongsToMany(SavedCandidate::class, 'saved_candidates_detail', 'job_id', 'saved_candidates_id');
+    }
 }

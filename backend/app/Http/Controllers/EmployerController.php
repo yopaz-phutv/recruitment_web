@@ -7,6 +7,7 @@ use App\Models\Candidate;
 use App\Models\CandidateMessage;
 use App\Models\Employer;
 use App\Models\Job;
+use App\Models\SavedCandidate;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Query\Builder;
@@ -310,34 +311,41 @@ class EmployerController extends Controller
     {
         $user = Auth::user();
 
-        DB::table('saved_candidates')
-            ->where([
-                ['employer_id', $user->id],
-                ['resume_id', $req->resume_id]
-            ])
-            ->delete();
+        $delete_record_id = SavedCandidate::where([
+            ['employer_id', $user->id],
+            ['resume_id', $req->resume_id]
+        ])->first()->id ?? null;
+        
+        if ($delete_record_id) {
+            DB::table('saved_candidates_detail')
+                ->where('saved_candidates_id', $delete_record_id)
+                ->delete();
+            SavedCandidate::destroy($delete_record_id);
+        }
 
         if (!$req->has('delete')) {
             $insert_data = [];
+
+            $saved_candidates_id = SavedCandidate::create([
+                'employer_id' => $user->id,
+                'resume_id' => $req->resume_id,
+            ])->id;
+
             if ($req->has('job_none')) {
                 $insert_data[] = [
-                    'employer_id' => $user->id,
-                    'resume_id' => $req->resume_id,
-                    'job_id' => 0,
-                    'created_at' => Carbon::now()
+                    'saved_candidates_id' => $saved_candidates_id,
+                    'job_id' => 0
                 ];
             } else {
                 foreach ($req->job_ids as $job_id) {
                     $insert_data[] = [
-                        'employer_id' => $user->id,
-                        'resume_id' => $req->resume_id,
-                        'job_id' => $job_id,
-                        'created_at' => Carbon::now()
+                        'saved_candidates_id' => $saved_candidates_id,
+                        'job_id' => $job_id
                     ];
                 }
             }
 
-            DB::table('saved_candidates')->insert($insert_data);
+            DB::table('saved_candidates_detail')->insert($insert_data);
 
             return response()->json('created successfully', 201);
         }
@@ -348,26 +356,64 @@ class EmployerController extends Controller
         $employer_id = Auth::user()->id;
         $job_id = $req->job_id;
 
-        $resumes = DB::table('saved_candidates')
-            ->join('resumes', 'resume_id', '=', 'resumes.id')
-            ->where('employer_id', $employer_id)
-            ->when($job_id !== null, function ($query) use ($req) {
-                return $query->where('job_id', $req->job_id);
+        $resumes = SavedCandidate::join('resumes', 'resume_id', '=', 'resumes.id')
+        ->where('employer_id', $employer_id)
+            ->when($job_id !== null, function ($query) use ($job_id) {
+                return $query->join('saved_candidates_detail', 'saved_candidates.id', '=', 'saved_candidates_id')
+                             ->where('job_id', $job_id);
             })
-            ->select('resumes.*', DB::raw('saved_candidates.created_at AS saved_time'))
-            ->oldest()
-            ->distinct()
+            ->select(
+                'resumes.id',
+                'candidate_id',
+                DB::raw('saved_candidates.id AS saved_candidates_id'),
+                'fullname',
+                'phone',
+                'email',
+                DB::raw('saved_candidates.created_at AS saved_time'),
+                'is_send_noti',
+                'image'
+            )
+            ->oldest('saved_time')
             ->get();
+
         for ($i = 0; $i < count($resumes); $i++) {
             $resume = $resumes[$i];
-            $jobs = DB::table('saved_candidates')
+            $jobs = DB::table('saved_candidates_detail')
                 ->join('jobs', 'job_id', '=', 'jobs.id')
-                ->where('resume_id', $resume->id)
+                ->where('saved_candidates_id', $resume->saved_candidates_id)
                 ->select('jobs.id', 'jname')
                 ->get();
-            $resumes[$i]->jobs = $jobs;
+                $resumes[$i]['jobs'] = $jobs; 
         }
 
         return response()->json($resumes);
+    }
+    public function sendRecommendToCandidate(Request $req){
+        $jobs = $req->jobs;
+
+        $employer = Employer::find(Auth::user()->id);
+
+        $noti_name = "<div>Bạn nhận được gợi ý việc làm từ nhà tuyển dụng <strong>{$employer->name}</strong></div>";
+        $content = "<div><strong>Việc làm:</strong>";
+        $frontend_app_base_url = config('FRONTEND_APP_BASE_URL');            
+        foreach ($jobs as $job) {
+            $content.= "<div><a href='{$frontend_app_base_url}/jobs/{$job['id']}'>{$job['jname']}</a></div>";
+        }
+        $content.= "</div>";
+
+        // save to `candidates` table:
+        CandidateMessage::create([
+            'candidate_id' => $req->candidate_id,
+            'name' => $noti_name,
+            'content' => $content
+        ]);
+        SavedCandidate::where([
+            ['employer_id', $employer->id],
+            ['resume_id', $req->id]
+        ])->update(['is_send_noti' => 1]);
+
+        event(new NotifyCandidateEvent($noti_name, $req->candidate_id));
+
+        return response()->json('sent successfully');
     }
 }
