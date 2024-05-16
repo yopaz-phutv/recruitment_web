@@ -67,7 +67,7 @@ function CandidateList() {
 
   return (
     <>
-      <div className="bg-white ms-4 mt-3" style={{ height: "90%" }}>
+      <div className="bg-white ms-3 mt-3 shadow-sm" style={{ height: "90%" }}>
         <h5 className="mb-1 pt-3 text-main" style={{ marginLeft: "45px" }}>
           Danh sách ứng viên
         </h5>

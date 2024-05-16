@@ -5,51 +5,42 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AiOutlinePlus } from "react-icons/ai";
+import Loading from "../../../components/Loading";
 import JobDetail from "./JobDetail";
 import JobCreating from "./JobCreating";
 import { useSelector } from "react-redux";
-import jtypeApi from "../../../api/jtype";
-import jlevelApi from "../../../api/jlevel";
-import industryApi from "../../../api/industry";
-import locationApi from "../../../api/location";
 import employerApi from "../../../api/employer";
+import useGetAllJtypes from "../../../hooks/useGetAllJtypes";
+import useGetAllJlevels from "../../../hooks/useGetAllJlevels";
+import useGetAllIndustries from "../../../hooks/useGetAllIndustries";
+import useGetAllLocations from "../../../hooks/useGetAllLocations";
 
 function JobManagement() {
-  const nav = useNavigate()
+  const nav = useNavigate();
 
+  const isAuth = useSelector((state) => state.employerAuth.isAuth);
+  const { register, handleSubmit } = useForm();
+
+  const { jtypes } = useGetAllJtypes();
+  const { jlevels } = useGetAllJlevels();
+  const { industries } = useGetAllIndustries();
+  const { locations } = useGetAllLocations();
   const [jobs, setJobs] = useState([]);
   const [curJob, setCurJob] = useState({ industries: [], locations: [] });
-  const [jtypes, setJtypes] = useState([]);
-  const [jlevels, setJlevels] = useState([]);
-  const [industries, setIndustries] = useState([]);
-  const [locations, setLocations] = useState([]);
-  const { register, handleSubmit } = useForm();
+  const [isLoading, setIsLoading] = useState(true);
   // const company = useSelector((state) => state.employerAuth.current.employer);
-  const isAuth = useSelector((state) => state.employerAuth.isAuth);
-
-  const getAllJtypes = async () => {
-    const res = await jtypeApi.getAll();
-    setJtypes(res.inf);
-  };
-
-  const getAllJlevels = async () => {
-    const res = await jlevelApi.getAll();
-    setJlevels(res.inf);
-  };
-  const getAllIndustries = async () => {
-    const res = await industryApi.getAll();
-    setIndustries(res.inf);
-  };
-  const getAllLocations = async () => {
-    const res = await locationApi.getAll();
-    setLocations(res);
-  };
 
   const getJobList = async (data) => {
-    let searchKey = "";
-    if (data) searchKey = data.searchKey;
-    const res = await employerApi.getJobList(searchKey);
-    setJobs(res);
+    try {
+      setIsLoading(true);
+      let searchKey = "";
+      if (data) searchKey = data.searchKey;
+      const res = await employerApi.getJobList(searchKey);
+      setJobs(res);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
   const handleClickActBtn = (job_inf, type) => {
     setCurJob(job_inf);
@@ -75,21 +66,13 @@ function JobManagement() {
   };
 
   useEffect(() => {
-    getAllJtypes();
-    getAllJlevels();
-    getAllIndustries();
-    getAllLocations();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     if (isAuth) getJobList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
 
   return (
     <>
-      <div className="bg-white ms-4 mt-3 pb-3">
+      <div className="bg-white ms-3 mt-3 pb-3 shadow-sm">
         <div className="pt-3" style={{ marginLeft: "45px" }}>
           <h5 className="text-main">Danh sách việc làm</h5>
           <div className="clearfix my-3" style={{ width: "93%" }}>
@@ -135,9 +118,9 @@ function JobManagement() {
                 <th>Hành động</th>
               </tr>
             </thead>
-            <tbody style={{ fontSize: "14px" }}>
-              {jobs.length > 0 &&
-                jobs.map((item, index) => (
+            {!isLoading && (
+              <tbody style={{ fontSize: "14px" }}>
+                {jobs.map((item, index) => (
                   <tr key={"job" + item.id}>
                     <td>{item.jname}</td>
                     <td>{item.jtype_name}</td>
@@ -181,9 +164,14 @@ function JobManagement() {
                     </td>
                   </tr>
                 ))}
-            </tbody>
+              </tbody>
+            )}
           </table>
-          {jobs.length === 0 && <h5>Không có bản ghi nào</h5>}
+          {isLoading ? (
+            <Loading />
+          ) : (
+            jobs.length === 0 && <h5>Không có bản ghi nào</h5>
+          )}
           <JobDetail
             inf={curJob}
             jtypes={jtypes}

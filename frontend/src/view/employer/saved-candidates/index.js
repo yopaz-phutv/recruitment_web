@@ -11,13 +11,15 @@ import CTooltip from "../../../components/CTooltip";
 import useGetJobsByEmployer from "../../../hooks/useGetJobsByEmployer";
 import clsx from "clsx";
 import { toast } from "react-toastify";
+import Loading from "../../../components/Loading";
 
 export default function SavedCandidates() {
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
   const { jobs } = useGetJobsByEmployer();
   const [resumes, setResumes] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  // const [curJobId, setCurJobId] = useState(null)
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSendingRecommend, setIsSendingRecommend] = useState(false);
+  const [filterJob, setFilterJob] = useState("Tất cả vị trí");
 
   const getResumeList = async (jobId) => {
     try {
@@ -42,13 +44,16 @@ export default function SavedCandidates() {
 
   const handleSendRecommend = async (resume, index) => {
     try {
+      setIsSendingRecommend(true);
       await employerApi.sendRecommendToCandidate(resume);
-      let resumesTemp = [...resumes]
-      resumesTemp[index].is_send_noti = 1
-      setResumes(resumesTemp)
+      let resumesTemp = [...resumes];
+      resumesTemp[index].is_send_noti = 1;
+      setResumes(resumesTemp);
       toast.success("Gửi thành công!");
     } catch (error) {
       toast.error("Đã có lỗi xảy ra!");
+    } finally {
+      setIsSendingRecommend(false);
     }
   };
 
@@ -61,7 +66,7 @@ export default function SavedCandidates() {
 
   return (
     <div
-      className="bg-white ms-4 mt-3 pb-2"
+      className="bg-white ms-3 mt-3 pb-2 shadow-sm"
       style={{ paddingLeft: "45px", paddingRight: "35px" }}
     >
       <h5 className="mb-2 pt-3 text-main">Danh sách ứng viên đã đánh dấu</h5>
@@ -71,20 +76,35 @@ export default function SavedCandidates() {
             <th className="fw-500">Tên</th>
             <th className="fw-500 w-25">
               <Dropdown>
-                <Dropdown.Toggle as="div" className="border pointer">
-                  Vị trí
-                </Dropdown.Toggle>
+                <CTooltip text={filterJob}>
+                  <Dropdown.Toggle as="span" className="border pointer">
+                    Vị trí
+                  </Dropdown.Toggle>
+                </CTooltip>
                 <Dropdown.Menu className="ts-sm py-0">
-                  <Dropdown.Item onClick={async () => await getResumeList()}>
+                  <Dropdown.Item
+                    onClick={async () => {
+                      setFilterJob("Tất cả vị trí");
+                      await getResumeList();
+                    }}
+                  >
                     Tất cả vị trí
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={async () => await getResumeList(0)}>
+                  <Dropdown.Item
+                    onClick={async () => {
+                      setFilterJob("Chưa xác định");
+                      await getResumeList(0);
+                    }}
+                  >
                     Chưa xác định
                   </Dropdown.Item>
                   {jobs.map((item) => (
                     <Dropdown.Item
                       key={item.id}
-                      onClick={async () => await getResumeList(item.id)}
+                      onClick={async () => {
+                        setFilterJob(item.jname);
+                        await getResumeList(item.id);
+                      }}
                     >
                       {item.jname}
                     </Dropdown.Item>
@@ -108,7 +128,7 @@ export default function SavedCandidates() {
                     ? item.jobs.map((job, index, self) => (
                         <div key={job.id}>
                           {job.jname}
-                          {index !== self.length -1 && ", "}
+                          {index !== self.length - 1 && ", "}
                         </div>
                       ))
                     : "Chưa xác định"}
@@ -117,38 +137,46 @@ export default function SavedCandidates() {
                 <td>{item.email}</td>
                 <td>{dayjs(item.saved_time).format("DD/MM/YYYY HH:mm")}</td>
                 <td>
-                  <div className="d-flex gap-2 ts-md">
-                    <CTooltip text="Xem hồ sơ">
-                      <a href={item.image} target="_blank" rel="noreferrer">
-                        <BsEye className="text-main pointer" />
-                      </a>
-                    </CTooltip>
-                    <div onClick={() => handleDelete(item.id, index)}>
-                      <BsTrash3 className="text-danger pointer" />
+                  {isSendingRecommend ? (
+                    <div className="d-flex gap-1 align-items-center flex-wrap">
+                      <Spinner size="sm" className="text-main" />
+                      Đang gửi
                     </div>
-                    <CTooltip
-                      text={clsx(
-                        "Gửi thông báo gợi ý việc làm tới ứng viên: ",
-                        item.is_send_noti ? "Đã gửi" : "Chưa gửi"
-                      )}
-                    >
-                      <div
-                        onClick={() => {
-                          if (!item.is_send_noti) handleSendRecommend(item, index);
-                        }}
-                      >
-                        <IoIosSend
-                          fontSize="18px"
-                          className={clsx(
-                            "pointer",
-                            item.is_send_noti
-                              ? "text-secondary"
-                              : "text-success"
-                          )}
-                        />
+                  ) : (
+                    <div className="d-flex gap-2 ts-md">
+                      <CTooltip text="Xem hồ sơ">
+                        <a href={item.image} target="_blank" rel="noreferrer">
+                          <BsEye className="text-main pointer" />
+                        </a>
+                      </CTooltip>
+                      <div onClick={() => handleDelete(item.id, index)}>
+                        <BsTrash3 className="text-danger pointer" />
                       </div>
-                    </CTooltip>
-                  </div>
+                      <CTooltip
+                        text={clsx(
+                          "Gửi thông báo gợi ý việc làm tới ứng viên: ",
+                          item.is_send_noti ? "Đã gửi" : "Chưa gửi"
+                        )}
+                      >
+                        <div
+                          onClick={() => {
+                            if (!item.is_send_noti)
+                              handleSendRecommend(item, index);
+                          }}
+                        >
+                          <IoIosSend
+                            fontSize="18px"
+                            className={clsx(
+                              "pointer",
+                              item.is_send_noti
+                                ? "text-secondary"
+                                : "text-success"
+                            )}
+                          />
+                        </div>
+                      </CTooltip>
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}
@@ -156,10 +184,7 @@ export default function SavedCandidates() {
         )}
       </Table>
       {isLoading ? (
-        <div className="ts-lg text-secondary d-flex align-items-center">
-          <Spinner size="sm" className="me-1" />
-          Đang tải...
-        </div>
+        <Loading />
       ) : (
         resumes.length === 0 && <h5>Không có bản ghi nào</h5>
       )}

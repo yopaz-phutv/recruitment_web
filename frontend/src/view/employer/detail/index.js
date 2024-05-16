@@ -4,14 +4,22 @@ import { useEffect, useState } from "react";
 import employerApi from "../../../api/employer";
 import EmployerDetailView from "../../../components/EmployerDetailView";
 import EditForm from "./EditForm";
+import Loading from "../../../components/Loading";
 
 export default function EmployerDetail() {
   const [detail, setDetail] = useState({});
   const [isEdit, setIsEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getDetail = async () => {
-    const res = await employerApi.getDetail();
-    setDetail(res);
+    try {
+      setIsLoading(true);
+      const res = await employerApi.getDetail();
+      setDetail(res);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -19,15 +27,17 @@ export default function EmployerDetail() {
   }, []);
 
   return (
-    <div className="bg-white ms-4 mt-3 pb-3 position-relative">
+    <div className="bg-white ms-3 mt-3 pb-3 position-relative shadow-sm">
       <div className="pt-3" style={{ marginLeft: "45px" }}>
         <h5 className="text-main">Thông tin công ty</h5>
-        {!isEdit ? (
+        {isLoading ? (
+          <Loading />
+        ) : !isEdit ? (
           <>
             <EmployerDetailView employer={detail} className="mt-3" />
             <Button
               className="position-absolute"
-              style={{ top: '30px', right: '16px' }}
+              style={{ top: "30px", right: "16px" }}
               onClick={() => setIsEdit(true)}
             >
               Sửa thông tin

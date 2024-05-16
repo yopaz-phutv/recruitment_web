@@ -96,7 +96,7 @@ export default function FindingCandidates() {
 
   return (
     <div
-      className="bg-white ms-4 mt-3 pb-2"
+      className="bg-white ms-3 mt-3 pb-2 shadow-sm"
       style={{ paddingLeft: "45px", paddingRight: "35px" }}
     >
       <h5 className="mb-2 pt-3 text-main">

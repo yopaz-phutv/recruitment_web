@@ -103,10 +103,10 @@ function Login() {
           </div>
           {msg && <div className="text-danger text-center mt-2">{msg}</div>}
           <button type="submit" className="btn btn-primary w-100 mt-3">
-            Đăng nhập
             {isLoading && (
-              <div className="spinner-border spinner-border-sm ms-1"></div>
+              <div className="spinner-border spinner-border-sm me-1"></div>
             )}
+            Đăng nhập
           </button>
           <div className="mt-1 text-center">
             <Link to={`#`} className="text-decoration-none">
