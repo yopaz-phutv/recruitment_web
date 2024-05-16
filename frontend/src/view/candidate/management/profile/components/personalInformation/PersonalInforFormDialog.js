@@ -360,6 +360,7 @@ export default function PersonalInforFormDialog({
                   <option
                     key={item.id}
                     selected={item.id === personal.desired_industry_id}
+                    value={item.id}
                   >
                     {item.name}
                   </option>
@@ -374,6 +375,7 @@ export default function PersonalInforFormDialog({
                   <option
                     key={item.id}
                     selected={item.id === personal.desired_jtype_id}
+                    value={item.id}
                   >
                     {item.name}
                   </option>
@@ -388,6 +390,7 @@ export default function PersonalInforFormDialog({
                   <option
                     key={item.id}
                     selected={item.id === personal.desired_jlevel_id}
+                    value={item.id}
                   >
                     {item.name}
                   </option>

@@ -43,9 +43,9 @@ class CandidateController extends Controller
         $candidate->objective = $req->objective;
 
         if ($req->has('desired_job')) $candidate->desired_job = $req->desired_job;
-        if ($req->has('industry_id')) $candidate->industry_id = $req->industry_id;
-        if ($req->has('jtype_id')) $candidate->jtype_id = $req->jtype_id;
-        if ($req->has('jlevel_id')) $candidate->jlevel_id = $req->jlevel_id;
+        if ($req->has('desired_industry_id')) $candidate->desired_industry_id = $req->desired_industry_id;
+        if ($req->has('desired_jtype_id')) $candidate->desired_jtype_id = $req->desired_jtype_id;
+        if ($req->has('desired_jlevel_id')) $candidate->desired_jlevel_id = $req->desired_jlevel_id;
         if ($req->has('desired_min_salary')) $candidate->desired_min_salary = $req->desired_min_salary;
         if ($req->has('desired_max_salary')) $candidate->desired_max_salary = $req->desired_max_salary;
         if ($req->has('job_yoe')) $candidate->job_yoe = $req->job_yoe;
