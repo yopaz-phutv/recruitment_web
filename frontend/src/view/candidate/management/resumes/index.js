@@ -10,25 +10,38 @@ import { IoMdAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { CandidateContext } from "../layouts/CandidateLayout";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import Loading from "../../../../components/Loading";
 
 export default function Resume() {
   const { setCvMode } = useContext(CandidateContext);
-  const [resumes, setResumes] = useState([]);
   const nav = useNavigate();
+  const isAuth = useSelector((state) => state.candAuth.isAuth);
+  const [resumes, setResumes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getResumes = async () => {
-    const res = await resumeApi.getByCurrentCandidate();
-    setResumes(res);
+    try {
+      setIsLoading(true);
+      const res = await resumeApi.getByCurrentCandidate();
+      setResumes(res);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   const handleCreate = () => {
     nav("/candidate/templates");
   };
+
   const handleEdit = (item) => {
     setCvMode("EDIT");
     nav(`/candidate/resumes/${item.id}`, {
       state: { templateId: item.template_id },
     });
   };
+
   const handleDelete = async (id) => {
     const choice = window.confirm("Bạn có chắc muốn xóa bản ghi này?");
     if (choice) {
@@ -43,8 +56,10 @@ export default function Resume() {
   };
 
   useEffect(() => {
-    getResumes();
-  }, []);
+    if (isAuth) {
+      getResumes();
+    }
+  }, [isAuth]);
 
   return (
     <div className="vh-100 pt-4 px-4">
@@ -69,9 +84,9 @@ export default function Resume() {
               <th className="fw-500">Hành động</th>
             </tr>
           </thead>
-          <tbody>
-            {resumes.length > 0 &&
-              resumes.map((item) => (
+          {!isLoading && (
+            <tbody>
+              {resumes.map((item) => (
                 <tr key={`resume_${item.id}`}>
                   <td className="ts-smd">{item.title}</td>
                   <td className="ts-smd">
@@ -95,9 +110,14 @@ export default function Resume() {
                   </td>
                 </tr>
               ))}
-          </tbody>
+            </tbody>
+          )}
         </Table>
-        {resumes.length === 0 && <h5 className="my-2">Không có bản ghi nào</h5>}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          resumes.length === 0 && <h5 className="my-2">Không có bản ghi nào</h5>
+        )}
       </div>
     </div>
   );

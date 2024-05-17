@@ -2,16 +2,24 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import candidateApi from "../../../api/candidate";
+import Loading from "../../../components/Loading";
 
 function AppliedJobs() {
   const nav = useNavigate();
-  const [jobs, setJobs] = useState([]);
   const user = useSelector((state) => state.candAuth.current);
   const isAuth = useSelector((state) => state.candAuth.isAuth);
+  const [jobs, setJobs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getAppliedJobs = async () => {
-    const res = await candidateApi.getAppliedJobs(user.id);
-    setJobs(res);
+    try {
+      setIsLoading(true);
+      const res = await candidateApi.getAppliedJobs(user.id);
+      setJobs(res);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -43,44 +51,50 @@ function AppliedJobs() {
               <th className="fw-500">Hồ sơ</th>
             </tr>
           </thead>
-          <tbody className="ts-smd">
-            {jobs.map((item) => (
-              <tr key={"job" + item.id}>
-                <td>
-                  <div
-                    className="hover-text-main pointer"
-                    onClick={() => nav(`/jobs/${item.id}`)}
-                  >
-                    {item.jname}
-                  </div>
-                </td>
-                <td>{item.name}</td>
-                <td>{item.postDate} </td>
-                <td>
-                  {item.status === "WAITING" && "Đang chờ duyệt"}
-                  {item.status === "BROWSING_RESUME" && "Đang duyệt hồ sơ"}
-                  {item.status === "RESUME_FAILED" && "Bị từ chối hồ sơ"}
-                  {item.status === "BROWSING_INTERVIEW" &&
-                    "Đang duyệt phỏng vấn"}
-                  {item.status === "INTERVIEW_FAILED" && "Phỏng vấn thất bại"}
-                  {item.status === "PASSED" && "Được nhận"}
-                </td>
-                <td>
-                  <a
-                    className=""
-                    style={{ textDecoration: "none" }}
-                    href={item.cv_link}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Xem
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          {!isLoading && (
+            <tbody className="ts-smd">
+              {jobs.map((item) => (
+                <tr key={"job" + item.id}>
+                  <td>
+                    <div
+                      className="hover-text-main pointer"
+                      onClick={() => nav(`/jobs/${item.id}`)}
+                    >
+                      {item.jname}
+                    </div>
+                  </td>
+                  <td>{item.name}</td>
+                  <td>{item.postDate} </td>
+                  <td>
+                    {item.status === "WAITING" && "Đang chờ duyệt"}
+                    {item.status === "BROWSING_RESUME" && "Đang duyệt hồ sơ"}
+                    {item.status === "RESUME_FAILED" && "Bị từ chối hồ sơ"}
+                    {item.status === "BROWSING_INTERVIEW" &&
+                      "Đang duyệt phỏng vấn"}
+                    {item.status === "INTERVIEW_FAILED" && "Phỏng vấn thất bại"}
+                    {item.status === "PASSED" && "Được nhận"}
+                  </td>
+                  <td>
+                    <a
+                      className=""
+                      style={{ textDecoration: "none" }}
+                      href={item.cv_link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Xem
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          )}
         </table>
-        {jobs.length === 0 && <h5 className="">Không có bản ghi nào</h5>}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          jobs.length === 0 && <h5 className="">Không có bản ghi nào</h5>
+        )}
       </div>
     </>
   );

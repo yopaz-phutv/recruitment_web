@@ -4,6 +4,7 @@ import { BsTrash3 } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import SavedJobPopup from "./SavedJobPopup";
 import candidateApi from "../../../api/candidate";
+import Loading from "../../../components/Loading";
 
 function SavedJobs() {
   const [jobs, setJobs] = useState([]);
@@ -11,22 +12,28 @@ function SavedJobs() {
   const [curJob, setCurJob] = useState({});
   const user = useSelector((state) => state.candAuth.current);
   const isAuth = useSelector((state) => state.candAuth.isAuth);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getSavedJobs = async () => {
-    const jobs = await candidateApi.getSavedJobs(user.id);
-    let jobLocs = [];
-    console.log(jobs);
-    setJobs(jobs);
-    for (let i = 0; i < jobs.length; i++) {
-      jobLocs[i] = "";
-      for (let j = 0; j < jobs[i].locations.length; j++) {
-        jobLocs[i] = jobLocs[i] + jobs[i].locations[j].name;
-        if (j !== jobs[i].locations.length - 1) {
-          jobLocs[i] = jobLocs[i] + ", ";
+    try {
+      setIsLoading(true);
+      const jobs = await candidateApi.getSavedJobs(user.id);
+      let jobLocs = [];
+      setJobs(jobs);
+      for (let i = 0; i < jobs.length; i++) {
+        jobLocs[i] = "";
+        for (let j = 0; j < jobs[i].locations.length; j++) {
+          jobLocs[i] = jobLocs[i] + jobs[i].locations[j].name;
+          if (j !== jobs[i].locations.length - 1) {
+            jobLocs[i] = jobLocs[i] + ", ";
+          }
         }
       }
+      setJobLocations(jobLocs);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
     }
-    setJobLocations(jobLocs);
   };
 
   useEffect(() => {
@@ -56,19 +63,19 @@ function SavedJobs() {
               <th className="fw-500">Hành động</th>
             </tr>
           </thead>
-          <tbody className="ts-smd">
-            {jobs.length > 0 &&
-              jobs.map((item, index) => (
+          {!isLoading && (
+            <tbody className="ts-smd">
+              {jobs.map((item, index) => (
                 <tr key={"saveJob" + item.id}>
                   <td>{item.jname}</td>
                   <td>{item.employer.name} </td>
                   <td>{jobLocations[index]}</td>
                   <td>{item.deadline} </td>
                   <td>
-                    <div className="d-flex flex-wrap align-items-center gap-lg-3 gap-1">
+                    <div className="d-flex align-items-center gap-lg-2 gap-1">
                       {item.is_active === 1 ? (
                         <Link to={`/jobs/${item.id}`}>
-                          <button className="btn btn-sm btn-outline-primary">
+                          <button className="btn btn-sm btn-outline-primary lh-sm">
                             Ứng tuyển
                           </button>
                         </Link>
@@ -89,11 +96,16 @@ function SavedJobs() {
                   </td>
                 </tr>
               ))}
-          </tbody>
+            </tbody>
+          )}
         </table>
-        {jobs.length === 0 && <h5 className="">Không có bản ghi nào</h5>}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          jobs.length === 0 && <h5 className="">Không có bản ghi nào</h5>
+        )}
       </div>
-      <SavedJobPopup job_id={curJob.id} />     
+      <SavedJobPopup job_id={curJob.id} />
     </>
   );
 }
