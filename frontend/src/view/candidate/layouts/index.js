@@ -10,25 +10,28 @@ import { candAuthActions } from "../../../redux/slices/candAuthSlice";
 import Login from "../auth/Login";
 import BellDialog from "./BellDialog";
 import Stack from "react-bootstrap/Stack";
+import Placeholder from "react-bootstrap/Placeholder";
 import { AppContext } from "../../../App";
 import clsx from "clsx";
-import InnerHTML from 'dangerously-set-html-content'
+import InnerHTML from "dangerously-set-html-content";
 
 const user_icon = process.env.PUBLIC_URL + "/image/user_icon.png";
 
 function Layout(props) {
   const nav = useNavigate();
+  const { curUrl, setCurUrl, pusher } = useContext(AppContext);
+
   const [bellMsgs, setBellMsgs] = useState([]);
   const [msgStyles, setMsgStyles] = useState([]);
   const [hasNew, setHasNew] = useState(false);
   const [showBellDialog, setShowBellDialog] = useState(false);
   const [showListMsg, setShowListMsg] = useState(false);
   const [curNotification, setCurNotification] = useState({});
-  const { curUrl, setCurUrl, pusher } = useContext(AppContext);
 
   const dispatch = useDispatch();
   const candidate = useSelector((state) => state.candAuth.current);
   const isAuth = useSelector((state) => state.candAuth.isAuth);
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
 
   const handleLogout = async () => {
     await authApi.logout(1);
@@ -77,14 +80,21 @@ function Layout(props) {
   }, [bellMsgs]);
 
   const getMe = async () => {
-    const res = await authApi.getMe(1);
-    dispatch(candAuthActions.setCurrentCandidate(res));
+    try {
+      setIsLoadingAuth(true);
+      const res = await authApi.getMe(1);
+      dispatch(candAuthActions.setCurrentCandidate(res));
+    } catch (error) {
+    } finally {
+      setIsLoadingAuth(false);
+    }
   };
+
   useEffect(() => {
     setCurUrl(window.location.pathname);
     if (localStorage.getItem("candidate_jwt")) {
       getMe();
-    }
+    } else setIsLoadingAuth(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -142,29 +152,32 @@ function Layout(props) {
             Việc làm
           </Link>
           <div className="me-auto"></div>
-          {!isAuth ? (
+          {isLoadingAuth ? (
+            <Placeholder animation="glow" style={{ marginRight: '40px' }}>
+              <Placeholder className="rounded-circle me-3" style={{ width: "35px", height: '35px' }}/>
+              <Placeholder className="rounded-circle me-1" style={{ width: "35px", height: '35px' }}/>
+              <Placeholder style={{ width: "75px" }} />
+            </Placeholder>
+          ) : !isAuth ? (
             <div className="d-flex align-items-center fw-normal ts-md pointer">
-              <div
-                data-bs-toggle="modal"
-                data-bs-target="#login-box"
-              >
+              <div data-bs-toggle="modal" data-bs-target="#login-box">
                 Đăng nhập
               </div>
-              <div className="vr mx-2 border-2"/>
-              <Link to="/sign-up" className="text-decoration-none text-secondary">
+              <div className="vr mx-2 border-2" />
+              <Link
+                to="/sign-up"
+                className="text-decoration-none text-secondary"
+              >
                 Đăng ký
               </Link>
               <div className="ms-3 me-2">
-                <a
-                  href="/employer/login"
-                  className="btn bg-info text-white fw-500"
-                >
+                <a href="/employer/login" className="btn bg-info text-white">
                   Đăng tuyển, tìm ứng viên
                 </a>
               </div>
             </div>
           ) : (
-            <div className="d-flex align-items-center sidebar-right">
+            <div className="d-flex align-items-center" style={{ marginRight: '40px' }}>
               <div
                 className="position-relative"
                 onMouseLeave={() => setShowListMsg(false)}
@@ -190,7 +203,8 @@ function Layout(props) {
                         key={"bell_msg" + index}
                         onClick={() => handleReadMsg(item)}
                         className={
-                          "text-wrap px-3 py-2 hover-bg-1 pointer" + msgStyles[index]
+                          "text-wrap px-3 py-2 hover-bg-1 pointer" +
+                          msgStyles[index]
                         }
                       >
                         <InnerHTML html={item.name} />
@@ -237,10 +251,7 @@ function Layout(props) {
           )}
         </Stack>
       </header>
-      <main
-        className="page-body"
-        style={{ marginTop: "57px" }}
-      >
+      <main className="page-body" style={{ marginTop: "57px" }}>
         {!isAuth && <Login />}
         {props.children}
       </main>

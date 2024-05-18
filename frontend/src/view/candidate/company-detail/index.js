@@ -1,7 +1,7 @@
-import "./custom.css";
+import "./index.css";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import employerApi from "../../api/employer";
+import employerApi from "../../../api/employer";
 import { IoMdPeople } from "react-icons/io";
 import { MdLocationOn } from "react-icons/md";
 import { IoIosLink } from "react-icons/io";

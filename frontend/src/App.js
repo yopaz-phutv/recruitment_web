@@ -5,8 +5,8 @@ import { ToastContainer } from "react-toastify";
 import Pusher from "pusher-js";
 
 import Home from "./view/candidate/Home";
-import CompanyList from "./view/candidate/CompanyList";
-import Company from "./view/candidate/Company";
+import CompanyList from "./view/candidate/companies";
+import Company from "./view/candidate/company-detail";
 import JobList from "./view/candidate/jobs";
 import Job from "./view/candidate/jobs/JobDetail";
 import EmployerLayout from "./view/employer/layouts";
