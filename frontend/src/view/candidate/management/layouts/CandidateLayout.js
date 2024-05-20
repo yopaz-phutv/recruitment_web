@@ -23,6 +23,7 @@ function CandidateLayout(props) {
   const isAuth = useSelector((state) => state.candAuth.isAuth);
 
   const [personal, setPersonal] = useState({});
+  const [isLoadingPersonal, setIsLoadingPersonal] = useState(true);
   const [educations, setEducations] = useState([]);
   const [experiences, setExperiences] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -34,10 +35,16 @@ function CandidateLayout(props) {
   const [cvMode, setCvMode] = useState("CREATE_0");
 
   const getPersonal = async () => {
-    let res = await candidateApi.getCurrent();
-    let avatar = await candidateApi.getCurrentAvatar();
-    if (avatar.length > 0) res = { ...res, avatar };
-    setPersonal(res);
+    try {
+      setIsLoadingPersonal(true);
+      let res = await candidateApi.getCurrent();
+      let avatar = await candidateApi.getCurrentAvatar();
+      if (avatar.length > 0) res = { ...res, avatar };
+      setPersonal(res);
+    } catch (error) {
+    } finally {
+      setIsLoadingPersonal(false);
+    }
   };
   const getEducations = async () => {
     const res = await educationApi.getByCurrentCandidateProfile();
@@ -97,6 +104,7 @@ function CandidateLayout(props) {
       value={{
         personal,
         setPersonal,
+        isLoadingPersonal,
         educations,
         setEducations,
         experiences,

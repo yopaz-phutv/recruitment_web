@@ -2,20 +2,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Form, Stack, Button } from "react-bootstrap";
-import RequiredMark from "../../../../../../components/form/requiredMark";
-import educationApi from "../../../../../../api/education";
 import Modal from "react-bootstrap/Modal";
+import experienceApi from "../../../../../api/experience";
+import RequiredMark from "../../../../../components/form/requiredMark";
 
-export default function EducationFormDialog({
+export default function ExperienceFormDialog({
   actType,
   setActType,
   current,
-  getAllEducations,
+  getAll,
 }) {
   const requiredMsg = "Không được để trống";
   const schema = yup.object({
-    school: yup.string().required(requiredMsg),
-    // major: yup.string().required(requiredMsg),
+    name: yup.string().required(requiredMsg),
+    company: yup.string().required(requiredMsg),
     // description: yup.string().required(requiredMsg),
     start_date: yup.string().required("Vui lòng chọn"),
     end_date: yup.string().required("Vui lòng chọn"),
@@ -31,15 +31,15 @@ export default function EducationFormDialog({
   const onSubmit = async (data) => {
     console.log({ data });
     if (actType === "ADD") {
-      await educationApi.create(data);
+      await experienceApi.create(data);
       alert("Tạo mới thành công!");
-      await getAllEducations();
+      await getAll();
       setActType("VIEW");
     }
     if (actType === "EDIT") {
-      await educationApi.update(current.id, data);
+      await experienceApi.update(current.id, data);
       alert("Cập nhật thành công!");
-      await getAllEducations();
+      await getAll();
       setActType("VIEW");
     }
   };
@@ -53,40 +53,38 @@ export default function EducationFormDialog({
       fullscreen="md-down"
     >
       <Modal.Header closeButton>
-        <Modal.Title>Thông tin học vấn</Modal.Title>
+        <Modal.Title>Kinh nghiệm việc làm</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-          <div style={{ fontSize: "15px" }}>
+          <div>
             <div className="row row-cols-md-2 row-cols-sm-1">
               <Form.Group className="mt-2">
-                <Form.Label className="fw-600">
-                  Trường/Trung tâm đào tạo
-                </Form.Label>
+                <Form.Label className="fw-600">Chức vụ/Vị trí</Form.Label>
                 <RequiredMark />
                 <Form.Control
                   size="sm"
                   type="text"
-                  defaultValue={actType === "EDIT" ? current.school : null}
-                  {...register("school")}
-                  isInvalid={errors.school}
+                  defaultValue={actType === "EDIT" ? current.name : null}
+                  {...register("name")}
+                  isInvalid={errors.name}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.school?.message}
+                  {errors.name?.message}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mt-2">
-                <Form.Label className="fw-600">Chuyên ngành</Form.Label>
-                {/* <RequiredMark /> */}
+                <Form.Label className="fw-600">Tên công ty</Form.Label>
+                <RequiredMark />
                 <Form.Control
                   size="sm"
                   type="text"
-                  defaultValue={actType === "EDIT" ? current.major : null}
-                  {...register("major")}
+                  defaultValue={actType === "EDIT" ? current.company : null}
+                  {...register("company")}
                 />
-                {/* <Form.Control.Feedback type="invalid">
-              {errors.major?.message}
-            </Form.Control.Feedback> */}
+                <Form.Control.Feedback type="invalid">
+                  {errors.company?.message}
+                </Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mt-2">
                 <Form.Label className="fw-600">Thời gian bắt đầu</Form.Label>
@@ -118,7 +116,7 @@ export default function EducationFormDialog({
               </Form.Group>
             </div>
             <Form.Group className="mt-2">
-              <Form.Label className="fw-600">Mô tả chi tiết</Form.Label>
+              <Form.Label className="fw-600">Mô tả công việc</Form.Label>
               <Form.Control
                 as={"textarea"}
                 rows={5}

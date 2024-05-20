@@ -156,7 +156,7 @@ function Layout(props) {
             <Placeholder animation="glow" style={{ marginRight: '40px' }}>
               <Placeholder className="rounded-circle me-3" style={{ width: "35px", height: '35px' }}/>
               <Placeholder className="rounded-circle me-1" style={{ width: "35px", height: '35px' }}/>
-              <Placeholder style={{ width: "75px" }} />
+              <Placeholder style={{ width: "80px" }} />
             </Placeholder>
           ) : !isAuth ? (
             <div className="d-flex align-items-center fw-normal ts-md pointer">
@@ -193,7 +193,7 @@ function Layout(props) {
                 )}
                 <div
                   className={clsx(
-                    "position-absolute bg-white rounded z-index-1 msg-list fw-normal shadow",
+                    "position-absolute bg-white border rounded z-index-1 msg-list fw-normal shadow",
                     showListMsg ? "d-block" : "d-none"
                   )}
                 >
@@ -211,7 +211,7 @@ function Layout(props) {
                       </div>
                     ))
                   ) : (
-                    <span className="ms-3">Không có thông báo nào</span>
+                    <div className="ms-3 py-2">Không có thông báo nào</div>
                   )}
                 </div>
               </div>
@@ -251,7 +251,7 @@ function Layout(props) {
           )}
         </Stack>
       </header>
-      <main className="page-body" style={{ marginTop: "57px" }}>
+      <main className="page-body" style={{ marginTop: "57px", minHeight: 'calc(100vh - 58px)' }}>
         {!isAuth && <Login />}
         {props.children}
       </main>

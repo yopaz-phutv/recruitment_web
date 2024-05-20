@@ -8,15 +8,18 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 import clsx from "clsx";
+import Loading from "../../../components/Loading";
 
 function CandidateList() {
-  // loc ho so theo: vi tri ung tuyen, tinh thanh, 
+  // loc ho so theo: vi tri ung tuyen, tinh thanh,
   const [candidates, setCandidates] = useState([]);
   const [curCandidate, setCurCandidate] = useState({});
+
   const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("WAITING");
   const [step, setStep] = useState("step1");
   const [showDialog, setShowDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
 
@@ -31,14 +34,15 @@ function CandidateList() {
     );
   };
   const getCandidateList = async () => {
-    const res = await employerApi.getCandidateList(keyword, status);
-    setCandidates(res);
+    try {
+      setIsLoading(true);
+      const res = await employerApi.getCandidateList(keyword, status);
+      setCandidates(res);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
-
-  useEffect(() => {
-    getCandidateList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keyword, status]);
 
   useEffect(() => {
     if (step === "step1") setStatus("WAITING");
@@ -63,11 +67,11 @@ function CandidateList() {
   useEffect(() => {
     if (isAuth) getCandidateList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth]);
+  }, [isAuth, keyword, status]);
 
   return (
     <>
-      <div className="bg-white ms-3 mt-3 shadow-sm" style={{ height: "90%" }}>
+      <div className="bg-white ms-3 mt-3 py-3 shadow-sm" style={{ height: "95%" }}>
         <h5 className="mb-1 pt-3 text-main" style={{ marginLeft: "45px" }}>
           Danh sách ứng viên
         </h5>
@@ -132,9 +136,6 @@ function CandidateList() {
                 </Form.Select>
               </div>
             )}
-            {/* {step === "step1" && status !== "RESUME_FAILED" ? (
-              <ResumeFilter />
-            ) : null} */}
           </Form>
           <div className="mt-3" style={{ width: "90%" }}>
             <table className="table table-borderless border text-center shadow-sm">
@@ -148,9 +149,9 @@ function CandidateList() {
                   <th style={{ width: "13%" }}>Hành động</th>
                 </tr>
               </thead>
-              <tbody className="ts-sm">
-                {candidates.length > 0 &&
-                  candidates.map((item) => (
+              {!isLoading && (
+                <tbody className="ts-sm">
+                  {candidates.map((item) => (
                     <tr key={item.jname + item.phone}>
                       <td>{item.lastname + " " + item.firstname}</td>
                       <td>{item.jname}</td>
@@ -196,10 +197,13 @@ function CandidateList() {
                       </td>
                     </tr>
                   ))}
-              </tbody>
+                </tbody>
+              )}
             </table>
-            {candidates.length === 0 && (
-              <h5 className="">Không có bản ghi nào</h5>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              candidates.length === 0 && <h5>Không có bản ghi nào</h5>
             )}
             <MessagePopup
               candidate={curCandidate}

@@ -29,6 +29,8 @@ return new class extends Migration
             $table->date('expire_at')->nullable();
             $table->boolean('is_hot')->default(0);
             $table->boolean('is_active')->default(1);
+            $table->double('latitude', null, null, true)->nullable();
+            $table->double('longitude', null, null, true)->nullable();
             $table->timestamps();
         });
     }

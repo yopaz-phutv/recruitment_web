@@ -1,26 +1,25 @@
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import { useContext, useState } from "react";
-import FrameLayout from "../frameLayout";
-import CertificateFormDialog from "./CertificateFormDialog";
-import certificateApi from "../../../../../../api/certificate";
 import dayjs from "dayjs";
-import { CandidateContext } from "../../../layouts/CandidateLayout";
+import PrizeFormDialog from "./PrizeFormDialog";
+import prizeApi from "../../../../../api/prize";
+import { CandidateContext } from "../../layouts/CandidateLayout";
+import FrameLayout from "../FrameLayout";
 
-export default function Certificate() {
-  const { certificates, setCertificates, getCertificates } =
-    useContext(CandidateContext);
+export default function Prize() {
+  const { prizes, setPrizes, getPrizes } = useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 
   const handleDelete = async (id) => {
-    let choice = window.confirm("Bạn có chắc muốn xóa Chứng chỉ này?");
+    let choice = window.confirm("Bạn có chắc muốn xóa Giải thưởng này?");
     if (choice) {
-      await certificateApi.destroy(id);
-      let temp = certificates.filter((item) => {
+      await prizeApi.destroy(id);
+      let temp = prizes.filter((item) => {
         return item.id !== id;
       });
-      setCertificates(temp);
+      setPrizes(temp);
     }
   };
   const handleEdit = (item) => {
@@ -30,13 +29,13 @@ export default function Certificate() {
 
   return (
     <FrameLayout
-      title="Chứng chỉ"
+      title="Giải thưởng"
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
-      titleId="profile-certificate"
+      titleId="profile-prize"
     >
-      {certificates?.map((item, index) => (
+      {prizes?.map((item, index) => (
         <div key={index}>
           <hr />
           <div className="border-0 border-main border-start ps-3 d-inline-block">
@@ -44,8 +43,6 @@ export default function Certificate() {
             <div>
               <span className="text-secondary ts-xs">
                 {dayjs(item.receive_date).format("DD/MM/YYYY")}
-                {item.expire_date &&
-                  " - " + dayjs(item.expire_date).format("DD/MM/YYYY")}
               </span>
             </div>
             {item.image && (
@@ -80,11 +77,11 @@ export default function Certificate() {
         </div>
       ))}
       {actType !== "VIEW" && (
-        <CertificateFormDialog
+        <PrizeFormDialog
           actType={actType}
           setActType={setActType}
           current={current}
-          getAll={getCertificates}
+          getAll={getPrizes}
         />
       )}
     </FrameLayout>

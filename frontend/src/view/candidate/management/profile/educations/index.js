@@ -1,26 +1,26 @@
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import { useContext, useState } from "react";
-import FrameLayout from "../frameLayout";
+import educationApi from "../../../../../api/education";
 import dayjs from "dayjs";
-import ActivityFormDialog from "./ActivityFormDialog";
-import activityApi from "../../../../../../api/activity";
-import { CandidateContext } from "../../../layouts/CandidateLayout";
+import EducationFormDialog from "./EducationFormDialog";
+import { CandidateContext } from "../../layouts/CandidateLayout";
+import FrameLayout from "../FrameLayout";
 
-export default function Activity() {
-  const { activities, setActivities, getActivities } =
+export default function Education() {
+  const { educations, setEducations, getEducations } =
     useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 
   const handleDelete = async (id) => {
-    let choice = window.confirm("Bạn có chắc muốn xóa Hoạt động này?");
+    let choice = window.confirm("Bạn có chắc muốn xóa Thông tin học vấn này?");
     if (choice) {
-      await activityApi.destroy(id);
-      let temp = activities.filter((item) => {
+      await educationApi.destroy(id);
+      let temp = educations.filter((item) => {
         return item.id !== id;
       });
-      setActivities(temp);
+      setEducations(temp);
     }
   };
   const handleEdit = (item) => {
@@ -30,44 +30,37 @@ export default function Activity() {
 
   return (
     <FrameLayout
-      title="Hoạt động"
+      title="Thông tin học vấn"
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
-      titleId="profile-activity"
+      titleId="profile-education"
     >
-      {activities?.map((item, index) => (
+      {educations?.map((item, index) => (
         <div key={index}>
           <hr />
           <div className="border-0 border-main border-start ps-3 d-inline-block">
-            <div className="fw-bold">{item.organization}</div>
-            <div className="ts-smd text-secondary">{item.role}</div>
+            <div className="fw-bold">{item.school}</div>
             {item.start_date || item.start_date ? (
               <div>
-                <span className="text-secondary ts-xs">
+                <span className="text-secondary" style={{ fontSize: "13px" }}>
                   {dayjs(item.start_date).format("DD/MM/YYYY")} -{" "}
-                  {!item.is_present
-                    ? dayjs(item.end_date).format("DD/MM/YYYY")
-                    : "hiện tại"}
+                  {dayjs(item.end_date).format("DD/MM/YYYY")}
                 </span>
               </div>
             ) : null}
-            <div className="ts-smd">
-              {item.link && (
-                <div>
-                  Link:{" "}
-                  <a href={item.link} className="text-decoration-none">
-                    {item.link}
-                  </a>
-                </div>
-              )}
-              <div>
-                Mô tả:
-                <span className="text-secondary"> {item.description}</span>
+            {item.major && (
+              <div style={{ fontSize: "15px" }}>
+                Chuyên ngành:
+                <span className="text-secondary">{" " + item.major}</span>
               </div>
+            )}
+            <div style={{ fontSize: "15px" }}>
+              Mô tả:
+              <span className="text-secondary">{" " + item.description}</span>
             </div>
           </div>
-          <div className="mt-2 float-lg-end">
+          <div className="mt-2 float-md-end">
             <Stack direction="horizontal" gap={2}>
               <Button
                 size="sm"
@@ -88,11 +81,11 @@ export default function Activity() {
         </div>
       ))}
       {actType !== "VIEW" && (
-        <ActivityFormDialog
+        <EducationFormDialog
           actType={actType}
           setActType={setActType}
           current={current}
-          getAll={getActivities}
+          getAllEducations={getEducations}
         />
       )}
     </FrameLayout>

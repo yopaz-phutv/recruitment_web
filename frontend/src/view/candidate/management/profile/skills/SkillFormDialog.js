@@ -2,10 +2,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Form, Stack, Button } from "react-bootstrap";
-import RequiredMark from "../../../../../../components/form/requiredMark";
 import Modal from "react-bootstrap/Modal";
-import skillApi from "../../../../../../api/skill";
+import skillApi from "../../../../../api/skill";
 import { IoMdStar, IoMdStarOutline } from "react-icons/io";
+import RequiredMark from "../../../../../components/form/requiredMark";
 
 export default function SkillFormDialog({
   actType,

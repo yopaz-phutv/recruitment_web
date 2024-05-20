@@ -2,41 +2,52 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Form, Stack, Button } from "react-bootstrap";
-import RequiredMark from "../../../../../../components/form/requiredMark";
 import Modal from "react-bootstrap/Modal";
-import projectApi from "../../../../../../api/project";
+import { useEffect, useState } from "react";
+import RequiredMark from "../../../../../components/form/requiredMark";
+import activityApi from "../../../../../api/activity";
 
-export default function ProjectFormDialog({
+export default function ActivityFormDialog({
   actType,
   setActType,
   current,
   getAll,
 }) {
+  const [isPresent, setIsPresent] = useState(false);
   const requiredMsg = "Không được để trống";
   const schema = yup.object({
-    name: yup.string().required(requiredMsg),
+    organization: yup.string().required(requiredMsg),
+    role: yup.string().required(requiredMsg),
     description: yup.string().required(requiredMsg),
     start_date: yup.string().required("Vui lòng chọn"),
-    end_date: yup.string().required("Vui lòng chọn"),
+    end_date: !isPresent && yup.string().required("Vui lòng chọn"),
   });
   const {
     register,
+    watch,
     formState: { errors },
     handleSubmit,
   } = useForm({
     resolver: yupResolver(schema),
   });
+  useEffect(() => {
+    if (watch("is_present")) {
+      setIsPresent(true);
+      document.getElementById("end-date").value = null;
+    } else setIsPresent(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch("is_present")]);
 
   const onSubmit = async (data) => {
     console.log({ data });
     if (actType === "ADD") {
-      await projectApi.create(data);
+      await activityApi.create(data);
       alert("Tạo mới thành công!");
       await getAll();
       setActType("VIEW");
     }
     if (actType === "EDIT") {
-      await projectApi.update(current.id, data);
+      await activityApi.update(current.id, data);
       alert("Cập nhật thành công!");
       await getAll();
       setActType("VIEW");
@@ -52,33 +63,41 @@ export default function ProjectFormDialog({
       fullscreen="md-down"
     >
       <Modal.Header closeButton>
-        <Modal.Title>Dự án</Modal.Title>
+        <Modal.Title>Hoạt động</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
           <div>
             <div className="row row-cols-md-2 row-cols-sm-1">
               <Form.Group className="mt-2">
-                <Form.Label className="fw-600">Tên dự án</Form.Label>
+                <Form.Label className="fw-600">Tên tổ chức</Form.Label>
                 <RequiredMark />
                 <Form.Control
                   size="sm"
                   type="text"
-                  defaultValue={actType === "EDIT" ? current.name : null}
-                  {...register("name")}
-                  isInvalid={errors.name}
+                  defaultValue={
+                    actType === "EDIT" ? current.organization : null
+                  }
+                  {...register("organization")}
+                  isInvalid={errors.organization}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.name?.message}
+                  {errors.organization?.message}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mt-2">
-                <Form.Label className="fw-600">Loại dự án</Form.Label>
+                <Form.Label className="fw-600">Vai trò</Form.Label>
                 <RequiredMark />
-                <Form.Select {...register("prj_type")}>
-                  <option value="cá nhân">Cá nhân</option>
-                  <option value="nhóm">Nhóm</option>
-                </Form.Select>
+                <Form.Control
+                  size="sm"
+                  type="text"
+                  defaultValue={actType === "EDIT" ? current.role : null}
+                  {...register("role")}
+                  isInvalid={errors.role}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.role?.message}
+                </Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mt-2">
                 <Form.Label className="fw-600">Thời gian bắt đầu</Form.Label>
@@ -98,36 +117,29 @@ export default function ProjectFormDialog({
                 <Form.Label className="fw-600">Thời gian kết thúc</Form.Label>
                 <RequiredMark />
                 <Form.Control
+                  id="end-date"
                   size="sm"
                   type="date"
                   {...register("end_date")}
                   defaultValue={actType === "EDIT" ? current.end_date : null}
-                  isInvalid={errors.end_date}
+                  disabled={watch("is_present")}
+                  isInvalid={!watch("is_present") && errors.end_date}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.end_date?.message}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mt-2">
-                <Form.Label className="fw-600">Vai trò</Form.Label>
-                <Form.Control
-                  size="sm"
-                  type="text"
-                  defaultValue={actType === "EDIT" ? current.role : null}
-                  {...register("role")}
+                <Form.Label></Form.Label>
+                <Form.Check
+                  type="checkbox"
+                  label="Vẫn đang hoạt động"
+                  defaultChecked={actType === "EDIT" && current.is_present}
+                  {...register("is_present")}
                 />
               </Form.Group>
               <Form.Group className="mt-2">
-                <Form.Label className="fw-600">Công nghệ sử dụng</Form.Label>
-                <Form.Control
-                  size="sm"
-                  type="text"
-                  defaultValue={actType === "EDIT" ? current.technologies : null}
-                  {...register("technologies")}
-                />
-              </Form.Group>
-              <Form.Group className="mt-2">
-                <Form.Label className="fw-600">Liên kết tới dự án</Form.Label>
+                <Form.Label className="fw-600">Liên kết</Form.Label>
                 <Form.Control
                   size="sm"
                   type="text"
@@ -137,7 +149,7 @@ export default function ProjectFormDialog({
               </Form.Group>
             </div>
             <Form.Group className="mt-2">
-              <Form.Label className="fw-600">Mô tả dự án</Form.Label>
+              <Form.Label className="fw-600">Mô tả hoạt động</Form.Label>
               <RequiredMark />
               <Form.Control
                 as={"textarea"}

@@ -4,7 +4,6 @@ import employerApi from "../../../api/employer";
 import CPagination from "../../../components/CPagination";
 import Spinner from "react-bootstrap/Spinner";
 import CompanyItem from "./CompanyItem";
-import Loading from "../../../components/Loading";
 import CompanyItemSkeleton from "./CompanyItemSkeleton";
 
 function CompanyList() {

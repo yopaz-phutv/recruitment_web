@@ -6,18 +6,13 @@ import authApi from "../../../api/auth";
 import { candAuthActions } from "../../../redux/slices/candAuthSlice";
 
 function Login() {
-  const {
-    register,
-    // formState: { errors },
-    handleSubmit,
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
   const handleLogin = async (user) => {
-    //add role 1(candidate)
     user.role = 1;
     setIsLoading(true);
     await authApi
@@ -31,14 +26,13 @@ function Login() {
         } else {
           const closeBtn = document.getElementById("closeBtn");
           closeBtn.click();
-          document.querySelector('button.resetBtn').click();
+          document.querySelector("button.resetBtn").click();
         }
       })
-      .catch((error) => {
-        // console.log(error);
+      .catch(() => {
         setIsError(true);
       });
-      setIsLoading(false);
+    setIsLoading(false);
   };
 
   return (
@@ -60,7 +54,7 @@ function Login() {
                 <input
                   type="text"
                   className="form-control"
-                  name="email"                  
+                  name="email"
                   {...register("email")}
                 />
                 <label htmlFor="email">Email</label>
@@ -89,13 +83,21 @@ function Login() {
                 </span>
               </div>
               <div className="d-flex justify-content-end mt-2">
-                <button type="submit" className="btn btn-primary me-1 w-100">
+                <button
+                  type="submit"
+                  className="btn btn-primary me-1 w-100"
+                  disabled={isLoading}
+                >
                   {isLoading && (
-                    <span className="spinner-border spinner-border-sm" />
+                    <span className="spinner-border spinner-border-sm me-1" />
                   )}
-                  &nbsp;Đăng nhập
+                  Đăng nhập
                 </button>
-                <button type="reset" className="resetBtn" style={{ display: 'none' }} />
+                <button
+                  type="reset"
+                  className="resetBtn"
+                  style={{ display: "none" }}
+                />
               </div>
             </form>
           </div>

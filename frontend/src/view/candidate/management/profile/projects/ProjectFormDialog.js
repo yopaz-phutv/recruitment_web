@@ -2,11 +2,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Form, Stack, Button } from "react-bootstrap";
-import RequiredMark from "../../../../../../components/form/requiredMark";
 import Modal from "react-bootstrap/Modal";
-import experienceApi from "../../../../../../api/experience";
+import projectApi from "../../../../../api/project";
+import RequiredMark from "../../../../../components/form/requiredMark";
 
-export default function ExperienceFormDialog({
+export default function ProjectFormDialog({
   actType,
   setActType,
   current,
@@ -15,8 +15,7 @@ export default function ExperienceFormDialog({
   const requiredMsg = "Không được để trống";
   const schema = yup.object({
     name: yup.string().required(requiredMsg),
-    company: yup.string().required(requiredMsg),
-    // description: yup.string().required(requiredMsg),
+    description: yup.string().required(requiredMsg),
     start_date: yup.string().required("Vui lòng chọn"),
     end_date: yup.string().required("Vui lòng chọn"),
   });
@@ -31,13 +30,13 @@ export default function ExperienceFormDialog({
   const onSubmit = async (data) => {
     console.log({ data });
     if (actType === "ADD") {
-      await experienceApi.create(data);
+      await projectApi.create(data);
       alert("Tạo mới thành công!");
       await getAll();
       setActType("VIEW");
     }
     if (actType === "EDIT") {
-      await experienceApi.update(current.id, data);
+      await projectApi.update(current.id, data);
       alert("Cập nhật thành công!");
       await getAll();
       setActType("VIEW");
@@ -53,14 +52,14 @@ export default function ExperienceFormDialog({
       fullscreen="md-down"
     >
       <Modal.Header closeButton>
-        <Modal.Title>Kinh nghiệm việc làm</Modal.Title>
+        <Modal.Title>Dự án</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
           <div>
             <div className="row row-cols-md-2 row-cols-sm-1">
               <Form.Group className="mt-2">
-                <Form.Label className="fw-600">Chức vụ/Vị trí</Form.Label>
+                <Form.Label className="fw-600">Tên dự án</Form.Label>
                 <RequiredMark />
                 <Form.Control
                   size="sm"
@@ -74,17 +73,12 @@ export default function ExperienceFormDialog({
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mt-2">
-                <Form.Label className="fw-600">Tên công ty</Form.Label>
+                <Form.Label className="fw-600">Loại dự án</Form.Label>
                 <RequiredMark />
-                <Form.Control
-                  size="sm"
-                  type="text"
-                  defaultValue={actType === "EDIT" ? current.company : null}
-                  {...register("company")}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.company?.message}
-                </Form.Control.Feedback>
+                <Form.Select {...register("prj_type")}>
+                  <option value="cá nhân">Cá nhân</option>
+                  <option value="nhóm">Nhóm</option>
+                </Form.Select>
               </Form.Group>
               <Form.Group className="mt-2">
                 <Form.Label className="fw-600">Thời gian bắt đầu</Form.Label>
@@ -114,20 +108,48 @@ export default function ExperienceFormDialog({
                   {errors.end_date?.message}
                 </Form.Control.Feedback>
               </Form.Group>
+              <Form.Group className="mt-2">
+                <Form.Label className="fw-600">Vai trò</Form.Label>
+                <Form.Control
+                  size="sm"
+                  type="text"
+                  defaultValue={actType === "EDIT" ? current.role : null}
+                  {...register("role")}
+                />
+              </Form.Group>
+              <Form.Group className="mt-2">
+                <Form.Label className="fw-600">Công nghệ sử dụng</Form.Label>
+                <Form.Control
+                  size="sm"
+                  type="text"
+                  defaultValue={actType === "EDIT" ? current.technologies : null}
+                  {...register("technologies")}
+                />
+              </Form.Group>
+              <Form.Group className="mt-2">
+                <Form.Label className="fw-600">Liên kết tới dự án</Form.Label>
+                <Form.Control
+                  size="sm"
+                  type="text"
+                  defaultValue={actType === "EDIT" ? current.link : null}
+                  {...register("link")}
+                />
+              </Form.Group>
             </div>
             <Form.Group className="mt-2">
-              <Form.Label className="fw-600">Mô tả công việc</Form.Label>
+              <Form.Label className="fw-600">Mô tả dự án</Form.Label>
+              <RequiredMark />
               <Form.Control
                 as={"textarea"}
                 rows={5}
                 size="sm"
                 defaultValue={actType === "EDIT" ? current.description : null}
                 {...register("description")}
-                // isInvalid={errors.description}
+                isInvalid={errors.description}
               />
-              {/* <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback type="invalid">
                 {errors.description?.message}
-              </Form.Control.Feedback> */}
+              </Form.Control.Feedback>
             </Form.Group>
           </div>
           <Stack direction="horizontal" gap={3} className="mt-3">

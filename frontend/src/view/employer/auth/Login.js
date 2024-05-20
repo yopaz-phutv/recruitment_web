@@ -102,7 +102,11 @@ function Login() {
             {errors.password && required_error}
           </div>
           {msg && <div className="text-danger text-center mt-2">{msg}</div>}
-          <button type="submit" className="btn btn-primary w-100 mt-3">
+          <button
+            type="submit"
+            className="btn btn-primary w-100 mt-3"
+            disabled={isLoading}
+          >
             {isLoading && (
               <div className="spinner-border spinner-border-sm me-1"></div>
             )}

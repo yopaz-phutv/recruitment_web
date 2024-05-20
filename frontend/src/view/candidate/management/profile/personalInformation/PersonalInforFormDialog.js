@@ -2,20 +2,20 @@ import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
-import RequiredMark from "../../../../../../components/form/requiredMark";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Modal from "react-bootstrap/Modal";
 import { FaUser } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import candidateApi from "../../../../../../api/candidate";
+import candidateApi from "../../../../../api/candidate";
 import Spinner from "react-bootstrap/Spinner";
 import { toast } from "react-toastify";
-import useGetAllLocations from "../../../../../../hooks/useGetAllLocations";
-import useGetAllIndustries from "../../../../../../hooks/useGetAllIndustries";
-import useGetAllJtypes from "../../../../../../hooks/useGetAllJtypes";
-import useGetAllJlevels from "../../../../../../hooks/useGetAllJlevels";
+import useGetAllLocations from "../../../../../hooks/useGetAllLocations";
+import useGetAllIndustries from "../../../../../hooks/useGetAllIndustries";
+import useGetAllJtypes from "../../../../../hooks/useGetAllJtypes";
+import useGetAllJlevels from "../../../../../hooks/useGetAllJlevels";
+import RequiredMark from "../../../../../components/form/requiredMark";
 
 export default function PersonalInforFormDialog({
   isEdit,

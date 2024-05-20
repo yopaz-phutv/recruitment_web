@@ -93,6 +93,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-31',
                 'is_hot' => 1,
                 'is_active' => 1,
+                'latitude' => 21.0092023, 'longitude' => 105.8209867,
                 'created_at' => '2023-07-20 09:05:00'
             ],
             [
@@ -128,6 +129,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-20',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => 21.0092023, 'longitude' => 105.8209867,
                 'created_at' => '2023-07-19 09:05:00'
             ],
             [
@@ -211,6 +213,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-21',
                 'is_hot' => 1,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-20 09:05:00'
             ],
             [
@@ -259,6 +262,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-22',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => 21.00938022431737, 'longitude' => 105.82880893920581,
                 'created_at' => '2023-07-19 09:05:00'
             ],
             [
@@ -313,6 +317,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-20',
                 'is_hot' => 1,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-15 09:05:00'
             ],
             [
@@ -386,6 +391,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-21',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-16 09:05:00'
             ],
             [
@@ -421,6 +427,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-22',
                 'is_hot' => 1,
                 'is_active' => 1,
+                'latitude' => 21.01980411024916, 'longitude' => 105.86029073634822,
                 'created_at' => '2023-07-22 09:05:00'
             ],
             [
@@ -464,6 +471,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-21',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-20 09:05:00'
             ],
             [
@@ -495,6 +503,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-23',
                 'is_hot' => 1,
                 'is_active' => 1,
+                'latitude' => 20.96003321630619, 'longitude' => 105.8482375588116,
                 'created_at' => '2023-07-22 09:05:00'
             ],
             [
@@ -525,6 +534,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-25',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-18 09:05:00'
             ],
             [
@@ -562,6 +572,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-21',
                 'is_hot' => 1,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-16 09:05:00'
             ],
             [
@@ -595,6 +606,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-22',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-20 09:05:00'
             ],
             [
@@ -638,6 +650,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-16',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-15 09:05:00'
             ],
             [
@@ -681,6 +694,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-17',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-16 09:05:00'
             ],
             [
@@ -727,6 +741,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-18',
                 'is_hot' => 1,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-17 09:05:00'
             ],
             [
@@ -757,6 +772,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-19',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-18 09:05:00'
             ],
             [
@@ -807,6 +823,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-20',
                 'is_hot' => 1,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-20 09:05:00'
             ],
             [
@@ -856,6 +873,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-15',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-14 09:05:00'
             ],
             [
@@ -902,6 +920,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-16',
                 'is_hot' => 1,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-15 09:05:00'
             ],
             [
@@ -961,6 +980,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-17',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-16 09:05:00'
             ],
             [
@@ -992,6 +1012,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-18',
                 'is_hot' => 1,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-17 09:05:00'
             ],
             [
@@ -1024,6 +1045,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-19',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-18 09:05:00'
             ],
             [
@@ -1079,6 +1101,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-19',
                 'is_hot' => 1,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-18 09:05:00'
             ],
             [
@@ -1150,6 +1173,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-20',
                 'is_hot' => 0,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-19 09:05:00'
             ],
             [
@@ -1183,6 +1207,7 @@ class JobSeeder extends Seeder
                 'expire_at' => '2023-08-21',
                 'is_hot' => 1,
                 'is_active' => 1,
+                'latitude' => null, 'longitude' => null,
                 'created_at' => '2023-07-20 09:05:00'
             ],
 

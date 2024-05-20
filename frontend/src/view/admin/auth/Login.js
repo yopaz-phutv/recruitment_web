@@ -29,7 +29,7 @@ function Login() {
       .then((res) => {
         localStorage.setItem("admin_jwt", res.authorization.token);
         toast.success("Đăng nhập thành công!");
-        nav('/admin');
+        nav("/admin");
       })
       .catch(() => {
         setMsg("Email hoặc mật khẩu không chính xác!");
@@ -55,9 +55,7 @@ function Login() {
           className="border px-4 py-3 rounded shadow"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <h5 className="mb-3 text-center text-main">
-            Admin đăng nhập
-          </h5>
+          <h5 className="mb-3 text-center text-main">Admin đăng nhập</h5>
           <div className="ts-smd">
             <label htmlFor="email" className="mb-1 fw-500">
               Email{required_mark}
@@ -94,11 +92,15 @@ function Login() {
             {errors.password && required_error}
           </div>
           {msg && <div className="text-danger text-center mt-2">{msg}</div>}
-          <button type="submit" className="btn btn-primary w-100 mt-3">
-            Đăng nhập
+          <button
+            type="submit"
+            className="btn btn-primary w-100 mt-3"
+            disabled={isLoading}
+          >
             {isLoading && (
-              <div className="spinner-border spinner-border-sm ms-1"></div>
+              <div className="spinner-border spinner-border-sm me-1"></div>
             )}
+            Đăng nhập
           </button>
         </form>
       </div>

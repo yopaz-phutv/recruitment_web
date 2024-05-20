@@ -2,13 +2,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Form, Stack, Button } from "react-bootstrap";
-import RequiredMark from "../../../../../../components/form/requiredMark";
 import Modal from "react-bootstrap/Modal";
-import certificateApi from "../../../../../../api/certificate";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+import prizeApi from "../../../../../api/prize";
+import RequiredMark from "../../../../../components/form/requiredMark";
 
-export default function CertificateFormDialog({
+export default function PrizeFormDialog({
   actType,
   setActType,
   current,
@@ -28,10 +28,6 @@ export default function CertificateFormDialog({
   });
   const [hasImg, setHasImg] = useState(false);
   const [isDeleteImg, setIsDeleteImg] = useState(false);
-
-  // useEffect(() => {
-  //   console.log("has img::", hasImg);
-  // }, [hasImg]);
 
   const handleDisplayImg = (e) => {
     setHasImg(true);
@@ -58,22 +54,21 @@ export default function CertificateFormDialog({
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("receive_date", data.receive_date);
-    formData.append("expire_date", data.expire_date);
     if (hasImg) {
       formData.append("image", data.image[0]);
-    }
+    }    
     if (isDeleteImg) {
-      formData.append("delete_img", 1);
+      formData.append("delete_img", 1);      
     }
 
     if (actType === "ADD") {
-      await certificateApi.create(formData);
+      await prizeApi.create(formData);
       alert("Tạo mới thành công!");
       await getAll();
       setActType("VIEW");
     }
     if (actType === "EDIT") {
-      await certificateApi.update(current.id, formData);
+      await prizeApi.update(current.id, formData);
       alert("Cập nhật thành công!");
       await getAll();
       setActType("VIEW");
@@ -89,13 +84,13 @@ export default function CertificateFormDialog({
       fullscreen="md-down"
     >
       <Modal.Header closeButton>
-        <Modal.Title>Chứng chỉ</Modal.Title>
+        <Modal.Title>Giải thưởng</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
           <div>
             <Form.Group className="mt-2">
-              <Form.Label className="fw-600">Tên chứng chỉ</Form.Label>
+              <Form.Label className="fw-600">Tên giải thưởng</Form.Label>
               <RequiredMark />
               <Form.Control
                 size="sm"
@@ -124,17 +119,6 @@ export default function CertificateFormDialog({
                 <Form.Control.Feedback type="invalid">
                   {errors.receive_date?.message}
                 </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group className="mt-2">
-                <Form.Label className="fw-600">
-                  Ngày hết hạn {"(nếu có)"}
-                </Form.Label>
-                <Form.Control
-                  size="sm"
-                  type="date"
-                  {...register("expire_date")}
-                  defaultValue={actType === "EDIT" ? current.expire_date : null}
-                />
               </Form.Group>
             </div>
             <form>

@@ -12,6 +12,7 @@ import useGetAllJtypes from "../../../hooks/useGetAllJtypes";
 import useGetAllJlevels from "../../../hooks/useGetAllJlevels";
 import JobItem from "./JobItem";
 import JobItemSkeleton from "./JobItemSkeleton";
+import JobMap from "./JobMap";
 
 function JobList() {
   const {
@@ -199,6 +200,8 @@ function JobList() {
           </div>
         </div>
       </Form>
+
+      {/* <JobMap className="mt-3" jobs={jobs} /> */}
 
       {isLoading ? (
         <div className="row row-cols-lg-3 mt-4">

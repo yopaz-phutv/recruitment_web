@@ -1,25 +1,28 @@
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import { useContext, useState } from "react";
-import FrameLayout from "../frameLayout";
 import dayjs from "dayjs";
-import projectApi from "../../../../../../api/project";
-import ProjectFormDialog from "./ProjectFormDialog";
-import { CandidateContext } from "../../../layouts/CandidateLayout";
+import experienceApi from "../../../../../api/experience";
+import ExperienceFormDialog from "./ExperienceFormDialog";
+import { CandidateContext } from "../../layouts/CandidateLayout";
+import FrameLayout from "../FrameLayout";
 
-export default function Project() {
-  const { projects, setProjects, getProjects } = useContext(CandidateContext);
+export default function Experience() {
+  const { experiences, setExperiences, getExperiences } =
+    useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 
   const handleDelete = async (id) => {
-    let choice = window.confirm("Bạn có chắc muốn xóa Dự án này?");
+    let choice = window.confirm(
+      "Bạn có chắc muốn xóa Kinh nghiệm việc làm này?"
+    );
     if (choice) {
-      await projectApi.destroy(id);
-      let temp = projects.filter((item) => {
+      await experienceApi.destroy(id);
+      let temp = experiences.filter((item) => {
         return item.id !== id;
       });
-      setProjects(temp);
+      setExperiences(temp);
     }
   };
   const handleEdit = (item) => {
@@ -29,13 +32,13 @@ export default function Project() {
 
   return (
     <FrameLayout
-      title="Dự án"
+      title="Kinh nghiệm việc làm"
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
-      titleId="profile-project"
+      titleId="profile-experience"
     >
-      {projects?.map((item, index) => (
+      {experiences?.map((item, index) => (
         <div key={index}>
           <hr />
           <div className="border-0 border-main border-start ps-3 d-inline-block">
@@ -50,33 +53,11 @@ export default function Project() {
               </div>
             ) : null}
             <div className="ts-smd">
-              <div className="text-secondary">{"Project " + item.prj_type}</div>
-              {item.role && (
-                <div>
-                  Vai trò: <span className="text-secondary">{item.role}</span>
-                </div>
-              )}
-              {item.link && (
-                <div>
-                  Link:{" "}
-                  <a href={item.link} className="text-decoration-none">
-                    {item.link}
-                  </a>
-                </div>
-              )}
-              {item.technologies && (
-                <div>
-                  Công nghệ:{" "}
-                  <span className="text-secondary">{item.technologies}</span>
-                </div>
-              )}
-            </div>
-            <div className="ts-smd">
               <span className="">Mô tả:</span>
               <span className="text-secondary">{" " + item.description}</span>
             </div>
           </div>
-          <div className="mt-2 float-lg-end">
+          <div className="mt-2 float-md-end">
             <Stack direction="horizontal" gap={2}>
               <Button
                 size="sm"
@@ -97,11 +78,11 @@ export default function Project() {
         </div>
       ))}
       {actType !== "VIEW" && (
-        <ProjectFormDialog
+        <ExperienceFormDialog
           actType={actType}
           setActType={setActType}
           current={current}
-          getAll={getProjects}
+          getAll={getExperiences}
         />
       )}
     </FrameLayout>

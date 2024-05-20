@@ -1,25 +1,25 @@
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import { useContext, useState } from "react";
-import FrameLayout from "../frameLayout";
-import dayjs from "dayjs";
-import PrizeFormDialog from "./PrizeFormDialog";
-import prizeApi from "../../../../../../api/prize";
-import { CandidateContext } from "../../../layouts/CandidateLayout";
+import skillApi from "../../../../../api/skill";
+import { IoMdStar, IoMdStarOutline } from "react-icons/io";
+import SkillFormDialog from "./SkillFormDialog";
+import { CandidateContext } from "../../layouts/CandidateLayout";
+import FrameLayout from "../FrameLayout";
 
-export default function Prize() {
-  const { prizes, setPrizes, getPrizes } = useContext(CandidateContext);
+export default function Skill() {
+  const { skills, setSkills, getSkills } = useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 
   const handleDelete = async (id) => {
-    let choice = window.confirm("Bạn có chắc muốn xóa Giải thưởng này?");
+    let choice = window.confirm("Bạn có chắc muốn xóa Kỹ năng này?");
     if (choice) {
-      await prizeApi.destroy(id);
-      let temp = prizes.filter((item) => {
+      await skillApi.destroy(id);
+      let temp = skills.filter((item) => {
         return item.id !== id;
       });
-      setPrizes(temp);
+      setSkills(temp);
     }
   };
   const handleEdit = (item) => {
@@ -29,31 +29,35 @@ export default function Prize() {
 
   return (
     <FrameLayout
-      title="Giải thưởng"
+      title="Kỹ năng"
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
-      titleId="profile-prize"
+      titleId="profile-skill"
     >
-      {prizes?.map((item, index) => (
+      {skills?.map((item, index) => (
         <div key={index}>
           <hr />
           <div className="border-0 border-main border-start ps-3 d-inline-block">
             <div className="fw-bold">{item.name}</div>
-            <div>
-              <span className="text-secondary ts-xs">
-                {dayjs(item.receive_date).format("DD/MM/YYYY")}
-              </span>
-            </div>
-            {item.image && (
-              <a
-                className="nav-link text-primary"
-                href={item.image}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span className="ts-smd">Ảnh</span>
-              </a>
+            <Stack direction="horizontal">
+              {Array.from({ length: 5 }, (_, ind) => (
+                <span key={ind}>
+                  {ind <= item.proficiency - 1 ? (
+                    <IoMdStar className="fs-3" style={{ color: "orange" }} />
+                  ) : (
+                    <IoMdStarOutline
+                      className="fs-3"
+                      style={{ color: "orange" }}
+                    />
+                  )}
+                </span>
+              ))}
+            </Stack>
+            {item.description && (
+              <div className="ts-smd">
+                <span className="text-secondary">{" " + item.description}</span>
+              </div>
             )}
           </div>
           <div className="mt-2 float-md-end">
@@ -77,11 +81,11 @@ export default function Prize() {
         </div>
       ))}
       {actType !== "VIEW" && (
-        <PrizeFormDialog
+        <SkillFormDialog
           actType={actType}
           setActType={setActType}
           current={current}
-          getAll={getPrizes}
+          getAll={getSkills}
         />
       )}
     </FrameLayout>

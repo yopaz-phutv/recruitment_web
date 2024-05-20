@@ -1,11 +1,3 @@
-import Certificate from "./components/certificates";
-import Education from "./components/educations";
-import Experience from "./components/experiences";
-import Prize from "./components/prizes";
-import Project from "./components/projects";
-import Skill from "./components/skills";
-import Activity from "./components/activities";
-import PersonalInfor from "./components/personalInformation";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
@@ -14,6 +6,14 @@ import { CandidateContext } from "../layouts/CandidateLayout";
 import resumeApi from "../../../../api/resume";
 import { useSelector } from "react-redux";
 import candidateApi from "../../../../api/candidate";
+import PersonalInfor from "./personalInformation";
+import Education from "./educations";
+import Experience from "./experiences";
+import Project from "./projects";
+import Skill from "./skills";
+import Certificate from "./certificates";
+import Prize from "./prizes";
+import Activity from "./activities";
 
 export default function Profile() {
   const { personal } = useContext(CandidateContext);
@@ -93,7 +93,7 @@ export default function Profile() {
           <Prize />
           <Activity />
         </div>
-        <div className="flex-fill ps-3">
+        <div className="ps-3" style={{ width: "30%" }}>
           <div className="bg-white rounded sticky-top" style={{ top: "62px" }}>
             <div id="profile-part-list" className="pt-2 pb-1">
               <div className="border-bottom text-center fw-bold pb-1">

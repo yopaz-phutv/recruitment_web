@@ -1,28 +1,26 @@
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import { useContext, useState } from "react";
-import FrameLayout from "../frameLayout";
+import CertificateFormDialog from "./CertificateFormDialog";
+import certificateApi from "../../../../../api/certificate";
 import dayjs from "dayjs";
-import experienceApi from "../../../../../../api/experience";
-import ExperienceFormDialog from "./ExperienceFormDialog";
-import { CandidateContext } from "../../../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts/CandidateLayout";
+import FrameLayout from "../FrameLayout";
 
-export default function Experience() {
-  const { experiences, setExperiences, getExperiences } =
+export default function Certificate() {
+  const { certificates, setCertificates, getCertificates } =
     useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 
   const handleDelete = async (id) => {
-    let choice = window.confirm(
-      "Bạn có chắc muốn xóa Kinh nghiệm việc làm này?"
-    );
+    let choice = window.confirm("Bạn có chắc muốn xóa Chứng chỉ này?");
     if (choice) {
-      await experienceApi.destroy(id);
-      let temp = experiences.filter((item) => {
+      await certificateApi.destroy(id);
+      let temp = certificates.filter((item) => {
         return item.id !== id;
       });
-      setExperiences(temp);
+      setCertificates(temp);
     }
   };
   const handleEdit = (item) => {
@@ -32,30 +30,34 @@ export default function Experience() {
 
   return (
     <FrameLayout
-      title="Kinh nghiệm việc làm"
+      title="Chứng chỉ"
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
-      titleId="profile-experience"
+      titleId="profile-certificate"
     >
-      {experiences?.map((item, index) => (
+      {certificates?.map((item, index) => (
         <div key={index}>
           <hr />
           <div className="border-0 border-main border-start ps-3 d-inline-block">
             <div className="fw-bold">{item.name}</div>
-            <div className="text-secondary ts-smd">{item.company}</div>
-            {item.start_date || item.start_date ? (
-              <div>
-                <span className="text-secondary ts-xs">
-                  {dayjs(item.start_date).format("DD/MM/YYYY")} -{" "}
-                  {dayjs(item.end_date).format("DD/MM/YYYY")}
-                </span>
-              </div>
-            ) : null}
-            <div className="ts-smd">
-              <span className="">Mô tả:</span>
-              <span className="text-secondary">{" " + item.description}</span>
+            <div>
+              <span className="text-secondary ts-xs">
+                {dayjs(item.receive_date).format("DD/MM/YYYY")}
+                {item.expire_date &&
+                  " - " + dayjs(item.expire_date).format("DD/MM/YYYY")}
+              </span>
             </div>
+            {item.image && (
+              <a
+                className="nav-link text-primary"
+                href={item.image}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="ts-smd">Ảnh</span>
+              </a>
+            )}
           </div>
           <div className="mt-2 float-md-end">
             <Stack direction="horizontal" gap={2}>
@@ -78,11 +80,11 @@ export default function Experience() {
         </div>
       ))}
       {actType !== "VIEW" && (
-        <ExperienceFormDialog
+        <CertificateFormDialog
           actType={actType}
           setActType={setActType}
           current={current}
-          getAll={getExperiences}
+          getAll={getCertificates}
         />
       )}
     </FrameLayout>
