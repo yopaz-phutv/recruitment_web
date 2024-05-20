@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('job_applying', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('job_id');
             $table->unsignedBigInteger('candidate_id');
             $table->text('cv_link')->nullable();
             $table->enum('status', ['WAITING', 'BROWSING_RESUME', 'RESUME_FAILED', 'BROWSING_INTERVIEW', 'INTERVIEW_FAILED', 'PASSED'])->default('WAITING');
             $table->timestamps();
-            $table->primary(['job_id', 'candidate_id']);
         });
     }
 

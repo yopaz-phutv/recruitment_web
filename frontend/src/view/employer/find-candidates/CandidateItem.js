@@ -18,7 +18,7 @@ export default function CandidateItem({
     setCurResume(resume);
     if (resume.is_saved) {
       await employerApi.handleSavingCandidate({
-        resume_id: resume.id,
+        candidate_id: resume.candidate_id,
         delete: 1,
       });
       updateBookmark(resume.id);

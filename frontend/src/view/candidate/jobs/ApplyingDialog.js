@@ -25,7 +25,7 @@ export default function AppyingDialog({ show, setShow, job, user, jobId }) {
       var next = true;
       const formData = new FormData();
       if (isUpload) formData.append("cv", file);
-      if (isOnline) formData.append("cv_link", curResume.image);
+      if (isOnline) formData.append("resume_id", curResume.id);
       if (isUpload) {
         if (!file) next = false;
       } else if (isOnline) {
@@ -38,12 +38,12 @@ export default function AppyingDialog({ show, setShow, job, user, jobId }) {
       }
       setIsLoading(true);
       await jobApi.apply(jobId, formData);
-      setIsLoading(false);
       window.location.reload();
       toast.success("Ứng tuyển thành công!");
     } catch (error) {
-      setIsLoading(false);
       toast.error("Đã có lỗi xảy ra!");
+    } finally {
+      setIsLoading(false);
     }
   };
   const getResumes = async () => {

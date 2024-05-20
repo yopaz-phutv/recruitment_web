@@ -158,16 +158,27 @@ class JobController extends Controller
     }
     public function apply(Request $req)
     {
-        $path = "";
-        if ($req->hasFile('cv'))
-            $path = uploadFile2GgDrive($req->cv, 'resumes');
-        else if ($req->cv_link) $path = $req->cv_link;
+        $candidate_id = Auth::user()->id;
 
-        $user = Auth::user();
+        $url = "";
+        if ($req->hasFile('cv'))
+            $url = uploadFile2GgDrive($req->cv, 'applied_resumes');
+        else if ($req->has('resume_id')) {
+            $new_path = "applied_resumes/applied_resume_{$candidate_id}_{$req->id}.png";
+            Storage::copy("resumes/resume_{$req->resume_id}.png", $new_path);
+            $url = Storage::url($new_path);
+
+            $start = strpos($url, 'id=') + strlen('id=');
+            $end = strpos($url, '&export=media');
+            $fileId = substr($url, $start, $end - $start);
+
+            $url = 'https://drive.google.com/file/d/' . $fileId . '/view';
+        }
+
         DB::table('job_applying')->insert([
             'job_id' => $req->id,
-            'candidate_id' => $user->id,
-            'cv_link' => $path,
+            'candidate_id' => $candidate_id,
+            'cv_link' => $url,
             'created_at' => Carbon::now()
         ]);
 

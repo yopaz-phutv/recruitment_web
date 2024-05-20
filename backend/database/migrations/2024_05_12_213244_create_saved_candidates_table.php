@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('saved_candidates', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employer_id');
-            $table->unsignedBigInteger('resume_id');
+            $table->unsignedBigInteger('candidate_id');
             $table->boolean('is_send_noti')->default(0);
             $table->timestamps();
         });

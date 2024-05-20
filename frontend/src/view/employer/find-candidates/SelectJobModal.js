@@ -20,7 +20,7 @@ export default function SelectJobModal({
       setMessage("Vui lòng chọn!");
     } else {
       setShow(false);
-      var postData = { resume_id: curResume.id };
+      var postData = { candidate_id: curResume.candidate_id };
       if (job_none) postData.job_none = job_none;
       else postData.job_ids = job_ids;
 

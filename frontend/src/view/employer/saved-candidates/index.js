@@ -32,10 +32,10 @@ export default function SavedCandidates() {
     }
   };
 
-  const handleDelete = async (resume_id, index) => {
+  const handleDelete = async (candidate_id, index) => {
     const choice = window.confirm("Bạn có chắc muốn xóa bản ghi này?");
     if (choice) {
-      await employerApi.handleSavingCandidate({ resume_id, delete: 1 });
+      await employerApi.handleSavingCandidate({ candidate_id, delete: 1 });
       let resumesTemp = [...resumes];
       resumesTemp.splice(index, 1);
       setResumes(resumesTemp);
@@ -149,7 +149,7 @@ export default function SavedCandidates() {
                           <BsEye className="text-main pointer" />
                         </a>
                       </CTooltip>
-                      <div onClick={() => handleDelete(item.id, index)}>
+                      <div onClick={() => handleDelete(item.candidate_id, index)}>
                         <BsTrash3 className="text-danger pointer" />
                       </div>
                       <CTooltip

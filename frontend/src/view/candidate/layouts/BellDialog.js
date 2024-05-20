@@ -17,7 +17,7 @@ export default function BellDialog({ show, setShow, current }) {
           Đã nhận lúc {dayjs(current.created_at).format("H:m - DD/MM/YYYY")}
         </div> */}
         <div className="mt-2 ps-3 fw-500 ts-17">{current.title}</div>
-        <div className="mt-1 border rounded py-1 ps-2 bg-mlight whitespace-preline">
+        <div className="mt-1 rounded p-2 bg-mlight whitespace-preline">
           <InnerHTML html={current.content} />
         </div>
         <Button

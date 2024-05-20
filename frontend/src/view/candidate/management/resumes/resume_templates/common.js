@@ -12,8 +12,9 @@ import { useParams, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import templateList from "./templateList";
 import { srcToFile } from "../../../../../common/functions";
-import { jsPDF } from "jspdf";
-import * as htmlToImage from "html-to-image";
+// import { jsPDF } from "jspdf";
+// import * as htmlToImage from "html-to-image";
+import html2canvas from 'html2canvas';
 
 export const TemplateContext = createContext();
 
@@ -341,23 +342,25 @@ export default function Template({
   };
   const getImgData = async () => {
     let cvElement = document.querySelector("#resume");
-    let imgData = await htmlToImage.toPng(cvElement);
+    const canvas = await html2canvas(cvElement);
+    const imgData = canvas.toDataURL('image/png');
 
     return imgData;
   };
 
   const handleDownload = async () => {
-    let filename = watch("title") + ".pdf";
-    // let link = document.createElement("a");
+    let filename = watch("title") + ".png";
+    let link = document.createElement("a");
 
     const imgData = await getImgData();
-    // link.download = filename;
-    // document.body.appendChild(link);
-    // link.click();
-    // document.body.removeChild(link);
-    const pdf = new jsPDF();
-    pdf.addImage(imgData, "PNG", 0, 0);
-    pdf.save(filename);
+    link.href = imgData;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    // const pdf = new jsPDF();
+    // pdf.addImage(imgData, "PNG", 0, 0);
+    // pdf.save(filename);
   };
 
   return (

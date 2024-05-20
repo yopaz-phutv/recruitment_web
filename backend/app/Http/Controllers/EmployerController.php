@@ -258,6 +258,7 @@ class EmployerController extends Controller
     public function findCandidates(Request $req)
     {
         $query = Candidate::query()
+            ->whereNotNull('public_resume_id')
             ->join('resumes', 'public_resume_id', '=', 'resumes.id')
             ->join('locations', 'location_id', '=', 'locations.id');
         if ($req->has('location_ids')) {
@@ -300,7 +301,7 @@ class EmployerController extends Controller
             $resume = $resumes['data'][$i];
             $res = DB::table('saved_candidates')->where([
                 ['employer_id', '=', $employer_id],
-                ['resume_id', '=', $resume['id']]
+                ['candidate_id', '=', $resume['candidate_id']]
             ])->get()->toArray();
             $resumes['data'][$i]['is_saved'] = count($res) > 0;
         }
@@ -313,9 +314,9 @@ class EmployerController extends Controller
 
         $delete_record_id = SavedCandidate::where([
             ['employer_id', $user->id],
-            ['resume_id', $req->resume_id]
+            ['candidate_id', $req->candidate_id]
         ])->first()->id ?? null;
-        
+
         if ($delete_record_id) {
             DB::table('saved_candidates_detail')
                 ->where('saved_candidates_id', $delete_record_id)
@@ -328,7 +329,7 @@ class EmployerController extends Controller
 
             $saved_candidates_id = SavedCandidate::create([
                 'employer_id' => $user->id,
-                'resume_id' => $req->resume_id,
+                'candidate_id' => $req->candidate_id,
             ])->id;
 
             if ($req->has('job_none')) {
@@ -356,19 +357,20 @@ class EmployerController extends Controller
         $employer_id = Auth::user()->id;
         $job_id = $req->job_id;
 
-        $resumes = SavedCandidate::join('resumes', 'resume_id', '=', 'resumes.id')
-        ->where('employer_id', $employer_id)
+        $resumes = SavedCandidate::join('candidates', 'candidate_id', '=', 'candidates.id')
+            ->join('resumes', 'public_resume_id', '=', 'resumes.id')
+            ->where('employer_id', $employer_id)
             ->when($job_id !== null, function ($query) use ($job_id) {
                 return $query->join('saved_candidates_detail', 'saved_candidates.id', '=', 'saved_candidates_id')
-                             ->where('job_id', $job_id);
+                    ->where('job_id', $job_id);
             })
             ->select(
                 'resumes.id',
-                'candidate_id',
+                'saved_candidates.candidate_id',
                 DB::raw('saved_candidates.id AS saved_candidates_id'),
                 'fullname',
-                'phone',
-                'email',
+                'resumes.phone',
+                'resumes.email',
                 DB::raw('saved_candidates.created_at AS saved_time'),
                 'is_send_noti',
                 'image'
@@ -383,23 +385,24 @@ class EmployerController extends Controller
                 ->where('saved_candidates_id', $resume->saved_candidates_id)
                 ->select('jobs.id', 'jname')
                 ->get();
-                $resumes[$i]['jobs'] = $jobs; 
+            $resumes[$i]['jobs'] = $jobs;
         }
 
         return response()->json($resumes);
     }
-    public function sendRecommendToCandidate(Request $req){
+    public function sendRecommendToCandidate(Request $req)
+    {
         $jobs = $req->jobs;
 
         $employer = Employer::find(Auth::user()->id);
 
         $noti_name = "<div>Bạn nhận được gợi ý việc làm từ nhà tuyển dụng <strong>{$employer->name}</strong></div>";
-        $content = "<div><strong>Việc làm:</strong>";
-        $frontend_app_base_url = config('FRONTEND_APP_BASE_URL');            
+        $content = "<div><strong>{$employer->name}</strong> đã xem hồ sơ công khai của bạn và nhận thấy bạn phù hợp với vị trí mà họ đang tuyển dụng:";
+        $frontend_app_base_url = config('FRONTEND_APP_BASE_URL');
         foreach ($jobs as $job) {
-            $content.= "<div><a href='{$frontend_app_base_url}/jobs/{$job['id']}'>{$job['jname']}</a></div>";
+            $content .= "<div><a href='{$frontend_app_base_url}/jobs/{$job['id']}'>{$job['jname']}</a></div>";
         }
-        $content.= "</div>";
+        $content .= "</div>";
 
         // save to `candidates` table:
         CandidateMessage::create([
@@ -409,7 +412,7 @@ class EmployerController extends Controller
         ]);
         SavedCandidate::where([
             ['employer_id', $employer->id],
-            ['resume_id', $req->id]
+            ['candidate_id', $req->candidate_id]
         ])->update(['is_send_noti' => 1]);
 
         event(new NotifyCandidateEvent($noti_name, $req->candidate_id));
