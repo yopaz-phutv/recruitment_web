@@ -299,7 +299,7 @@ class EmployerController extends Controller
         $employer_id = Auth::user()->id;
         for ($i = 0; $i < count($resumes['data']); $i++) {
             $resume = $resumes['data'][$i];
-            $res = DB::table('saved_candidates')->where([
+            $res = DB::table('candidate_bookmarks')->where([
                 ['employer_id', '=', $employer_id],
                 ['candidate_id', '=', $resume['candidate_id']]
             ])->get()->toArray();
@@ -318,8 +318,8 @@ class EmployerController extends Controller
         ])->first()->id ?? null;
 
         if ($delete_record_id) {
-            DB::table('saved_candidates_detail')
-                ->where('saved_candidates_id', $delete_record_id)
+            DB::table('candidate_bookmark_detail')
+                ->where('candidate_bookmark_id', $delete_record_id)
                 ->delete();
             SavedCandidate::destroy($delete_record_id);
         }
@@ -327,26 +327,26 @@ class EmployerController extends Controller
         if (!$req->has('delete')) {
             $insert_data = [];
 
-            $saved_candidates_id = SavedCandidate::create([
+            $candidate_bookmark_id = SavedCandidate::create([
                 'employer_id' => $user->id,
                 'candidate_id' => $req->candidate_id,
             ])->id;
 
             if ($req->has('job_none')) {
                 $insert_data[] = [
-                    'saved_candidates_id' => $saved_candidates_id,
+                    'candidate_bookmark_id' => $candidate_bookmark_id,
                     'job_id' => 0
                 ];
             } else {
                 foreach ($req->job_ids as $job_id) {
                     $insert_data[] = [
-                        'saved_candidates_id' => $saved_candidates_id,
+                        'candidate_bookmark_id' => $candidate_bookmark_id,
                         'job_id' => $job_id
                     ];
                 }
             }
 
-            DB::table('saved_candidates_detail')->insert($insert_data);
+            DB::table('candidate_bookmark_detail')->insert($insert_data);
 
             return response()->json('created successfully', 201);
         }
@@ -361,17 +361,17 @@ class EmployerController extends Controller
             ->join('resumes', 'public_resume_id', '=', 'resumes.id')
             ->where('employer_id', $employer_id)
             ->when($job_id !== null, function ($query) use ($job_id) {
-                return $query->join('saved_candidates_detail', 'saved_candidates.id', '=', 'saved_candidates_id')
+                return $query->join('candidate_bookmark_detail', 'candidate_bookmarks.id', '=', 'candidate_bookmark_id')
                     ->where('job_id', $job_id);
             })
             ->select(
                 'resumes.id',
-                'saved_candidates.candidate_id',
-                DB::raw('saved_candidates.id AS saved_candidates_id'),
+                'candidate_bookmarks.candidate_id',
+                DB::raw('candidate_bookmarks.id AS candidate_bookmark_id'),
                 'fullname',
                 'resumes.phone',
                 'resumes.email',
-                DB::raw('saved_candidates.created_at AS saved_time'),
+                DB::raw('candidate_bookmarks.created_at AS saved_time'),
                 'is_send_noti',
                 'image'
             )
@@ -380,9 +380,9 @@ class EmployerController extends Controller
 
         for ($i = 0; $i < count($resumes); $i++) {
             $resume = $resumes[$i];
-            $jobs = DB::table('saved_candidates_detail')
+            $jobs = DB::table('candidate_bookmarks_detail')
                 ->join('jobs', 'job_id', '=', 'jobs.id')
-                ->where('saved_candidates_id', $resume->saved_candidates_id)
+                ->where('candidate_bookmark_id', $resume->candidate_bookmarks_id)
                 ->select('jobs.id', 'jname')
                 ->get();
             $resumes[$i]['jobs'] = $jobs;

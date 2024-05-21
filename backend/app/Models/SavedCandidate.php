@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class SavedCandidate extends Model
 {
     use HasFactory;
-    protected $table = "saved_candidates";
+    protected $table = "candidate_bookmarks";
     protected $guarded = [];
 
     public function jobs()
     {
-        return $this->belongsToMany(Job::class, 'saved_candidates_detail', 'saved_candidates_id', 'job_id');
+        return $this->belongsToMany(Job::class, 'candidate_bookmarks_detail', 'candidate_bookmarks_id', 'job_id');
     }
 }
