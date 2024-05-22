@@ -20,7 +20,7 @@ class SkillSeeder extends Seeder
                 'candidate_id' => 1,
                 'name' => 'Ngôn ngữ lập trình',
                 'proficiency' => 0,
-                'description' => 'C, Java, PHP'
+                'description' => 'C, Java, PHP, ReactJS, TypeScript'
             ],
             [
                 'id' => 2,
@@ -29,6 +29,21 @@ class SkillSeeder extends Seeder
                 'proficiency' => 3,
                 'description' => 'MySQL, PostGreSQL'
             ],
+            [
+                'id' => 3,
+                'candidate_id' => 2,
+                'name' => 'Ngôn ngữ lập trình',
+                'proficiency' => 0,
+                'description' => 'C, Java, PHP, Laravel, SpringBoot'
+            ],
+            [
+                'id' => 4,
+                'candidate_id' => 2,
+                'name' => 'Cơ sở dữ liệu',
+                'proficiency' => 3,
+                'description' => 'MySQL, PostGreSQL, NoSQL'
+            ],
+
         ]);
     }
 }

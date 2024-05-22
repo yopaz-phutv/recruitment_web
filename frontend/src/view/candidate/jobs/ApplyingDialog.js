@@ -60,7 +60,7 @@ export default function AppyingDialog({
       setIsLoading(true);
       await jobApi.apply(jobId, formData);
       toast.success("Ứng tuyển thành công!");
-      // window.location.reload();
+      window.location.reload();
     } catch (error) {
       toast.error("Đã có lỗi xảy ra!");
     } finally {

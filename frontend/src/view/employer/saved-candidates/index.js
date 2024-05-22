@@ -17,6 +17,7 @@ export default function SavedCandidates() {
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
   const { jobs } = useGetJobsByEmployer();
   const [resumes, setResumes] = useState([]);
+  const [curResume, setCurResume] = useState({})
   const [isLoading, setIsLoading] = useState(true);
   const [isSendingRecommend, setIsSendingRecommend] = useState(false);
   const [filterJob, setFilterJob] = useState("Tất cả vị trí");
@@ -44,6 +45,7 @@ export default function SavedCandidates() {
 
   const handleSendRecommend = async (resume, index) => {
     try {
+      setCurResume(resume)
       setIsSendingRecommend(true);
       await employerApi.sendRecommendToCandidate(resume);
       let resumesTemp = [...resumes];
@@ -137,7 +139,7 @@ export default function SavedCandidates() {
                 <td>{item.email}</td>
                 <td>{dayjs(item.saved_time).format("DD/MM/YYYY HH:mm")}</td>
                 <td>
-                  {isSendingRecommend ? (
+                  {isSendingRecommend && item.id === curResume.id ? (
                     <div className="d-flex gap-1 align-items-center flex-wrap">
                       <Spinner size="sm" className="text-main" />
                       Đang gửi

@@ -2,6 +2,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CandidateContext } from "../layouts/CandidateLayout";
 import resumeApi from "../../../../api/resume";
 import { useSelector } from "react-redux";
@@ -16,6 +17,7 @@ import Prize from "./prizes";
 import Activity from "./activities";
 
 export default function Profile() {
+  const nav = useNavigate();
   const { personal } = useContext(CandidateContext);
   const partList = [
     { name: "Thông tin cá nhân", href: "#profile-personal" },
@@ -153,6 +155,17 @@ export default function Profile() {
                           Chọn hồ sơ mới
                         </Button>
                       </>
+                    ) : resumes.length === 0 ? (
+                      <div>
+                        Bạn chưa có hồ sơ nào,{" "}
+                        <span
+                          className="text-primary pointer"
+                          onClick={() => nav("/candidate/templates")}
+                        >
+                          nhấn vào đây
+                        </span>{" "}
+                        để tạo hồ sơ.
+                      </div>
                     ) : (
                       <>
                         <div className="mb-1">Chọn hồ sơ:</div>

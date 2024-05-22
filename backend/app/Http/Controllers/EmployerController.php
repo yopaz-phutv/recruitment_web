@@ -377,7 +377,7 @@ class EmployerController extends Controller
                 'is_send_noti',
                 'resumes.resume_link'
             )
-            ->oldest('saved_time')
+            ->latest('saved_time')
             ->get();
 
         for ($i = 0; $i < count($resumes); $i++) {
