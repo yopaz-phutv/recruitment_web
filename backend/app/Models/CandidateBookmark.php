@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SavedCandidate extends Model
+class CandidateBookmark extends Model
 {
     use HasFactory;
     protected $table = "candidate_bookmarks";
@@ -13,6 +13,6 @@ class SavedCandidate extends Model
 
     public function jobs()
     {
-        return $this->belongsToMany(Job::class, 'candidate_bookmarks_detail', 'candidate_bookmarks_id', 'job_id');
+        return $this->belongsToMany(Job::class, 'candidate_bookmark_detail', 'candidate_bookmark_id', 'job_id');
     }
 }

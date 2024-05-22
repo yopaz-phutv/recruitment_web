@@ -64,3 +64,11 @@ function uploadFile2GgDrive(
 
     return $ret;
 }
+
+function getViewLinkFromGgStorageUrl($url) {
+    $start = strpos($url, 'id=') + strlen('id=');
+    $end = strpos($url, '&export=media');
+    $fileId = substr($url, $start, $end - $start);
+
+    return 'https://drive.google.com/file/d/' . $fileId . '/view';
+}

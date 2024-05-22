@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('employer_id');
             $table->unsignedBigInteger('candidate_id');
             $table->boolean('is_send_noti')->default(0);
+            $table->text('resume_link')->nullable();
             $table->timestamps();
         });
     }

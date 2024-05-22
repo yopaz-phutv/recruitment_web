@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Events\NotifyCandidateEvent;
+use App\Events\SendRecommend2Candidate;
 use App\Models\Candidate;
+use App\Models\CandidateBookmark;
 use App\Models\CandidateMessage;
 use App\Models\Employer;
 use App\Models\Job;
-use App\Models\SavedCandidate;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Query\Builder;
@@ -179,6 +180,7 @@ class EmployerController extends Controller
     {
         $currentTime = Carbon::parse(Carbon::now())->format('H:i d/m/Y');
         $company = Employer::where('user_id', '=', Auth::user()->id)->value('name');
+        $msgName = "";
 
         if ($req->actType == "VIEWED") $nextStatus = "BROWSING_RESUME";
         else if ($req->actType == "ACCEPT") {
@@ -219,8 +221,8 @@ class EmployerController extends Controller
                     'content' => $req->content,
                 ]
             );
+            event(new NotifyCandidateEvent($msgName, $req->candidate_id));
         }
-        event(new NotifyCandidateEvent($msgName, $req->candidate_id));
 
         return response()->json("Updated successfully");
     }
@@ -312,7 +314,7 @@ class EmployerController extends Controller
     {
         $user = Auth::user();
 
-        $delete_record_id = SavedCandidate::where([
+        $delete_record_id = CandidateBookmark::where([
             ['employer_id', $user->id],
             ['candidate_id', $req->candidate_id]
         ])->first()->id ?? null;
@@ -321,13 +323,13 @@ class EmployerController extends Controller
             DB::table('candidate_bookmark_detail')
                 ->where('candidate_bookmark_id', $delete_record_id)
                 ->delete();
-            SavedCandidate::destroy($delete_record_id);
+            CandidateBookmark::destroy($delete_record_id);
         }
 
         if (!$req->has('delete')) {
             $insert_data = [];
 
-            $candidate_bookmark_id = SavedCandidate::create([
+            $candidate_bookmark_id = CandidateBookmark::create([
                 'employer_id' => $user->id,
                 'candidate_id' => $req->candidate_id,
             ])->id;
@@ -357,7 +359,7 @@ class EmployerController extends Controller
         $employer_id = Auth::user()->id;
         $job_id = $req->job_id;
 
-        $resumes = SavedCandidate::join('candidates', 'candidate_id', '=', 'candidates.id')
+        $resumes = CandidateBookmark::join('candidates', 'candidate_id', '=', 'candidates.id')
             ->join('resumes', 'public_resume_id', '=', 'resumes.id')
             ->where('employer_id', $employer_id)
             ->when($job_id !== null, function ($query) use ($job_id) {
@@ -373,16 +375,16 @@ class EmployerController extends Controller
                 'resumes.email',
                 DB::raw('candidate_bookmarks.created_at AS saved_time'),
                 'is_send_noti',
-                'image'
+                'resumes.resume_link'
             )
             ->oldest('saved_time')
             ->get();
 
         for ($i = 0; $i < count($resumes); $i++) {
             $resume = $resumes[$i];
-            $jobs = DB::table('candidate_bookmarks_detail')
+            $jobs = DB::table('candidate_bookmark_detail')
                 ->join('jobs', 'job_id', '=', 'jobs.id')
-                ->where('candidate_bookmark_id', $resume->candidate_bookmarks_id)
+                ->where('candidate_bookmark_id', $resume->candidate_bookmark_id)
                 ->select('jobs.id', 'jname')
                 ->get();
             $resumes[$i]['jobs'] = $jobs;
@@ -393,6 +395,9 @@ class EmployerController extends Controller
     public function sendRecommendToCandidate(Request $req)
     {
         $jobs = $req->jobs;
+        $bookmark_id = $req->candidate_bookmark_id;
+        $candidate_id = $req->candidate_id;
+        $resume_id = $req->id;
 
         $employer = Employer::find(Auth::user()->id);
 
@@ -404,18 +409,14 @@ class EmployerController extends Controller
         }
         $content .= "</div>";
 
-        // save to `candidates` table:
+        event(new SendRecommend2Candidate($bookmark_id, $resume_id));
+
         CandidateMessage::create([
-            'candidate_id' => $req->candidate_id,
+            'candidate_id' => $candidate_id,
             'name' => $noti_name,
             'content' => $content
         ]);
-        SavedCandidate::where([
-            ['employer_id', $employer->id],
-            ['candidate_id', $req->candidate_id]
-        ])->update(['is_send_noti' => 1]);
-
-        event(new NotifyCandidateEvent($noti_name, $req->candidate_id));
+        event(new NotifyCandidateEvent($noti_name, $candidate_id));
 
         return response()->json('sent successfully');
     }

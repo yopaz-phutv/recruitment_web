@@ -29,6 +29,9 @@ const candidateApi = {
   updatePublicResume: (data) => {
     return candidateAxios.post(`${prefix}/updatePublicResume`, data);
   },
+  getCurJobRecommendData: (job_id) => {
+    return candidateAxios.get(`${prefix}/getCurJobRecommendData/${job_id}`);
+  }
 };
 
 export default candidateApi;

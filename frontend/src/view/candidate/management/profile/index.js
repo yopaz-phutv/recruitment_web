@@ -132,7 +132,7 @@ export default function Profile() {
                           <>
                             Hồ sơ đã chọn: &nbsp;
                             <a
-                              href={curResume.image}
+                              href={curResume.resume_link}
                               className="ts-sm text-primary pointer"
                               target="_blank"
                               rel="noreferrer"
@@ -166,7 +166,7 @@ export default function Profile() {
                               onClick={() => setCurResume(item)}
                             />
                             <a
-                              href={item.image}
+                              href={item.resume_link}
                               className="ts-sm ms-5 text-primary pointer"
                               target="_blank"
                               rel="noreferrer"

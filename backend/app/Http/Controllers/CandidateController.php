@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Candidate;
+use App\Models\CandidateBookmark;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -79,7 +80,7 @@ class CandidateController extends Controller
                 'jobs.id',
                 'jname',
                 'employers.name',
-                'cv_link',
+                'resume_link',
                 'status',
                 DB::raw('DATE_FORMAT(job_applying.created_at, "%d/%m/%Y") as postDate')
             )
@@ -153,17 +154,34 @@ class CandidateController extends Controller
         // }
         return response()->json('Updated successfully');
     }
-    public function updatePublicResume(Request $req) {
+    public function updatePublicResume(Request $req)
+    {
         $candidate_id = Auth::user()->id;
         if ($req->has('not_public')) {
             $resume_id = null;
-        }
-        else {
+        } else {
             $resume_id = $req->resume_id;
         }
 
         Candidate::where('id', $candidate_id)->update(['public_resume_id' => $resume_id]);
 
         return response()->json('updated successfully');
+    }
+
+    public function getCurJobRecommendData(Request $req)
+    {
+        $candidate_id = Auth::user()->id;
+
+        $ret = CandidateBookmark::join('candidate_bookmark_detail', 'id', '=', 'candidate_bookmark_id')
+            ->where([
+                ['candidate_id', '=', $candidate_id],
+                ['job_id', '=', $req->job_id],
+                ['is_send_noti', '=', 1]
+            ])
+            ->select('resume_link', 'candidate_bookmark_id')
+            ->latest()
+            ->first();
+
+        return response()->json($ret);
     }
 }

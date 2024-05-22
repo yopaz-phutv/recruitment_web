@@ -72,7 +72,7 @@ class ResumeController extends Controller
             $path = 'resumes/' . $filename;
             if (Storage::exists($path)) Storage::delete($path);
             $retPath = uploadFile2GgDrive($resume_file, 'resumes', $filename);
-            Resume::where('id', $resume_id)->update(['image' => $retPath]);
+            Resume::where('id', $resume_id)->update(['resume_link' => $retPath]);
         }
 
         if ($resume) {
@@ -175,12 +175,12 @@ class ResumeController extends Controller
         }
         //save resume file to gg drive
         if ($resume_file) {
-            
+
             $filename = 'resume_' . $resume_id . '.png';
             $path = 'resumes/' . $filename;
             if (Storage::exists($path)) Storage::delete($path);
             $retPath = uploadFile2GgDrive($resume_file, 'resumes', $filename);
-            Resume::where('id', $resume_id)->update(['image' => $retPath]);
+            Resume::where('id', $resume_id)->update(['resume_link' => $retPath]);
         }
 
         Resume::where('id', $resume_id)->update($resume_fields);

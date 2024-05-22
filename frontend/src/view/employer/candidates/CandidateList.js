@@ -184,7 +184,7 @@ function CandidateList() {
                         <a
                           className="ms-2"
                           style={{ textDecoration: "none" }}
-                          href={item.cv_link}
+                          href={item.resume_link}
                           target="_blank"
                           rel="noreferrer"
                         >

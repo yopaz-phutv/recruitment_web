@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\SendRecommend2Candidate;
 use App\Events\UserRegister;
 use App\Listeners\SaveDetailUserInfor;
+use App\Listeners\SaveSuitableResume;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -20,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        SendRecommend2Candidate::class => [
+            SaveSuitableResume::class,
+        ]
     ];
 
     /**

@@ -9,7 +9,9 @@ class CandidateMessageController extends Controller
 {
     public function getByCandidateID($id)
     {
-        $msgs = CandidateMessage::where('candidate_id', '=', $id)->get();
+        $msgs = CandidateMessage::where('candidate_id', '=', $id)
+            ->latest()
+            ->get();
 
         return response()->json($msgs);
     }
@@ -17,10 +19,9 @@ class CandidateMessageController extends Controller
     {
         $res = CandidateMessage::where('id', '=', $id)
             ->update(['isRead' => 1]);
-        if($res){
+        if ($res) {
             $msg = "Updated successfully!";
-        }
-        else {
+        } else {
             $msg = "Updated failed!";
         }
 

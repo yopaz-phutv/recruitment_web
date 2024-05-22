@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Candidate;
 use Illuminate\Http\Request;
 use App\Models\Job;
+use App\Models\JobApplying;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -159,28 +160,32 @@ class JobController extends Controller
     public function apply(Request $req)
     {
         $candidate_id = Auth::user()->id;
+        $current_time = Carbon::now();
+        $use_suitable_resume = $req->use_suitable_resume;
 
-        $url = "";
-        if ($req->hasFile('cv'))
-            $url = uploadFile2GgDrive($req->cv, 'applied_resumes');
-        else if ($req->has('resume_id')) {
-            $new_path = "applied_resumes/applied_resume_{$candidate_id}_{$req->id}.png";
-            Storage::copy("resumes/resume_{$req->resume_id}.png", $new_path);
-            $url = Storage::url($new_path);
-
-            $start = strpos($url, 'id=') + strlen('id=');
-            $end = strpos($url, '&export=media');
-            $fileId = substr($url, $start, $end - $start);
-
-            $url = 'https://drive.google.com/file/d/' . $fileId . '/view';
-        }
-
-        DB::table('job_applying')->insert([
+        $new_applying = JobApplying::create([
             'job_id' => $req->id,
             'candidate_id' => $candidate_id,
-            'cv_link' => $url,
-            'created_at' => Carbon::now()
+            'created_at' => $current_time,
+            'updated_at' => $current_time
         ]);
+
+        $url = "";
+        if ($use_suitable_resume == 1) {
+            $new_path = "applied_resumes/applied_resume_{$new_applying->id}.png";
+            Storage::copy("suitable_resumes/suitable_resume_{$req->candidate_bookmark_id}.png", $new_path);
+            $url = getViewLinkFromGgStorageUrl(Storage::url($new_path));
+        } else {
+            if ($req->hasFile('cv'))
+                $url = uploadFile2GgDrive($req->cv, 'applied_resumes');
+            else if ($req->has('resume_id')) {
+                $new_path = "applied_resumes/applied_resume_{$new_applying->id}.png";
+                Storage::copy("resumes/resume_{$req->resume_id}.png", $new_path);
+                $url = getViewLinkFromGgStorageUrl(Storage::url($new_path));
+            }
+        }
+
+        JobApplying::where('id', $new_applying->id)->update(['resume_link' => $url]);
 
         return response()->json('applied successfully');
     }

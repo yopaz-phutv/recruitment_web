@@ -35,9 +35,8 @@ return new class extends Migration
             $table->string('certificateTitle', 60)->nullable();
             $table->string('prizeTitle', 60)->nullable();
             $table->string('activityTitle', 60)->nullable();
-            $table->text('cv_link')->nullable();
+            $table->text('resume_link')->nullable();
             $table->json('parts_order')->nullable();
-            $table->string('image')->nullable();
             $table->text('skill_text')->nullable();
             $table->timestamps();
         });

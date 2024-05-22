@@ -21,6 +21,7 @@ import dayjs from "dayjs";
 import Button from "react-bootstrap/Button";
 import AppyingDialog from "./ApplyingDialog";
 import { toast } from "react-toastify";
+import { isNullObject } from "../../../common/functions";
 
 function Job() {
   const { id } = useParams();
@@ -38,6 +39,8 @@ function Job() {
   const [isApplied, setIsApplied] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [industries, setIndustries] = useState([]);
+  const [recommendData, setRecommendData] = useState({});
+  const [isLoadingRecommend, setIsLoadingRecommend] = useState(true);
 
   const getJobInf = async () => {
     const res = await jobApi.getById(id);
@@ -48,7 +51,6 @@ function Job() {
   const checkApplying = async () => {
     const res = await jobApi.checkApplying(id);
     setIsApplied(res.value);
-    console.log("is applying?", res.value);
   };
 
   const checkLoggedIn = () => {
@@ -61,12 +63,23 @@ function Job() {
   const checkJobSaved = async () => {
     const res = await candidateApi.checkJobSaved(id);
     setIsSaved(res.value);
-    console.log("save job?:", res.value);
   };
+
+  const getCurJobRecommendData = async () => {
+    try {
+      setIsLoadingRecommend(true);
+      const res = await candidateApi.getCurJobRecommendData(id);
+      setRecommendData(res);
+    } catch (error) {
+    } finally {
+      setIsLoadingRecommend(false);
+    }
+  };
+
   const handleClickSaveBtn = async (status) => {
     const data = { status: status };
     const res = await candidateApi.processJobSaving(id, data);
-    console.log('res::', res);
+    console.log("res::", res);
     setIsSaved(!isSaved);
   };
 
@@ -78,6 +91,7 @@ function Job() {
     if (isAuth) {
       checkApplying();
       checkJobSaved();
+      getCurJobRecommendData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
@@ -140,6 +154,8 @@ function Job() {
                         job={job}
                         user={user}
                         jobId={id}
+                        recommendData={recommendData}
+                        isLoadingRecommend={isLoadingRecommend}
                       />
                     )}
                   </div>

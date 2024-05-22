@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('job_id');
             $table->unsignedBigInteger('candidate_id');
-            $table->text('cv_link')->nullable();
+            $table->text('resume_link')->nullable();
             $table->enum('status', ['WAITING', 'BROWSING_RESUME', 'RESUME_FAILED', 'BROWSING_INTERVIEW', 'INTERVIEW_FAILED', 'PASSED'])->default('WAITING');
             $table->timestamps();
         });
