@@ -314,19 +314,18 @@ class EmployerController extends Controller
     {
         $user = Auth::user();
 
-        $delete_record_id = CandidateBookmark::where([
-            ['employer_id', $user->id],
-            ['candidate_id', $req->candidate_id]
-        ])->first()->id ?? null;
-
-        if ($delete_record_id) {
-            DB::table('candidate_bookmark_detail')
-                ->where('candidate_bookmark_id', $delete_record_id)
-                ->delete();
-            CandidateBookmark::destroy($delete_record_id);
-        }
-
-        if (!$req->has('delete')) {
+        if ($req->has('delete')) {
+            $query = CandidateBookmark::where('id', $req->candidate_bookmark_id);
+            $is_send_noti = $query->pluck('is_send_noti')[0];
+            if ($is_send_noti) {
+                $query->update(['is_deleted' => 1]);
+            } else {
+                DB::table('candidate_bookmark_detail')
+                    ->where('candidate_bookmark_id', $req->candidate_bookmark_id)
+                    ->delete();
+                $query->delete();
+            }
+        } else {
             $insert_data = [];
 
             $candidate_bookmark_id = CandidateBookmark::create([
@@ -352,6 +351,7 @@ class EmployerController extends Controller
 
             return response()->json('created successfully', 201);
         }
+
         return response()->json('deleted successfully');
     }
     public function getSavedCandidates(Request $req)
@@ -361,7 +361,10 @@ class EmployerController extends Controller
 
         $resumes = CandidateBookmark::join('candidates', 'candidate_id', '=', 'candidates.id')
             ->join('resumes', 'public_resume_id', '=', 'resumes.id')
-            ->where('employer_id', $employer_id)
+            ->where([
+                ['employer_id', '=', $employer_id],
+                ['is_deleted', '=', 0]
+            ])
             ->when($job_id !== null, function ($query) use ($job_id) {
                 return $query->join('candidate_bookmark_detail', 'candidate_bookmarks.id', '=', 'candidate_bookmark_id')
                     ->where('job_id', $job_id);

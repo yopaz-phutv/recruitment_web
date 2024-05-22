@@ -17,7 +17,7 @@ export default function SavedCandidates() {
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
   const { jobs } = useGetJobsByEmployer();
   const [resumes, setResumes] = useState([]);
-  const [curResume, setCurResume] = useState({})
+  const [curResume, setCurResume] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isSendingRecommend, setIsSendingRecommend] = useState(false);
   const [filterJob, setFilterJob] = useState("Tất cả vị trí");
@@ -33,10 +33,13 @@ export default function SavedCandidates() {
     }
   };
 
-  const handleDelete = async (candidate_id, index) => {
+  const handleDelete = async (resume, index) => {
     const choice = window.confirm("Bạn có chắc muốn xóa bản ghi này?");
     if (choice) {
-      await employerApi.handleSavingCandidate({ candidate_id, delete: 1 });
+      await employerApi.handleSavingCandidate({
+        candidate_bookmark_id: resume.candidate_bookmark_id,
+        delete: 1,
+      });
       let resumesTemp = [...resumes];
       resumesTemp.splice(index, 1);
       setResumes(resumesTemp);
@@ -45,7 +48,7 @@ export default function SavedCandidates() {
 
   const handleSendRecommend = async (resume, index) => {
     try {
-      setCurResume(resume)
+      setCurResume(resume);
       setIsSendingRecommend(true);
       await employerApi.sendRecommendToCandidate(resume);
       let resumesTemp = [...resumes];
@@ -147,11 +150,15 @@ export default function SavedCandidates() {
                   ) : (
                     <div className="d-flex gap-2 ts-md">
                       <CTooltip text="Xem hồ sơ">
-                        <a href={item.image} target="_blank" rel="noreferrer">
+                        <a href={item.resume_link} target="_blank" rel="noreferrer">
                           <BsEye className="text-main pointer" />
                         </a>
                       </CTooltip>
-                      <div onClick={() => handleDelete(item.candidate_id, index)}>
+                      <div
+                        onClick={() =>
+                          handleDelete(item, index)
+                        }
+                      >
                         <BsTrash3 className="text-danger pointer" />
                       </div>
                       <CTooltip
