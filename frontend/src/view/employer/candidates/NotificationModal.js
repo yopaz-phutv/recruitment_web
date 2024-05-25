@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { emailjsConfig } from "../../../services";
 import Spinner from "react-bootstrap/Spinner";
 
-function MessagePopup({
+export default function NotificationModal({
   candidate,
   showDialog,
   setShowDialog,
@@ -30,15 +30,19 @@ function MessagePopup({
 
   const {
     register,
+    watch,
     formState: { errors },
     handleSubmit,
+    resetField,
   } = useForm();
   const requiredMsg = "Không được để trống!";
-  const [isSendMail, setIsSendMail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data) => {
+    // console.log({ data });
     try {
+      delete data.send_mail
+      if (!watch("send_mail")) delete data.title;
       setIsLoading(true);
       await employerApi.processApplying({ ...candidate, ...data });
       setIsLoading(false);
@@ -49,7 +53,7 @@ function MessagePopup({
       setIsLoading(false);
       toast.error("Gửi thông báo thất bại!");
     }
-    if (isSendMail) {
+    if (watch("send_mail")) {
       var templateParams = {
         to_email: candidate.email,
         title: data.title,
@@ -79,7 +83,6 @@ function MessagePopup({
       show={showDialog}
       onShow={() => {
         document.getElementById("reset").click();
-        setIsSendMail(false);
       }}
       onHide={handleClose}
       size="lg"
@@ -101,36 +104,53 @@ function MessagePopup({
           </div>
         </div>
         <Form className="mt-2" noValidate onSubmit={handleSubmit(onSubmit)}>
-          <Form.Check
-            type="checkbox"
-            label="Gửi email thông báo"
-            onClick={() => setIsSendMail(!isSendMail)}
-          />
-          <Form.Group>
-            <Form.Label className="fw-500">Tiêu đề</Form.Label>
-            <Form.Control
-              type="text"
-              size="sm"
-              {...register("title", { required: requiredMsg })}
-              isInvalid={errors.title}
+          <div className="ts-smd">
+            <Form.Check
+              type="checkbox"
+              label="Gửi email thông báo"
+              {...register("send_mail")}
+              onClick={() => {
+                if (!watch("send_mail")) {
+                  resetField("send_fast_noti", { defaultValue: false });
+                }
+              }}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.title?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mt-1">
-            <Form.Label className="fw-500">Nội dung</Form.Label>
-            <Form.Control
-              as="textarea"
-              size="sm"
-              rows={10}
-              {...register("content", { required: requiredMsg })}
-              isInvalid={errors.content}
+            <Form.Check
+              type="checkbox"
+              label="Gửi thông báo nhanh"
+              {...register("send_fast_noti")}
+              disabled={watch("send_mail")}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.content?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
+          </div>
+          {watch("send_mail") && (
+            <Form.Group>
+              <Form.Label className="fw-500">Tiêu đề</Form.Label>
+              <Form.Control
+                type="text"
+                size="sm"
+                {...register("title", { required: requiredMsg })}
+                isInvalid={errors.title}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.title?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          )}
+          {watch("send_fast_noti") !== null && (
+            <Form.Group>
+              <Form.Label className="fw-500">Nội dung</Form.Label>
+              <Form.Control
+                as="textarea"
+                size="sm"
+                rows={10}
+                {...register("content", { required: requiredMsg })}
+                isInvalid={errors.content}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.content?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          )}
           <div className="d-flex gap-2 justify-content-end mt-3 me-3">
             <Button
               type="submit"
@@ -151,4 +171,3 @@ function MessagePopup({
     </Modal>
   );
 }
-export { MessagePopup };

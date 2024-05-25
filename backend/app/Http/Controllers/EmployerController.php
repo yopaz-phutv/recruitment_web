@@ -148,9 +148,10 @@ class EmployerController extends Controller
 
     public function getCandidateList(Request $req)
     {
+        $job_id = $req->job_id;
         $job_ids = Job::where('employer_id', '=', Auth::user()->id)->pluck('id');
 
-        $keyword = $req->query('keyword'); //search by name, email, applied job of candidate
+        // $keyword = $req->query('keyword'); //search by name, email, applied job of candidate
 
         if ($req->status == 'WAITING' || $req->status == 'BROWSING_RESUME') {
             $status = ['WAITING', 'BROWSING_RESUME'];
@@ -161,14 +162,17 @@ class EmployerController extends Controller
             ->join('candidates', 'candidate_id', '=', 'candidates.id')
             ->whereIn('status', $status)
             ->whereIn('job_id', $job_ids)
-            ->when($keyword != null, function ($query) use ($keyword) {
-                return $query->where(function ($query2) use ($keyword) {
-                    $query2->whereRaw('LOWER(jname) LIKE ?', ['%' . strtolower($keyword) . '%'])
-                        ->orWhereraw('LOWER(candidates.email) LIKE ?', ['%' . strtolower($keyword) . '%'])
-                        ->orWhereraw("LOWER(CONCAT(lastname, ' ', firstname)) LIKE ?", ['%' . strtolower($keyword) . '%']);
-                });
+            ->when(!empty($job_id), function ($query) use ($job_id) {
+                $query->where('job_id', $job_id);
             })
-            ->selectRaw('job_applying.*, candidates.*, jobs.id, jobs.jname,
+            // ->when($keyword != null, function ($query) use ($keyword) {
+            //     return $query->where(function ($query2) use ($keyword) {
+            //         $query2->whereRaw('LOWER(jname) LIKE ?', ['%' . strtolower($keyword) . '%'])
+            //             ->orWhereraw('LOWER(candidates.email) LIKE ?', ['%' . strtolower($keyword) . '%'])
+            //             ->orWhereraw("LOWER(CONCAT(lastname, ' ', firstname)) LIKE ?", ['%' . strtolower($keyword) . '%']);
+            //     });
+            // })
+            ->selectRaw('job_applying.*, candidates.*, jobs.id, jobs.jname, jobs.interview_round_num,
                         DATE_FORMAT(job_applying.created_at, "%d/%m/%Y %H:%i") as appliedTime')
             ->orderByDesc('job_applying.created_at')
             ->get();

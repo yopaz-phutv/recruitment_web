@@ -33,8 +33,10 @@ const employerApi = {
   getJobList: (keyword = "") => {
     return employerAxios.get(`${prefix}/getJobList?keyword=${keyword}`);
   },
-  getCandidateList: (keyword, status) => {
-    let url = `${prefix}/getCandidateList?keyword=${keyword}&status=${status}`;
+  getCandidateList: (params) => {
+    let url = `${prefix}/getCandidateList?${queryString.stringify(params, {
+      arrayFormat: "index",
+    })}`;
     return employerAxios.get(url);
   },
   processApplying: (data) => {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('candidate_id');
             $table->text('resume_link')->nullable();
             $table->enum('status', ['WAITING', 'BROWSING_RESUME', 'RESUME_FAILED', 'BROWSING_INTERVIEW', 'INTERVIEW_FAILED', 'PASSED'])->default('WAITING');
+            $table->unsignedTinyInteger('interview_round')->nullable();
             $table->timestamps();
         });
     }
