@@ -201,7 +201,7 @@ function JobList() {
         </div>
       </Form>
 
-      {/* <JobMap className="mt-3" jobs={jobs} /> */}
+      <JobMap className="mt-3" jobs={jobs} />
 
       {isLoading ? (
         <div className="row row-cols-lg-3 mt-4">

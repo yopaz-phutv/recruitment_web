@@ -50,18 +50,5 @@ const employerApi = {
       })}`
     );
   },
-  handleSavingCandidate: (data) => {
-    return employerAxios.post(`${prefix}/handleSavingCandidate`, data);
-  },
-  getSavedCandidates: (params) => {
-    return employerAxios.get(
-      `${prefix}/getSavedCandidates?${queryString.stringify(params, {
-        arrayFormat: "index",
-      })}`
-    );
-  },
-  sendRecommendToCandidate: (data) => {
-    return employerAxios.post(`${prefix}/sendRecommendToCandidate`, data);
-  }
 };
 export default employerApi;

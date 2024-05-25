@@ -11,7 +11,7 @@ import JobList from "./view/candidate/jobs";
 import Job from "./view/candidate/jobs/JobDetail";
 import EmployerLayout from "./view/employer/layouts";
 import EmployerLogin from "./view/employer/auth/Login";
-import CandidateList from "./view/employer/candidates/CandidateList";
+import CandidateList from "./view/employer/candidates";
 import JobManagement from "./view/employer/jobs";
 import CandidateLayout from "./view/candidate/management/layouts/CandidateLayout";
 import AppliedJobs from "./view/candidate/management/AppliedJobs";

@@ -91,7 +91,7 @@ export default function JobMap({ className, jobs }) {
       false
     );
     curMap.current.addObject(group);
-    curMap.current.setCenter(group.getBoundingBox().getCenter());
+    // curMap.current.setCenter(group.getBoundingBox().getCenter());
     curMap.current.setZoom(12);
     mapGroup.current = group;
   };
@@ -100,12 +100,10 @@ export default function JobMap({ className, jobs }) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         curMap.current.setZoom(15);
-        console.log(
-          "kkk:",
-          position.coords.latitude,
-          position.coords.longitude
-        );
-        const curLoc = { lat: 20.82865825186767, lng: 106.09522300218937 };
+        const curLoc = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
         var marker = new H.map.Marker(curLoc);
         curMap.current.addObject(marker);
         curMap.current.setCenter(curLoc);

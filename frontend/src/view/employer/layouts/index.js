@@ -29,8 +29,16 @@ function Layout(props) {
     nav("/employer/login");
   };
   const getMe = async () => {
-    const res = await authApi.getMe(2);
-    dispatch(employerAuthActions.setUser(res));
+    try {
+      const res = await authApi.getMe(2);
+      dispatch(employerAuthActions.setUser(res));      
+    } catch (error) {
+      if (error.response.data.message === "Token has expired") {
+        const res = await authApi.refresh(2);
+        localStorage.setItem("employer_jwt", res.token)
+        window.location.reload()
+      }
+    }
   };
   const handleChangePage = (url) => {
     nav(url);

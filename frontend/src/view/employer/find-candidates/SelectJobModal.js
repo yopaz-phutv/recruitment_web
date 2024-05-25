@@ -3,14 +3,16 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import employerApi from "../../../api/employer";
+import candidateBookmarkApi from "../../../api/candidateBookmark";
+import { toast } from "react-toastify";
 
 export default function SelectJobModal({
   show,
   setShow,
   jobs,
   curResume,
-  updateBookmark,
+  resumes,
+  setResumes,
 }) {
   const { register, watch, handleSubmit, reset } = useForm();
   const [message, setMessage] = useState(null);
@@ -20,12 +22,59 @@ export default function SelectJobModal({
       setMessage("Vui lòng chọn!");
     } else {
       setShow(false);
-      var postData = { candidate_id: curResume.candidate_id };
-      if (job_none) postData.job_none = job_none;
-      else postData.job_ids = job_ids;
+      let temp = [...resumes];
+      const index = temp.findIndex((item) => item.id === curResume.id);
 
-      await employerApi.handleSavingCandidate(postData);
-      updateBookmark();
+      var data = { candidate_id: curResume.candidate_id };
+      if (!job_none) data.job_ids = job_ids;
+
+      if (!curResume.candidate_bookmark_id || curResume.is_send_noti === 1) {
+        job_ids = job_ids.map((item) => Number(item))
+        const new_bookmark_id = await candidateBookmarkApi.create(data);
+
+        temp[index].candidate_bookmark_id = new_bookmark_id;
+        temp[index].is_send_noti = 0;
+        temp[index].job_ids = job_none ? 0 : job_ids;
+
+        toast.success("Đã đánh dấu!");
+      } else {
+        temp[index].job_ids = job_ids;
+
+        await candidateBookmarkApi.update(
+          curResume.candidate_bookmark_id,
+          data
+        );
+        toast.success("Đã cập nhật!");
+      }
+      setResumes(temp);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (curResume.candidate_bookmark_id) {
+      let params = {};
+      if (curResume.is_send_noti) {
+        params = {
+          delete_by: "candidate_id",
+          candidate_id: curResume.candidate_id,
+        };
+      } else {
+        params = {
+          delete_by: "id",
+          id: curResume.candidate_bookmark_id,
+        };
+      }
+
+      await candidateBookmarkApi.destroy(params);
+      let temp = [...resumes];
+      const index = temp.findIndex((item) => item.id === curResume.id);
+      temp[index].candidate_bookmark_id = null;
+      delete temp[index].is_send_noti;
+      delete temp[index].job_ids;
+      setResumes(temp);
+
+      toast.success('Đã bỏ đánh dấu');
+      setShow(false);
     }
   };
 
@@ -38,7 +87,7 @@ export default function SelectJobModal({
       <Modal.Body className="pt-0">
         <Form>
           <div className="text-center ts-17 fw-600">
-            Chọn vị trí việc làm tương ứng với ứng viên
+            Chọn vị trí việc làm muốn đánh dấu
           </div>
           <div>
             <Form.Check
@@ -61,12 +110,19 @@ export default function SelectJobModal({
                 key={job.id}
                 type="checkbox"
                 label={job.jname}
+                defaultChecked={curResume.job_ids?.includes(job.id)}
                 disabled={watch("job_none")}
                 value={job.id}
                 {...register("job_ids")}
               />
             ))}
           </div>
+          {curResume.is_send_noti === 1 && (
+            <div className="ts-sm text-danger mt-1">
+              Lần gần đây nhất bạn đã gửi thông báo gợi ý việc làm cho ứng viên
+              này!
+            </div>
+          )}
           {message && <div className="text-danger">{message}</div>}
           <div className="mt-3 d-flex gap-2">
             <Button
@@ -74,15 +130,17 @@ export default function SelectJobModal({
               className="w-100 border-0 bg-main"
               onClick={handleSubmit(handleSaving)}
             >
-              Xác nhận
+              {curResume.is_send_noti === 1 || !curResume.candidate_bookmark_id
+                ? "Tạo đánh dấu mới"
+                : "Cập nhật"}
             </Button>
             <Button
               size="sm"
               variant="secondary"
               className="w-100"
-              onClick={() => setShow(false)}
+              onClick={handleDelete}
             >
-              Đóng
+              {curResume.candidate_bookmark_id ? "Bỏ đánh dấu" : "Đóng"}
             </Button>
           </div>
         </Form>

@@ -1,59 +1,72 @@
 import { useEffect, useState } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
+import Form from "react-bootstrap/Form";
 import { BsEye, BsTrash3 } from "react-icons/bs";
 import { IoIosSend } from "react-icons/io";
-import employerApi from "../../../api/employer";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import CTooltip from "../../../components/CTooltip";
 import useGetJobsByEmployer from "../../../hooks/useGetJobsByEmployer";
-import clsx from "clsx";
 import { toast } from "react-toastify";
 import Loading from "../../../components/Loading";
+import candidateBookmarkApi from "../../../api/candidateBookmark";
 
 export default function SavedCandidates() {
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
   const { jobs } = useGetJobsByEmployer();
-  const [resumes, setResumes] = useState([]);
-  const [curResume, setCurResume] = useState({});
+  const [bookmarks, setBookmarks] = useState([]);
+  const [curBookmark, setCurBookmark] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isSendingRecommend, setIsSendingRecommend] = useState(false);
-  const [filterJob, setFilterJob] = useState("Tất cả vị trí");
+  const [filterJobId, setFilterJobId] = useState("");
+  const [notiStatus, setNotiStatus] = useState("0");
 
-  const getResumeList = async (jobId) => {
+  const getBookmarkList = async () => {
     try {
       setIsLoading(true);
-      const res = await employerApi.getSavedCandidates({ job_id: jobId });
-      setResumes(res);
+      let params = { is_send_noti: notiStatus };
+      if (filterJobId !== "") params.job_id = filterJobId;
+      const res = await candidateBookmarkApi.getList(params);
+      setBookmarks(res);
     } catch (error) {
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleDelete = async (resume, index) => {
+  const handleDelete = async (bookmark, index) => {
     const choice = window.confirm("Bạn có chắc muốn xóa bản ghi này?");
     if (choice) {
-      await employerApi.handleSavingCandidate({
-        candidate_bookmark_id: resume.candidate_bookmark_id,
-        delete: 1,
+      await candidateBookmarkApi.destroy({
+        delete_by: "id",
+        id: bookmark.id,
+        is_send_noti: bookmark.is_send_noti,
       });
-      let resumesTemp = [...resumes];
-      resumesTemp.splice(index, 1);
-      setResumes(resumesTemp);
+      let temp = [...bookmarks];
+      temp.splice(index, 1);
+      setBookmarks(temp);
+      toast.success('Xóa thành công!');
     }
   };
 
-  const handleSendRecommend = async (resume, index) => {
+  const handleSendRecommend = async (bookmark, index) => {
     try {
-      setCurResume(resume);
+      setCurBookmark(bookmark);
       setIsSendingRecommend(true);
-      await employerApi.sendRecommendToCandidate(resume);
-      let resumesTemp = [...resumes];
-      resumesTemp[index].is_send_noti = 1;
-      setResumes(resumesTemp);
+
+      let data = {};
+      Object.entries(bookmark).forEach(([key, value]) => {
+        if (["candidate_id", "resume_id", "jobs", "email"].includes(key))
+          data[key] = value;
+      });
+
+      await candidateBookmarkApi.sendRecommend(bookmark.id, data);
+
+      let temp = [...bookmarks];
+      temp.splice(index, 1);
+      setBookmarks(temp);
+
       toast.success("Gửi thành công!");
     } catch (error) {
       toast.error("Đã có lỗi xảy ra!");
@@ -64,10 +77,10 @@ export default function SavedCandidates() {
 
   useEffect(() => {
     if (isAuth) {
-      getResumeList();
+      getBookmarkList();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth]);
+  }, [isAuth, filterJobId, notiStatus]);
 
   return (
     <div
@@ -75,48 +88,38 @@ export default function SavedCandidates() {
       style={{ paddingLeft: "45px", paddingRight: "35px" }}
     >
       <h5 className="mb-2 pt-3 text-main">Danh sách ứng viên đã đánh dấu</h5>
+      <div className="d-flex gap-2 flex-column flex-sm-row">
+        <CTooltip text="Trạng thái">
+          <Form.Select
+            size="sm"
+            style={{ width: "210px" }}
+            onChange={(e) => setNotiStatus(e.target.value)}
+          >
+            <option value="0">Chưa gửi thông báo gợi ý</option>
+            <option value="1">Đã gửi thông báo gợi ý</option>
+          </Form.Select>
+        </CTooltip>
+        <CTooltip text="Vị trí">
+          <Form.Select
+            size="sm"
+            style={{ width: "210px" }}
+            onChange={(e) => setFilterJobId(e.target.value)}
+          >
+            <option value="">Tất cả vị trí</option>
+            <option value="0">Chưa xác định</option>
+            {jobs.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.jname}
+              </option>
+            ))}
+          </Form.Select>
+        </CTooltip>
+      </div>
       <Table hover className="shadow-sm mt-3" style={{ width: "98%" }}>
         <thead className="table-primary ts-smd">
           <tr>
             <th className="fw-500">Tên</th>
-            <th className="fw-500 w-25">
-              <Dropdown>
-                <CTooltip text={filterJob}>
-                  <Dropdown.Toggle as="span" className="border pointer">
-                    Vị trí
-                  </Dropdown.Toggle>
-                </CTooltip>
-                <Dropdown.Menu className="ts-sm py-0">
-                  <Dropdown.Item
-                    onClick={async () => {
-                      setFilterJob("Tất cả vị trí");
-                      await getResumeList();
-                    }}
-                  >
-                    Tất cả vị trí
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={async () => {
-                      setFilterJob("Chưa xác định");
-                      await getResumeList(0);
-                    }}
-                  >
-                    Chưa xác định
-                  </Dropdown.Item>
-                  {jobs.map((item) => (
-                    <Dropdown.Item
-                      key={item.id}
-                      onClick={async () => {
-                        setFilterJob(item.jname);
-                        await getResumeList(item.id);
-                      }}
-                    >
-                      {item.jname}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
-            </th>
+            <th className="fw-500 w-25">Vị trí</th>
             <th className="fw-500">Điện thoại</th>
             <th className="fw-500 w-15">Email</th>
             <th className="fw-500">Đã lưu lúc</th>
@@ -125,7 +128,7 @@ export default function SavedCandidates() {
         </thead>
         {!isLoading && (
           <tbody className="ts-sm">
-            {resumes.map((item, index) => (
+            {bookmarks.map((item, index) => (
               <tr key={item.id}>
                 <td className="text-capitalize">{item.fullname}</td>
                 <td>
@@ -142,7 +145,7 @@ export default function SavedCandidates() {
                 <td>{item.email}</td>
                 <td>{dayjs(item.saved_time).format("DD/MM/YYYY HH:mm")}</td>
                 <td>
-                  {isSendingRecommend && item.id === curResume.id ? (
+                  {isSendingRecommend && item.id === curBookmark.id ? (
                     <div className="d-flex gap-1 align-items-center flex-wrap">
                       <Spinner size="sm" className="text-main" />
                       Đang gửi
@@ -150,40 +153,27 @@ export default function SavedCandidates() {
                   ) : (
                     <div className="d-flex gap-2 ts-md">
                       <CTooltip text="Xem hồ sơ">
-                        <a href={item.resume_link} target="_blank" rel="noreferrer">
+                        <a
+                          href={item.resume_link}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
                           <BsEye className="text-main pointer" />
                         </a>
                       </CTooltip>
-                      <div
-                        onClick={() =>
-                          handleDelete(item, index)
-                        }
-                      >
+                      <div onClick={() => handleDelete(item, index)}>
                         <BsTrash3 className="text-danger pointer" />
                       </div>
-                      <CTooltip
-                        text={clsx(
-                          "Gửi thông báo gợi ý việc làm tới ứng viên: ",
-                          item.is_send_noti ? "Đã gửi" : "Chưa gửi"
-                        )}
-                      >
-                        <div
-                          onClick={() => {
-                            if (!item.is_send_noti)
-                              handleSendRecommend(item, index);
-                          }}
-                        >
-                          <IoIosSend
-                            fontSize="18px"
-                            className={clsx(
-                              "pointer",
-                              item.is_send_noti
-                                ? "text-secondary"
-                                : "text-success"
-                            )}
-                          />
-                        </div>
-                      </CTooltip>
+                      {notiStatus === "0" && (
+                        <CTooltip text="Gửi thông báo gợi ý việc làm tới ứng viên">
+                          <div onClick={() => handleSendRecommend(item, index)}>
+                            <IoIosSend
+                              fontSize="18px"
+                              className="text-success pointer"
+                            />
+                          </div>
+                        </CTooltip>
+                      )}
                     </div>
                   )}
                 </td>
@@ -195,7 +185,7 @@ export default function SavedCandidates() {
       {isLoading ? (
         <Loading />
       ) : (
-        resumes.length === 0 && <h5>Không có bản ghi nào</h5>
+        bookmarks.length === 0 && <h5>Không có bản ghi nào</h5>
       )}
     </div>
   );

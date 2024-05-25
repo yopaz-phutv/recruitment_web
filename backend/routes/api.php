@@ -6,6 +6,7 @@ use App\Http\Controllers\EducationController;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\CandidateBookmarkController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\CandidateMessageController;
 use App\Http\Controllers\CertificateController;
@@ -73,8 +74,6 @@ Route::controller(EmployerController::class)->prefix('companies')->group(functio
     Route::post('processApplying', 'processApplying')->middleware('jwt');
     Route::post('{job_id}/changeJobStatus', 'changeJobStatus');
     Route::get('findCandidates', 'findCandidates');
-    Route::post('handleSavingCandidate', 'handleSavingCandidate');
-    Route::get('getSavedCandidates', 'getSavedCandidates');
     Route::post('sendRecommendToCandidate', 'sendRecommendToCandidate');
 });
 
@@ -189,4 +188,10 @@ Route::controller(ResumeController::class)->prefix('resumes')->group(function ()
     Route::post('update', 'update');
     Route::delete('{id}', 'destroy');
 });
-
+Route::controller(CandidateBookmarkController::class)->prefix('candidate-bookmarks')->group(function () {
+    Route::get('', 'index');
+    Route::post('', 'create');
+    Route::patch('{id}', 'update');
+    Route::delete('', 'destroy');
+    Route::post('{id}/send-recommend', 'sendRecommend');
+});

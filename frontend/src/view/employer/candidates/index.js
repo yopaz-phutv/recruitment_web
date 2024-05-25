@@ -72,7 +72,7 @@ function CandidateList() {
   return (
     <>
       <div className="bg-white ms-3 mt-3 py-3 shadow-sm" style={{ height: "95%" }}>
-        <h5 className="mb-1 pt-3 text-main" style={{ marginLeft: "45px" }}>
+        <h5 className="mb-1 text-main" style={{ marginLeft: "45px" }}>
           Danh sách ứng viên
         </h5>
         <Tab.Container onSelect={(k) => setStep(k)}>
@@ -94,7 +94,7 @@ function CandidateList() {
             </Nav.Item>
           </Nav>
         </Tab.Container>
-        <div className="mt-3" style={{ marginLeft: "45px" }}>
+        <div className="mt-1" style={{ marginLeft: "45px" }}>
           <Form onSubmit={handleSubmit((data) => setKeyword(data.keyword))}>
             <Form.Group className="input-group" style={{ width: "35%" }}>
               <Form.Control

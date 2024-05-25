@@ -4,7 +4,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import { useForm } from "react-hook-form";
 import useGetAllLocations from "../../../hooks/useGetAllLocations";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CMulSelect from "../../../components/CMulSelect";
 import useGetAllIndustries from "../../../hooks/useGetAllIndustries";
 import TagInput from "../../../components/TagInput";
@@ -20,8 +20,10 @@ import { useLocation } from "react-router-dom";
 import CPagination from "../../../components/CPagination";
 import SelectJobModal from "./SelectJobModal";
 import useGetJobsByEmployer from "../../../hooks/useGetJobsByEmployer";
+import { useSelector } from "react-redux";
 
 export default function FindingCandidates() {
+  const isAuth = useSelector((state) => state.employerAuth.isAuth);
   const { locations, isLoading: isLoadingLocations } = useGetAllLocations();
   const { industries, isLoading: isLoadingIndustries } = useGetAllIndustries();
   const { jtypes } = useGetAllJtypes();
@@ -86,13 +88,11 @@ export default function FindingCandidates() {
     setIsLoading(false);
   };
 
-  const updateBookmark = (resume_id) => {
-    if (!resume_id) resume_id = curResume.id;
-    const resumesTemp = [...resumes];
-    const index = resumesTemp.findIndex((item) => item.id === resume_id);
-    resumesTemp[index].is_saved = !resumesTemp[index].is_saved;
-    setResumes(resumesTemp);
-  };
+  useEffect(() => {
+    if (isAuth) {
+      fetchCandidates()
+    }
+  }, [isAuth])
 
   return (
     <div
@@ -257,7 +257,6 @@ export default function FindingCandidates() {
                 }}
                 setShowSelectJobModal={setShowSelectJobModal}
                 setCurResume={setCurResume}
-                updateBookmark={updateBookmark}
               />
             </div>
           ))}
@@ -275,7 +274,7 @@ export default function FindingCandidates() {
         <ResumeModal
           show={showResumeModal}
           setShow={setShowResumeModal}
-          imageSrc={curResume.image}
+          imageSrc={curResume.resume_link}
         />
       )}
       {showSelectJobModal && (
@@ -284,7 +283,8 @@ export default function FindingCandidates() {
           setShow={setShowSelectJobModal}
           jobs={jobs}
           curResume={curResume}
-          updateBookmark={updateBookmark}
+          resumes={resumes}
+          setResumes={setResumes}
         />
       )}
     </div>

@@ -301,126 +301,25 @@ class EmployerController extends Controller
         $employer_id = Auth::user()->id;
         for ($i = 0; $i < count($resumes['data']); $i++) {
             $resume = $resumes['data'][$i];
-            $res = DB::table('candidate_bookmarks')->where([
-                ['employer_id', '=', $employer_id],
-                ['candidate_id', '=', $resume['candidate_id']]
-            ])->get()->toArray();
-            $resumes['data'][$i]['is_saved'] = count($res) > 0;
+            $res = DB::table('candidate_bookmarks')
+                ->where([
+                    ['employer_id', '=', $employer_id],
+                    ['candidate_id', '=', $resume['candidate_id']],
+                    ['is_deleted', '=', 0]
+                ])
+                ->latest()
+                ->get()
+                ->toArray();
+            if (count($res) > 0) $resumes['data'][$i]['is_send_noti'] = $res[0]->is_send_noti;
+            $resumes['data'][$i]['candidate_bookmark_id'] = $res[0]->id ?? null;
+            if (count($res) > 0) {
+                $job_ids = DB::table('candidate_bookmark_detail')
+                    ->where('candidate_bookmark_id', $res[0]->id)
+                    ->pluck('job_id');
+                $resumes['data'][$i]['job_ids'] = $job_ids;
+            }
         }
 
         return response()->json($resumes);
-    }
-    public function handleSavingCandidate(Request $req)
-    {
-        $user = Auth::user();
-
-        if ($req->has('delete')) {
-            $query = CandidateBookmark::where('id', $req->candidate_bookmark_id);
-            $is_send_noti = $query->pluck('is_send_noti')[0];
-            if ($is_send_noti) {
-                $query->update(['is_deleted' => 1]);
-            } else {
-                DB::table('candidate_bookmark_detail')
-                    ->where('candidate_bookmark_id', $req->candidate_bookmark_id)
-                    ->delete();
-                $query->delete();
-            }
-        } else {
-            $insert_data = [];
-
-            $candidate_bookmark_id = CandidateBookmark::create([
-                'employer_id' => $user->id,
-                'candidate_id' => $req->candidate_id,
-            ])->id;
-
-            if ($req->has('job_none')) {
-                $insert_data[] = [
-                    'candidate_bookmark_id' => $candidate_bookmark_id,
-                    'job_id' => 0
-                ];
-            } else {
-                foreach ($req->job_ids as $job_id) {
-                    $insert_data[] = [
-                        'candidate_bookmark_id' => $candidate_bookmark_id,
-                        'job_id' => $job_id
-                    ];
-                }
-            }
-
-            DB::table('candidate_bookmark_detail')->insert($insert_data);
-
-            return response()->json('created successfully', 201);
-        }
-
-        return response()->json('deleted successfully');
-    }
-    public function getSavedCandidates(Request $req)
-    {
-        $employer_id = Auth::user()->id;
-        $job_id = $req->job_id;
-
-        $resumes = CandidateBookmark::join('candidates', 'candidate_id', '=', 'candidates.id')
-            ->join('resumes', 'public_resume_id', '=', 'resumes.id')
-            ->where([
-                ['employer_id', '=', $employer_id],
-                ['is_deleted', '=', 0]
-            ])
-            ->when($job_id !== null, function ($query) use ($job_id) {
-                return $query->join('candidate_bookmark_detail', 'candidate_bookmarks.id', '=', 'candidate_bookmark_id')
-                    ->where('job_id', $job_id);
-            })
-            ->select(
-                'resumes.id',
-                'candidate_bookmarks.candidate_id',
-                DB::raw('candidate_bookmarks.id AS candidate_bookmark_id'),
-                'fullname',
-                'resumes.phone',
-                'resumes.email',
-                DB::raw('candidate_bookmarks.created_at AS saved_time'),
-                'is_send_noti',
-                'resumes.resume_link'
-            )
-            ->latest('saved_time')
-            ->get();
-
-        for ($i = 0; $i < count($resumes); $i++) {
-            $resume = $resumes[$i];
-            $jobs = DB::table('candidate_bookmark_detail')
-                ->join('jobs', 'job_id', '=', 'jobs.id')
-                ->where('candidate_bookmark_id', $resume->candidate_bookmark_id)
-                ->select('jobs.id', 'jname')
-                ->get();
-            $resumes[$i]['jobs'] = $jobs;
-        }
-
-        return response()->json($resumes);
-    }
-    public function sendRecommendToCandidate(Request $req)
-    {
-        $jobs = $req->jobs;
-        $bookmark_id = $req->candidate_bookmark_id;
-        $candidate_id = $req->candidate_id;
-        $resume_id = $req->id;
-
-        $employer = Employer::find(Auth::user()->id);
-
-        $noti_name = "<div>Bạn nhận được gợi ý việc làm từ nhà tuyển dụng <strong>{$employer->name}</strong></div>";
-        $content = "<div><strong>{$employer->name}</strong> đã xem hồ sơ công khai của bạn và nhận thấy bạn phù hợp với vị trí mà họ đang tuyển dụng:";
-        $frontend_app_base_url = config('FRONTEND_APP_BASE_URL');
-        foreach ($jobs as $job) {
-            $content .= "<div><a href='{$frontend_app_base_url}/jobs/{$job['id']}'>{$job['jname']}</a></div>";
-        }
-        $content .= "</div>";
-
-        event(new SendRecommend2Candidate($bookmark_id, $resume_id));
-
-        CandidateMessage::create([
-            'candidate_id' => $candidate_id,
-            'name' => $noti_name,
-            'content' => $content
-        ]);
-        event(new NotifyCandidateEvent($noti_name, $candidate_id));
-
-        return response()->json('sent successfully');
     }
 }

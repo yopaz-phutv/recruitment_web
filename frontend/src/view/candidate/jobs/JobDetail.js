@@ -21,7 +21,6 @@ import dayjs from "dayjs";
 import Button from "react-bootstrap/Button";
 import AppyingDialog from "./ApplyingDialog";
 import { toast } from "react-toastify";
-import { isNullObject } from "../../../common/functions";
 
 function Job() {
   const { id } = useParams();

@@ -11,13 +11,11 @@ use App\Models\Employer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-//use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
-
 class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt', ['except' => ['login', 'register']]);
+        $this->middleware('jwt', ['except' => ['login', 'register', 'refresh']]);
     }
 
     public function login(Request $request)
@@ -149,12 +147,16 @@ class AuthController extends Controller
 
     public function refresh()
     {
+        // return response()->json([
+        //     'user' => Auth::user(),
+        //     'authorization' => [
+        //         'token' => Auth::refresh(),
+        //         'type' => 'bearer',
+        //     ]
+        // ]);
         return response()->json([
-            'user' => Auth::user(),
-            'authorization' => [
-                'token' => Auth::refresh(),
-                'type' => 'bearer',
-            ]
+            'token' => Auth::refresh(),
+            'type' => 'bearer',
         ]);
     }
 }
