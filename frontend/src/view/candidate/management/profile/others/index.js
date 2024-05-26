@@ -1,25 +1,24 @@
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import { useContext, useState } from "react";
-import skillApi from "../../../../../api/skill";
-import { IoMdStar, IoMdStarOutline } from "react-icons/io";
-import SkillFormDialog from "./SkillFormDialog";
+import OtherFormDialog from "./OtherFormDialog";
 import { CandidateContext } from "../../layouts/CandidateLayout";
 import FrameLayout from "../FrameLayout";
+import otherApi from "../../../../../api/other";
 
-export default function Skill() {
-  const { skills, setSkills, getSkills } = useContext(CandidateContext);
+export default function Other() {
+  const { others, setOthers, getOthers } = useContext(CandidateContext);
   const [actType, setActType] = useState("VIEW");
   const [current, setCurrent] = useState({});
 
   const handleDelete = async (id) => {
-    let choice = window.confirm("Bạn có chắc muốn xóa Kỹ năng này?");
+    let choice = window.confirm("Bạn có chắc muốn xóa Thông tin này?");
     if (choice) {
-      await skillApi.destroy(id);
-      let temp = skills.filter((item) => {
+      await otherApi.destroy(id);
+      let temp = others.filter((item) => {
         return item.id !== id;
       });
-      setSkills(temp);
+      setOthers(temp);
     }
   };
   const handleEdit = (item) => {
@@ -29,39 +28,22 @@ export default function Skill() {
 
   return (
     <FrameLayout
-      title="Kỹ năng"
+      title="Thông tin khác"
       hasaddbtn={true}
       className="mt-4"
       setActType={setActType}
-      titleId="profile-skill"
+      titleId="profile-other"
     >
-      {skills?.map((item, index) => (
+      {others?.map((item, index) => (
         <div key={index}>
           <hr />
           <div className="position-relative">
-            <div className="border-0 border-main border-start ps-3 d-inline-block">
+            <div className="border-0 border-main border-start ps-3">
               <div className="fw-bold">{item.name}</div>
-              <Stack direction="horizontal">
-                {Array.from({ length: 5 }, (_, ind) => (
-                  <span key={ind}>
-                    {ind <= item.proficiency - 1 ? (
-                      <IoMdStar className="fs-3" style={{ color: "orange" }} />
-                    ) : (
-                      <IoMdStarOutline
-                        className="fs-3"
-                        style={{ color: "orange" }}
-                      />
-                    )}
-                  </span>
-                ))}
-              </Stack>
-              {item.description && (
-                <div className="ts-smd">
-                  <span className="text-secondary">
-                    {" " + item.description}
-                  </span>
-                </div>
-              )}
+              <div className="ts-smd text-break">
+                Mô tả:
+                <span className="text-secondary"> {item.description}</span>
+              </div>
             </div>
             <div className="position-absolute top-0 end-0">
               <Stack direction="horizontal" gap={2}>
@@ -85,11 +67,11 @@ export default function Skill() {
         </div>
       ))}
       {actType !== "VIEW" && (
-        <SkillFormDialog
+        <OtherFormDialog
           actType={actType}
           setActType={setActType}
           current={current}
-          getAll={getSkills}
+          getAll={getOthers}
         />
       )}
     </FrameLayout>

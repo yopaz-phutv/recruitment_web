@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { CandidateContext } from "../../layouts/CandidateLayout";
 import { useNavigate } from "react-router-dom";
 
-export default function CreateOptionDialog({ show, setShow, templateId }) {
+export default function OptionDialog({ show, setShow, templateId }) {
   const { setCvMode } = useContext(CandidateContext);
   const nav = useNavigate();
   const handleSelect = (mode) => {

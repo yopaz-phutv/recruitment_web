@@ -1,19 +1,20 @@
 import "./style.css";
-import { BsEye, BsSearch } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 import { RiUserSearchFill } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AiOutlinePlus } from "react-icons/ai";
+import { MdEdit } from "react-icons/md";
 import Loading from "../../../components/Loading";
-import JobDetail from "./JobDetail";
-import JobCreating from "./JobCreating";
 import { useSelector } from "react-redux";
 import employerApi from "../../../api/employer";
 import useGetAllJtypes from "../../../hooks/useGetAllJtypes";
 import useGetAllJlevels from "../../../hooks/useGetAllJlevels";
 import useGetAllIndustries from "../../../hooks/useGetAllIndustries";
 import useGetAllLocations from "../../../hooks/useGetAllLocations";
+import EditJobModal from "./EditJobModal";
+import CreateJobModal from "./CreateJobModal";
 
 function JobManagement() {
   const nav = useNavigate();
@@ -28,7 +29,8 @@ function JobManagement() {
   const [jobs, setJobs] = useState([]);
   const [curJob, setCurJob] = useState({ industries: [], locations: [] });
   const [isLoading, setIsLoading] = useState(true);
-  // const company = useSelector((state) => state.employerAuth.current.employer);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const getJobList = async (data) => {
     try {
@@ -44,7 +46,8 @@ function JobManagement() {
   };
   const handleClickActBtn = (job_inf, type) => {
     setCurJob(job_inf);
-    if (type === "SEARCH") {
+    if (type === "EDIT") setShowEditModal(true);
+    else if (type === "SEARCH") {
       const stateValue = {
         locationIds: job_inf.locations.map((item) => item.id),
         industryIds: job_inf.industries.map((item) => item.id),
@@ -95,9 +98,8 @@ function JobManagement() {
             </form>
             <button
               type="button"
-              className="float-end d-flex align-items-center btn btn-info btn-sm text-white me-3"
-              data-bs-toggle="modal"
-              data-bs-target="#jobCreating"
+              className="float-end d-flex gap-1 align-items-center btn btn-info btn-sm text-white px-4"
+              onClick={() => setShowCreateModal(true)}
             >
               <AiOutlinePlus />
               Tạo mới
@@ -145,11 +147,9 @@ function JobManagement() {
                       </div>
                     </td>
                     <td className="ts-17">
-                      <BsEye
+                      <MdEdit
                         className="text-primary pointer"
-                        data-bs-toggle="modal"
-                        data-bs-target="#jobDetail"
-                        onClick={() => handleClickActBtn(item, "VIEW")}
+                        onClick={() => handleClickActBtn(item, "EDIT")}
                       />
                       {/* <BsTrash3
                       className="ms-2 text-danger"
@@ -172,19 +172,29 @@ function JobManagement() {
           ) : (
             jobs.length === 0 && <h5>Không có bản ghi nào</h5>
           )}
-          <JobDetail
-            inf={curJob}
-            jtypes={jtypes}
-            jlevels={jlevels}
-            industries={industries}
-            locations={locations}
-          />
-          <JobCreating
-            jtypes={jtypes}
-            jlevels={jlevels}
-            industries={industries}
-            locations={locations}
-          />
+          {showEditModal && (
+            <EditJobModal
+              inf={curJob}
+              jtypes={jtypes}
+              jlevels={jlevels}
+              industries={industries}
+              locations={locations}
+              getJobList={getJobList}
+              show={showEditModal}
+              setShow={setShowEditModal}
+            />
+          )}
+          {showCreateModal && (
+            <CreateJobModal
+              jtypes={jtypes}
+              jlevels={jlevels}
+              industries={industries}
+              locations={locations}
+              getJobList={getJobList}
+              show={showCreateModal}
+              setShow={setShowCreateModal}
+            />
+          )}
         </div>
       </div>
     </>

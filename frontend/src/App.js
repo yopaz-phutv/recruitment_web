@@ -20,7 +20,7 @@ import Signup from "./view/candidate/auth/Signup";
 import Layout from "./view/candidate/layouts";
 import Profile from "./view/candidate/management/profile";
 import Resume from "./view/candidate/management/resumes";
-import Template from "./view/candidate/management/resumes/resume_templates/common";
+import Template from "./view/candidate/management/resumes/resume_templates/TemplateWrapper";
 import TemplateList from "./view/candidate/management/resumes/resume_templates";
 import EmployerSignup from "./view/employer/auth/Signup";
 import AdminLogin from "./view/admin/auth/Login";

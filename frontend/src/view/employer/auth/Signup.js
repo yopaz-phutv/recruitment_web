@@ -263,7 +263,7 @@ export default function Signup() {
               <div className="d-flex gap-2 my-3">
                 <Button
                   size="sm"
-                  variant="secondary"
+                  variant="danger"
                   className="w-40"
                   onClick={() => setIsEdit(false)}
                 >

@@ -1,6 +1,6 @@
 import Modal from "react-bootstrap/Modal";
-import Template from "./common";
-import CreateOptionDialog from "./CreateOptionDialog";
+import Template from "./TemplateWrapper";
+import OptionDialog from "./OptionDialog";
 import { useState } from "react";
 import * as htmlToImage from "html-to-image";
 
@@ -61,7 +61,7 @@ export default function TemplatePreviewModal({ show, setShow, templateId }) {
           </div>
         </Modal.Body>
       </Modal>
-      <CreateOptionDialog
+      <OptionDialog
         show={showCreateModal}
         setShow={setShowCreateModal}
         templateId={templateId}

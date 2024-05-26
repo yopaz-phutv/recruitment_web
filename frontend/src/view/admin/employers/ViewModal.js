@@ -22,7 +22,7 @@ export default function ViewModal({ show, setShow, employer, curTabInd }) {
         />
       </Modal.Body>
       <Modal.Footer className="py-1">
-        <Button variant="secondary" onClick={() => setShow(false)}>
+        <Button variant="danger" onClick={() => setShow(false)}>
           Đóng
         </Button>
       </Modal.Footer>

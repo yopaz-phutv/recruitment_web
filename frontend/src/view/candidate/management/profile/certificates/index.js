@@ -39,43 +39,45 @@ export default function Certificate() {
       {certificates?.map((item, index) => (
         <div key={index}>
           <hr />
-          <div className="border-0 border-main border-start ps-3 d-inline-block">
-            <div className="fw-bold">{item.name}</div>
-            <div>
-              <span className="text-secondary ts-xs">
-                {dayjs(item.receive_date).format("DD/MM/YYYY")}
-                {item.expire_date &&
-                  " - " + dayjs(item.expire_date).format("DD/MM/YYYY")}
-              </span>
+          <div className="position-relative">
+            <div className="border-0 border-main border-start ps-3 d-inline-block">
+              <div className="fw-bold">{item.name}</div>
+              <div>
+                <span className="text-secondary ts-xs">
+                  {dayjs(item.receive_date).format("DD/MM/YYYY")}
+                  {item.expire_date &&
+                    " - " + dayjs(item.expire_date).format("DD/MM/YYYY")}
+                </span>
+              </div>
+              {item.image && (
+                <a
+                  className="nav-link text-primary"
+                  href={item.image}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="ts-smd">Ảnh</span>
+                </a>
+              )}
             </div>
-            {item.image && (
-              <a
-                className="nav-link text-primary"
-                href={item.image}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span className="ts-smd">Ảnh</span>
-              </a>
-            )}
-          </div>
-          <div className="mt-2 float-md-end">
-            <Stack direction="horizontal" gap={2}>
-              <Button
-                size="sm"
-                variant="outline-primary"
-                onClick={() => handleEdit(item)}
-              >
-                Sửa
-              </Button>
-              <Button
-                size="sm"
-                variant="outline-danger"
-                onClick={() => handleDelete(item.id)}
-              >
-                Xóa
-              </Button>
-            </Stack>
+            <div className="position-absolute top-0 end-0">
+              <Stack direction="horizontal" gap={2}>
+                <Button
+                  size="sm"
+                  variant="outline-primary"
+                  onClick={() => handleEdit(item)}
+                >
+                  Sửa
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline-danger"
+                  onClick={() => handleDelete(item.id)}
+                >
+                  Xóa
+                </Button>
+              </Stack>
+            </div>
           </div>
         </div>
       ))}

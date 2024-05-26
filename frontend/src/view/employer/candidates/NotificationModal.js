@@ -19,12 +19,18 @@ export default function NotificationModal({
   let prefix_msg = "";
   const step = candidate.step;
   const actType = candidate.actType;
+  const interview_round = candidate.interview_round;
+  const interview_round_num = candidate.interview_round_num;
+
   if (step === "step1") {
     if (actType === "ACCEPT") prefix_msg = "Chấp nhận hồ sơ ứng viên ";
     else if (actType === "REJECT") prefix_msg = "Từ chối hồ sơ ứng viên ";
   } else if (step === "step2") {
-    if (actType === "ACCEPT") prefix_msg = "Tiếp nhận ứng viên ";
-    else if (actType === "REJECT") prefix_msg = "Không tiếp nhận ứng viên ";
+    if (actType === "ACCEPT") {
+      if (interview_round < interview_round_num) {
+        prefix_msg = `Chấp nhận qua vòng phỏng vấn thứ ${interview_round} ứng viên  `;
+      } else prefix_msg = "Tiếp nhận ứng viên ";
+    } else if (actType === "REJECT") prefix_msg = "Không tiếp nhận ứng viên ";
   }
   const company = useSelector((state) => state.employerAuth.current.employer);
 
@@ -41,7 +47,7 @@ export default function NotificationModal({
   const onSubmit = async (data) => {
     // console.log({ data });
     try {
-      delete data.send_mail
+      delete data.send_mail;
       if (!watch("send_mail")) delete data.title;
       setIsLoading(true);
       await employerApi.processApplying({ ...candidate, ...data });
@@ -107,7 +113,7 @@ export default function NotificationModal({
           <div className="ts-smd">
             <Form.Check
               type="checkbox"
-              label="Gửi email thông báo"
+              label="Gửi thêm email"
               {...register("send_mail")}
               onClick={() => {
                 if (!watch("send_mail")) {
@@ -136,7 +142,7 @@ export default function NotificationModal({
               </Form.Control.Feedback>
             </Form.Group>
           )}
-          {watch("send_fast_noti") !== null && (
+          {!watch("send_fast_noti") && (
             <Form.Group>
               <Form.Label className="fw-500">Nội dung</Form.Label>
               <Form.Control
@@ -156,12 +162,19 @@ export default function NotificationModal({
               type="submit"
               variant="primary"
               size="sm"
+              className="d-flex align-items-center gap-1"
               disabled={isLoading}
             >
-              {isLoading && <Spinner size="sm" className="me-1" />}
-              {!isLoading ? "Xác nhận" : "Đang xử lý"}
+              {isLoading ? (
+                <>
+                  <Spinner size="sm" />
+                  Đang xử lý
+                </>
+              ) : (
+                "Xác nhận"
+              )}
             </Button>
-            <Button variant="secondary" size="sm" onClick={handleClose}>
+            <Button variant="danger" size="sm" onClick={handleClose}>
               Hủy
             </Button>
             <button type="reset" id="reset" className="d-none" />

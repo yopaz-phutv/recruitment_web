@@ -136,7 +136,7 @@ export default function SelectJobModal({
             </Button>
             <Button
               size="sm"
-              variant="secondary"
+              variant="danger"
               className="w-100"
               onClick={handleDelete}
             >

@@ -39,6 +39,7 @@ export default function Activity() {
       {activities?.map((item, index) => (
         <div key={index}>
           <hr />
+          <div className="position-relative">
           <div className="border-0 border-main border-start ps-3 d-inline-block">
             <div className="fw-bold">{item.organization}</div>
             <div className="ts-smd text-secondary">{item.role}</div>
@@ -61,13 +62,13 @@ export default function Activity() {
                   </a>
                 </div>
               )}
-              <div>
+              <div className="text-break">
                 Mô tả:
                 <span className="text-secondary"> {item.description}</span>
               </div>
             </div>
           </div>
-          <div className="mt-2 float-lg-end">
+          <div className="position-absolute top-0 end-0">
             <Stack direction="horizontal" gap={2}>
               <Button
                 size="sm"
@@ -84,7 +85,7 @@ export default function Activity() {
                 Xóa
               </Button>
             </Stack>
-          </div>
+          </div></div>
         </div>
       ))}
       {actType !== "VIEW" && (

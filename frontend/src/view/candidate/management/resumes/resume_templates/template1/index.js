@@ -11,7 +11,7 @@ import { useContext, useEffect, useState } from "react";
 import { CandidateContext } from "../../../layouts/CandidateLayout";
 import clsx from "clsx";
 import dayjs from "dayjs";
-import { TemplateContext } from "../common";
+import { TemplateContext } from "../TemplateWrapper";
 
 export default function Template1() {
   const {
@@ -931,7 +931,7 @@ export default function Template1() {
   return (
     <div
       id="resume"
-      className="mx-auto border d-flex p-2 shadow-sm"
+      className="mx-auto border d-flex shadow-sm"
       style={{ width: "800px" }}
     >
       <div className="cv-bg-main ps-1 pe-2" style={{ width: "340px" }}>

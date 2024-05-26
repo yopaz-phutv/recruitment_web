@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('job_id')->nullable();
             $table->string('name');
             $table->string('title')->nullable();
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->boolean('isRead')->default(0);
             $table->timestamps();
         });

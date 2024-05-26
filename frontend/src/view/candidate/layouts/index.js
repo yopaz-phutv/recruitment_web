@@ -59,7 +59,6 @@ function Layout(props) {
       }
       setBellMsgs(temp);
     }
-    // nav(`/jobs/${inf.job_id}`);
   };
 
   useEffect(() => {
@@ -103,9 +102,9 @@ function Layout(props) {
       getAllMessages();
       let channelName = `candidate-channel_${candidate.id}`;
       let channel = pusher.subscribe(channelName);
-      channel.bind("notification-event", (data) => {
+      channel.bind("notification-event", async (data) => {
         // alert("bell message::", JSON.stringify(data));
-        getAllMessages();
+        await getAllMessages();
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -200,7 +199,7 @@ function Layout(props) {
                   {bellMsgs.length > 0 ? (
                     bellMsgs.map((item, index) => (
                       <div
-                        key={"bell_msg" + index}
+                        key={item.id}
                         onClick={() => handleReadMsg(item)}
                         className={
                           "text-wrap px-3 py-2 hover-bg-1 pointer" +

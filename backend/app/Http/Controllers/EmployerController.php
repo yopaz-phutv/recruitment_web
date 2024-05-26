@@ -149,9 +149,8 @@ class EmployerController extends Controller
     public function getCandidateList(Request $req)
     {
         $job_id = $req->job_id;
+        $interview_round = $req->interview_round;
         $job_ids = Job::where('employer_id', '=', Auth::user()->id)->pluck('id');
-
-        // $keyword = $req->query('keyword'); //search by name, email, applied job of candidate
 
         if ($req->status == 'WAITING' || $req->status == 'BROWSING_RESUME') {
             $status = ['WAITING', 'BROWSING_RESUME'];
@@ -165,13 +164,12 @@ class EmployerController extends Controller
             ->when(!empty($job_id), function ($query) use ($job_id) {
                 $query->where('job_id', $job_id);
             })
-            // ->when($keyword != null, function ($query) use ($keyword) {
-            //     return $query->where(function ($query2) use ($keyword) {
-            //         $query2->whereRaw('LOWER(jname) LIKE ?', ['%' . strtolower($keyword) . '%'])
-            //             ->orWhereraw('LOWER(candidates.email) LIKE ?', ['%' . strtolower($keyword) . '%'])
-            //             ->orWhereraw("LOWER(CONCAT(lastname, ' ', firstname)) LIKE ?", ['%' . strtolower($keyword) . '%']);
-            //     });
-            // })
+            ->when(
+                $req->status == 'BROWSING_INTERVIEW' && !empty($job_id),
+                function ($query) use ($interview_round) {
+                    $query->where('interview_round', $interview_round);
+                }
+            )
             ->selectRaw('job_applying.*, candidates.*, jobs.id, jobs.jname, jobs.interview_round_num,
                         DATE_FORMAT(job_applying.created_at, "%d/%m/%Y %H:%i") as appliedTime')
             ->orderByDesc('job_applying.created_at')
@@ -182,50 +180,56 @@ class EmployerController extends Controller
 
     public function processApplying(Request $req)
     {
+        $interview_round_num = $req->interview_round_num;
+        $current_round = $req->interview_round;
         $currentTime = Carbon::parse(Carbon::now())->format('H:i d/m/Y');
         $company = Employer::where('user_id', '=', Auth::user()->id)->value('name');
-        $msgName = "";
+        $msg_name = "";
 
-        if ($req->actType == "VIEWED") $nextStatus = "BROWSING_RESUME";
+        if ($req->actType == "VIEWED") $next_status = "BROWSING_RESUME";
         else if ($req->actType == "ACCEPT") {
             if ($req->step == "step1") {
-                $nextStatus = "BROWSING_INTERVIEW";
-                $msgName = "Hồ sơ được chấp nhận, vị trí ";
+                $next_status = "BROWSING_INTERVIEW";
+                $next_round = 1;
+                $msg_name = "Hồ sơ được chấp nhận, vị trí ";
             } else if ($req->step == "step2") {
-                $nextStatus = "PASSED";
-                $msgName = "Chúc mừng bạn đã được nhận, vị trí ";
+                if ($current_round < $interview_round_num) {
+                    $next_round = $current_round + 1;
+                    $msg_name = "Bạn đã vượt qua vòng phỏng vấn thứ {$current_round}, vị trí ";
+                } else {
+                    $next_status = "PASSED";
+                    $msg_name = "Chúc mừng bạn đã được nhận, vị trí ";
+                }
             }
         } else if ($req->actType == "REJECT") {
             if ($req->step == "step1") {
-                $nextStatus = "RESUME_FAILED";
-                $msgName = "Hồ sơ bị loại, vị trí ";
+                $next_status = "RESUME_FAILED";
+                $msg_name = "Hồ sơ bị loại, vị trí ";
             } else if ($req->step == "step2") {
-                $nextStatus = "INTERVIEW_FAILED";
-                $msgName = "Phỏng vấn bị loại, vị trí ";
+                $next_status = "INTERVIEW_FAILED";
+                $msg_name = "Phỏng vấn bị loại, vị trí ";
             }
         }
-        $msgName = $msgName . $req->jname . ', ' . $company . ', lúc ' . $currentTime;
+        $msg_name = $msg_name . $req->jname . ', ' . $company . ', ' . $currentTime;
         //update:
+        $job_applying_data = ['updated_at' => Carbon::now()];
+        if (isset($next_status)) $job_applying_data['status'] = $next_status;
+        if (isset($next_round)) $job_applying_data['interview_round'] = $next_round;
+
         DB::table('job_applying')
-            ->where([
-                ['job_id', '=', $req->job_id],
-                ['candidate_id', '=', $req->candidate_id]
-            ])
-            ->update([
-                'status' => $nextStatus,
-                'updated_at' => Carbon::now(),
-            ]);
+            ->where('id', $req->id)
+            ->update($job_applying_data);
+
         if ($req->actType != "VIEWED") {
-            CandidateMessage::create(
-                [
-                    'candidate_id' => $req->candidate_id,
-                    'job_id' => $req->job_id,
-                    'name' => $msgName,
-                    'title' => $req->title,
-                    'content' => $req->content,
-                ]
-            );
-            event(new NotifyCandidateEvent($msgName, $req->candidate_id));
+            $candidate_msg_data = [
+                'candidate_id' => $req->candidate_id,
+                'job_id' => $req->job_id,
+                'name' => $msg_name,
+            ];
+            if ($req->has('content')) $candidate_msg_data['content'] = $req->content;
+
+            CandidateMessage::create($candidate_msg_data);
+            event(new NotifyCandidateEvent($msg_name, $req->candidate_id));
         }
 
         return response()->json("Updated successfully");

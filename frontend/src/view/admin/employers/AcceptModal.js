@@ -70,7 +70,7 @@ export default function AcceptModal({
           {isLoading && <Spinner size="sm" className="me-1" />}
           Xác nhận
         </Button>
-        <Button variant="secondary" className="flex-fill" onClick={handleClose}>
+        <Button variant="danger" className="flex-fill" onClick={handleClose}>
           Hủy
         </Button>
       </Modal.Footer>

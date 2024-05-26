@@ -1,7 +1,7 @@
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import candidateApi from "../../../api/candidate";
 
-function SavedJobPopup({ job_id }) {
+export default function DeleteJobModal({ job_id }) {
   const deleteSavedJob = async () => {
     await candidateApi.processJobSaving(job_id, { status: 0 });
     window.location.reload();
@@ -16,7 +16,7 @@ function SavedJobPopup({ job_id }) {
               className="d-block mx-auto text-primary my-3"
               style={{ fontSize: "45px" }}
             />
-            Bạn có muốn xóa việc làm này khỏi danh sách không?
+            Bạn có muốn xóa việc làm này khỏi hệ thống không?
           </div>
           <div className="modal-footer border-top-0">
             <button
@@ -39,5 +39,3 @@ function SavedJobPopup({ job_id }) {
     </div>
   );
 }
-
-export default SavedJobPopup;

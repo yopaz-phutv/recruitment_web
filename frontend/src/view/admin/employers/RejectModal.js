@@ -90,7 +90,7 @@ export default function RejectModal({
             Xác nhận
           </Button>
           <Button
-            variant="secondary"
+            variant="danger"
             className="flex-fill"
             onClick={handleClose}
           >

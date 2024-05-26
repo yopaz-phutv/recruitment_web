@@ -41,39 +41,41 @@ export default function Experience() {
       {experiences?.map((item, index) => (
         <div key={index}>
           <hr />
-          <div className="border-0 border-main border-start ps-3 d-inline-block">
-            <div className="fw-bold">{item.name}</div>
-            <div className="text-secondary ts-smd">{item.company}</div>
-            {item.start_date || item.start_date ? (
-              <div>
-                <span className="text-secondary ts-xs">
-                  {dayjs(item.start_date).format("DD/MM/YYYY")} -{" "}
-                  {dayjs(item.end_date).format("DD/MM/YYYY")}
-                </span>
+          <div className="position-relative">
+            <div className="border-0 border-main border-start ps-3 d-inline-block">
+              <div className="fw-bold">{item.name}</div>
+              <div className="text-secondary ts-smd">{item.company}</div>
+              {item.start_date || item.start_date ? (
+                <div>
+                  <span className="text-secondary ts-xs">
+                    {dayjs(item.start_date).format("DD/MM/YYYY")} -{" "}
+                    {dayjs(item.end_date).format("DD/MM/YYYY")}
+                  </span>
+                </div>
+              ) : null}
+              <div className="ts-smd text-break">
+                <span className="">Mô tả:</span>
+                <span className="text-secondary">{" " + item.description}</span>
               </div>
-            ) : null}
-            <div className="ts-smd">
-              <span className="">Mô tả:</span>
-              <span className="text-secondary">{" " + item.description}</span>
             </div>
-          </div>
-          <div className="mt-2 float-md-end">
-            <Stack direction="horizontal" gap={2}>
-              <Button
-                size="sm"
-                variant="outline-primary"
-                onClick={() => handleEdit(item)}
-              >
-                Sửa
-              </Button>
-              <Button
-                size="sm"
-                variant="outline-danger"
-                onClick={() => handleDelete(item.id)}
-              >
-                Xóa
-              </Button>
-            </Stack>
+            <div className="position-absolute top-0 end-0">
+              <Stack direction="horizontal" gap={2}>
+                <Button
+                  size="sm"
+                  variant="outline-primary"
+                  onClick={() => handleEdit(item)}
+                >
+                  Sửa
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline-danger"
+                  onClick={() => handleDelete(item.id)}
+                >
+                  Xóa
+                </Button>
+              </Stack>
+            </div>
           </div>
         </div>
       ))}

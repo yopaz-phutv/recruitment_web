@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { BsCheckCircle, BsEye, BsXCircle } from "react-icons/bs";
-import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import NotificationModal from "./NotificationModal";
 import employerApi from "../../../api/employer";
@@ -11,7 +10,8 @@ import clsx from "clsx";
 import Loading from "../../../components/Loading";
 import CTooltip from "../../../components/CTooltip";
 import useGetJobsByEmployer from "../../../hooks/useGetJobsByEmployer";
-import CircleTabs from "./CircleTabs";
+import StepTabs from "./StepTabs";
+import { isNullObject } from "../../../common/functions";
 
 function CandidateList() {
   // loc ho so theo: vi tri ung tuyen, tinh thanh,
@@ -20,15 +20,12 @@ function CandidateList() {
   const [candidates, setCandidates] = useState([]);
   const [curCandidate, setCurCandidate] = useState({});
 
-  const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("WAITING");
   const [step, setStep] = useState("step1");
   const [showDialog, setShowDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [curJobId, setCurJobId] = useState("");
+  const [curJob, setCurJob] = useState({});
   const [curRound, setCurRound] = useState(1);
-
-  const { register, handleSubmit } = useForm();
 
   const makeTabStyle = (tabName) => {
     return clsx(
@@ -42,9 +39,9 @@ function CandidateList() {
     try {
       setIsLoading(true);
       const res = await employerApi.getCandidateList({
-        keyword,
         status,
-        job_id: curJobId,
+        job_id: curJob.id,
+        interview_round: curRound,
       });
       setCandidates(res);
     } catch (error) {
@@ -76,7 +73,7 @@ function CandidateList() {
   useEffect(() => {
     if (isAuth) getCandidateList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth, keyword, status, curJobId]);
+  }, [isAuth, status, curJob, curRound]);
 
   return (
     <>
@@ -107,7 +104,7 @@ function CandidateList() {
           </Nav>
         </Tab.Container>
         <div className="mt-1" style={{ marginLeft: "45px" }}>
-          <Form onSubmit={handleSubmit((data) => setKeyword(data.keyword))}>
+          <Form>
             {step !== "step3" && (
               <div className="d-flex gap-2 mt-2 ts-smd">
                 <CTooltip text="Trạng thái">
@@ -139,11 +136,20 @@ function CandidateList() {
                   <Form.Select
                     size="sm"
                     style={{ width: "290px" }}
-                    onChange={(e) => setCurJobId(e.target.value)}
+                    onChange={(e) =>
+                      setCurJob(
+                        jobs.find((job) => job.id === Number(e.target.value)) ||
+                          {}
+                      )
+                    }
                   >
                     <option value="">Tất cả vị trí</option>
                     {jobs.map((job) => (
-                      <option key={job.id} value={job.id}>
+                      <option
+                        key={job.id}
+                        value={job.id}
+                        selected={job.id === curJob.id}
+                      >
                         {job.jname}
                       </option>
                     ))}
@@ -152,10 +158,13 @@ function CandidateList() {
               </div>
             )}
           </Form>
-          {step === "step2" && status === "BROWSING_INTERVIEW" ? (
-            <CircleTabs
+          {step === "step2" &&
+          status === "BROWSING_INTERVIEW" &&
+          !isNullObject(curJob) &&
+          curJob?.interview_round_num > 1 ? (
+            <StepTabs
               title="Vòng"
-              tabNum={3}
+              tabNum={curJob.interview_round_num}
               curStep={curRound}
               setCurStep={setCurRound}
               className="m-4 w-50 mx-auto"
@@ -185,12 +194,25 @@ function CandidateList() {
                       <td>{item.email}</td>
                       {step === "step2" && <td>{item.interview_round}</td>}
                       <td style={{ fontSize: "17px" }}>
+                        <a
+                          style={{ textDecoration: "none" }}
+                          href={item.resume_link}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <BsEye
+                            type="button"
+                            fontSize="19px"
+                            className="text-primary"
+                            onClick={() => handleClickActionBtn(item, "VIEWED")}
+                          />
+                        </a>
                         {status !== "PASSED" &&
                         status !== "RESUME_FAILED" &&
                         status !== "INTERVIEW_FAILED" ? (
                           <>
                             <BsCheckCircle
-                              className="text-success pointer"
+                              className="ms-2 text-success pointer"
                               onClick={() =>
                                 handleClickActionBtn(item, "ACCEPT")
                               }
@@ -203,19 +225,6 @@ function CandidateList() {
                             />
                           </>
                         ) : null}
-                        <a
-                          className="ms-2"
-                          style={{ textDecoration: "none" }}
-                          href={item.resume_link}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <BsEye
-                            type="button"
-                            className="text-primary"
-                            onClick={() => handleClickActionBtn(item, "VIEWED")}
-                          />
-                        </a>
                       </td>
                     </tr>
                   ))}
@@ -227,12 +236,14 @@ function CandidateList() {
             ) : (
               candidates.length === 0 && <h5>Không có bản ghi nào</h5>
             )}
-            <NotificationModal
-              candidate={curCandidate}
-              showDialog={showDialog}
-              setShowDialog={setShowDialog}
-              getCandidateList={getCandidateList}
-            />
+            {showDialog && (
+              <NotificationModal
+                candidate={curCandidate}
+                showDialog={showDialog}
+                setShowDialog={setShowDialog}
+                getCandidateList={getCandidateList}
+              />
+            )}
           </div>
         </div>
       </div>

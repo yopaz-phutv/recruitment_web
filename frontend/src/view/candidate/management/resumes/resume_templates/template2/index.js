@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from "react";
 import { CandidateContext } from "../../../layouts/CandidateLayout";
 import clsx from "clsx";
 import dayjs from "dayjs";
-import { TemplateContext } from "../common";
+import { TemplateContext } from "../TemplateWrapper";
 import FlexInput from "../../../../../../components/FlexInput";
 
 export default function Template2() {
@@ -952,7 +952,7 @@ export default function Template2() {
   return (
     <div
       id="resume"
-      className="mx-auto border d-flex p-2 shadow-sm"
+      className="mx-auto border d-flex shadow-sm"
       style={{ width: "800px" }}
     >
       <div className="bg-white ps-1 pe-2" style={{ width: "510px" }}>

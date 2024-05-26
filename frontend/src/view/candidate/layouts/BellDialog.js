@@ -16,14 +16,15 @@ export default function BellDialog({ show, setShow, current }) {
         {/* <div className="text-secondary ts-sm">
           Đã nhận lúc {dayjs(current.created_at).format("H:m - DD/MM/YYYY")}
         </div> */}
-        <div className="mt-2 ps-3 fw-500 ts-17">{current.title}</div>
-        <div className="mt-1 rounded p-2 bg-mlight whitespace-preline">
-          <InnerHTML html={current.content} />
-        </div>
+        {current.content && (
+          <div className="mt-1 rounded p-2 bg-mlight whitespace-preline">
+            <InnerHTML html={current.content} />
+          </div>
+        )}
         <Button
           className="mt-2 d-block ms-auto"
           size="sm"
-          variant="secondary"
+          variant="danger"
           onClick={handleClose}
         >
           Đóng

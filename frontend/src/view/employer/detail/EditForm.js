@@ -229,7 +229,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
             )}
             <Button
               size="sm"
-              variant="secondary"
+              variant="danger"
               className="ms-2 py-0"
               onClick={() => setDeleteCurLogo(!deleteCurLogo)}
             >
@@ -271,7 +271,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
             )}
             <Button
               size="sm"
-              variant="secondary"
+              variant="danger"
               className="ms-2 py-0"
               onClick={() => setDeleteCurImage(!deleteCurImage)}
             >
@@ -302,7 +302,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
             {isLoading && <Spinner size="sm" className="me-1" />}
             {!isLoading ? "Cập nhật" : "Đang xử lý"}
           </Button>
-          <Button variant="secondary" onClick={returnView}>
+          <Button variant="danger" onClick={returnView}>
             Hủy
           </Button>
         </div>

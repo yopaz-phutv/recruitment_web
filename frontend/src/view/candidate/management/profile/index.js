@@ -15,6 +15,7 @@ import Skill from "./skills";
 import Certificate from "./certificates";
 import Prize from "./prizes";
 import Activity from "./activities";
+import Other from "./others";
 
 export default function Profile() {
   const nav = useNavigate();
@@ -28,6 +29,7 @@ export default function Profile() {
     { name: "Chứng chỉ", href: "#profile-certificate" },
     { name: "Giải thưởng", href: "#profile-prize" },
     { name: "Hoạt động", href: "#profile-activity" },
+    { name: "Thông tin khác", href: "#profile-other" },
   ];
   const isAuth = useSelector((state) => state.candAuth.isAuth);
   const [showChangeProfileStatusPart, setShowChangeProfileStatusPart] =
@@ -94,6 +96,7 @@ export default function Profile() {
           <Certificate />
           <Prize />
           <Activity />
+          <Other />
         </div>
         <div className="ps-3" style={{ width: "30%" }}>
           <div className="bg-white rounded sticky-top" style={{ top: "62px" }}>
@@ -105,14 +108,14 @@ export default function Profile() {
                 <a
                   key={index}
                   href={item.href}
-                  className="d-block text-decoration-none text-main fw-600 px-3 px-lg-4 py-1"
+                  className="d-block text-decoration-none text-main px-3 px-lg-4 py-1"
                 >
                   {item.name}
                 </a>
               ))}
             </div>
             {showChangeProfileStatusPart && (
-              <div className="border-top p-2 pb-3 ts-sm">
+              <div className="border-top p-3 pt-2 ts-sm">
                 <span>Cho phép nhà tuyển dụng tìm kiếm hồ sơ</span>
                 <Form.Check
                   type="switch"
@@ -205,7 +208,7 @@ export default function Profile() {
                           </Button>
                           <Button
                             size="sm"
-                            variant="secondary"
+                            variant="danger"
                             className="w-100 px-3"
                             onClick={() => {
                               setSelectNewResume(false);

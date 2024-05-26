@@ -38,61 +38,65 @@ export default function Project() {
       {projects?.map((item, index) => (
         <div key={index}>
           <hr />
-          <div className="border-0 border-main border-start ps-3 d-inline-block">
-            <div className="fw-bold">{item.name}</div>
-            <div className="text-secondary ts-smd">{item.company}</div>
-            {item.start_date || item.start_date ? (
-              <div>
-                <span className="text-secondary ts-xs">
-                  {dayjs(item.start_date).format("DD/MM/YYYY")} -{" "}
-                  {dayjs(item.end_date).format("DD/MM/YYYY")}
-                </span>
+          <div className="position-relative">
+            <div className="border-0 border-main border-start ps-3 d-inline-block">
+              <div className="fw-bold">{item.name}</div>
+              <div className="text-secondary ts-smd">{item.company}</div>
+              {item.start_date || item.start_date ? (
+                <div>
+                  <span className="text-secondary ts-xs">
+                    {dayjs(item.start_date).format("DD/MM/YYYY")} -{" "}
+                    {dayjs(item.end_date).format("DD/MM/YYYY")}
+                  </span>
+                </div>
+              ) : null}
+              <div className="ts-smd">
+                <div className="text-secondary">
+                  {"Project " + item.prj_type}
+                </div>
+                {item.role && (
+                  <div>
+                    Vai trò: <span className="text-secondary">{item.role}</span>
+                  </div>
+                )}
+                {item.link && (
+                  <div>
+                    Link:{" "}
+                    <a href={item.link} className="text-decoration-none">
+                      {item.link}
+                    </a>
+                  </div>
+                )}
+                {item.technologies && (
+                  <div>
+                    Công nghệ:{" "}
+                    <span className="text-secondary">{item.technologies}</span>
+                  </div>
+                )}
               </div>
-            ) : null}
-            <div className="ts-smd">
-              <div className="text-secondary">{"Project " + item.prj_type}</div>
-              {item.role && (
-                <div>
-                  Vai trò: <span className="text-secondary">{item.role}</span>
-                </div>
-              )}
-              {item.link && (
-                <div>
-                  Link:{" "}
-                  <a href={item.link} className="text-decoration-none">
-                    {item.link}
-                  </a>
-                </div>
-              )}
-              {item.technologies && (
-                <div>
-                  Công nghệ:{" "}
-                  <span className="text-secondary">{item.technologies}</span>
-                </div>
-              )}
+              <div className="ts-smd text-break">
+                Mô tả:
+                <span className="text-secondary">{" " + item.description}</span>
+              </div>
             </div>
-            <div className="ts-smd">
-              <span className="">Mô tả:</span>
-              <span className="text-secondary">{" " + item.description}</span>
+            <div className="mt-2 float-lg-end">
+              <Stack direction="horizontal" gap={2}>
+                <Button
+                  size="sm"
+                  variant="outline-primary"
+                  onClick={() => handleEdit(item)}
+                >
+                  Sửa
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline-danger"
+                  onClick={() => handleDelete(item.id)}
+                >
+                  Xóa
+                </Button>
+              </Stack>
             </div>
-          </div>
-          <div className="mt-2 float-lg-end">
-            <Stack direction="horizontal" gap={2}>
-              <Button
-                size="sm"
-                variant="outline-primary"
-                onClick={() => handleEdit(item)}
-              >
-                Sửa
-              </Button>
-              <Button
-                size="sm"
-                variant="outline-danger"
-                onClick={() => handleDelete(item.id)}
-              >
-                Xóa
-              </Button>
-            </Stack>
           </div>
         </div>
       ))}

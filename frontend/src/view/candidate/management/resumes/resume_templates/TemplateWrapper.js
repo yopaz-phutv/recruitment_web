@@ -18,7 +18,7 @@ import html2canvas from 'html2canvas';
 
 export const TemplateContext = createContext();
 
-export default function Template({
+export default function TemplateWrapper({
   templateId = 1,
   mode,
   useSampleData = false,
@@ -434,7 +434,7 @@ export default function Template({
               </span>
             </Button>
           </div>
-          <div className="mt-4">
+          <div className="my-4">
             {templateList.find((item) => item.id === templateId).render}
           </div>
         </form>
