@@ -28,6 +28,8 @@ function JobList() {
   const { jlevels } = useGetAllJlevels();
   const [selectedIndustries, setSelectedIndustries] = useState([]);
   const [selectedLocations, setSelectedLocations] = useState([]);
+  const [industryErr, setIndustryErr] = useState(null);
+  const [locationErr, setLocationErr] = useState(null);
 
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +39,7 @@ function JobList() {
   const [isSearchLoading, setIsSearchLoading] = useState(false);
 
   const [distance, setDistance] = useState(null);
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(null);
   const [showHint, setShowHint] = useState(false);
   const [refreshHint, setRefreshHint] = useState(false);
   const [hintLocations, setHintLocations] = useState([]);
@@ -67,6 +69,10 @@ function JobList() {
   };
 
   const handleFilter = async (data) => {
+    if (address && distance) {
+      if (selectedIndustries.length === 0 || selectedLocations.length === 0)
+        return;
+    }
     try {
       const conditions = {
         ...data,
@@ -125,6 +131,15 @@ function JobList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [useMap]);
 
+  useEffect(() => {
+    if (address && distance) {
+      if (selectedIndustries.length === 0) setIndustryErr("Vui lòng chọn!");
+      else setIndustryErr(null);
+      if (selectedLocations.length === 0) setLocationErr("Vui lòng chọn!");
+      else setLocationErr(null);
+    }
+  }, [address, distance, selectedIndustries, selectedLocations]);
+
   return (
     <div className="pt-3 pb-4" style={{ margin: "0px 100px" }}>
       <Form noValidate className="bg-mlight p-3 rounded shadow-sm border">
@@ -160,6 +175,7 @@ function JobList() {
                     textAtt="name"
                     valueAtt="id"
                     setOutput={setSelectedIndustries}
+                    errorMsg={industryErr}
                   />
                 )}
               </div>
@@ -172,6 +188,7 @@ function JobList() {
                     textAtt="name"
                     valueAtt="id"
                     setOutput={setSelectedLocations}
+                    errorMsg={locationErr}
                   />
                 )}
               </div>
@@ -316,7 +333,7 @@ function JobList() {
           <div className="flex-fill ps-3 align-self-lg-center mt-2 mt-lg-0">
             <button
               type="button"
-              className="btn btn-sm border-0 bg-main text-white rounded-sm px-4"              
+              className="btn btn-sm border-0 bg-main text-white rounded-sm px-4"
               onClick={handleSubmit(handleFilter)}
             >
               {isSearchLoading ? (

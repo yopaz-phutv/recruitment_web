@@ -41,6 +41,7 @@ export default function CMulSelect({
   contentWidth,
   size,
   defaultValue = [],
+  errorMsg = null,
 }) {
   const [options, setOptions] = useState(
     convert2SelectOptions(items, textAtt, valueAtt)
@@ -93,7 +94,7 @@ export default function CMulSelect({
       <Dropdown.Toggle
         as={CustomToggle}
         className={clsx(
-          "trigger text-truncate pointer",
+          "trigger text-truncate pointer position-relative",
           size === "sm" && "form-select-sm"
         )}
       >
@@ -127,6 +128,16 @@ export default function CMulSelect({
           </div>
         ))}
       </Dropdown.Menu>
+      {errorMsg && (
+        <div
+          className="position-absolute top-100 start-0 bg-white text-danger ts-sm border border-danger shadow-sm z-index-1"
+          style={{ borderRadius: "3px" }}
+        >
+          <div className="position-relative px-2">
+            <span>{errorMsg}</span>
+          </div>
+        </div>
+      )}
     </Dropdown>
   );
 }
