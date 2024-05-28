@@ -6,6 +6,7 @@ import Spinner from "react-bootstrap/Spinner";
 import CPagination from "../../../components/CPagination";
 import CMulSelect from "../../../components/CMulSelect";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import useGetAllIndustries from "../../../hooks/useGetAllIndustries";
 import useGetAllLocations from "../../../hooks/useGetAllLocations";
 import useGetAllJtypes from "../../../hooks/useGetAllJtypes";
@@ -35,15 +36,30 @@ function JobList() {
   const [filterConditions, setFilterConditions] = useState({});
   const [isSearchLoading, setIsSearchLoading] = useState(false);
 
+  const [distance, setDistance] = useState(null);
+  const [address, setAddress] = useState("");
+  const [showHint, setShowHint] = useState(false);
+  const [refreshHint, setRefreshHint] = useState(false);
+  const [hintLocations, setHintLocations] = useState([]);
+  const [curLocation, setCurLocation] = useState({});
+  const [useMap, setUseMap] = useState(false);
+
   const getJobs = async (page = 1, conditions) => {
     try {
       setIsLoading(true);
-      const res = await jobApi.getList({
-        page,
+      let params = {
         ...(conditions || filterConditions),
-      });
-      setJobs(res.data);
-      setTotalPage(res.last_page);
+      };
+      if (useMap) params.type = "get_all";
+      else params.page = page;
+
+      const res = await jobApi.getList(params);
+      if (useMap) {
+        setJobs(res);
+      } else {
+        setJobs(res.data);
+        setTotalPage(res.last_page);
+      }
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -67,27 +83,61 @@ function JobList() {
     }
   };
 
+  // const handleEnter = (key) => {
+  //   if (key === "Enter" && address !== "") {
+  //     setRefreshHint(true);
+  //     setShowHint(true);
+  //   }
+  // };
+
+  const handleChangeAddress = async (address) => {
+    setAddress(address);
+    setRefreshHint(true);
+  };
+
+  const handleSelectLocation = (location) => {
+    setShowHint(false);
+    setCurLocation(location);
+    document.getElementById("map-address-input").value = location.address.label;
+  };
+
+  const handleSelectYourLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setShowHint(false);
+        setCurLocation({
+          position: {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          },
+        });
+        document.getElementById("map-address-input").value = "Vị trí của bạn";
+      });
+    } else alert("Trình duyệt không hỗ trợ xác định vị trí của bạn!");
+  };
+
   useEffect(() => {
     getJobs();
+    if (!useMap) {
+      setCurLocation({});
+      setDistance(null);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [useMap]);
 
   return (
     <div className="pt-3 pb-4" style={{ margin: "0px 100px" }}>
-      <Form
-        noValidate
-        className="bg-mlight p-3 rounded shadow-sm border"
-        onSubmit={handleSubmit(handleFilter)}
-      >
+      <Form noValidate className="bg-mlight p-3 rounded shadow-sm border">
         <h4 className="text-center text-main">
           Tìm việc làm nhanh, việc làm mới nhất trên toàn quốc
         </h4>
         <div className="mt-3 d-flex flex-column flex-lg-row">
-          <div className="w-85">
+          <div style={{ width: "89%" }}>
             <div className="row row-cols-lg-3 gap-1 gap-lg-0 ps-3">
               <Form.Group className="position-relative">
                 <Form.Control
                   type="text"
+                  size="sm"
                   aria-label="job_keyword"
                   placeholder="Tìm việc làm"
                   {...register("keyword", { minLength: 3 })}
@@ -104,6 +154,7 @@ function JobList() {
               <div>
                 {industries.length > 0 && (
                   <CMulSelect
+                    size="sm"
                     defaultText="Tất cả ngành nghề"
                     items={industries}
                     textAtt="name"
@@ -115,6 +166,7 @@ function JobList() {
               <div>
                 {locations.length > 0 && (
                   <CMulSelect
+                    size="sm"
                     defaultText="Tất cả tỉnh thành"
                     items={locations}
                     textAtt="name"
@@ -126,7 +178,10 @@ function JobList() {
             </div>
             <div className="row row-cols-lg-4 gap-1 gap-lg-0 mt-2 ps-3">
               <div>
-                <select className="form-select" {...register("salary")}>
+                <select
+                  className="form-select form-select-sm"
+                  {...register("salary")}
+                >
                   <option value="">Mức lương</option>
                   <option value="5">Trên 5 triệu</option>
                   <option value="10">Trên 10 triệu</option>
@@ -155,7 +210,10 @@ function JobList() {
                 </select>
               </div>
               <div>
-                <select className="form-select " {...register("jtype_id")}>
+                <select
+                  className="form-select form-select-sm"
+                  {...register("jtype_id")}
+                >
                   <option value="">Hình thức việc làm</option>
                   {jtypes.map((item) => (
                     <option value={item.id} key={"jtype" + item.id}>
@@ -165,7 +223,10 @@ function JobList() {
                 </select>
               </div>
               <div>
-                <select className="form-select" {...register("jlevel_id")}>
+                <select
+                  className="form-select form-select-sm"
+                  {...register("jlevel_id")}
+                >
                   <option value="">Cấp bậc</option>
                   {jlevels.map((item) => (
                     <option value={item.id} key={"jlevel" + item.id}>
@@ -175,7 +236,10 @@ function JobList() {
                 </select>
               </div>
               <div>
-                <select className="form-select" {...register("posting_period")}>
+                <select
+                  className="form-select form-select-sm"
+                  {...register("posting_period")}
+                >
                   <option value="">Đăng trong vòng</option>
                   <option value="3">4 ngày trước</option>
                   <option value="7">1 tuần trước</option>
@@ -184,11 +248,76 @@ function JobList() {
                 </select>
               </div>
             </div>
+            <div className="ms-3 mt-2 d-flex gap-2 align-items-lg-center flex-lg-row flex-column">
+              <Form.Check
+                type="switch"
+                label="Tìm kiếm với map"
+                className="ts-smd"
+                style={{ marginTop: "5px" }}
+                onClick={() => setUseMap(!useMap)}
+              />
+              {useMap && (
+                <>
+                  <div className="position-relative" style={{ width: "390px" }}>
+                    <Form.Control
+                      id="map-address-input"
+                      type="type"
+                      size="sm"
+                      aria-label="address-input"
+                      placeholder="Nhập địa điểm"
+                      onChange={(e) => handleChangeAddress(e.target.value)}
+                      // onKeyDown={(e) => handleEnter(e.key)}()
+                      onFocus={() => setShowHint(true)}
+                      onBlur={() => {
+                        setTimeout(() => {
+                          setShowHint(false);
+                        }, 500);
+                      }}
+                    />
+                    {showHint && (
+                      <div
+                        className="position-absolute w-100 bg-white z-index-1 ts-smd mt-1 shadow border overflow-auto"
+                        style={{ maxHeight: "280px" }}
+                      >
+                        <div
+                          className="fw-600 px-2 py-1 hover-bg-primary hover-text-white pointer border-bottom"
+                          onClick={handleSelectYourLocation}
+                        >
+                          Vị trí của bạn
+                        </div>
+                        {hintLocations?.map((location, index) => (
+                          <div
+                            key={index}
+                            className="px-2 py-1 hover-bg-primary hover-text-white pointer border-bottom"
+                            onClick={() => handleSelectLocation(location)}
+                          >
+                            {location.address.label}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <InputGroup size="sm" style={{ width: "220px" }}>
+                    <Form.Control
+                      type="number"
+                      aria-label="job-distance-input"
+                      placeholder="Nhập khoảng cách"
+                      className="border-end-0"
+                      onChange={(e) => setDistance(e.target.value)}
+                    />
+                    <InputGroup.Text className="bg-white border-start-0">
+                      km
+                    </InputGroup.Text>
+                  </InputGroup>
+                </>
+              )}
+            </div>
           </div>
-          <div className="flex-fill ps-3 mt-2 mt-lg-0">
+          <div className="flex-fill ps-3 align-self-lg-center mt-2 mt-lg-0">
             <button
-              type="submit"
-              className="btn border-0 bg-main text-white rounded"
+              type="button"
+              className="btn btn-sm border-0 bg-main text-white rounded-sm px-4"              
+              onClick={handleSubmit(handleFilter)}
             >
               {isSearchLoading ? (
                 <Spinner size="sm" />
@@ -200,19 +329,26 @@ function JobList() {
           </div>
         </div>
       </Form>
-
-      <JobMap className="mt-3" jobs={jobs} />
-
-      {isLoading ? (
+      {useMap ? (
+        <JobMap
+          className="mt-3"
+          jobs={jobs}
+          address={address}
+          distance={distance}
+          refreshHint={refreshHint}
+          setRefreshHint={setRefreshHint}
+          hintLocations={hintLocations}
+          setHintLocations={setHintLocations}
+          curLocation={curLocation}
+        />
+      ) : isLoading ? (
         <div className="row row-cols-lg-3 mt-4">
           {Array.from({ length: 9 }, (_, index) => (
             <JobItemSkeleton key={index} />
           ))}
         </div>
       ) : jobs.length === 0 ? (
-        <h4 className="my-4">
-          Không có bản ghi nào phù hợp!
-        </h4>
+        <h4 className="my-4">Không có bản ghi nào phù hợp!</h4>
       ) : (
         <>
           <div className="row row-cols-lg-3 mt-4">

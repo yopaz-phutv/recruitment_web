@@ -16,11 +16,9 @@ class JobController extends Controller
 {
     public function index(Request $req)
     {
-        $jobs = Job::with(['employer', 'locations'])
+        $query = Job::query()->with(['employer', 'locations'])
             ->where('jobs.is_active', 1)
             ->when($req->keyword !== null, function ($query) use ($req) {
-                // return $query->join('employers', 'employer_id', '=', 'employers.id')
-                //     ->whereRaw('LOWER(employers.name) LIKE ?', ['%' . strtolower($req->keyword) . '%']);
                 return $query->whereRaw('LOWER(jobs.jname) LIKE ?', ['%' . strtolower($req->keyword) . '%']);
             })
             ->when($req->industry_id !== null, function ($query) use ($req) {
@@ -39,11 +37,14 @@ class JobController extends Controller
             })
             ->when($req->jlevel_id !== null, function ($query) use ($req) {
                 return $query->where('jlevel_id', '=', $req->jlevel_id);
-            })
-            ->orderByDesc('jobs.updated_at')
+            })            
             ->select('jobs.*')
-            ->distinct()
-            ->paginate(9);
+            ->distinct();
+        
+        if ($req->type == 'get_all') {
+            $jobs = $query->orderBy('latitude')->orderBy('longitude')->get();
+        }
+        else $jobs = $query->orderByDesc('jobs.created_at')->paginate(9);
 
         $jobs = $jobs->toArray();
         $currentTime = Carbon::now();
