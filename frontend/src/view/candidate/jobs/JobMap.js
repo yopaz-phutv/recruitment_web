@@ -14,6 +14,7 @@ export default function JobMap({
   setRefreshHint,
   setHintLocations,
   curLocation,
+  setJobNum,
 }) {
   const mapRef = useRef(null);
   const curMap = useRef(null);
@@ -38,7 +39,8 @@ export default function JobMap({
   const addJobLocationsToMap = () => {
     var group = new H.map.Group(),
       i;
-    var markerData = [];
+    var markerData = [],
+      markerNum = 0;
 
     for (i = 0; i < jobs.length; i++) {
       let job = jobs[i];
@@ -74,6 +76,7 @@ export default function JobMap({
                 data: markerData,
               }
             );
+            markerNum++;
             group.addObject(marker);
             markerData = [job];
           }
@@ -81,19 +84,22 @@ export default function JobMap({
       }
     }
     // add last marker to map group:
-    marker = new H.map.Marker(
-      {
-        lat: markerData[0].latitude,
-        lng: markerData[0].longitude,
-      },
-      {
-        icon: new H.map.Icon(redLocationIcon, {
-          size: new H.math.Size(38, 38),
-        }),
-        data: markerData,
-      }
-    );
-    group.addObject(marker);
+    if (markerData.length > 0) {
+      marker = new H.map.Marker(
+        {
+          lat: markerData[0].latitude,
+          lng: markerData[0].longitude,
+        },
+        {
+          icon: new H.map.Icon(redLocationIcon, {
+            size: new H.math.Size(38, 38),
+          }),
+          data: markerData,
+        }
+      );
+      markerNum++;
+      group.addObject(marker);
+    }
 
     group.addEventListener(
       "tap",
@@ -140,9 +146,12 @@ export default function JobMap({
       false
     );
     curMap.current.addObject(group);
-    curMap.current.setCenter(group.getBoundingBox().getCenter());
+    if (markerNum > 0) {
+      curMap.current.setCenter(group.getBoundingBox().getCenter());
+    }    
     curMap.current.setZoom(12);
     mapGroup.current = group;
+    setJobNum(markerNum);
   };
 
   const getHints = () => {

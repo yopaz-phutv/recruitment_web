@@ -32,6 +32,7 @@ function JobList() {
   const [locationErr, setLocationErr] = useState(null);
 
   const [jobs, setJobs] = useState([]);
+  const [jobNum, setJobNum] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPage, setTotalPage] = useState(1);
   const [curPage, setCurPage] = useState(1);
@@ -59,6 +60,7 @@ function JobList() {
       if (useMap) {
         setJobs(res);
       } else {
+        setJobNum(res.total)        
         setJobs(res.data);
         setTotalPage(res.last_page);
       }
@@ -108,6 +110,7 @@ function JobList() {
   };
 
   const handleSelectYourLocation = () => {
+    setAddress("Vị trí của bạn");
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         setShowHint(false);
@@ -137,6 +140,9 @@ function JobList() {
       else setIndustryErr(null);
       if (selectedLocations.length === 0) setLocationErr("Vui lòng chọn!");
       else setLocationErr(null);
+    } else {
+      setIndustryErr(null);
+      setLocationErr(null);
     }
   }, [address, distance, selectedIndustries, selectedLocations]);
 
@@ -170,12 +176,13 @@ function JobList() {
                 {industries.length > 0 && (
                   <CMulSelect
                     size="sm"
+                    limit={3}
                     defaultText="Tất cả ngành nghề"
                     items={industries}
                     textAtt="name"
                     valueAtt="id"
                     setOutput={setSelectedIndustries}
-                    errorMsg={industryErr}
+                    message={industryErr}
                   />
                 )}
               </div>
@@ -183,12 +190,13 @@ function JobList() {
                 {locations.length > 0 && (
                   <CMulSelect
                     size="sm"
+                    limit={3}
                     defaultText="Tất cả tỉnh thành"
                     items={locations}
                     textAtt="name"
                     valueAtt="id"
                     setOutput={setSelectedLocations}
-                    errorMsg={locationErr}
+                    message={locationErr}
                   />
                 )}
               </div>
@@ -346,9 +354,9 @@ function JobList() {
           </div>
         </div>
       </Form>
+      <div className="text-main ts-smd mt-3 mb-2">Có {jobNum} kết quả phù hợp</div>
       {useMap ? (
         <JobMap
-          className="mt-3"
           jobs={jobs}
           address={address}
           distance={distance}
@@ -357,9 +365,10 @@ function JobList() {
           hintLocations={hintLocations}
           setHintLocations={setHintLocations}
           curLocation={curLocation}
+          setJobNum={setJobNum}
         />
       ) : isLoading ? (
-        <div className="row row-cols-lg-3 mt-4">
+        <div className="row row-cols-lg-3">
           {Array.from({ length: 9 }, (_, index) => (
             <JobItemSkeleton key={index} />
           ))}
@@ -368,7 +377,7 @@ function JobList() {
         <h4 className="my-4">Không có bản ghi nào phù hợp!</h4>
       ) : (
         <>
-          <div className="row row-cols-lg-3 mt-4">
+          <div className="row row-cols-lg-3">
             {jobs.map((job) => (
               <JobItem key={job.id} job={job} />
             ))}

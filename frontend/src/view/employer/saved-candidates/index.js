@@ -82,6 +82,8 @@ export default function SavedCandidates() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, filterJobId, notiStatus]);
 
+  // TODO: add edit bookmark feature
+
   return (
     <div
       className="bg-white ms-3 mt-3 pb-2 shadow-sm"

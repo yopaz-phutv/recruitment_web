@@ -3,6 +3,7 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const CustomToggle = React.forwardRef(
   ({ children, className, onClick }, ref) => (
@@ -40,9 +41,11 @@ export default function CMulSelect({
   setOutput,
   contentWidth,
   size,
+  limit = 8,
   defaultValue = [],
-  errorMsg = null,
+  message = null,
 }) {
+  // TODO: process error based on type prop
   const [options, setOptions] = useState(
     convert2SelectOptions(items, textAtt, valueAtt)
   );
@@ -52,17 +55,23 @@ export default function CMulSelect({
     let tempOptions = [...options];
     let tempCurOptions = [...curOptions];
 
-    // update options:
-    tempOptions[index].select = !tempOptions[index].select;
-    setOptions(tempOptions);
     // update curOptions:
     let ind = tempCurOptions.findIndex((item) => item.id === option.id);
     if (ind < 0) {
-      tempCurOptions.push(option);
+      if (curOptions.length === limit) {
+        toast.error(`Số lựa chọn không quá ${limit}!`, {
+          position: "top-center",
+        });
+      } else tempCurOptions.push(option);
     } else {
       tempCurOptions.splice(ind, 1);
     }
     setCurOptions(tempCurOptions);
+    // update options:
+    if (!(ind < 0 && curOptions.length === limit)) {
+      tempOptions[index].select = !tempOptions[index].select;
+      setOptions(tempOptions);
+    }
     // update output:
     let tempOutput = tempCurOptions.map((item) => item.value);
     setOutput(tempOutput);
@@ -128,13 +137,13 @@ export default function CMulSelect({
           </div>
         ))}
       </Dropdown.Menu>
-      {errorMsg && (
+      {message && (
         <div
           className="position-absolute top-100 start-0 bg-white text-danger ts-sm border border-danger shadow-sm z-index-1"
           style={{ borderRadius: "3px" }}
         >
           <div className="position-relative px-2">
-            <span>{errorMsg}</span>
+            <span>{message}</span>
           </div>
         </div>
       )}
