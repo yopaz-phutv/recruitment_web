@@ -14,7 +14,9 @@ export default function SelectJobModal({
   resumes,
   setResumes,
 }) {
-  const { register, watch, handleSubmit, reset } = useForm();
+  const { register, watch, handleSubmit, resetField } = useForm({
+    defaultValues: { job_none: curResume.job_ids?.includes(0) ? true : false },
+  });
   const [message, setMessage] = useState(null);
 
   const handleSaving = async ({ job_none, job_ids }) => {
@@ -27,25 +29,21 @@ export default function SelectJobModal({
 
       var data = { candidate_id: curResume.candidate_id };
       if (!job_none) data.job_ids = job_ids;
+      else data.job_none = 1;
 
       if (!curResume.candidate_bookmark_id || curResume.is_send_noti === 1) {
-        job_ids = job_ids.map((item) => Number(item))
         const new_bookmark_id = await candidateBookmarkApi.create(data);
-
         temp[index].candidate_bookmark_id = new_bookmark_id;
-        temp[index].is_send_noti = 0;
-        temp[index].job_ids = job_none ? 0 : job_ids;
-
         toast.success("Đã đánh dấu!");
       } else {
-        temp[index].job_ids = job_ids;
-
         await candidateBookmarkApi.update(
           curResume.candidate_bookmark_id,
           data
         );
         toast.success("Đã cập nhật!");
       }
+      temp[index].is_send_noti = 0;
+      temp[index].job_ids = job_none ? [0] : job_ids.map((item) => Number(item));
       setResumes(temp);
     }
   };
@@ -73,7 +71,7 @@ export default function SelectJobModal({
       delete temp[index].job_ids;
       setResumes(temp);
 
-      toast.success('Đã bỏ đánh dấu');
+      toast.success("Đã bỏ đánh dấu");
       setShow(false);
     }
   };
@@ -102,7 +100,7 @@ export default function SelectJobModal({
                     inputs[i].checked = false;
                     inputs[i].value = null;
                   }
-                } else reset();
+                } else resetField("job_ids", { defaultValue: false });
               }}
             />
             {jobs.map((job) => (
@@ -136,7 +134,7 @@ export default function SelectJobModal({
             </Button>
             <Button
               size="sm"
-              variant="danger"
+              variant="secondary"
               className="w-100"
               onClick={handleDelete}
             >

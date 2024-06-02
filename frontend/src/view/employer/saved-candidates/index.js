@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import { BsEye, BsTrash3 } from "react-icons/bs";
 import { IoIosSend } from "react-icons/io";
+import { MdEdit } from "react-icons/md";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import CTooltip from "../../../components/CTooltip";
@@ -11,6 +12,7 @@ import useGetJobsByEmployer from "../../../hooks/useGetJobsByEmployer";
 import { toast } from "react-toastify";
 import Loading from "../../../components/Loading";
 import candidateBookmarkApi from "../../../api/candidateBookmark";
+import EditBookmarkModal from "./EditBookmarkModal";
 
 export default function SavedCandidates() {
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
@@ -21,6 +23,7 @@ export default function SavedCandidates() {
   const [isSendingRecommend, setIsSendingRecommend] = useState(false);
   const [filterJobId, setFilterJobId] = useState("");
   const [notiStatus, setNotiStatus] = useState("0");
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const getBookmarkList = async () => {
     try {
@@ -46,7 +49,7 @@ export default function SavedCandidates() {
       let temp = [...bookmarks];
       temp.splice(index, 1);
       setBookmarks(temp);
-      toast.success('Xóa thành công!');
+      toast.success("Xóa thành công!");
     }
   };
 
@@ -163,6 +166,16 @@ export default function SavedCandidates() {
                           <BsEye className="text-main pointer" />
                         </a>
                       </CTooltip>
+                      {notiStatus === "0" && (
+                        <div
+                          onClick={() => {
+                            setCurBookmark(item);
+                            setShowEditModal(true);
+                          }}
+                        >
+                          <MdEdit className="text-primary pointer" fontSize="18px" />
+                        </div>
+                      )}
                       <div onClick={() => handleDelete(item, index)}>
                         <BsTrash3 className="text-danger pointer" />
                       </div>
@@ -188,6 +201,16 @@ export default function SavedCandidates() {
         <Loading />
       ) : (
         bookmarks.length === 0 && <h5>Không có bản ghi nào</h5>
+      )}
+      {showEditModal && (
+        <EditBookmarkModal
+          show={showEditModal}
+          setShow={setShowEditModal}
+          jobs={jobs}
+          curBookmark={curBookmark}
+          bookmarks={bookmarks}
+          setBookmarks={setBookmarks}
+        />
       )}
     </div>
   );

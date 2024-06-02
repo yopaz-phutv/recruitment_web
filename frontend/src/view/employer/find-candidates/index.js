@@ -18,9 +18,9 @@ import CandidateItem from "./CandidateItem";
 import ResumeModal from "./ResumeModal";
 import { useLocation } from "react-router-dom";
 import CPagination from "../../../components/CPagination";
-import SelectJobModal from "./SelectJobModal";
 import useGetJobsByEmployer from "../../../hooks/useGetJobsByEmployer";
 import { useSelector } from "react-redux";
+import SelectJobModal from "./SelectJobModal";
 
 export default function FindingCandidates() {
   const isAuth = useSelector((state) => state.employerAuth.isAuth);
