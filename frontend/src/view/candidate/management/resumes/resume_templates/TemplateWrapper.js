@@ -14,7 +14,12 @@ import templateList from "./templateList";
 import { srcToFile } from "../../../../../common/functions";
 // import { jsPDF } from "jspdf";
 // import * as htmlToImage from "html-to-image";
-import html2canvas from 'html2canvas';
+import html2canvas from "html2canvas";
+import {
+  cvContentSize,
+  cvFontFamily,
+  cvTitleSize,
+} from "../../../../../common/constant";
 
 export const TemplateContext = createContext();
 
@@ -39,6 +44,9 @@ export default function TemplateWrapper({
 
   const location = useLocation();
   if (location.state?.templateId) templateId = location.state.templateId;
+  const curTemplate = templateList.find((item) => item.id === templateId);
+
+  const [style, setStyle] = useState(curTemplate.defaultStyle);
 
   useEffect(() => {
     if (mode) setCvMode(mode);
@@ -51,9 +59,15 @@ export default function TemplateWrapper({
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    // getFieldState,
+    formState: { errors, isDirty },
     reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      title_size: style.title.fontSize,
+      content_size: style.content.fontSize,
+    },
+  });
 
   const [isSaveLoading, setIsSaveLoading] = useState(false);
   const [fullname, setFullname] = useState("");
@@ -101,8 +115,10 @@ export default function TemplateWrapper({
       res.basicInfor = { ...res.basicInfor, avatar };
     }
     const partsOrder = JSON.parse(res.parts_order);
+    const templateStyle = JSON.parse(res.style);
 
     setParts(partsOrder);
+    if(templateStyle) setStyle(templateStyle);
     setBasicInfor(res.basicInfor);
     templateId = res.basicInfor.template_id;
 
@@ -282,6 +298,12 @@ export default function TemplateWrapper({
       skillText += item.name + " " + item.description + "";
     });
 
+    delete data["bg_main_color"]
+    delete data["title_color"]
+    delete data["title_size"]
+    delete data["content_size"]
+    delete data["font_family"]
+
     let postData = {
       basicInfor: {
         ...data,
@@ -290,6 +312,7 @@ export default function TemplateWrapper({
         parts_order: JSON.stringify(parts),
         avatar: !avatarFile && cvMode === "CREATE_1" ? personal.avatar : null,
         skill_text: skillText,
+        style: JSON.stringify(style),
       },
       educations: isPresentInParts("education") ? educations : null,
       experiences: isPresentInParts("experience") ? experiences : null,
@@ -343,7 +366,7 @@ export default function TemplateWrapper({
   const getImgData = async () => {
     let cvElement = document.querySelector("#resume");
     const canvas = await html2canvas(cvElement);
-    const imgData = canvas.toDataURL('image/png');
+    const imgData = canvas.toDataURL("image/png");
 
     return imgData;
   };
@@ -362,6 +385,84 @@ export default function TemplateWrapper({
     // pdf.addImage(imgData, "PNG", 0, 0);
     // pdf.save(filename);
   };
+
+  const changeElementsStyle = () => {
+    var elements;
+    for (let className in style) {
+      if (className === "fontFamily") {
+        document.getElementById("resume").style.fontFamily = style.fontFamily;
+      } else {
+        elements = document.getElementsByClassName(className);
+        for (let i = 0; i < elements.length; i++) {
+          var attributeObj = style[className];
+          for (let att in attributeObj) {
+            elements[i].style[att] = attributeObj[att];
+          }
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      changeElementsStyle();
+    }, 500);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [style]);
+
+  useEffect(() => {
+    if (isDirty) {
+      let temp = { ...style };
+      const color = watch("title_color")
+      temp.title.color = color;
+      temp["cv-fullname"].color = color;
+      if (style["personal-icon"]) temp["personal-icon"].color = color;
+      if (style["cv-line"]) temp["cv-line"].borderColor = color;
+      setStyle(temp);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch("title_color")]);
+
+  useEffect(() => {
+    if (isDirty) {
+      let temp = { ...style };
+      temp["cv-bg-main"].backgroundColor = watch("bg_main_color");
+      setStyle(temp);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch("bg_main_color")]);
+
+  useEffect(() => {
+    if (isDirty) {
+      let temp = { ...style };
+      temp.title.fontSize = watch("title_size");
+      setStyle(temp);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch("title_size")]);
+
+  useEffect(() => {
+    if (isDirty) {
+      let temp = { ...style };
+      temp.content.fontSize = watch("content_size");
+      setStyle(temp);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch("content_size")]);
+
+  useEffect(() => {
+    if (isDirty) {
+      let temp = { ...style };
+      temp.fontFamily =
+        watch("font_family") === "Mặc định" ? "" : watch("font_family");
+      setStyle(temp);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch("font_family")]);
 
   return (
     <TemplateContext.Provider
@@ -395,51 +496,109 @@ export default function TemplateWrapper({
     >
       {mode !== "READ" ? (
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="clearfix ms-3 py-3 border-top shadow-sm bg-white">
-            <Form.Group className="float-start ms-3 w-20">
-              <Form.Control
-                type="text"
-                aria-label="resume_title"
+          <div className="ms-3 ps-3 py-2 border-top shadow-sm bg-white">
+            <div className="clearfix mt-1">
+              <Form.Group className="float-start w-20">
+                <Form.Control
+                  type="text"
+                  aria-label="resume_title"
+                  size="sm"
+                  placeholder="Tiêu đề hồ sơ"
+                  defaultValue={cvMode === "EDIT" ? basicInfor.title : null}
+                  className="border-primary"
+                  {...register("title", {
+                    required: "Vui lòng điền tiêu đề hồ sơ",
+                  })}
+                  isInvalid={errors.title}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.title?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Button
+                variant="outline-primary"
                 size="sm"
-                placeholder="Tiêu đề hồ sơ"
-                defaultValue={cvMode === "EDIT" ? basicInfor.title : null}
-                className="border-primary"
-                {...register("title", {
-                  required: "Vui lòng điền tiêu đề hồ sơ",
-                })}
-                isInvalid={errors.title}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.title?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Button
-              variant="outline-primary"
-              size="sm"
-              className="float-end me-5 px-5 py-1"
-              onClick={handleDownload}
-            >
-              <span className="fw-600">Tải xuống CV</span>
-            </Button>
-            <Button
-              type="submit"
-              variant="outline-primary"
-              size="sm"
-              className="float-end me-3 px-5 py-1"
-              disabled={isSaveLoading}
-            >
-              {isSaveLoading && <Spinner size="sm" className="me-1" />}
-              <span className="fw-600">
-                {!isSaveLoading ? "Lưu" : "Đang xử lý"}
-              </span>
-            </Button>
+                className="float-end me-5 px-5 py-1"
+                onClick={handleDownload}
+              >
+                <span className="fw-600">Tải xuống CV</span>
+              </Button>
+              <Button
+                type="submit"
+                variant="outline-primary"
+                size="sm"
+                className="float-end me-3 px-5 py-1"
+                disabled={isSaveLoading}
+              >
+                {isSaveLoading && <Spinner size="sm" className="me-1" />}
+                <span className="fw-600">
+                  {!isSaveLoading ? "Lưu" : "Đang xử lý"}
+                </span>
+              </Button>
+            </div>
+            <div className="mt-2 ts-sm d-flex flex-wrap gap-3">
+              <div className="d-flex align-items-center">
+                <Form.Control
+                  type="color"
+                  className="border-0"
+                  defaultValue={style["cv-bg-main"].backgroundColor}
+                  {...register("bg_main_color")}
+                />
+                <span>Màu nền chủ đề</span>
+              </div>
+              <div className="d-flex align-items-center">
+                <Form.Control
+                  type="color"
+                  className="border-0"
+                  defaultValue={style.title.color}
+                  {...register("title_color")}
+                />
+                <span>Màu chữ chủ đề</span>
+              </div>
+              <div className="d-flex gap-1 align-items-center">
+                <Form.Select
+                  size="sm"
+                  style={{ width: "62px" }}
+                  {...register("title_size")}
+                >
+                  {cvTitleSize.map((item, index) => (
+                    <option key={index} value={`${item}px`}>
+                      {item}
+                    </option>
+                  ))}
+                </Form.Select>
+                <span>Size chữ tiêu đề</span>
+              </div>
+              <div className="d-flex gap-1 align-items-center">
+                <Form.Select
+                  size="sm"
+                  style={{ width: "62px" }}
+                  {...register("content_size")}
+                >
+                  {cvContentSize.map((item, index) => (
+                    <option key={index} value={`${item}px`}>
+                      {item}
+                    </option>
+                  ))}
+                </Form.Select>
+                <span>Size chữ nội dung</span>
+              </div>
+              <div className="d-flex gap-1 align-items-center">
+                <Form.Select size="sm" {...register("font_family")}>
+                  {cvFontFamily.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </Form.Select>
+                <span style={{ width: "100px" }}>Font chữ</span>
+              </div>
+            </div>
           </div>
-          <div className="my-4">
-            {templateList.find((item) => item.id === templateId).render}
-          </div>
+          <div className="my-4">{curTemplate.render}</div>
         </form>
       ) : (
-        <>{templateList.find((item) => item.id === templateId).render}</>
+        <div>{curTemplate.render}</div>
       )}
     </TemplateContext.Provider>
   );

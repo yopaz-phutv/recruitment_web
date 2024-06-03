@@ -36,7 +36,7 @@ const FlexInput = React.forwardRef(
         className={clsx("d-flex gap-1 align-items-start z-index-1", className)}
         style={style}
       >
-        <div className="cv-text-main">{iconLeft || null}</div>
+        <div className="personal-icon">{iconLeft || null}</div>
         <textarea
           className={clsx(
             "autoresize resize-none overflow-hidden w-100",
@@ -44,7 +44,7 @@ const FlexInput = React.forwardRef(
             disabled && "remove-cvinput-hover",
             innerClassName
           )}
-          style={innerStyle}
+          style={{...innerStyle, height: "auto"}}
           rows={1}
           onChange={(e) => {
             if (setCurrent) setCurrent(e.target.value);
@@ -54,7 +54,7 @@ const FlexInput = React.forwardRef(
           disabled={disabled}
           {...props}
         />
-        <div className="text-main">{iconRight || null}</div>
+        <div className="personal-icon">{iconRight || null}</div>
       </div>
     );
   }

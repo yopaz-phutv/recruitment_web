@@ -208,7 +208,7 @@ export default function Profile() {
                           </Button>
                           <Button
                             size="sm"
-                            variant="danger"
+                            variant="secondary"
                             className="w-100 px-3"
                             onClick={() => {
                               setSelectNewResume(false);

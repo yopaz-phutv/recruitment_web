@@ -1,4 +1,4 @@
-import "./style.css";
+// import "./style.css";
 import defaultAvt from "./default-avatar.webp";
 import { IoCalendarClear } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -173,7 +173,7 @@ export default function Template1() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start cv-border-main">
+      <div className="content cv-line">
         <div className="d-flex align-items-center">
           <FlexInput
             disabled={cvMode === "READ"}
@@ -259,7 +259,7 @@ export default function Template1() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start cv-border-main">
+      <div className="content cv-line">
         <div className="d-flex align-items-center">
           <FlexInput
             disabled={cvMode === "READ"}
@@ -359,7 +359,7 @@ export default function Template1() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start cv-border-main">
+      <div className="content cv-line">
         <div className="d-flex align-items-center">
           <FlexInput
             disabled={cvMode === "READ"}
@@ -475,7 +475,7 @@ export default function Template1() {
     }, [endDate]);
 
     return (
-      <div className="content border-3 border-start cv-border-main">
+      <div className="content cv-line">
         <div className="d-flex align-items-center">
           <FlexInput
             disabled={cvMode === "READ"}
@@ -959,7 +959,7 @@ export default function Template1() {
           disabled={cvMode === "READ"}
           placeholder="HỌ TÊN"
           className="mt-2"
-          innerClassName="cv-bg-main h4 cv-text-main text-center text-uppercase"
+          innerClassName="cv-fullname cv-bg-main text-center text-uppercase"
           defaultValue={fullname}
           {...register("fullname")}
         />

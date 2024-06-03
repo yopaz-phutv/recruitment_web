@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: Merriweather;
+  src: url("./assets/fonts/Merriweather-Light.ttf");
+}
+
+@font-face {
+  font-family: OpenSans;
+  src: url("./assets/fonts/OpenSans-VariableFont_wdth\,wght.ttf");
+}
+
+@font-face {
+  font-family: Raleway;
+  src: url("./assets/fonts/Raleway-VariableFont_wght.ttf");
+}
+
+@font-face {
+  font-family: Wenkai;
+  src: url("./assets/fonts/LXGWWenKaiTC-Bold.ttf");
+}
+
+@font-face {
+  font-family: RobotoMono;
+  src: url("./assets/fonts/RobotoMono-VariableFont_wght.ttf");
+}

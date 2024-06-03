@@ -38,6 +38,7 @@ return new class extends Migration
             $table->text('resume_link')->nullable();
             $table->json('parts_order')->nullable();
             $table->text('skill_text')->nullable();
+            $table->json('style')->nullable();            
             $table->timestamps();
         });
     }

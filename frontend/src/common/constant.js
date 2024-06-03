@@ -8,3 +8,15 @@ export const expLevel = [
   { name: "5 năm", value: 5 },
   { name: "Trên 5 năm", value: 6 },
 ];
+
+export const cvTitleSize = [18, 19, 20, 21, 22, 23, 24];
+
+export const cvContentSize = [13, 14, 15, 16, 17];
+
+export const cvFontFamily = [
+  "Mặc định",
+  "Merriweather",
+  "OpenSans",
+  "Raleway",
+  "Wenkai",
+];
