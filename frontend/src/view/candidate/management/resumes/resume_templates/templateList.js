@@ -44,4 +44,5 @@ const templateList = [
     },
   },
 ];
+
 export default templateList;

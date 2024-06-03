@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import sample from "./sample";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { CandidateContext } from "../../layouts/CandidateLayout";
 import { useForm } from "react-hook-form";
 import dayjs from "dayjs";
@@ -46,7 +46,7 @@ export default function TemplateWrapper({
   if (location.state?.templateId) templateId = location.state.templateId;
   const curTemplate = templateList.find((item) => item.id === templateId);
 
-  const [style, setStyle] = useState(curTemplate.defaultStyle);
+  const [style, setStyle] = useState(structuredClone(curTemplate.defaultStyle));
 
   useEffect(() => {
     if (mode) setCvMode(mode);
@@ -118,7 +118,7 @@ export default function TemplateWrapper({
     const templateStyle = JSON.parse(res.style);
 
     setParts(partsOrder);
-    if(templateStyle) setStyle(templateStyle);
+    if (templateStyle) setStyle(templateStyle);
     setBasicInfor(res.basicInfor);
     templateId = res.basicInfor.template_id;
 
@@ -298,11 +298,11 @@ export default function TemplateWrapper({
       skillText += item.name + " " + item.description + "";
     });
 
-    delete data["bg_main_color"]
-    delete data["title_color"]
-    delete data["title_size"]
-    delete data["content_size"]
-    delete data["font_family"]
+    delete data["bg_main_color"];
+    delete data["title_color"];
+    delete data["title_size"];
+    delete data["content_size"];
+    delete data["font_family"];
 
     let postData = {
       basicInfor: {
@@ -415,9 +415,16 @@ export default function TemplateWrapper({
   }, [style]);
 
   useEffect(() => {
+    if (cvMode === "READ") {
+      setStyle(curTemplate.defaultStyle);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cvMode]);
+
+  useEffect(() => {
     if (isDirty) {
       let temp = { ...style };
-      const color = watch("title_color")
+      const color = watch("title_color");
       temp.title.color = color;
       temp["cv-fullname"].color = color;
       if (style["personal-icon"]) temp["personal-icon"].color = color;
