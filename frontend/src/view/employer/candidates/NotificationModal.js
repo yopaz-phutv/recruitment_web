@@ -93,19 +93,20 @@ export default function NotificationModal({
       onHide={handleClose}
       size="lg"
       fullscreen="md-down"
+      style={{ fontFamily: "sans-serif" }}
     >
       <Modal.Body>
-        <div className="ts-xl fw-500 text-center border-bottom pb-1">
+        <div className="ts-xl fw-600 text-center border-bottom pb-1">
           Gửi thông báo
         </div>
         <div className="text-center bg-mlight">
           <div className="pt-1 pb-2">
             {prefix_msg}
-            <span className="fw-500">
+            <span className="fw-600">
               {candidate.lastname + " " + candidate.firstname}
             </span>
             <div>
-              Vị trí <span className="fw-500">{candidate.jname}</span>
+              Vị trí <span className="fw-600">{candidate.jname}</span>
             </div>
           </div>
         </div>
@@ -130,7 +131,7 @@ export default function NotificationModal({
           </div>
           {watch("send_mail") && (
             <Form.Group>
-              <Form.Label className="fw-500">Tiêu đề</Form.Label>
+              <Form.Label className="fw-600">Tiêu đề</Form.Label>
               <Form.Control
                 type="text"
                 size="sm"
@@ -144,7 +145,7 @@ export default function NotificationModal({
           )}
           {!watch("send_fast_noti") && (
             <Form.Group>
-              <Form.Label className="fw-500">Nội dung</Form.Label>
+              <Form.Label className="fw-600">Nội dung</Form.Label>
               <Form.Control
                 as="textarea"
                 size="sm"
@@ -174,7 +175,7 @@ export default function NotificationModal({
                 "Xác nhận"
               )}
             </Button>
-            <Button variant="danger" size="sm" onClick={handleClose}>
+            <Button variant="secondary" size="sm" onClick={handleClose}>
               Hủy
             </Button>
             <button type="reset" id="reset" className="d-none" />

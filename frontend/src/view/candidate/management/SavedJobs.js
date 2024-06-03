@@ -48,19 +48,19 @@ function SavedJobs() {
         <table className="table border shadow-sm">
           <thead className="table-primary">
             <tr>
-              <th className="fw-500" style={{ width: "26%" }}>
+              <th className="fw-600" style={{ width: "26%" }}>
                 Vị trí
               </th>
-              <th className="fw-500" style={{ width: "26%" }}>
+              <th className="fw-600" style={{ width: "26%" }}>
                 Công ty
               </th>
-              <th className="fw-500" style={{ width: "18%" }}>
+              <th className="fw-600" style={{ width: "18%" }}>
                 Địa điểm
               </th>
-              <th className="fw-500" style={{ width: "14%" }}>
+              <th className="fw-600" style={{ width: "14%" }}>
                 Hạn nộp
               </th>
-              <th className="fw-500">Hành động</th>
+              <th className="fw-600">Hành động</th>
             </tr>
           </thead>
           {!isLoading && (

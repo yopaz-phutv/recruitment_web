@@ -92,7 +92,7 @@ export default function SavedCandidates() {
       className="bg-white ms-3 mt-3 pb-2 shadow-sm"
       style={{ paddingLeft: "45px", paddingRight: "35px" }}
     >
-      <h5 className="mb-2 pt-3 text-main">Danh sách ứng viên đã đánh dấu</h5>
+      <h4 className="mb-2 pt-3 text-main">Danh sách ứng viên đã đánh dấu</h4>
       <div className="d-flex gap-2 flex-column flex-sm-row">
         <CTooltip text="Trạng thái">
           <Form.Select
@@ -123,12 +123,12 @@ export default function SavedCandidates() {
       <Table hover className="shadow-sm mt-3" style={{ width: "98%" }}>
         <thead className="table-primary ts-smd">
           <tr>
-            <th className="fw-500">Tên</th>
-            <th className="fw-500 w-25">Vị trí</th>
-            <th className="fw-500">Điện thoại</th>
-            <th className="fw-500 w-15">Email</th>
-            <th className="fw-500">Đã lưu lúc</th>
-            <th className="fw-500">Hành động</th>
+            <th className="fw-600">Tên</th>
+            <th className="fw-600 w-25">Vị trí</th>
+            <th className="fw-600">Điện thoại</th>
+            <th className="fw-600 w-15">Email</th>
+            <th className="fw-600">Đã lưu lúc</th>
+            <th className="fw-600">Hành động</th>
           </tr>
         </thead>
         {!isLoading && (

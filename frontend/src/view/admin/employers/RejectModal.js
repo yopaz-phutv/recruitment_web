@@ -16,7 +16,7 @@ export default function RejectModal({
   employer,
   setCurTabInd,
   getEmployers,
-  getRequestsAmount
+  getRequestsAmount,
 }) {
   const nav = useNavigate();
   const {
@@ -62,7 +62,11 @@ export default function RejectModal({
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal
+      show={show}
+      onHide={handleClose}
+      style={{ fontFamily: "sans-serif" }}
+    >
       <Form noValidate onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body className="text-center">
           Từ chối tài khoản nhà tuyển dụng <br />
@@ -89,11 +93,7 @@ export default function RejectModal({
             {isLoading && <Spinner size="sm" className="me-1" />}
             Xác nhận
           </Button>
-          <Button
-            variant="danger"
-            className="flex-fill"
-            onClick={handleClose}
-          >
+          <Button variant="danger" className="flex-fill" onClick={handleClose}>
             Hủy
           </Button>
         </Modal.Footer>

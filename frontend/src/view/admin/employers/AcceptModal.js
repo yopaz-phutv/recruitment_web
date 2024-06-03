@@ -55,7 +55,11 @@ export default function AcceptModal({
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal
+      show={show}
+      onHide={handleClose}
+      style={{ fontFamily: "sans-serif" }}
+    >
       <Modal.Body className="text-center">
         Chấp nhận tài khoản nhà tuyển dụng <br />
         <strong className="ts-lg">{employer.name}</strong>

@@ -7,6 +7,7 @@ import useGetAllLocations from "../../../hooks/useGetAllLocations";
 import { useState } from "react";
 import employerApi from "../../../api/employer";
 import { toast } from "react-toastify";
+import { BsTrash3 } from "react-icons/bs";
 
 export default function EditForm({ className, employer, getDetail, returnView }) {
   const requiredMsg = "Không được để trống";
@@ -77,7 +78,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
       className={className}
     >
       <Form.Group className="ts-smd">
-        <Form.Label className="mb-1 fw-500">Tên công ty</Form.Label>
+        <Form.Label className="mb-1 fw-600">Tên công ty</Form.Label>
         <RequiredMark />
         <Form.Control
           type="text"
@@ -91,7 +92,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mt-2 ts-smd">
-        <Form.Label className="mb-1 fw-500">Mã số thuế</Form.Label>
+        <Form.Label className="mb-1 fw-600">Mã số thuế</Form.Label>
         <Form.Control
           type="text"
           size="sm"
@@ -100,7 +101,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
         />
       </Form.Group>
       <Form.Group className="ts-smd mt-2 d-flex align-items-center">
-        <Form.Label className="mb-1 fw-500 me-3">Số nhân sự</Form.Label>
+        <Form.Label className="mb-1 fw-600 me-3">Số nhân sự</Form.Label>
         <Form.Control
           type="number"
           size="sm"
@@ -118,7 +119,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
         />
         &nbsp;nhân viên
       </Form.Group>
-      <Form.Label className="mb-1 fw-500">Địa chỉ</Form.Label>
+      <Form.Label className="mb-1 fw-600">Địa chỉ</Form.Label>
       <RequiredMark />
       <Form.Group className="ts-smd">
         <Form.Select
@@ -161,7 +162,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="ts-smd mt-2">
-        <Form.Label className="mb-1 fw-500">Website</Form.Label>
+        <Form.Label className="mb-1 fw-600">Website</Form.Label>
         <Form.Control
           type="text"
           size="sm"
@@ -175,7 +176,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
       </Form.Group>
       <div className="mt-2 d-flex gap-3">
         <Form.Group className="ts-smd w-60">
-          <Form.Label className="mb-1 fw-500">Người liên hệ</Form.Label>
+          <Form.Label className="mb-1 fw-600">Người liên hệ</Form.Label>
           <RequiredMark />
           <Form.Control
             type="text"
@@ -189,7 +190,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="ts-smd flex-fill">
-          <Form.Label className="mb-1 fw-500">Số điện thoại</Form.Label>
+          <Form.Label className="mb-1 fw-600">Số điện thoại</Form.Label>
           <RequiredMark />
           <Form.Control
             type="text"
@@ -204,7 +205,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
         </Form.Group>
       </div>
       <Form.Group className="ts-smd mt-2">
-        <Form.Label className="mb-1 fw-500">Mô tả công ty</Form.Label>
+        <Form.Label className="mb-1 fw-600">Mô tả công ty</Form.Label>
         <Form.Control
           as="textarea"
           size="sm"
@@ -214,7 +215,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
         />
       </Form.Group>
       <Form.Group className="ts-smd mt-2">
-        <Form.Label className="mb-1 fw-500">Logo công ty</Form.Label>
+        <Form.Label className="mb-1 fw-600">Logo công ty</Form.Label>
         {employer.logo && !changeLogo ? (
           <>
             {!deleteCurLogo && (
@@ -240,7 +241,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
         <div className="mt-1 d-flex gap-2">
           <Button
             size="sm"
-            className="w-20"
+            className="w-20 lh-sm"
             onClick={() => setChangeLogo(!changeLogo)}
           >
             {!changeLogo ? "Logo mới" : "Xóa"}
@@ -256,7 +257,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
         </div>
       </Form.Group>
       <Form.Group className="ts-smd mt-2">
-        <Form.Label className="mb-1 fw-500">Ảnh đại diện công ty</Form.Label>
+        <Form.Label className="mb-1 fw-600">Ảnh đại diện công ty</Form.Label>
         {employer.image && !changeImage ? (
           <>
             {!deleteCurImage && (
@@ -282,7 +283,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
         <div className="mt-1 d-flex gap-2">
           <Button
             size="sm"
-            className="w-20"
+            className="w-20 lh-sm"
             onClick={() => setChangeImage(!changeImage)}
           >
             {!changeImage ? "Ảnh mới" : "Xóa"}
@@ -302,7 +303,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
             {isLoading && <Spinner size="sm" className="me-1" />}
             {!isLoading ? "Cập nhật" : "Đang xử lý"}
           </Button>
-          <Button variant="danger" onClick={returnView}>
+          <Button variant="secondary" onClick={returnView}>
             Hủy
           </Button>
         </div>

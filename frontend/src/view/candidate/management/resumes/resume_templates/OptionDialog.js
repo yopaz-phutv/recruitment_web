@@ -15,13 +15,18 @@ export default function OptionDialog({ show, setShow, templateId }) {
     nav("/candidate/resumes/create", { state: { templateId } });
   };
   return (
-    <Modal show={show} onHide={() => setShow(false)} dialogClassName="shadow">
+    <Modal
+      show={show}
+      onHide={() => setShow(false)}
+      dialogClassName="shadow"
+      style={{ fontFamily: "sans-serif" }}
+    >
       <IoMdClose
         className="ms-auto fs-4 me-1 mt-1 pointer"
         onClick={() => setShow(false)}
       />
       <Modal.Body className="pt-1 mb-3">
-        <h5 className="text-center">Chọn phương thức tạo hồ sơ</h5>
+        <h5 className="text-center fw-600">Chọn phương thức tạo hồ sơ</h5>
         <Stack direction="vertically" gap={3} className="mt-3">
           <Button
             variant="outline-primary"

@@ -29,7 +29,7 @@ function SavedJobPopup({ job_id }) {
             </button>
             <button
               type="button"
-              className="btn btn-danger"
+              className="btn btn-secondary"
               data-bs-dismiss="modal"
             >
               Hủy

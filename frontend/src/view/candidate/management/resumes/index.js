@@ -3,8 +3,8 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import resumeApi from "../../../../api/resume";
 import dayjs from "dayjs";
-import { BsEyeFill } from "react-icons/bs";
-import { MdDelete } from "react-icons/md";
+import { BsEye } from "react-icons/bs";
+import { BsTrash3 } from "react-icons/bs";
 import { MdEdit } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -78,10 +78,10 @@ export default function Resume() {
         <Table hover className="w-85 shadow-sm mt-3">
           <thead className="table-primary">
             <tr>
-              <th className="fw-500 w-30">Tiêu đề hồ sơ</th>
-              <th className="fw-500">Thời gian tạo</th>
-              <th className="fw-500">Thời gian sửa</th>
-              <th className="fw-500">Hành động</th>
+              <th className="fw-600 w-30">Tiêu đề hồ sơ</th>
+              <th className="fw-600">Thời gian tạo</th>
+              <th className="fw-600">Thời gian sửa</th>
+              <th className="fw-600">Hành động</th>
             </tr>
           </thead>
           {!isLoading && (
@@ -96,14 +96,25 @@ export default function Resume() {
                     {dayjs(item.updated_at).format("H:mm DD/MM/YYYY")}
                   </td>
                   <td className="ts-lg">
-                    <div className="d-flex gap-3">
-                      <BsEyeFill className="text-secondary pointer" />
+                    <div className="d-flex gap-3 align-items-center">
+                      <a
+                        href={item.resume_link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="d-block"
+                      >
+                        <BsEye
+                          className="text-primary pointer"
+                          style={{ marginBottom: "2px" }}
+                        />
+                      </a>
                       <MdEdit
                         className="text-primary pointer"
                         onClick={() => handleEdit(item)}
                       />
-                      <MdDelete
+                      <BsTrash3
                         className="text-danger pointer"
+                        fontSize="16px"
                         onClick={() => handleDelete(item.id)}
                       />
                     </div>

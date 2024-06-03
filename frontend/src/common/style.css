@@ -53,6 +53,10 @@
 .hover-bg-primary:hover {
   background-color: #0a58ca !important;
 }
+.hover-bgt-light:hover {
+  color: #0099cc !important;
+  background-color: #cce4ffa0 !important;
+}
 /* hover border */
 .hover-border-main:hover {
   border-color: #0099cc !important;

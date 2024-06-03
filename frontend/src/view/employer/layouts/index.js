@@ -4,7 +4,6 @@ import {
   BsFillBriefcaseFill,
   BsFillPeopleFill,
   BsFillPersonFill,
-  // BsMessenger,
 } from "react-icons/bs";
 import { FaUserCheck } from "react-icons/fa6";
 import { RiUserSearchFill } from "react-icons/ri";
@@ -58,7 +57,7 @@ function Layout(props) {
   return (
     <>
       <nav className="navbar border-bottom shadow-sm fixed-top bg-white">
-        <div className="navbar-brand ms-3 text-secondary">Recruitment</div>
+        <div className="navbar-brand ms-3 text-secondary fw-600">Recruitment</div>
         <div className="dropdown pointer">
           <div
             className="d-flex align-items-center me-5 dropdown-toggle"
@@ -78,9 +77,9 @@ function Layout(props) {
         className="d-flex flex-column flex-lg-row"
         style={{ marginTop: "57px" }}
       >
-        <div className="ts-smd fw-500 text-secondary menu-part bg-white border-lg-end">
+        <div className="ts-smd fw-600 text-secondary menu-part bg-white border-lg-end">
           <div className="sticky-top top-0 d-flex flex-row flex-wrap flex-lg-column">
-            <div className="text-center text-main border-lg-bottom py-2 py-lg-3 px-2 fw-500">
+            <div className="text-center text-main border-lg-bottom py-2 py-lg-3 px-2">
               {company && company.name}
             </div>
             <div

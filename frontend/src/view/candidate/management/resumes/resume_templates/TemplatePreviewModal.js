@@ -33,9 +33,10 @@ export default function TemplatePreviewModal({ show, setShow, templateId }) {
         scrollable
         size="xl"
         fullscreen="lg-down"
+        style={{ fontFamily: "sans-serif" }}
       >
         <Modal.Header closeButton>
-          <Modal.Title className="w-100 text-center">
+          <Modal.Title className="w-100 text-center fw-600">
             Mẫu hồ sơ số {templateId}
           </Modal.Title>
         </Modal.Header>

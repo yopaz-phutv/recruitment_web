@@ -49,9 +49,10 @@ export default function SkillFormDialog({
       centered
       size="md"
       fullscreen="sm-down"
+      style={{ fontFamily: "sans-serif" }}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Kỹ năng</Modal.Title>
+        <Modal.Title className="fw-600">Kỹ năng</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -143,7 +144,7 @@ export default function SkillFormDialog({
               Lưu
             </Button>
             <Button
-              variant="danger"
+              variant="secondary"
               size="sm"
               type="reset"
               className="me-3"

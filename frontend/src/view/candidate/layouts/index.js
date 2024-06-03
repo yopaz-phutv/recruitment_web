@@ -121,7 +121,7 @@ function Layout(props) {
         <Stack
           direction="horizontal"
           gap={1}
-          className="fixed-top bg-white text-secondary shadow-sm ts-17 fw-500"
+          className="fixed-top bg-white text-secondary shadow-sm ts-17 fw-600"
         >
           <Link
             className="nav-link ms-2 pe-2 ts-xl pb-1"

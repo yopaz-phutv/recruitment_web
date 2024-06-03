@@ -119,7 +119,7 @@ export default function PersonalInfor() {
               </div>
             </div>
           </div>
-          <div className="ts-17 fw-500 mt-3">
+          <div className="ts-17 fw-600 mt-3">
             Thông tin vị trí việc làm mong muốn
           </div>
           <div className="row row-cols-md-2 row-cols-sm-1 mt-1">

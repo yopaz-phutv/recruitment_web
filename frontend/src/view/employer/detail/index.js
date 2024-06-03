@@ -29,7 +29,7 @@ export default function EmployerDetail() {
   return (
     <div className="bg-white ms-3 mt-3 pb-3 position-relative shadow-sm">
       <div className="pt-3" style={{ marginLeft: "45px" }}>
-        <h5 className="text-main">Thông tin công ty</h5>
+        <h4 className="text-main">Thông tin công ty</h4>
         {isLoading ? (
           <Loading />
         ) : !isEdit ? (

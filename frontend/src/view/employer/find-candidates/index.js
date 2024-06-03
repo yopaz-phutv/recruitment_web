@@ -99,9 +99,9 @@ export default function FindingCandidates() {
       className="bg-white ms-3 mt-3 pb-2 shadow-sm"
       style={{ paddingLeft: "45px", paddingRight: "35px" }}
     >
-      <h5 className="mb-2 pt-3 text-main">
+      <h4 className="mb-2 pt-3 text-main">
         Tìm kiếm ứng viên theo tiêu chí việc làm
-      </h5>
+      </h4>
       <Form noValidate className="mt-3">
         <div className="row row-cols-4">
           {!isLoadingLocations && (

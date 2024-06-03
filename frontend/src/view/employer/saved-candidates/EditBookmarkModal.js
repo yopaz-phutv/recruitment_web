@@ -15,9 +15,7 @@ export default function EditBookmarkModal({
   setBookmarks,
 }) {
   const jobIds =
-    curBookmark.jobs.length > 0
-      ? curBookmark.jobs.map((job) => job.id)
-      : [0];
+    curBookmark.jobs.length > 0 ? curBookmark.jobs.map((job) => job.id) : [0];
   const { register, watch, handleSubmit, resetField } = useForm({
     defaultValues: {
       job_none: jobIds.includes(0) ? true : false,
@@ -42,13 +40,17 @@ export default function EditBookmarkModal({
 
       temp[index].jobs = job_none
         ? []
-        : jobs.filter((job) =>  job_ids.includes(String(job.id)));
+        : jobs.filter((job) => job_ids.includes(String(job.id)));
       setBookmarks(temp);
     }
   };
 
   return (
-    <Modal show={show} onHide={() => setShow(false)}>
+    <Modal
+      show={show}
+      onHide={() => setShow(false)}
+      style={{ fontFamily: "sans-serif" }}
+    >
       <Modal.Header
         closeButton
         className="pt-2 pb-0 border-bottom-0"

@@ -19,7 +19,7 @@ export default function FrameLayout({
         )}
       >
         <div className="d-flex align-items-center justify-content-between">
-          <h5 className="ps-1">{title}</h5>
+          <h5 className="ps-1 fw-600">{title}</h5>
           {hasaddbtn && (
             <div className="d-inline float-end me-2">
               <Button

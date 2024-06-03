@@ -168,13 +168,13 @@ export default function EmployerList() {
         <Table hover className="w-95 shadow-sm mt-3">
           <thead className="table-primary ts-smd">
             <tr>
-              <th className="fw-500 w-30">Tên</th>
-              <th className="fw-500">Địa chỉ</th>
-              <th className="fw-500">Email</th>
-              <th className="fw-500">Điện thoại</th>
-              <th className="fw-500">Ngày đăng ký</th>
-              {curTabInd === 0 && <th className="fw-500">Trạng thái</th>}
-              <th className="fw-500">Hành động</th>
+              <th className="fw-600 w-30">Tên</th>
+              <th className="fw-600">Địa chỉ</th>
+              <th className="fw-600">Email</th>
+              <th className="fw-600">Điện thoại</th>
+              <th className="fw-600">Ngày đăng ký</th>
+              {curTabInd === 0 && <th className="fw-600">Trạng thái</th>}
+              <th className="fw-600">Hành động</th>
             </tr>
           </thead>
           {!isLoading && (

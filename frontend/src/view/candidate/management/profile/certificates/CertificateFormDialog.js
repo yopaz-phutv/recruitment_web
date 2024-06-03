@@ -83,9 +83,10 @@ export default function CertificateFormDialog({
       centered
       size="lg"
       fullscreen="md-down"
+      style={{ fontFamily: "sans-serif" }}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Chứng chỉ</Modal.Title>
+        <Modal.Title className="fw-600">Chứng chỉ</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -174,7 +175,7 @@ export default function CertificateFormDialog({
               Lưu
             </Button>
             <Button
-              variant="danger"
+              variant="secondary"
               size="sm"
               type="reset"
               className="me-3"

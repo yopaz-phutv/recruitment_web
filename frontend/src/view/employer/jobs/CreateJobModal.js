@@ -56,9 +56,10 @@ export default function CreateJobModal({
       scrollable
       show={show}
       onHide={() => setShow(false)}
+      style={{ fontFamily: "sans-serif" }}
     >
       <Modal.Header closeButton className="py-2">
-        <Modal.Title className="w-100 text-center">
+        <Modal.Title className="w-100 text-center fw-600">
           Đăng việc làm mới
         </Modal.Title>
       </Modal.Header>
@@ -309,7 +310,7 @@ export default function CreateJobModal({
             </button>
             <button
               type="button"
-              className="btn btn-danger me-2 ms-3"
+              className="btn btn-secondary me-2 ms-3"
               data-bs-dismiss="modal"
             >
               Đóng

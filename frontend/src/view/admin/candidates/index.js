@@ -59,12 +59,12 @@ export default function AdminCandidateList() {
         <Table hover className="shadow-sm mt-3" style={{ width: "98%" }}>
           <thead className="table-primary ts-smd">
             <tr>
-              <th className="fw-500 w-20">Tên</th>
-              <th className="fw-500 w-20">Email</th>
-              <th className="fw-500">Điện thoại</th>
-              <th className="fw-500">Đăng ký lúc</th>
-              <th className="fw-500">Cập nhật lúc</th>
-              <th className="fw-500">Trạng thái</th>
+              <th className="fw-600 w-20">Tên</th>
+              <th className="fw-600 w-20">Email</th>
+              <th className="fw-600">Điện thoại</th>
+              <th className="fw-600">Đăng ký lúc</th>
+              <th className="fw-600">Cập nhật lúc</th>
+              <th className="fw-600">Trạng thái</th>
             </tr>
           </thead>
           {!isLoading && (

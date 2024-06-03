@@ -43,7 +43,9 @@ export default function SelectJobModal({
         toast.success("Đã cập nhật!");
       }
       temp[index].is_send_noti = 0;
-      temp[index].job_ids = job_none ? [0] : job_ids.map((item) => Number(item));
+      temp[index].job_ids = job_none
+        ? [0]
+        : job_ids.map((item) => Number(item));
       setResumes(temp);
     }
   };
@@ -77,7 +79,11 @@ export default function SelectJobModal({
   };
 
   return (
-    <Modal show={show} onHide={() => setShow(false)}>
+    <Modal
+      show={show}
+      onHide={() => setShow(false)}
+      style={{ fontFamily: "sans-serif" }}
+    >
       <Modal.Header
         closeButton
         className="pt-2 pb-0 border-bottom-0"

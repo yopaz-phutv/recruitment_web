@@ -13,7 +13,6 @@ function Layout(props) {
   const nav = useNavigate();
   const { curUrl, setCurUrl } = useContext(AppContext);
 
-  // const company = useSelector((state) => state.adminAuth.current.admin);
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
@@ -44,7 +43,7 @@ function Layout(props) {
   return (
     <>
       <nav className="navbar border-bottom shadow-sm fixed-top bg-white">
-        <div className="navbar-brand ms-3 text-secondary">Recruitment</div>
+        <div className="navbar-brand ms-3 text-secondary fw-600">Recruitment</div>
         <div className="dropdown pointer">
           <div
             className="d-flex align-items-center me-5 dropdown-toggle"
@@ -64,7 +63,7 @@ function Layout(props) {
         className="d-flex flex-column flex-lg-row"
         style={{ marginTop: "57px" }}
       >
-        <div className=" ts-smd fw-500 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-bottom border-lg-end">
+        <div className=" ts-smd fw-600 text-secondary menu-part d-flex flex-row flex-lg-column bg-white border-bottom border-lg-end">
           <div
             className={clsx(
               "d-flex align-items-center ps-lg-5 py-lg-2 px-2 py-2 pointer hover-bg-light hover-text-main",

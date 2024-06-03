@@ -51,9 +51,10 @@ export default function EducationFormDialog({
       centered
       size="lg"
       fullscreen="md-down"
+      style={{ fontFamily: "sans-serif" }}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Thông tin học vấn</Modal.Title>
+        <Modal.Title className="fw-600">Thông tin học vấn</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -142,7 +143,7 @@ export default function EducationFormDialog({
               Lưu
             </Button>
             <Button
-              variant="danger"
+              variant="secondary"
               size="sm"
               type="reset"
               className="me-3"

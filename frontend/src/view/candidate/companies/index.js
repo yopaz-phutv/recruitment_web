@@ -61,7 +61,7 @@ function CompanyList() {
           Tìm kiếm
         </button>
       </form>
-      <h4 className="my-3 text-main text-center">Danh sách công ty</h4>
+      <h4 className="my-3 text-main text-center fw-600">Danh sách công ty</h4>
       <div className="row mt-3">
         {isLoading ? (
           Array.from({ length: 6 }, (_, index) => (

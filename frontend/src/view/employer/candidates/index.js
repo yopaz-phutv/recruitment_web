@@ -81,9 +81,9 @@ function CandidateList() {
         className="bg-white ms-3 mt-3 py-3 shadow-sm"
         style={{ height: "95%" }}
       >
-        <h5 className="mb-0 text-main" style={{ marginLeft: "45px" }}>
+        <h4 className="mb-0 text-main" style={{ marginLeft: "45px" }}>
           Danh sách ứng viên
-        </h5>
+        </h4>
         <Tab.Container onSelect={(k) => setStep(k)}>
           <Nav className="mx-auto pb-1 justify-content-center">
             <Nav.Item>

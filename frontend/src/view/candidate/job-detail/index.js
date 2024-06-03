@@ -121,9 +121,7 @@ function Job() {
               </div>
               <div className="container pt-2" style={{ marginLeft: "25px" }}>
                 <div>
-                  <div className="">
-                    <h4 className="mt-3">{job.jname}</h4>
-                  </div>
+                  <h4 className="mt-3 text-main fw-600">{job.jname}</h4>
                   <div className="clearfix mt-3 mb-2">
                     <button
                       className="btn btn-primary ts-sm"
@@ -287,7 +285,7 @@ function Job() {
               </div>
               <div className="fw-bold ms-2">{job.employer.name}</div>
             </div>
-            <div className="mx-2 ts-smd">
+            <div className="mx-2 ts-smd mb-1">
               <div className="d-flex">
                 <div
                   className="d-flex align-items-center text-secondary"
@@ -331,9 +329,6 @@ function Job() {
               </Button>
             </div>
           </div>
-          {/* <div className="bg-white mt-3 p-2">
-            kkk
-          </div> */}
         </div>
       </div>
     </div>

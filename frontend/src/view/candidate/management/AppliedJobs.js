@@ -36,19 +36,19 @@ function AppliedJobs() {
         <table className="table border shadow-sm">
           <thead className="table-primary">
             <tr>
-              <th className="fw-500" style={{ width: "28%" }}>
+              <th className="fw-600" style={{ width: "28%" }}>
                 Vị trí
               </th>
-              <th className="fw-500" style={{ width: "26%" }}>
+              <th className="fw-600" style={{ width: "26%" }}>
                 Công ty
               </th>
-              <th className="fw-500" style={{ width: "13%" }}>
+              <th className="fw-600" style={{ width: "13%" }}>
                 Ngày nộp
               </th>
-              <th className="fw-500" style={{ width: "18%" }}>
+              <th className="fw-600" style={{ width: "18%" }}>
                 Trạng thái
               </th>
-              <th className="fw-500">Hồ sơ</th>
+              <th className="fw-600">Hồ sơ</th>
             </tr>
           </thead>
           {!isLoading && (

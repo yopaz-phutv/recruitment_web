@@ -82,9 +82,10 @@ export default function PrizeFormDialog({
       centered
       size="lg"
       fullscreen="md-down"
+      style={{ fontFamily: "sans-serif" }}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Giải thưởng</Modal.Title>
+        <Modal.Title className="fw-600">Giải thưởng</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -162,7 +163,7 @@ export default function PrizeFormDialog({
               Lưu
             </Button>
             <Button
-              variant="danger"
+              variant="secondary"
               size="sm"
               type="reset"
               className="me-3"

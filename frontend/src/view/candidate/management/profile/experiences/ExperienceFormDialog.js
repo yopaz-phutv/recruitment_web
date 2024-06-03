@@ -51,9 +51,10 @@ export default function ExperienceFormDialog({
       centered
       size="lg"
       fullscreen="md-down"
+      style={{ fontFamily: "sans-serif" }}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Kinh nghiệm việc làm</Modal.Title>
+        <Modal.Title className="fw-600">Kinh nghiệm việc làm</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -140,7 +141,7 @@ export default function ExperienceFormDialog({
               Lưu
             </Button>
             <Button
-              variant="danger"
+              variant="secondary"
               size="sm"
               type="reset"
               className="me-3"

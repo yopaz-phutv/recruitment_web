@@ -8,7 +8,7 @@ import Home from "./view/candidate/Home";
 import CompanyList from "./view/candidate/companies";
 import Company from "./view/candidate/company-detail";
 import JobList from "./view/candidate/jobs";
-import Job from "./view/candidate/jobs/JobDetail";
+import Job from "./view/candidate/job-detail";
 import EmployerLayout from "./view/employer/layouts";
 import EmployerLogin from "./view/employer/auth/Login";
 import CandidateList from "./view/employer/candidates";
@@ -41,6 +41,7 @@ function App() {
   });
 
   return (
+    <div style={{fontFamily: "sans-serif"}}>
     <AppContext.Provider value={{ curUrl, setCurUrl, pusher }}>
       <ToastContainer autoClose={500} position="bottom-right" />
       <BrowserRouter>
@@ -109,7 +110,7 @@ function App() {
           <Route path="admin/login" element={<AdminLogin />} />
         </Routes>
       </BrowserRouter>
-    </AppContext.Provider>
+    </AppContext.Provider></div>
   );
 }
 

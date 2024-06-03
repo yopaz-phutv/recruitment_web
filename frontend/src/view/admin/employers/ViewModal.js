@@ -9,9 +9,10 @@ export default function ViewModal({ show, setShow, employer, curTabInd }) {
       fullscreen="lg-down"
       show={show}
       onHide={() => setShow(false)}
+      style={{ fontFamily: "sans-serif" }}
     >
       <Modal.Header closeButton className="py-2">
-        <Modal.Title className="w-100 text-center">
+        <Modal.Title className="w-100 text-center fw-600">
           Thông tin nhà tuyển dụng
         </Modal.Title>
       </Modal.Header>
@@ -22,7 +23,7 @@ export default function ViewModal({ show, setShow, employer, curTabInd }) {
         />
       </Modal.Body>
       <Modal.Footer className="py-1">
-        <Button variant="danger" onClick={() => setShow(false)}>
+        <Button variant="secondary" onClick={() => setShow(false)}>
           Đóng
         </Button>
       </Modal.Footer>

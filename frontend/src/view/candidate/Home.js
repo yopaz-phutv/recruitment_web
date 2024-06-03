@@ -1,15 +1,15 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  BsCaretLeft,
-  BsCaretRight,
-  BsCurrencyDollar,
-  BsGeoAlt,
-} from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { MdOutlineAttachMoney } from "react-icons/md";
+import { MdLocationOn } from "react-icons/md";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import clsx from "clsx";
+import CTooltip from "../../components/CTooltip";
 
 function Home() {
   const poster = process.env.PUBLIC_URL + "/image/poster4.jpg";
+  const nav = useNavigate();
   const [hotJobs, setHotJobs] = useState([{ employer: {}, locations: [] }]);
   const [hotCompanies, setHotCompanies] = useState([]);
   const [page, setPage] = useState({ links: [] });
@@ -53,18 +53,13 @@ function Home() {
         <img className="w-100" src={poster} alt="poster" />
       </div>
       <div className="mt-5 mx-4 pb-3 bg-white">
-        <h4 className="pt-3 ps-4">Việc làm nổi bật</h4>
+        <h4 className="pt-3 ps-4 text-main">Việc làm nổi bật</h4>
         <hr />
-        <div className="row">
-          {hotJobs.map((job, index) => (
-            <div
-              key={"job" + job.id}
-              className="col-md-5 my-2 d-flex border-bottom"
-              style={{ marginLeft: "85px" }}
-            >
-              <Link
-                to={`/companies/${job.employer.id}`}
-                className="border ms-1 mb-3 d-flex justify-content-center"
+        <div className="row row-cols-lg-2 mx-auto">
+          {hotJobs.map((job) => (
+            <div key={job.id} className="my-2 d-flex border-bottom">
+              <div
+                className="border ms-3 mb-3 d-flex justify-content-center"
                 style={{ width: "110px", height: "110px" }}
               >
                 <img
@@ -76,19 +71,24 @@ function Home() {
                   src={job.employer.logo}
                   alt={"hotjob" + job.id}
                 />
-              </Link>
+              </div>
               <div style={{ fontSize: "15.5px" }}>
                 <div className="ms-4 mt-1 mb-2">
-                  <Link
-                    to={`/jobs/${job.id}`}
-                    className="nav-link fw-bold"
+                  <div
+                    className="fw-bold hover-text-main pointer"
                     style={{ fontSize: "18.5px" }}
+                    onClick={() => nav(`/jobs/${job.id}`)}
                   >
                     {job.jname}
-                  </Link>
-                  <span className="text-secondary">{job.employer.name} </span>
+                  </div>
+                  <span
+                    className="text-secondary hover-text-main pointer"
+                    onClick={() => nav(`/companies/${job.employer.id}`)}
+                  >
+                    {job.employer.name}
+                  </span>
                   <div className="d-flex align-items-center">
-                    <BsCurrencyDollar />
+                    <MdOutlineAttachMoney className="fs-5 text-main" />
                     {job.min_salary ? (
                       <span>
                         {job.min_salary} - {job.max_salary} triệu VND
@@ -98,7 +98,7 @@ function Home() {
                     )}
                   </div>
                   <div className="d-flex align-items-center">
-                    <BsGeoAlt />
+                    <MdLocationOn className="fs-5 text-main" />
                     &nbsp;
                     {job.locations.map((item, index) => (
                       <span key={"job_location_" + job.id + "-" + item.id}>
@@ -113,60 +113,66 @@ function Home() {
           ))}
         </div>
         <div className="d-flex justify-content-center mt-3">
-          {page.links.map((item) => (
+          {page.links.map((item, index) => (
             <button
-              key={'page' + item.label}
-              type="button"
-              className="btn btn-sm border me-2"
-              style={{
-                backgroundColor: curPage.toString() === item.label && "#1E90FF",
-                color: curPage.toString() === item.label ? "white" : "#1E90FF",
-              }}
+              key={index}
+              className={clsx(
+                "btn btn-sm me-2",
+                curPage.toString() === item.label
+                  ? "bg-main text-white"
+                  : "border text-main"
+              )}
+              style={{ width: "30px", height: "30px" }}
               onClick={() => getHotJobs(item.url)}
             >
               {item.label === "&laquo; Previous" && (
-                <BsCaretLeft style={{ fontSize: "18px" }} />
+                <FiChevronLeft style={{ marginBottom: "2px" }} />
               )}
               {item.label === "Next &raquo;" && (
-                <BsCaretRight style={{ fontSize: "18px" }} />
+                <FiChevronRight style={{ marginBottom: "2px" }} />
               )}
               {item.label !== "&laquo; Previous" &&
               item.label !== "Next &raquo;"
                 ? item.label
                 : null}
             </button>
-          ))}          
+          ))}
         </div>
       </div>
       <div className="mt-5 mx-4 bg-white">
-        <h4 className="pt-3 ps-4">Top công ty nổi bật</h4>
+        <h4 className="pt-3 ps-4 text-main">Top công ty nổi bật</h4>
         <hr />
-        <div className="row ms-4 pb-4">
+        <div className="row row-cols-3 row-cols-lg-5 mx-auto px-3 pb-2">
           {hotCompanies.map((company) => (
-            <div
-              className="col-md-2 border rounded me-5"
-              key={"company" + company.id}
-            >
-              <Link
-                to={`/companies/${company.id}`}
-                className="d-flex justify-content-center mx-auto"
-                style={{ width: "110px", height: "110px" }}
+            <div className="px-2" key={company.id}>
+              <div
+                className="border rounded mb-3 pb-1 pointer"
+                onClick={() => nav(`/companies/${company.id}`)}
               >
-                <img
-                  className="align-self-center"
-                  style={{
-                    maxHeight: "90px",
-                    maxWidth: "90px",
-                  }}
-                  src={company.logo}
-                  alt={"hot_company" + company.id}
-                />
-              </Link>
-              <div className="text-center mb-2">
-                <div className="fw-bold mb-1">{company.name}</div>
-                <span className="border rounded px-1 bg-mlight">
-                  {company.job_num} việc làm
-                </span>
+                <div
+                  className="d-flex justify-content-center mx-auto"
+                  style={{ width: "110px", height: "110px" }}
+                >
+                  <img
+                    className="align-self-center"
+                    style={{
+                      maxHeight: "90px",
+                      maxWidth: "90px",
+                    }}
+                    src={company.logo}
+                    alt=""
+                  />
+                </div>
+                <div className="text-center mb-2">
+                  <CTooltip text={company.name}>
+                    <div className="fw-bold mb-1 text-truncate px-3 ts-smd hover-text-main">
+                      {company.name}
+                    </div>
+                  </CTooltip>
+                  <small className="rounded px-2 bg-mlight text-main">
+                    {company.job_num} việc làm
+                  </small>
+                </div>
               </div>
             </div>
           ))}

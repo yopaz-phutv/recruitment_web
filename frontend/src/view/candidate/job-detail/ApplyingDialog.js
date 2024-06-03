@@ -242,7 +242,7 @@ export default function AppyingDialog({
           {isLoading && <Spinner size="sm" className="me-1" />}
           {!isLoading ? "Nộp hồ sơ" : "Đang xử lý"}
         </button>
-        <button className="btn btn-danger" onClick={() => setShow(false)}>
+        <button className="btn btn-secondary" onClick={() => setShow(false)}>
           Đóng
         </button>
       </Modal.Footer>

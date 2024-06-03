@@ -25,6 +25,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* .card:hover {
-  box-shadow: 2px 2px rgb(234, 228, 228) !important;
-} */
+
+@media screen and (max-width: 992px) {
+  #job-detail-container {
+      margin: 0 25px !important;
+  }
+}

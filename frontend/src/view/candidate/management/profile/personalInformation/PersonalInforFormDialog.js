@@ -137,9 +137,10 @@ export default function PersonalInforFormDialog({
       centered
       size="lg"
       fullscreen="lg-down"
+      style={{ fontFamily: "sans-serif" }}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Thông tin cá nhân</Modal.Title>
+        <Modal.Title className="fw-600">Thông tin cá nhân</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -339,7 +340,7 @@ export default function PersonalInforFormDialog({
               {...register("objective")}
             />
           </Form.Group>
-          <div className="ts-lg fw-500 mt-3">
+          <div className="ts-lg fw-600 mt-3">
             *Thông tin vị trí việc làm mong muốn
           </div>
           <div className="row row-cols-md-2 row-cols-sm-1">
@@ -424,7 +425,7 @@ export default function PersonalInforFormDialog({
                   label="Dưới 1 năm"
                   className="w-40"
                   defaultChecked={personal.job_yoe === 0}
-                  {...register("isLessThan1")}            
+                  {...register("isLessThan1")}
                 />
                 {!watch("isLessThan1") && (
                   <InputGroup size="sm">
@@ -452,7 +453,7 @@ export default function PersonalInforFormDialog({
               {!isLoading ? "Lưu" : "Đang xử lý"}
             </Button>
             <Button
-              variant="danger"
+              variant="secondary"
               size="sm"
               type="reset"
               className="me-3"
