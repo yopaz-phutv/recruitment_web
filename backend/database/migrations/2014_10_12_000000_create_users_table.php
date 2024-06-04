@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->unsignedTinyInteger('role');
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(1);
             $table->boolean('is_accepted')->default(1);
             $table->boolean('is_denied')->default(0);
             $table->timestamps();

@@ -27,11 +27,10 @@ return new class extends Migration
             $table->text('requirements')->nullable();
             $table->text('benefits')->nullable();
             $table->date('expire_at')->nullable();
-            $table->unsignedTinyInteger('interview_round_num')->default(1);            
-            $table->boolean('is_hot')->default(0);
-            $table->boolean('is_active')->default(1);
+            $table->unsignedTinyInteger('interview_round_num')->default(1); 
             $table->double('latitude', null, null, true)->nullable();
             $table->double('longitude', null, null, true)->nullable();
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

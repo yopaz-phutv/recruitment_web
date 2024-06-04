@@ -14,7 +14,6 @@ export default function JobMap({
   setRefreshHint,
   setHintLocations,
   curLocation,
-  setJobNum,
 }) {
   const mapRef = useRef(null);
   const curMap = useRef(null);
@@ -151,7 +150,6 @@ export default function JobMap({
     }    
     curMap.current.setZoom(12);
     mapGroup.current = group;
-    setJobNum(markerNum);
   };
 
   const getHints = () => {

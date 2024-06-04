@@ -14,6 +14,7 @@ import useGetAllJlevels from "../../../hooks/useGetAllJlevels";
 import JobItem from "./JobItem";
 import JobItemSkeleton from "./JobItemSkeleton";
 import JobMap from "./JobMap";
+import { candExpLevel, salaryLevel } from "../../../common/constant";
 
 function JobList() {
   const {
@@ -59,8 +60,9 @@ function JobList() {
       const res = await jobApi.getList(params);
       if (useMap) {
         setJobs(res);
+        setJobNum(res.length);
       } else {
-        setJobNum(res.total)        
+        setJobNum(res.total);
         setJobs(res.data);
         setTotalPage(res.last_page);
       }
@@ -97,6 +99,9 @@ function JobList() {
   //     setShowHint(true);
   //   }
   // };
+  const handleUseMap = () => {
+    setUseMap(!useMap);
+  };
 
   const handleChangeAddress = async (address) => {
     setAddress(address);
@@ -201,37 +206,29 @@ function JobList() {
                 )}
               </div>
             </div>
-            <div className="row row-cols-lg-4 gap-1 gap-lg-0 mt-2 ps-3">
+            <div className="row row-cols-lg-5 gap-1 gap-lg-0 mt-2 ps-3">
               <div>
                 <select
                   className="form-select form-select-sm"
                   {...register("salary")}
                 >
-                  <option value="">Mức lương</option>
-                  <option value="5">Trên 5 triệu</option>
-                  <option value="10">Trên 10 triệu</option>
-                  <option value="15">Trên 15 triệu</option>
-                  <option value="20">Trên 20 triệu</option>
-                  <option value="25">Trên 25 triệu</option>
-                  <option value="30">Trên 30 triệu</option>
-                  <option value="40">Trên 40 triệu</option>
-                  <option value="50">Trên 50 triệu</option>
-                  <option value="5">Trên 5 triệu</option>
-                  <option value="10">Trên 10 triệu</option>
-                  <option value="15">Trên 15 triệu</option>
-                  <option value="20">Trên 20 triệu</option>
-                  <option value="25">Trên 25 triệu</option>
-                  <option value="30">Trên 30 triệu</option>
-                  <option value="40">Trên 40 triệu</option>
-                  <option value="50">Trên 50 triệu</option>
-                  <option value="5">Trên 5 triệu</option>
-                  <option value="10">Trên 10 triệu</option>
-                  <option value="15">Trên 15 triệu</option>
-                  <option value="20">Trên 20 triệu</option>
-                  <option value="25">Trên 25 triệu</option>
-                  <option value="30">Trên 30 triệu</option>
-                  <option value="40">Trên 40 triệu</option>
-                  <option value="50">Trên 50 triệu</option>
+                  {salaryLevel.map((item, index) => (
+                    <option key={index} value={item.value}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <select
+                  className="form-select form-select-sm"
+                  {...register("experience")}
+                >
+                  {candExpLevel.map((item, index) => (
+                    <option key={index} value={item.value}>
+                      {item.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>
@@ -279,9 +276,9 @@ function JobList() {
                 label="Tìm kiếm với map"
                 className="ts-smd"
                 style={{ marginTop: "5px" }}
-                onClick={() => setUseMap(!useMap)}
+                onClick={handleUseMap}
               />
-              {useMap && (
+              {useMap ? (
                 <>
                   <div className="position-relative" style={{ width: "390px" }}>
                     <Form.Control
@@ -335,6 +332,18 @@ function JobList() {
                     </InputGroup.Text>
                   </InputGroup>
                 </>
+              ) : (
+                <Form.Select
+                  size="sm"
+                  onChange={() => null}
+                  style={{ width: "220px" }}
+                >
+                  <option value="0">Mặc định</option>
+                  <option value="1">Mức lương tăng dần</option>
+                  <option value="2">Mức lương giảm dần</option>
+                  <option value="3">Mới nhất đến cũ nhất</option>
+                  <option value="4">Cũ nhất đến mới nhất</option>
+                </Form.Select>
               )}
             </div>
           </div>
@@ -354,7 +363,9 @@ function JobList() {
           </div>
         </div>
       </Form>
-      <div className="text-main ts-smd mt-3 mb-2">Có {jobNum} kết quả phù hợp</div>
+      <div className="mt-3 mb-2 text-main ts-smd">
+        Có {jobNum} kết quả phù hợp
+      </div>
       {useMap ? (
         <JobMap
           jobs={jobs}
@@ -365,7 +376,6 @@ function JobList() {
           hintLocations={hintLocations}
           setHintLocations={setHintLocations}
           curLocation={curLocation}
-          setJobNum={setJobNum}
         />
       ) : isLoading ? (
         <div className="row row-cols-lg-3">

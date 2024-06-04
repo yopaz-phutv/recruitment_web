@@ -26,7 +26,8 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->text('logo')->nullable();
             $table->text('image')->nullable();
-            $table->boolean('is_hot')->default(0);
+            $table->double('latitude', null, null, true)->nullable();
+            $table->double('longitude', null, null, true)->nullable();
             $table->timestamps();
         });
     }

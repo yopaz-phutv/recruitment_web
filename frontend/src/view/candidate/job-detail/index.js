@@ -21,6 +21,7 @@ import dayjs from "dayjs";
 import Button from "react-bootstrap/Button";
 import AppyingDialog from "./ApplyingDialog";
 import { toast } from "react-toastify";
+import defaultCompanyLogo from "../../../assets/images/default_company_logo.png";
 
 function Job() {
   const { id } = useParams();
@@ -97,14 +98,18 @@ function Job() {
 
   return (
     <div style={{ margin: "0 10%" }}>
-      <div className="container image-container d-flex justify-content-center">
-        <img
-          src={job.employer.image}
-          className="mx-auto d-block mt-3"
-          style={{ maxWidth: "93%", maxHeight: "400px" }}
-          alt={"com-img-" + job.employer.id}
-        />
-      </div>
+      {job.employer.image ? (
+        <div className="container image-container d-flex justify-content-center">
+          <img
+            src={job.employer.image}
+            className="mx-auto d-block mt-3"
+            style={{ maxWidth: "93%", maxHeight: "400px" }}
+            alt={"com-img-" + job.employer.id}
+          />
+        </div>
+      ) : (
+        <div className="pt-2" />
+      )}
       <div className="d-flex mt-3">
         <div className="left-part">
           <div className="bg-white shadow-sm pb-4">
@@ -114,7 +119,7 @@ function Job() {
                 style={{ minWidth: "130px" }}
               >
                 <img
-                  src={job.employer.logo}
+                  src={job.employer.logo || defaultCompanyLogo}
                   width="100%"
                   alt={job.employer.name}
                 />
@@ -200,10 +205,10 @@ function Job() {
                 <div>
                   <div className="text-main">Kinh nghiệm</div>
                   <div className="fw-500">
-                    {job.yoe ? (
-                      <span>{job.yoe} năm</span>
-                    ) : (
+                    {job.yoe === null ? (
                       <span>Không yêu cầu</span>
+                    ) : (
+                      <span>{job.yoe === 0 ? "Dưới 1" : job.yoe} năm</span>
                     )}
                   </div>
                 </div>
@@ -261,12 +266,25 @@ function Job() {
           </div>
           <div className="bg-white mt-4 mb-5 shadow-sm">
             <h5 className="bg-main text-white p-3">Chi tiết về job</h5>
-            <div className="p-3">
-              {job.description ? (
-                <div className="whitespace-preline">{job.description}</div>
-              ) : (
-                "Chưa cập nhật thông tin"
-              )}
+            <div className="ps-4 pe-3 pt-1 pb-4 whitespace-preline">
+              <div>
+                <strong className="ts-lg">Mô tả công việc:</strong>
+                <div className="ps-3 ts-smd">
+                  {job.description || "Chưa cập nhật"}
+                </div>
+              </div>
+              <div className="mt-2">
+                <strong className="ts-lg">Yêu cầu ứng viên:</strong>
+                <div className="ps-3 ts-smd">
+                  {job.requirements || "Chưa cập nhật"}
+                </div>
+              </div>
+              <div className="mt-2">
+                <strong className="ts-lg">Chế độ phúc lợi:</strong>
+                <div className="ps-3 ts-smd">
+                  {job.benefits || "Chưa cập nhật"}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -278,7 +296,7 @@ function Job() {
                 style={{ width: "90px", height: "90px" }}
               >
                 <img
-                  src={job.employer.logo}
+                  src={job.employer.logo || defaultCompanyLogo}
                   width="100%"
                   alt={job.employer.name}
                 />
