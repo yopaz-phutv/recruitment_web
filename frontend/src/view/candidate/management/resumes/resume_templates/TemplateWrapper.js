@@ -295,7 +295,7 @@ export default function TemplateWrapper({
 
     var skillText = "";
     skills.forEach((item) => {
-      skillText += item.name + " " + item.description + "";
+      skillText += item.name + " " + item.description + " ";
     });
 
     delete data["bg_main_color"];

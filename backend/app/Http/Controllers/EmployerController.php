@@ -293,9 +293,7 @@ class EmployerController extends Controller
             );
         }
         if ($req->filled('job_yoe')) {
-            if ($req->job_yoe > 5)
-                $query->where('job_yoe', ">=", $req->job_yoe);
-            else $query->where('job_yoe', $req->job_yoe);
+            $query->where('job_yoe', ">=", $req->job_yoe);
         }
         if ($req->filled('skill_text')) {
             $query->whereRaw("MATCH(skill_text) AGAINST ('$req->skill_text' IN NATURAL LANGUAGE MODE)");
