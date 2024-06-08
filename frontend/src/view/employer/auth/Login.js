@@ -67,7 +67,7 @@ function Login() {
             Nhà tuyển dụng đăng nhập
           </h5>
           <div className="ts-smd">
-            <label htmlFor="email" className="mb-1 fw-500">
+            <label htmlFor="email" className="mb-1 fw-600">
               Email{required_mark}
             </label>
             <input
@@ -80,7 +80,7 @@ function Login() {
             {errors.email && required_error}
           </div>
           <div className="mt-2 ts-smd">
-            <label htmlFor="passwd" className="mb-1 fw-500">
+            <label htmlFor="passwd" className="mb-1 fw-600">
               Password{required_mark}
             </label>
             <div className="input-group">
@@ -104,7 +104,7 @@ function Login() {
           {msg && <div className="text-danger text-center mt-2">{msg}</div>}
           <button
             type="submit"
-            className="btn btn-primary w-100 mt-3"
+            className="btn bg-main text-white w-100 mt-2"
             disabled={isLoading}
           >
             {isLoading && (
@@ -113,7 +113,7 @@ function Login() {
             Đăng nhập
           </button>
           <div className="mt-1 text-center">
-            <Link to={`#`} className="text-decoration-none">
+            <Link to="/employer/forget-password" className="text-decoration-none">
               Quên mật khẩu
             </Link>
           </div>

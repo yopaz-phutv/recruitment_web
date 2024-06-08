@@ -45,6 +45,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('logout', 'logout');
     Route::get('refresh', 'refresh');
     Route::get('getMe', 'me');
+    Route::patch('updateNewPassword', 'updateNewPassword');
 });
 
 Route::controller(CandidateController::class)->prefix('candidates')->group(function () {

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import authApi from "../../../api/auth";
 import { candAuthActions } from "../../../redux/slices/candAuthSlice";
@@ -70,7 +70,7 @@ function Login() {
               </div>
               <div className="text-center">
                 <a
-                  href="/k"
+                  href="/forget-password"
                   className="d-block mt-1"
                   style={{ textDecoration: "none" }}
                 >

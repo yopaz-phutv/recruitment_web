@@ -26,6 +26,9 @@ const authApi = {
     if (role === 2) return employerAxios.get("/getMe");
     if (role === 0) return adminAxios.get("/getMe");
   },
+  updateNewPassword: (data) => {
+    return commonAxios.patch("/updateNewPassword", data);
+  }
 };
 
 export default authApi;

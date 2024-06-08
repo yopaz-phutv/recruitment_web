@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import sample from "./sample";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { CandidateContext } from "../../layouts/CandidateLayout";
 import { useForm } from "react-hook-form";
 import dayjs from "dayjs";

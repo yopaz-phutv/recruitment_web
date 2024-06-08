@@ -11,11 +11,12 @@ use App\Models\Employer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+
 class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt', ['except' => ['login', 'register', 'refresh']]);
+        $this->middleware('jwt', ['except' => ['login', 'register', 'refresh', 'updateNewPassword']]);
     }
 
     public function login(Request $request)
@@ -158,5 +159,13 @@ class AuthController extends Controller
             'token' => Auth::refresh(),
             'type' => 'bearer',
         ]);
+    }
+
+    public function updateNewPassword(Request $req)
+    {
+        User::where("email", $req->email)
+            ->update(['password' => Hash::make($req->password)]);
+
+        return response()->json('updated successfully');
     }
 }

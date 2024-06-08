@@ -30,6 +30,7 @@ import EmployerDetail from "./view/employer/detail";
 import FindingCandidates from "./view/employer/find-candidates";
 import AdminCandidateList from "./view/admin/candidates";
 import SavedCandidates from "./view/employer/saved-candidates";
+import ForgetPassword from "./components/forget-password";
 
 export const AppContext = createContext();
 
@@ -41,76 +42,102 @@ function App() {
   });
 
   return (
-    <div style={{fontFamily: "sans-serif"}}>
-    <AppContext.Provider value={{ curUrl, setCurUrl, pusher }}>
-      <ToastContainer autoClose={500} position="bottom-right" />
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="*"
-            element={
-              <Layout>
-                <Routes>
-                  <Route exact path="" element={<Home />} />
-                  <Route path="sign-up" element={<Signup />} />
-                  <Route path="companies" element={<CompanyList />} />
-                  <Route path="companies/:id" element={<Company />} />
-                  <Route path="jobs" element={<JobList />} />
-                  <Route path="jobs/:id" element={<Job />} />
-                  <Route
-                    path="candidate/*"
-                    element={
-                      <CandidateLayout>
-                        <Routes>
-                          <Route
-                            path="applied-jobs"
-                            element={<AppliedJobs />}
-                          />
-                          <Route path="saved-jobs" element={<SavedJobs />} />
-                          <Route path="profile" element={<Profile />} />
-                          <Route path="resumes" element={<Resume />} />
-                          <Route path="templates" element={<TemplateList />} />
-                          <Route path="resumes/create" element={<Template />} />
-                          <Route path="resumes/:id" element={<Template />} />
-                        </Routes>
-                      </CandidateLayout>
-                    }
-                  />
-                </Routes>
-              </Layout>
-            }
-          />
-          <Route
-            path="employer/*"
-            element={
-              <EmployerLayout>
-                <Routes>
-                  <Route path="candidates" element={<CandidateList />} />
-                  <Route path="jobs" element={<JobManagement />} />
-                  <Route path="find-candidates" element={<FindingCandidates />} />
-                  <Route path="saved-candidates" element={<SavedCandidates />} />
-                  <Route path="detail" element={<EmployerDetail />} />
-                </Routes>
-              </EmployerLayout>
-            }
-          />
-          <Route path="employer/login" element={<EmployerLogin />} />
-          <Route path="employer/signup" element={<EmployerSignup />} />
-          <Route
-            path="admin/*"
-            element={
-              <AdminLayout>
-                <Routes>
-                  <Route path="employers" element={<EmployerList />} />
-                  <Route path="candidates" element={<AdminCandidateList />} />
-                </Routes>
-              </AdminLayout>
-            }
-          />
-          <Route path="admin/login" element={<AdminLogin />} />
-        </Routes>
-      </BrowserRouter>
-    </AppContext.Provider></div>
+    <div style={{ fontFamily: "sans-serif" }}>
+      <AppContext.Provider value={{ curUrl, setCurUrl, pusher }}>
+        <ToastContainer autoClose={500} position="bottom-right" />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="*"
+              element={
+                <Layout>
+                  <Routes>
+                    <Route exact path="" element={<Home />} />
+                    <Route path="sign-up" element={<Signup />} />
+                    <Route
+                      path="forget-password"
+                      element={<ForgetPassword redirectUrl="/" />}
+                    />
+                    <Route path="companies" element={<CompanyList />} />
+                    <Route path="companies/:id" element={<Company />} />
+                    <Route path="jobs" element={<JobList />} />
+                    <Route path="jobs/:id" element={<Job />} />
+                    <Route
+                      path="candidate/*"
+                      element={
+                        <CandidateLayout>
+                          <Routes>
+                            <Route
+                              path="applied-jobs"
+                              element={<AppliedJobs />}
+                            />
+                            <Route path="saved-jobs" element={<SavedJobs />} />
+                            <Route path="profile" element={<Profile />} />
+                            <Route path="resumes" element={<Resume />} />
+                            <Route
+                              path="templates"
+                              element={<TemplateList />}
+                            />
+                            <Route
+                              path="resumes/create"
+                              element={<Template />}
+                            />
+                            <Route path="resumes/:id" element={<Template />} />
+                          </Routes>
+                        </CandidateLayout>
+                      }
+                    />
+                  </Routes>
+                </Layout>
+              }
+            />
+            <Route
+              path="employer/*"
+              element={
+                <EmployerLayout>
+                  <Routes>
+                    <Route path="candidates" element={<CandidateList />} />
+                    <Route path="jobs" element={<JobManagement />} />
+                    <Route
+                      path="find-candidates"
+                      element={<FindingCandidates />}
+                    />
+                    <Route
+                      path="saved-candidates"
+                      element={<SavedCandidates />}
+                    />
+                    <Route path="detail" element={<EmployerDetail />} />
+                  </Routes>
+                </EmployerLayout>
+              }
+            />
+            <Route path="employer/login" element={<EmployerLogin />} />
+            <Route path="employer/signup" element={<EmployerSignup />} />
+            <Route
+              path="employer/forget-password"
+              element={
+                <ForgetPassword
+                  className="border border-mlight"
+                  redirectUrl="/employer/login"
+                />
+              }
+            />
+            <Route
+              path="admin/*"
+              element={
+                <AdminLayout>
+                  <Routes>
+                    <Route path="employers" element={<EmployerList />} />
+                    <Route path="candidates" element={<AdminCandidateList />} />
+                  </Routes>
+                </AdminLayout>
+              }
+            />
+            <Route path="admin/login" element={<AdminLogin />} />
+          </Routes>
+        </BrowserRouter>
+      </AppContext.Provider>
+    </div>
   );
 }
 
