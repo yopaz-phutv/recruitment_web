@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import dayjs from "dayjs";
 import { FaUser } from "react-icons/fa";
 import PersonalInforFormDialog from "./PersonalInforFormDialog";
-import { CandidateContext } from "../../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts";
 import PersonalInforSkeleton from "./PersonalInforSkeleton";
 import FrameLayout from "../FrameLayout";
 

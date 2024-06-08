@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CandidateContext } from "../layouts/CandidateLayout";
+import { CandidateContext } from "../layouts";
 import resumeApi from "../../../../api/resume";
 import { useSelector } from "react-redux";
 import candidateApi from "../../../../api/candidate";

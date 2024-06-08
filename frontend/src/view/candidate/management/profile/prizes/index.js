@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import dayjs from "dayjs";
 import PrizeFormDialog from "./PrizeFormDialog";
 import prizeApi from "../../../../../api/prize";
-import { CandidateContext } from "../../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts";
 import FrameLayout from "../FrameLayout";
 
 export default function Prize() {

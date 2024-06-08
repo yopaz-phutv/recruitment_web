@@ -235,7 +235,7 @@ export default function AppyingDialog({
       </Modal.Body>
       <Modal.Footer className="border-top-0">
         <button
-          className="btn btn-primary"
+          className="btn bg-main text-white"
           onClick={handleApply}
           disabled={isLoading}
         >

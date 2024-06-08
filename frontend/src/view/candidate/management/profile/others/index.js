@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import { useContext, useState } from "react";
 import OtherFormDialog from "./OtherFormDialog";
-import { CandidateContext } from "../../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts";
 import FrameLayout from "../FrameLayout";
 import otherApi from "../../../../../api/other";
 

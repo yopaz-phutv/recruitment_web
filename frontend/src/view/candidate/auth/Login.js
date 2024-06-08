@@ -71,8 +71,7 @@ function Login() {
               <div className="text-center">
                 <a
                   href="/forget-password"
-                  className="d-block mt-1"
-                  style={{ textDecoration: "none" }}
+                  className="d-block mt-1 text-decoration-none text-main"
                 >
                   Quên mật khẩu
                 </a>
@@ -85,7 +84,7 @@ function Login() {
               <div className="d-flex justify-content-end mt-2">
                 <button
                   type="submit"
-                  className="btn btn-primary me-1 w-100"
+                  className="btn bg-main text-white me-1 w-100"
                   disabled={isLoading}
                 >
                   {isLoading && (

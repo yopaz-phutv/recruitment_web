@@ -13,7 +13,7 @@ import EmployerLayout from "./view/employer/layouts";
 import EmployerLogin from "./view/employer/auth/Login";
 import CandidateList from "./view/employer/candidates";
 import JobManagement from "./view/employer/jobs";
-import CandidateLayout from "./view/candidate/management/layouts/CandidateLayout";
+import CandidateLayout from "./view/candidate/management/layouts";
 import AppliedJobs from "./view/candidate/management/AppliedJobs";
 import SavedJobs from "./view/candidate/management/SavedJobs";
 import Signup from "./view/candidate/auth/Signup";
@@ -44,7 +44,7 @@ function App() {
   return (
     <div style={{ fontFamily: "sans-serif" }}>
       <AppContext.Provider value={{ curUrl, setCurUrl, pusher }}>
-        <ToastContainer autoClose={500} position="bottom-right" />
+        <ToastContainer autoClose={500} position="top-right" />
         <BrowserRouter>
           <Routes>
             <Route

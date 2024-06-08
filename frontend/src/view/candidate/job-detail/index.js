@@ -126,10 +126,10 @@ function Job() {
               </div>
               <div className="container pt-2" style={{ marginLeft: "25px" }}>
                 <div>
-                  <h4 className="mt-3 text-main fw-600">{job.jname}</h4>
+                  <h5 className="mt-3 text-main fw-600">{job.jname}</h5>
                   <div className="clearfix mt-3 mb-2">
                     <button
-                      className="btn btn-primary ts-sm"
+                      className="btn bg-main text-white ts-sm"
                       disabled={isApplied === true}
                       onClick={checkLoggedIn}
                     >
@@ -289,7 +289,7 @@ function Job() {
           </div>
         </div>
         <div className="right-part ps-3">
-          <div className="bg-white pb-2 shadow-sm">
+          <div className="bg-white px-1 pb-2 shadow-sm">
             <div className="d-flex align-items-center ms-2">
               <div
                 className="d-flex align-items-center"
@@ -301,7 +301,7 @@ function Job() {
                   alt={job.employer.name}
                 />
               </div>
-              <div className="fw-bold ms-2">{job.employer.name}</div>
+              <div className="fw-bold ms-3">{job.employer.name}</div>
             </div>
             <div className="mx-2 ts-smd mb-1">
               <div className="d-flex">
@@ -340,7 +340,7 @@ function Job() {
               </div>
               <Button
                 size="sm"
-                className="container-fluid mt-1 bg-main"
+                className="container-fluid mt-1 bg-main border-0"
                 onClick={() => nav(`/companies/${job.employer.id}`)}
               >
                 Xem trang công ty

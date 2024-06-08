@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import dayjs from "dayjs";
 import projectApi from "../../../../../api/project";
 import ProjectFormDialog from "./ProjectFormDialog";
-import { CandidateContext } from "../../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts";
 import FrameLayout from "../FrameLayout";
 
 export default function Project() {

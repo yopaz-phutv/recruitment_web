@@ -3,7 +3,7 @@ import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 import { IoMdClose } from "react-icons/io";
 import { useContext } from "react";
-import { CandidateContext } from "../../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts";
 import { useNavigate } from "react-router-dom";
 
 export default function OptionDialog({ show, setShow, templateId }) {

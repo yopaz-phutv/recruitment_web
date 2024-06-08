@@ -14,7 +14,7 @@ export default function FrameLayout({
       <div id={titleId} />
       <div
         className={clsx(
-          "border border-2 rounded p-3 shadow-sm bg-white",
+          "rounded p-3 bg-white shadow-sm",
           className
         )}
       >

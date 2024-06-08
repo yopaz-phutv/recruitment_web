@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import dayjs from "dayjs";
 import ActivityFormDialog from "./ActivityFormDialog";
 import activityApi from "../../../../../api/activity";
-import { CandidateContext } from "../../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts";
 import FrameLayout from "../FrameLayout";
 
 export default function Activity() {

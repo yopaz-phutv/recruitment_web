@@ -48,9 +48,9 @@ export default function Company() {
       )}
       <div className="mt-3">
         <div className="bg-white mx-auto shadow-sm pt-3">
-          <h4 style={{ marginLeft: "30px" }} className="text-main fw-600">
+          <h5 style={{ marginLeft: "30px" }} className="text-main fw-600">
             {infor.name}
-          </h4>
+          </h5>
           <div className="d-flex ps-4 pb-4 pt-1">
             <div
               className="border d-flex align-items-center"

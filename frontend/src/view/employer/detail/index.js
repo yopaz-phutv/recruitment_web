@@ -27,7 +27,7 @@ export default function EmployerDetail() {
   }, []);
 
   return (
-    <div className="bg-white ms-3 mt-3 pb-3 position-relative shadow-sm">
+    <div className="bg-white ms-3 mt-3 pb-4 position-relative shadow-sm">
       <div className="pt-3" style={{ marginLeft: "45px" }}>
         <h4 className="text-main">Thông tin công ty</h4>
         {isLoading ? (
@@ -36,7 +36,7 @@ export default function EmployerDetail() {
           <>
             <EmployerDetailView employer={detail} className="mt-3" />
             <Button
-              className="position-absolute"
+              className="position-absolute bg-main border-0"
               style={{ top: "30px", right: "16px" }}
               onClick={() => setIsEdit(true)}
             >

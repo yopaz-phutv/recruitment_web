@@ -49,7 +49,6 @@ export default function FindingCandidates() {
   const {
     register,
     handleSubmit,
-    // formState: { errors },
   } = useForm({
     defaultValues: {
       gender: searchCondition?.gender,
@@ -150,7 +149,7 @@ export default function FindingCandidates() {
             </Form.Select>
           </div>
           <div className="d-flex align-items-center mb-2">
-            <div className="w-45 ts-sm">Độ tuổi</div>
+            <div className="w-30 ts-sm text-end pe-2">Độ tuổi</div>
             <InputGroup className="flex-fill align-items-center">
               <Form.Control
                 type="number"

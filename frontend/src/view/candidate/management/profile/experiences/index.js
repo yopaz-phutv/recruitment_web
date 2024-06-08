@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import dayjs from "dayjs";
 import experienceApi from "../../../../../api/experience";
 import ExperienceFormDialog from "./ExperienceFormDialog";
-import { CandidateContext } from "../../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts";
 import FrameLayout from "../FrameLayout";
 
 export default function Experience() {

@@ -84,7 +84,7 @@ export default function EmployerDetailView({
               empty
             )}
           </div>
-          <div className="mt-1 d-flex">
+          <div className="mt-2 d-flex">
             <div className="fw-600 w-20">Ảnh công ty:</div>
             {employer.image ? (
               <a

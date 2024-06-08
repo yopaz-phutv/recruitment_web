@@ -8,7 +8,7 @@ import { BsTrash3 } from "react-icons/bs";
 import { MdEdit } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { CandidateContext } from "../layouts/CandidateLayout";
+import { CandidateContext } from "../layouts";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import Loading from "../../../../components/Loading";
@@ -104,7 +104,7 @@ export default function Resume() {
                         className="d-block"
                       >
                         <BsEye
-                          className="text-primary pointer"
+                          className="text-main pointer"
                           style={{ marginBottom: "2px" }}
                         />
                       </a>

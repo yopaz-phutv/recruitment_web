@@ -113,14 +113,14 @@ function Login() {
             Đăng nhập
           </button>
           <div className="mt-1 text-center">
-            <Link to="/employer/forget-password" className="text-decoration-none">
+            <Link to="/employer/forget-password" className="text-decoration-none text-main">
               Quên mật khẩu
             </Link>
           </div>
           <hr />
           <div className="text-center">
             Bạn là nhà tuyển dụng mới?&nbsp;
-            <Link to="/employer/signup" className="text-decoration-none">
+            <Link to="/employer/signup" className="text-decoration-none text-main">
               Đăng ký tài khoản
             </Link>
           </div>

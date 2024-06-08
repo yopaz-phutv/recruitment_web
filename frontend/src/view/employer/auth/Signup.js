@@ -94,7 +94,7 @@ export default function Signup() {
             </h5>
             <Link
               to="/employer/login"
-              className="ps-5 ts-sm text-decoration-none"
+              className="ps-5 ts-sm text-decoration-none text-main"
             >
               Quay lại trang Đăng nhập
             </Link>

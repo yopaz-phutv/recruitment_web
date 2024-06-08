@@ -1,6 +1,5 @@
 import "./layout.css";
 import { useNavigate } from "react-router-dom";
-// import { AiTwotoneAppstore } from "react-icons/ai";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import candidateApi from "../../../../api/candidate";
@@ -136,19 +135,19 @@ function CandidateLayout(props) {
     >
       <div className="d-flex flex-column flex-lg-row">
         <div className="ts-smd fw-600 text-secondary menu-part bg-white">
-          <div className="d-flex flex-row flex-lg-column border-end sticky-top top-0">
+          <div className="d-flex flex-row flex-lg-column sticky-top top-0">
             <div className="fw-600 text-center text-main border-bottom py-3 px-2 ts-lg fw-500">
               Tài khoản của tôi
             </div>
-            <div
+            {/* <div
               className={clsx(
                 "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",
-                curUrl === "/candidate" && "bg-mlight text-main"
+                curUrl === "/candidate/account" && "bg-mlight text-main"
               )}
-              onClick={() => handleChangePage("/candidate")}
+              onClick={() => handleChangePage("/candidate/account")}
             >
-              Dashboard
-            </div>
+              Tài khoản
+            </div> */}
             <div
               className={clsx(
                 "d-flex align-items-center ps-lg-5 py-lg-2 px-2 pointer hover-bgt-light",

@@ -8,7 +8,7 @@ import { IoIosLink } from "react-icons/io";
 import FlexInput from "../../../../../../components/FlexInput";
 import { ContentItem, InforPart } from "../../components";
 import { useContext, useEffect, useState } from "react";
-import { CandidateContext } from "../../../layouts/CandidateLayout";
+import { CandidateContext } from "../../../layouts";
 import clsx from "clsx";
 import dayjs from "dayjs";
 import { TemplateContext } from "../TemplateWrapper";

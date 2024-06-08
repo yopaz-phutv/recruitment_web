@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import CertificateFormDialog from "./CertificateFormDialog";
 import certificateApi from "../../../../../api/certificate";
 import dayjs from "dayjs";
-import { CandidateContext } from "../../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts";
 import FrameLayout from "../FrameLayout";
 
 export default function Certificate() {

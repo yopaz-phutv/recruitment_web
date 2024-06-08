@@ -31,7 +31,7 @@ function CandidateList() {
     return clsx(
       "fw-600 pb-1 me-5",
       step === tabName
-        ? "border-2 border-bottom border-primary"
+        ? "border-2 border-bottom border-main text-main"
         : "text-secondary"
     );
   };
@@ -205,7 +205,7 @@ function CandidateList() {
                           <BsEye
                             type="button"
                             fontSize="19px"
-                            className="text-primary"
+                            className="text-main"
                             onClick={() => handleClickActionBtn(item, "VIEWED")}
                           />
                         </a>

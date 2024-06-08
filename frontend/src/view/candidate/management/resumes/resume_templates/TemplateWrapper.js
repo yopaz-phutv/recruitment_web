@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import sample from "./sample";
 import { createContext, useContext, useEffect, useState } from "react";
-import { CandidateContext } from "../../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts";
 import { useForm } from "react-hook-form";
 import dayjs from "dayjs";
 import resumeApi from "../../../../../api/resume";

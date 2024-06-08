@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import skillApi from "../../../../../api/skill";
 import { IoMdStar, IoMdStarOutline } from "react-icons/io";
 import SkillFormDialog from "./SkillFormDialog";
-import { CandidateContext } from "../../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts";
 import FrameLayout from "../FrameLayout";
 
 export default function Skill() {

@@ -393,7 +393,7 @@ export default function EditJobModal({
           <div className="mt-3 float-end">
             <button
               type="submit"
-              className="btn btn-primary d-inline-flex gap-1 align-items-center"
+              className="btn bg-main text-white d-inline-flex gap-1 align-items-center"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -408,7 +408,7 @@ export default function EditJobModal({
             <button
               type="button"
               className="btn btn-secondary me-2 ms-3"
-              data-bs-dismiss="modal"
+              onClick={() => setShow(false)}
             >
               Đóng
             </button>

@@ -123,7 +123,7 @@ function JobManagement() {
             {!isLoading && (
               <tbody style={{ fontSize: "14px" }}>
                 {jobs.map((item, index) => (
-                  <tr key={"job" + item.id}>
+                  <tr key={item.id}>
                     <td>{item.jname}</td>
                     <td>{item.jtype_name}</td>
                     <td>{item.jlevel_name} </td>

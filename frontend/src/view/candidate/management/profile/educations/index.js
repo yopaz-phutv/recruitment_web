@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import educationApi from "../../../../../api/education";
 import dayjs from "dayjs";
 import EducationFormDialog from "./EducationFormDialog";
-import { CandidateContext } from "../../layouts/CandidateLayout";
+import { CandidateContext } from "../../layouts";
 import FrameLayout from "../FrameLayout";
 
 export default function Education() {

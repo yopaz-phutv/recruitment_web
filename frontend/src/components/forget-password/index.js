@@ -44,12 +44,12 @@ export default function ForgetPassword({className, redirectUrl}) {
       content: `Vui lòng nhập mã sau để tạo mật khẩu mới: ${newCode}`,
     };
 
-    // await emailjs.send(
-    //   emailjsConfig.serviceId,
-    //   emailjsConfig.templates.common,
-    //   templateParams,
-    //   emailjsConfig.publicKey
-    // );
+    await emailjs.send(
+      emailjsConfig.serviceId,
+      emailjsConfig.templates.common,
+      templateParams,
+      emailjsConfig.publicKey
+    );    
     setIsLoading(false);
     setStep(2);
     setTimeout(() => {
@@ -88,10 +88,6 @@ export default function ForgetPassword({className, redirectUrl}) {
     }
   };
 
-  useEffect(() => {
-    console.log({ code });
-  }, [code]);
-
   return (
     <div className="wrapper mx-auto" style={{ width: "450px", paddingTop: "150px" }}>
       <div className={clsx("bg-white px-3 pb-3 rounded shadow-sm", className)}>
@@ -126,7 +122,7 @@ export default function ForgetPassword({className, redirectUrl}) {
         )}
         {step === 2 && (
           <div className="pt-1">
-            <small className="text-primary pointer" onClick={() => setStep(1)}>
+            <small className="text-main pointer" onClick={() => setStep(1)}>
               {"<<"} Quay lại
             </small>
             <Form.Group>
@@ -161,7 +157,7 @@ export default function ForgetPassword({className, redirectUrl}) {
         )}
         {step === 3 && (
           <Form className="pt-1">
-            <small className="text-primary pointer" onClick={() => setStep(2)}>
+            <small className="text-main pointer" onClick={() => setStep(2)}>
               {"<<"} Quay lại
             </small>
             <Form.Group>

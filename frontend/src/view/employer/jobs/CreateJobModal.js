@@ -87,7 +87,7 @@ export default function CreateJobModal({
                 {...register("industries")}
               >
                 {industries.map((item, index) => (
-                  <option value={index} key={"industry" + item.id}>
+                  <option value={index} key={item.id}>
                     {item.name}
                   </option>
                 ))}
@@ -148,7 +148,7 @@ export default function CreateJobModal({
                 {...register("locations")}
               >
                 {locations.map((item, index) => (
-                  <option value={index} key={"location" + item.id}>
+                  <option value={index} key={item.id}>
                     {item.name}
                   </option>
                 ))}
@@ -160,7 +160,7 @@ export default function CreateJobModal({
                 style={{ width: "50%" }}
               >
                 {watch("locations").map((item, index) => (
-                  <span key={"cur_location" + item}>
+                  <span key={item}>
                     {locations[item].name}
                     {index !== watch("locations").length - 1 && ", "}
                   </span>
@@ -296,7 +296,7 @@ export default function CreateJobModal({
           <div className="mt-3 float-end">
             <button
               type="submit"
-              className="btn btn-primary d-inline-flex gap-1 align-items-center"
+              className="btn bg-main text-white d-inline-flex gap-1 align-items-center"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -311,7 +311,7 @@ export default function CreateJobModal({
             <button
               type="button"
               className="btn btn-secondary me-2 ms-3"
-              data-bs-dismiss="modal"
+              onClick={() => setShow(false)}
             >
               Đóng
             </button>

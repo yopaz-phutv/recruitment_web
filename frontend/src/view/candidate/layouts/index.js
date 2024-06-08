@@ -14,6 +14,7 @@ import Placeholder from "react-bootstrap/Placeholder";
 import { AppContext } from "../../../App";
 import clsx from "clsx";
 import InnerHTML from "dangerously-set-html-content";
+import { toast } from "react-toastify";
 
 const user_icon = process.env.PUBLIC_URL + "/image/user_icon.png";
 
@@ -89,6 +90,15 @@ function Layout(props) {
     }
   };
 
+  const handleChangePage = (url, needLogin) => {
+    if (needLogin && !isAuth) {
+      toast.error("Vui lòng đăng nhập");
+      return;
+    }
+    nav(url);
+    setCurUrl(url);
+  };
+
   useEffect(() => {
     setCurUrl(window.location.pathname);
     if (localStorage.getItem("candidate_jwt")) {
@@ -123,38 +133,52 @@ function Layout(props) {
           gap={1}
           className="fixed-top bg-white text-secondary shadow-sm ts-17 fw-600"
         >
-          <Link
-            className="nav-link ms-2 pe-2 ts-xl pb-1"
+          <div
+            className="pointer ms-2 pe-2 ts-xl pb-1"
             to="/"
-            onClick={() => setCurUrl("/")}
+            onClick={() => handleChangePage("/")}
           >
             Recruitment
-          </Link>
-          <Link
+          </div>
+          <div
             className={clsx(
-              "nav-link py-3 px-2",
-              curUrl === "companies" && "text-main"
+              "pointer py-3 px-2",
+              curUrl === "/companies" && "text-main"
             )}
             to="/companies"
-            onClick={() => setCurUrl("/companies")}
+            onClick={() => handleChangePage("/companies")}
           >
             Công ty
-          </Link>
-          <Link
+          </div>
+          <div
             className={clsx(
-              "nav-link py-3 px-2",
-              curUrl === "jobs" && "text-main"
+              "pointer py-3 px-2",
+              curUrl === "/jobs" && "text-main"
             )}
-            to="/jobs"
-            onClick={() => setCurUrl("/jobs")}
+            onClick={() => handleChangePage("/jobs")}
           >
             Việc làm
-          </Link>
+          </div>
+          <div
+            className={clsx(
+              "pointer py-3 px-2",
+              curUrl === "/candidate/templates" && "text-main"
+            )}
+            onClick={() => handleChangePage("/candidate/templates", true)}
+          >
+            Hồ sơ
+          </div>
           <div className="me-auto"></div>
           {isLoadingAuth ? (
-            <Placeholder animation="glow" style={{ marginRight: '40px' }}>
-              <Placeholder className="rounded-circle me-3" style={{ width: "35px", height: '35px' }}/>
-              <Placeholder className="rounded-circle me-1" style={{ width: "35px", height: '35px' }}/>
+            <Placeholder animation="glow" style={{ marginRight: "40px" }}>
+              <Placeholder
+                className="rounded-circle me-3"
+                style={{ width: "35px", height: "35px" }}
+              />
+              <Placeholder
+                className="rounded-circle me-1"
+                style={{ width: "35px", height: "35px" }}
+              />
               <Placeholder style={{ width: "80px" }} />
             </Placeholder>
           ) : !isAuth ? (
@@ -176,7 +200,10 @@ function Layout(props) {
               </div>
             </div>
           ) : (
-            <div className="d-flex align-items-center" style={{ marginRight: '40px' }}>
+            <div
+              className="d-flex align-items-center"
+              style={{ marginRight: "40px" }}
+            >
               <div
                 className="position-relative"
                 onMouseLeave={() => setShowListMsg(false)}
@@ -231,7 +258,7 @@ function Layout(props) {
                 </span>
                 <ul className="dropdown-menu">
                   <li>
-                    <Link className="dropdown-item" to="/candidate">
+                    <Link className="dropdown-item" to="/candidate/profile">
                       Tài khoản
                     </Link>
                   </li>
@@ -250,7 +277,10 @@ function Layout(props) {
           )}
         </Stack>
       </header>
-      <main className="page-body" style={{ marginTop: "57px", minHeight: 'calc(100vh - 58px)' }}>
+      <main
+        className="page-body"
+        style={{ marginTop: "57px", minHeight: "calc(100vh - 58px)" }}
+      >
         {!isAuth && <Login />}
         {props.children}
       </main>
@@ -261,7 +291,7 @@ function Layout(props) {
               className="col-md-4"
               style={{ fontSize: "15.6px", paddingLeft: "27px" }}
             >
-              <h5>Thông tin liên hệ</h5>
+              <h5 className="text-main">Thông tin liên hệ</h5>
               <p>Email: info@tuyendung.com</p>
               <p>Điện thoại: 0333-555-789</p>
               <p>
@@ -270,7 +300,7 @@ function Layout(props) {
               </p>
             </div>
             <div className="col-md-4" style={{ paddingLeft: "125px" }}>
-              <h5>Chuyên mục</h5>
+              <h5 className="text-main">Chuyên mục</h5>
               <ul className="list-unstyled">
                 <li>
                   <Link
@@ -307,7 +337,7 @@ function Layout(props) {
               </ul>
             </div>
             <div className="col-md-4" style={{ paddingLeft: "120px" }}>
-              <h5>Liên kết</h5>
+              <h5 className="text-main">Liên kết</h5>
               <ul className="list-unstyled">
                 <li>
                   <Link

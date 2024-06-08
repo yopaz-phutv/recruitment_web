@@ -45,7 +45,6 @@ export default function NotificationModal({
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data) => {
-    // console.log({ data });
     try {
       delete data.send_mail;
       if (!watch("send_mail")) delete data.title;
@@ -158,12 +157,11 @@ export default function NotificationModal({
               </Form.Control.Feedback>
             </Form.Group>
           )}
-          <div className="d-flex gap-2 justify-content-end mt-3 me-3">
+          <div className="d-flex gap-2 justify-content-end mt-3">
             <Button
               type="submit"
-              variant="primary"
               size="sm"
-              className="d-flex align-items-center gap-1"
+              className="d-flex align-items-center gap-1 bg-main border-0 px-3"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -175,7 +173,12 @@ export default function NotificationModal({
                 "Xác nhận"
               )}
             </Button>
-            <Button variant="secondary" size="sm" onClick={handleClose}>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="px-3"
+              onClick={handleClose}
+            >
               Hủy
             </Button>
             <button type="reset" id="reset" className="d-none" />

@@ -9,7 +9,12 @@ import employerApi from "../../../api/employer";
 import { toast } from "react-toastify";
 import { BsTrash3 } from "react-icons/bs";
 
-export default function EditForm({ className, employer, getDetail, returnView }) {
+export default function EditForm({
+  className,
+  employer,
+  getDetail,
+  returnView,
+}) {
   const requiredMsg = "Không được để trống";
   const schema = yup.object({
     contact_name: yup.string().required(requiredMsg),
@@ -62,7 +67,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
       await employerApi.update(formData);
       toast.success("Cập nhật thành công!");
       returnView();
-      getDetail()
+      getDetail();
     } catch (error) {
       toast.error("Đã có lỗi xảy ra!");
     } finally {
@@ -230,7 +235,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
             )}
             <Button
               size="sm"
-              variant="danger"
+              variant="secondary"
               className="ms-2 py-0"
               onClick={() => setDeleteCurLogo(!deleteCurLogo)}
             >
@@ -241,7 +246,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
         <div className="mt-1 d-flex gap-2">
           <Button
             size="sm"
-            className="w-20 lh-sm"
+            className="w-20 lh-sm bg-main border-0"
             onClick={() => setChangeLogo(!changeLogo)}
           >
             {!changeLogo ? "Logo mới" : "Xóa"}
@@ -272,7 +277,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
             )}
             <Button
               size="sm"
-              variant="danger"
+              variant="secondary"
               className="ms-2 py-0"
               onClick={() => setDeleteCurImage(!deleteCurImage)}
             >
@@ -283,7 +288,7 @@ export default function EditForm({ className, employer, getDetail, returnView })
         <div className="mt-1 d-flex gap-2">
           <Button
             size="sm"
-            className="w-20 lh-sm"
+            className="w-20 lh-sm bg-main border-0"
             onClick={() => setChangeImage(!changeImage)}
           >
             {!changeImage ? "Ảnh mới" : "Xóa"}
@@ -299,7 +304,11 @@ export default function EditForm({ className, employer, getDetail, returnView })
         </div>
         <hr />
         <div className="d-flex gap-2 justify-content-end">
-          <Button type="submit" disabled={isLoading}>
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="bg-main border-0"
+          >
             {isLoading && <Spinner size="sm" className="me-1" />}
             {!isLoading ? "Cập nhật" : "Đang xử lý"}
           </Button>
