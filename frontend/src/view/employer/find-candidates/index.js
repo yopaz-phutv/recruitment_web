@@ -38,7 +38,9 @@ export default function FindingCandidates() {
   const [totalPage, setTotalPage] = useState(0);
   const [curPage, setCurPage] = useState(1);
   const { jobs } = useGetJobsByEmployer();
+  const [totalResumes, setTotalResumes] = useState(0);
   const [showSelectJobModal, setShowSelectJobModal] = useState(false);
+  const [conditions, setConditions] = useState({});
 
   const location = useLocation();
   const searchCondition = location.state;
@@ -58,9 +60,15 @@ export default function FindingCandidates() {
   });
 
   const fetchCandidates = async (page = 1, data) => {
-    const res = await employerApi.findCandidates({ ...data, page });
+    if (data) setConditions(data);
+    let params = {
+      ...(data || conditions),
+      page,
+    };
+    const res = await employerApi.findCandidates(params);
     var resumeList = res.data;
     setResumes(resumeList);
+    setTotalResumes(res.total);
     setTotalPage(res.last_page);
     for (let i = 0; i < resumeList.length; i++) {
       const avtSrc = await resumeApi.getAvatar(resumeList[i].id);
@@ -90,9 +98,10 @@ export default function FindingCandidates() {
 
   useEffect(() => {
     if (isAuth) {
-      fetchCandidates()
+      fetchCandidates();
     }
-  }, [isAuth])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
 
   return (
     <div
@@ -243,7 +252,7 @@ export default function FindingCandidates() {
         </div>
       </Form>
       <div className="mt-4 ts-sm text-main">
-        Có {resumes.length} ứng viên phù hợp
+        Có {totalResumes} ứng viên phù hợp
       </div>
       <div className="mt-2 row row-cols-2 row-cols-lg-3">
         {resumes.length > 0 &&

@@ -27,7 +27,7 @@ class CandidateBookmarkController extends Controller
                 ['is_deleted', '=', 0],
                 ['is_send_noti', '=', $is_send_noti]
             ])
-            ->when($job_id !== null, function ($query) use ($job_id) {
+            ->when($job_id != null, function ($query) use ($job_id) {
                 return $query->join('candidate_bookmark_detail', 'candidate_bookmarks.id', '=', 'candidate_bookmark_id')
                     ->where('job_id', $job_id);
             })

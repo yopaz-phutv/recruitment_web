@@ -14,10 +14,9 @@ class JtypeSeeder extends Seeder
     public function run(): void
     {
         DB::table('jtypes')->insert([
-            ['id'=>1, 'name'=>'Nhân viên chính thức'],
-            ['id'=>2, 'name'=>'Tạm thời / Dự án'],
-            ['id'=>3, 'name'=>'Thực tập'],
-            //['id'=>4, 'name'=>''],
+            ['id' => 1, 'name' => 'Toàn thời gian'],
+            ['id' => 2, 'name' => 'Bán thời gian'],
+            ['id' => 3, 'name' => 'Thực tập'],
         ]);
     }
 }

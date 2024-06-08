@@ -14,24 +14,19 @@ class IndustrySeeder extends Seeder
     public function run(): void
     {
         DB::table('industries')->insert([
-            ['id'=>1, 'name'=>'Ngân hàng'],
-            ['id'=>2,'name'=>'CNTT-Phần mềm'],
-            ['id'=>3,'name'=>'CNTT-Phần cứng / Mạng'],
-            ['id'=>4,'name'=>'Tiếp thị trực tuyến'],
-            ['id'=>5,'name'=>'Tài chính / Đầu tư'],
-            ['id'=>6,'name'=>'Kiến trúc'],
-            ['id'=>7,'name'=>'Mỹ thuật / Nghệ thuật / Thiết kế'],
-            ['id'=>8,'name'=>'Bưu chính viễn thông'],
-            ['id'=>9,'name'=>'Nhân sự'],
-            ['id'=>10,'name'=>'Lao động phổ thông'],
-            ['id'=>11,'name'=>'Bán hàng / Kinh doanh'],
-            ['id'=>12,'name'=>'Dược phẩm'],
-            ['id'=>13,'name'=>'Hành chính / Thư ký'],
-            ['id'=>14,'name'=>'Tiếp thị / Marketing'],
-            ['id'=>15,'name'=>'Vận chuyển / Giao nhận / Kho vận'],
-            ['id'=>16,'name'=>'Tư vấn'],
-            //['id'=>,'name'=>''],
-            //['id'=>,'name'=>''],
+            ['id' => 1, 'name' => 'IT Phần mềm'],
+            ['id' => 2, 'name' => 'IT Phần cứng'],
+            ['id' => 3, 'name' => 'Kinh doanh / Bán hàng'],
+            ['id' => 4, 'name' => 'Hành chính / Văn phòng'],
+            ['id' => 5, 'name' => 'Nhân sự'],
+            ['id' => 6, 'name' => 'Tư vấn'],
+            ['id' => 7, 'name' => 'Biên / Phiên dịch'],
+            ['id' => 8, 'name' => 'Giáo dục / Đào tạo'],
+            ['id' => 9, 'name' => 'Ngân hàng / Tài chính'],
+            // ['id' => , 'name' => ''],
+            // ['id' => , 'name' => ''],
+            // ['id' => , 'name' => ''],
+            // ['id' => , 'name' => ''],
         ]);
     }
 }

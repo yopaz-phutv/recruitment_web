@@ -2,13 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { IoMdPeople } from "react-icons/io";
 import { MdLocationOn } from "react-icons/md";
 import { IoIosLink } from "react-icons/io";
+import defaultCompanyLogo from "../../../assets/images/default_company_logo.png"
 
 export default function CompanyItem({ company }) {
   const nav = useNavigate();
   return (
     <div
       className="col-sm-12 col-lg-4 mb-3 pointer"
-      key={`company_${company.id}`}
+      key={company.id}
     >
       <div
         className="card border hover-border-main hover-shadow-sm"
@@ -21,7 +22,7 @@ export default function CompanyItem({ company }) {
         >
           <div className="d-flex align-items-center">
             <img
-              src={company.logo}
+              src={company.logo || defaultCompanyLogo}
               style={{ maxWidth: "110px", maxHeight: "110px" }}
               alt={company.name}
             />

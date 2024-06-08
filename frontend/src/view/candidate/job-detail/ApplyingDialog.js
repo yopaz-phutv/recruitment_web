@@ -125,7 +125,7 @@ export default function AppyingDialog({
               className="form-control"
               name="fullname"
               placeholder={
-                user && user.name.lastname + " " + user.name.firstname
+                user && user.name?.lastname + " " + user.name?.firstname
               }
               disabled
             />

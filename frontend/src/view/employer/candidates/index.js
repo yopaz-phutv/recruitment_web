@@ -38,11 +38,13 @@ function CandidateList() {
   const getCandidateList = async () => {
     try {
       setIsLoading(true);
-      const res = await employerApi.getCandidateList({
+      let params = {
         status,
         job_id: curJob.id,
-        interview_round: curRound,
-      });
+      };
+      if (step === "step2") params.interview_round = curRound;
+      
+      const res = await employerApi.getCandidateList(params);
       setCandidates(res);
     } catch (error) {
     } finally {

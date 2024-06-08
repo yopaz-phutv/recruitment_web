@@ -112,7 +112,7 @@ class EmployerController extends Controller
 
     public function getHotList()
     {
-        $res = Employer::where('is_hot', 1)->take(5)->get();
+        $res = Employer::take(5)->inRandomOrder()->get();
         for ($i = 0; $i < count($res); $i++) {
             $job_num = Job::where('employer_id', $res[$i]['id'])->count();
             $res[$i]['job_num'] = $job_num;
@@ -170,7 +170,7 @@ class EmployerController extends Controller
                     $query->where('interview_round', $interview_round);
                 }
             )
-            ->selectRaw('job_applying.*, candidates.*, jobs.id, jobs.jname, jobs.interview_round_num,
+            ->selectRaw('job_applying.*, firstname, lastname, phone, email, jname, interview_round_num,
                         DATE_FORMAT(job_applying.created_at, "%d/%m/%Y %H:%i") as appliedTime')
             ->orderByDesc('job_applying.created_at')
             ->get();
@@ -180,6 +180,7 @@ class EmployerController extends Controller
 
     public function processApplying(Request $req)
     {
+        // return $req;
         $interview_round_num = $req->interview_round_num;
         $current_round = $req->interview_round;
         $currentTime = Carbon::parse(Carbon::now())->format('H:i d/m/Y');
@@ -283,8 +284,8 @@ class EmployerController extends Controller
         if ($req->filled('jlevel_id')) {
             $query->where('desired_jlevel_id', $req->jlevel_id);
         }
-        if ($req->filled('resumes.gender')) {
-            $query->where('gender', $req->gender);
+        if ($req->filled('gender')) {
+            $query->where('candidates.gender', $req->gender);
         }
         if ($req->filled('min_age')) {
             $query->whereRaw(
@@ -293,9 +294,7 @@ class EmployerController extends Controller
             );
         }
         if ($req->filled('job_yoe')) {
-            if ($req->job_yoe > 5)
-                $query->where('job_yoe', ">=", $req->job_yoe);
-            else $query->where('job_yoe', $req->job_yoe);
+            $query->where('job_yoe', ">=", $req->job_yoe);
         }
         if ($req->filled('skill_text')) {
             $query->whereRaw("MATCH(skill_text) AGAINST ('$req->skill_text' IN NATURAL LANGUAGE MODE)");

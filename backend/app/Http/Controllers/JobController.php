@@ -18,33 +18,58 @@ class JobController extends Controller
     {
         $query = Job::query()->with(['employer', 'locations'])
             ->where('jobs.is_active', 1)
-            ->when($req->keyword !== null, function ($query) use ($req) {
+            ->when($req->keyword != null, function ($query) use ($req) {
                 return $query->whereRaw('LOWER(jobs.jname) LIKE ?', ['%' . strtolower($req->keyword) . '%']);
             })
-            ->when($req->industry_id !== null, function ($query) use ($req) {
+            ->when($req->industry_id != null, function ($query) use ($req) {
                 return $query->join('job_industry', 'jobs.id', '=', 'job_industry.job_id')
                     ->whereIn('industry_id', $req->industry_id);
             })
-            ->when($req->location_id !== null, function ($query) use ($req) {
+            ->when($req->location_id != null, function ($query) use ($req) {
                 return $query->join('job_location', 'jobs.id', '=', 'job_location.job_id')
                     ->whereIn('location_id', $req->location_id);
             })
-            ->when($req->salary !== null, function ($query) use ($req) {
-                return $query->where('min_salary', '>=', $req->salary);
+            ->when($req->salary != null, function ($query) use ($req) {
+                if ($req->salary == 4) {
+                    return $query->where('min_salary', '<', 5);
+                } else if ($req->salary >= 5) {
+                    return $query->where('max_salary', '>=', $req->salary);
+                }
             })
-            ->when($req->jtype_id !== null, function ($query) use ($req) {
+            ->when($req->experience != null, function ($query) use ($req) {
+                $exp = $req->experience;
+                if ($exp == -1) {
+                    return $query->whereNull('yoe');
+                } else if ($exp >= 0 && $exp <= 5) {
+                    return $query->where('yoe', '=', $exp);
+                } else if ($exp > 5) {
+                    return $query->where('yoe', '>=', $exp);
+                }
+            })
+            ->when($req->jtype_id != null, function ($query) use ($req) {
                 return $query->where('jtype_id', '=', $req->jtype_id);
             })
-            ->when($req->jlevel_id !== null, function ($query) use ($req) {
+            ->when($req->jlevel_id != null, function ($query) use ($req) {
                 return $query->where('jlevel_id', '=', $req->jlevel_id);
-            })            
+            })
             ->select('jobs.*')
             ->distinct();
-        
+
         if ($req->type == 'get_all') {
             $jobs = $query->orderBy('latitude')->orderBy('longitude')->get();
+        } else {
+            switch ($req->sort_type) {
+                case 1:
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                case 2:
+                    $query->orderBy('created_at');
+                    break;
+                default:
+                    break;
+            }
+            $jobs = $query->orderByDesc('jobs.created_at')->paginate(9);
         }
-        else $jobs = $query->orderByDesc('jobs.created_at')->paginate(9);
 
         $jobs = $jobs->toArray();
         $currentTime = Carbon::now();
@@ -75,8 +100,8 @@ class JobController extends Controller
     public function getHotList()
     {
         $res = Job::with(['employer', 'locations'])
-            ->where('is_hot', 1)
-            ->orderByDesc('created_at')
+            ->where('id', '<=', 15)
+            ->inRandomOrder()
             ->paginate(6);
 
         return response()->json($res);

@@ -14,6 +14,9 @@ import useGetAllJlevels from "../../../hooks/useGetAllJlevels";
 import JobItem from "./JobItem";
 import JobItemSkeleton from "./JobItemSkeleton";
 import JobMap from "./JobMap";
+import { candExpLevel, salaryLevel } from "../../../common/constant";
+import CTooltip from "../../../components/CTooltip";
+import { isNullObject } from "../../../common/functions";
 
 function JobList() {
   const {
@@ -30,6 +33,7 @@ function JobList() {
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [industryErr, setIndustryErr] = useState(null);
   const [locationErr, setLocationErr] = useState(null);
+  const [sortType, setSortType] = useState(0);
 
   const [jobs, setJobs] = useState([]);
   const [jobNum, setJobNum] = useState(0);
@@ -54,13 +58,16 @@ function JobList() {
         ...(conditions || filterConditions),
       };
       if (useMap) params.type = "get_all";
-      else params.page = page;
+      else {
+        params.page = page;
+        params.sort_type = sortType;
+      }
 
       const res = await jobApi.getList(params);
       if (useMap) {
         setJobs(res);
       } else {
-        setJobNum(res.total)        
+        setJobNum(res.total);
         setJobs(res.data);
         setTotalPage(res.last_page);
       }
@@ -71,10 +78,12 @@ function JobList() {
   };
 
   const handleFilter = async (data) => {
-    if (address && distance) {
-      if (selectedIndustries.length === 0 || selectedLocations.length === 0)
-        return;
-    }
+    if (
+      useMap &&
+      (selectedIndustries.length === 0 || selectedLocations.length === 0)
+    )
+      return;
+
     try {
       const conditions = {
         ...data,
@@ -88,6 +97,13 @@ function JobList() {
       setIsSearchLoading(false);
     } catch (e) {
       setIsSearchLoading(false);
+    }
+  };
+
+  const handleUseMap = () => {
+    if (useMap) setUseMap(false);
+    else {
+      if (checkCanUseMap()) setUseMap(true);
     }
   };
 
@@ -125,9 +141,18 @@ function JobList() {
     } else alert("Trình duyệt không hỗ trợ xác định vị trí của bạn!");
   };
 
+  const checkCanUseMap = () => {
+    return selectedIndustries.length > 0 && selectedLocations.length > 0;
+  };
+
   useEffect(() => {
-    getJobs();
-    if (!useMap) {
+    if (useMap) {
+      if (isNullObject(filterConditions)) {
+        document.getElementById("job-filter-btn").click();
+      } else getJobs();
+    }
+    else {
+      getJobs();
       setCurLocation({});
       setDistance(null);
     }
@@ -135,7 +160,12 @@ function JobList() {
   }, [useMap]);
 
   useEffect(() => {
-    if (address && distance) {
+    getJobs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortType]);
+
+  useEffect(() => {
+    if (useMap) {
       if (selectedIndustries.length === 0) setIndustryErr("Vui lòng chọn!");
       else setIndustryErr(null);
       if (selectedLocations.length === 0) setLocationErr("Vui lòng chọn!");
@@ -144,7 +174,7 @@ function JobList() {
       setIndustryErr(null);
       setLocationErr(null);
     }
-  }, [address, distance, selectedIndustries, selectedLocations]);
+  }, [useMap, selectedIndustries, selectedLocations]);
 
   return (
     <div className="pt-3 pb-4" style={{ margin: "0px 100px" }}>
@@ -201,37 +231,29 @@ function JobList() {
                 )}
               </div>
             </div>
-            <div className="row row-cols-lg-4 gap-1 gap-lg-0 mt-2 ps-3">
+            <div className="row row-cols-lg-5 gap-1 gap-lg-0 mt-2 ps-3">
               <div>
                 <select
                   className="form-select form-select-sm"
                   {...register("salary")}
                 >
-                  <option value="">Mức lương</option>
-                  <option value="5">Trên 5 triệu</option>
-                  <option value="10">Trên 10 triệu</option>
-                  <option value="15">Trên 15 triệu</option>
-                  <option value="20">Trên 20 triệu</option>
-                  <option value="25">Trên 25 triệu</option>
-                  <option value="30">Trên 30 triệu</option>
-                  <option value="40">Trên 40 triệu</option>
-                  <option value="50">Trên 50 triệu</option>
-                  <option value="5">Trên 5 triệu</option>
-                  <option value="10">Trên 10 triệu</option>
-                  <option value="15">Trên 15 triệu</option>
-                  <option value="20">Trên 20 triệu</option>
-                  <option value="25">Trên 25 triệu</option>
-                  <option value="30">Trên 30 triệu</option>
-                  <option value="40">Trên 40 triệu</option>
-                  <option value="50">Trên 50 triệu</option>
-                  <option value="5">Trên 5 triệu</option>
-                  <option value="10">Trên 10 triệu</option>
-                  <option value="15">Trên 15 triệu</option>
-                  <option value="20">Trên 20 triệu</option>
-                  <option value="25">Trên 25 triệu</option>
-                  <option value="30">Trên 30 triệu</option>
-                  <option value="40">Trên 40 triệu</option>
-                  <option value="50">Trên 50 triệu</option>
+                  {salaryLevel.map((item, index) => (
+                    <option key={index} value={item.value}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <select
+                  className="form-select form-select-sm"
+                  {...register("experience")}
+                >
+                  {candExpLevel.map((item, index) => (
+                    <option key={index} value={item.value}>
+                      {item.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>
@@ -274,13 +296,23 @@ function JobList() {
               </div>
             </div>
             <div className="ms-3 mt-2 d-flex gap-2 align-items-lg-center flex-lg-row flex-column">
-              <Form.Check
-                type="switch"
-                label="Tìm kiếm với map"
-                className="ts-smd"
-                style={{ marginTop: "5px" }}
-                onClick={() => setUseMap(!useMap)}
-              />
+              <CTooltip
+                text={
+                  !checkCanUseMap()
+                    ? "Để sử dụng tính năng này vui lòng lựa chọn Tỉnh thành và Ngành nghề"
+                    : "Có thể dùng"
+                }
+              >
+                <div style={{ marginTop: "5px", width: "170px" }}>
+                  <Form.Check
+                    type="switch"
+                    label="Tìm kiếm với map"
+                    className="ts-smd"
+                    onClick={handleUseMap}
+                    disabled={!checkCanUseMap() && !useMap}
+                  />
+                </div>
+              </CTooltip>
               {useMap && (
                 <>
                   <div className="position-relative" style={{ width: "390px" }}>
@@ -340,6 +372,7 @@ function JobList() {
           </div>
           <div className="flex-fill ps-3 align-self-lg-center mt-2 mt-lg-0">
             <button
+              id="job-filter-btn"
               type="button"
               className="btn btn-sm border-0 bg-main text-white rounded-sm px-4"
               onClick={handleSubmit(handleFilter)}
@@ -354,7 +387,25 @@ function JobList() {
           </div>
         </div>
       </Form>
-      <div className="text-main ts-smd mt-3 mb-2">Có {jobNum} kết quả phù hợp</div>
+      <div className="clearfix mt-3 mb-2">
+        <div className="float-start text-main ts-smd mt-2">
+          Có {jobNum} kết quả phù hợp
+        </div>
+        {!useMap && jobs.length > 0 ? (
+          <CTooltip text="Sắp xếp theo">
+            <Form.Select
+              size="sm"
+              className="float-end"
+              style={{ width: "220px" }}
+              onChange={(e) => setSortType(Number(e.target.value))}
+            >
+              <option value="0">Mặc định</option>
+              <option value="1">Mới nhất đến cũ nhất</option>
+              <option value="2">Cũ nhất đến mới nhất</option>
+            </Form.Select>
+          </CTooltip>
+        ) : null}
+      </div>
       {useMap ? (
         <JobMap
           jobs={jobs}

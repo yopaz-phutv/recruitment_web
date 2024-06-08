@@ -40,11 +40,13 @@ export default function JobMap({
     var group = new H.map.Group(),
       i;
     var markerData = [],
-      markerNum = 0;
+      markerNum = 0,
+      jobNum = jobs.length;
 
     for (i = 0; i < jobs.length; i++) {
       let job = jobs[i];
-      if (job.latitude && job.longitude) {
+      if (!job.latitude || !job.longitude) jobNum--;
+      else {
         if (
           curMarker.current &&
           distance &&
@@ -52,8 +54,10 @@ export default function JobMap({
             curMarker.current.getGeometry()
           ) >
             1000 * distance
-        )
+        ) {
+          jobNum--;
           continue;
+        }
 
         if (markerData.length === 0) {
           markerData.push(job);
@@ -129,12 +133,7 @@ export default function JobMap({
               }
             </div>
             <div>
-              Còn 
-              ${
-                dayjs().diff(job.expire_at, "day") <= 30
-                  ? dayjs(job.expire_at).diff(new Date(), "day")
-                  : "30+"
-              } ngày
+              ${dayjs(job.expire_at).format("DD/MM/YYYY")}
             </div>
           </div>
         </div>
@@ -145,13 +144,13 @@ export default function JobMap({
       },
       false
     );
+    setJobNum(jobNum);
     curMap.current.addObject(group);
     if (markerNum > 0) {
       curMap.current.setCenter(group.getBoundingBox().getCenter());
-    }    
+    }
     curMap.current.setZoom(12);
     mapGroup.current = group;
-    setJobNum(markerNum);
   };
 
   const getHints = () => {

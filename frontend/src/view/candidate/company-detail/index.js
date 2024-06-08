@@ -5,13 +5,10 @@ import employerApi from "../../../api/employer";
 import { IoMdPeople } from "react-icons/io";
 import { IoIosLink } from "react-icons/io";
 import { MdPhone } from "react-icons/md";
-import {
-  BsCalendar2Check,
-  BsCalendarEvent,
-  BsPersonWorkspace,
-} from "react-icons/bs";
+import { BsCalendar2Check, BsCalendarEvent } from "react-icons/bs";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { MdLocationOn } from "react-icons/md";
+import defaultCompanyLogo from "../../../assets/images/default_company_logo.png";
 
 export default function Company() {
   const { id } = useParams();
@@ -36,15 +33,19 @@ export default function Company() {
 
   return (
     <div id="job-detail-container" style={{ margin: "0 140px" }}>
-      <div className="d-flex justify-content-center">
-        <img
-          src={infor.image}
-          className="mt-3"
-          width="100%"
-          height="auto"
-          alt={infor.name}
-        />
-      </div>
+      {infor.image ? (
+        <div className="d-flex justify-content-center">
+          <img
+            src={infor.image}
+            className="mt-3"
+            width="100%"
+            height="auto"
+            alt={infor.name}
+          />
+        </div>
+      ) : (
+        <div className="pt-2" />
+      )}
       <div className="mt-3">
         <div className="bg-white mx-auto shadow-sm pt-3">
           <h4 style={{ marginLeft: "30px" }} className="text-main fw-600">
@@ -56,7 +57,7 @@ export default function Company() {
               style={{ height: "130px" }}
             >
               <img
-                src={infor.logo}
+                src={infor.logo || defaultCompanyLogo}
                 alt=""
                 className="p-1"
                 style={{ width: "130px" }}
@@ -115,11 +116,13 @@ export default function Company() {
                 className="border d-flex align-items-center p-2"
                 style={{ width: "110px", height: "110px" }}
               >
-                <img src={infor.logo} alt="" className="w-100" />
+                <img src={infor.logo || defaultCompanyLogo} alt="" className="w-100" />
               </div>
               <div className="ms-3 mt-2">
                 <Link to={`/jobs/${job.id}`} className="nav-link">
-                  <span className="ts-lg fw-600 hover-text-main">{job.jname}</span>
+                  <span className="ts-lg fw-600 hover-text-main">
+                    {job.jname}
+                  </span>
                 </Link>
                 <div style={{ fontSize: "15px" }}>
                   <div className="d-flex align-items-center">

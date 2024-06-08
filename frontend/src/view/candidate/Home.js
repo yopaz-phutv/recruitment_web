@@ -6,6 +6,7 @@ import { MdLocationOn } from "react-icons/md";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import clsx from "clsx";
 import CTooltip from "../../components/CTooltip";
+import defaultCompanyLogo from "../../assets/images/default_company_logo.png"
 
 function Home() {
   const poster = process.env.PUBLIC_URL + "/image/poster4.jpg";
@@ -19,7 +20,6 @@ function Home() {
     await axios
       .get(apiURL)
       .then((res) => {
-        console.log(res.data);
         setHotJobs(res.data.data);
         delete res.data.data;
         setPage(res.data);
@@ -34,7 +34,6 @@ function Home() {
     await axios
       .get("http://127.0.0.1:8000/api/companies/getHotList")
       .then((res) => {
-        console.log(res.data);
         setHotCompanies(res.data);
       })
       .catch((error) => {
@@ -68,7 +67,7 @@ function Home() {
                     maxHeight: "90px",
                     maxWidth: "90px",
                   }}
-                  src={job.employer.logo}
+                  src={job.employer.logo || defaultCompanyLogo}
                   alt={"hotjob" + job.id}
                 />
               </div>
@@ -101,7 +100,7 @@ function Home() {
                     <MdLocationOn className="fs-5 text-main" />
                     &nbsp;
                     {job.locations.map((item, index) => (
-                      <span key={"job_location_" + job.id + "-" + item.id}>
+                      <span key={job.id}>
                         {item.name}
                         {index !== job.locations.length - 1 && ", "}
                       </span>
@@ -159,7 +158,7 @@ function Home() {
                       maxHeight: "90px",
                       maxWidth: "90px",
                     }}
-                    src={company.logo}
+                    src={company.logo || defaultCompanyLogo}
                     alt=""
                   />
                 </div>

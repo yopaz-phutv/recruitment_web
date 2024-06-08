@@ -14,13 +14,14 @@ class JlevelSeeder extends Seeder
     public function run(): void
     {
         DB::table('jlevels')->insert([
-            ['id'=>1, 'name'=>'Thực tập sinh'],
-            ['id'=>2, 'name'=>'Nhân viên'],
-            ['id'=>3, 'name'=>'Trưởng nhóm/Giám sát'],
-            ['id'=>4, 'name'=>'Quản lý'],
-            ['id'=>5, 'name'=>'Quản lý cấp cao'],
-            ['id'=>6, 'name'=>'Điều hành cấp cao'],
-            //['id'=>, 'name'=>''],
+            ['id' => 1, 'name' => 'Thực tập sinh'],
+            ['id' => 2, 'name' => 'Nhân viên'],
+            ['id' => 3, 'name' => 'Trưởng nhóm'],
+            ['id' => 4, 'name' => 'Trưởng/Phó phòng'],
+            ['id' => 5, 'name' => 'Quản lý/Giám sát'],
+            ['id' => 6, 'name' => 'Trưởng chi nhánh'],
+            ['id' => 7, 'name' => 'Giám đốc'],
+            ['id' => 8, 'name' => 'Phó giám đốc'],
         ]);
     }
 }

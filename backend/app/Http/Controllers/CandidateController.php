@@ -73,7 +73,7 @@ class CandidateController extends Controller
 
     public function getAppliedJobs($id)
     {
-        $jobs = Job::join('job_applying', 'id', '=', 'job_id')
+        $jobs = Job::join('job_applying', 'jobs.id', '=', 'job_id')
             ->join('employers', 'employer_id', '=', 'employers.id')
             ->where('candidate_id', $id)
             ->select(

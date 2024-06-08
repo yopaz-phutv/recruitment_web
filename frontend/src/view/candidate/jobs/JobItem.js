@@ -1,44 +1,50 @@
-import { useNavigate } from "react-router-dom";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { MdLocationOn } from "react-icons/md";
 import dayjs from "dayjs";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import defaultCompanyLogo from "../../../assets/images/default_company_logo.png";
 
 export default function JobItem({ job }) {
-  const nav = useNavigate();
-
   return (
-    <div
-      className="mb-3 pointer"
-      onClick={() => nav(`/jobs/${job.id}`)}
-    >
+    <div className="mb-3">
       <div className="d-flex p-2 border hover-border-main hover-shadow-sm bg-white">
         <div
           className="border d-flex align-items-center px-2"
           style={{ width: "100px", height: "100px" }}
         >
-          <img src={job.employer.logo} width="100%" alt={job.jname} />
+          <img
+            src={job.employer.logo || defaultCompanyLogo}
+            width="100%"
+            alt={job.jname}
+          />
         </div>
         <div className="ms-2 mt-1" style={{ width: "calc(100% - 125px)" }}>
           <OverlayTrigger
             placement="top"
             overlay={<Tooltip className="ts-xs">{job.jname}</Tooltip>}
           >
-            <div
-              className="text-truncate fw-bold text-dark text-decoration-none hover-text-main"
-              onClick={() => nav(`/jobs/${job.id}`)}
+            <a
+              href={`/jobs/${job.id}`}
+              className="d-block fw-bold text-dark text-decoration-none hover-text-main text-truncate"
+              target="_blank"
+              rel="noreferrer"
             >
               {job.jname}
-            </div>
+            </a>
           </OverlayTrigger>
           <OverlayTrigger
             placement="top"
             overlay={<Tooltip className="ts-xs">{job.employer.name}</Tooltip>}
           >
-            <div className="ts-smd text-secondary text-truncate">
+            <a
+              href={`/companies/${job.employer?.id}`}
+              className="d-block text-decoration-none ts-smd text-secondary hover-text-main text-truncate"
+              target="_blank"
+              rel="noreferrer"
+            >
               {job.employer.name}
-            </div>
+            </a>
           </OverlayTrigger>
           <div className="ts-sm">
             <div className="d-flex flex-wrap gap-1">
@@ -77,11 +83,14 @@ export default function JobItem({ job }) {
                 className="rounded-pill bg-disabled"
                 style={{ padding: "2.5px 8px" }}
               >
-                Còn&nbsp;
-                {dayjs().diff(job.expire_at, "day") <= 30
-                  ? dayjs(job.expire_at).diff(new Date(), "day")
-                  : "30+"}{" "}
-                ngày
+                {dayjs(job.created_at).format("DD/MM/YYYY")}
+              </span>
+              <span className="mx-2">-</span>
+              <span
+                className="rounded-pill bg-disabled"
+                style={{ padding: "2.5px 8px" }}
+              >
+                {dayjs(job.expire_at).format("DD/MM/YYYY")}
               </span>
             </div>
           </div>
