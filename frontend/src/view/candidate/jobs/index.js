@@ -15,6 +15,8 @@ import JobItem from "./JobItem";
 import JobItemSkeleton from "./JobItemSkeleton";
 import JobMap from "./JobMap";
 import { candExpLevel, salaryLevel } from "../../../common/constant";
+import CTooltip from "../../../components/CTooltip";
+import { isNullObject } from "../../../common/functions";
 
 function JobList() {
   const {
@@ -31,6 +33,7 @@ function JobList() {
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [industryErr, setIndustryErr] = useState(null);
   const [locationErr, setLocationErr] = useState(null);
+  const [sortType, setSortType] = useState(0);
 
   const [jobs, setJobs] = useState([]);
   const [jobNum, setJobNum] = useState(0);
@@ -55,12 +58,14 @@ function JobList() {
         ...(conditions || filterConditions),
       };
       if (useMap) params.type = "get_all";
-      else params.page = page;
+      else {
+        params.page = page;
+        params.sort_type = sortType;
+      }
 
       const res = await jobApi.getList(params);
       if (useMap) {
         setJobs(res);
-        setJobNum(res.length);
       } else {
         setJobNum(res.total);
         setJobs(res.data);
@@ -73,10 +78,12 @@ function JobList() {
   };
 
   const handleFilter = async (data) => {
-    if (address && distance) {
-      if (selectedIndustries.length === 0 || selectedLocations.length === 0)
-        return;
-    }
+    if (
+      useMap &&
+      (selectedIndustries.length === 0 || selectedLocations.length === 0)
+    )
+      return;
+
     try {
       const conditions = {
         ...data,
@@ -93,15 +100,19 @@ function JobList() {
     }
   };
 
+  const handleUseMap = () => {
+    if (useMap) setUseMap(false);
+    else {
+      if (checkCanUseMap()) setUseMap(true);
+    }
+  };
+
   // const handleEnter = (key) => {
   //   if (key === "Enter" && address !== "") {
   //     setRefreshHint(true);
   //     setShowHint(true);
   //   }
   // };
-  const handleUseMap = () => {
-    setUseMap(!useMap);
-  };
 
   const handleChangeAddress = async (address) => {
     setAddress(address);
@@ -130,9 +141,18 @@ function JobList() {
     } else alert("Trình duyệt không hỗ trợ xác định vị trí của bạn!");
   };
 
+  const checkCanUseMap = () => {
+    return selectedIndustries.length > 0 && selectedLocations.length > 0;
+  };
+
   useEffect(() => {
-    getJobs();
-    if (!useMap) {
+    if (useMap) {
+      if (isNullObject(filterConditions)) {
+        document.getElementById("job-filter-btn").click();
+      } else getJobs();
+    }
+    else {
+      getJobs();
       setCurLocation({});
       setDistance(null);
     }
@@ -140,7 +160,12 @@ function JobList() {
   }, [useMap]);
 
   useEffect(() => {
-    if (address && distance) {
+    getJobs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortType]);
+
+  useEffect(() => {
+    if (useMap) {
       if (selectedIndustries.length === 0) setIndustryErr("Vui lòng chọn!");
       else setIndustryErr(null);
       if (selectedLocations.length === 0) setLocationErr("Vui lòng chọn!");
@@ -149,7 +174,7 @@ function JobList() {
       setIndustryErr(null);
       setLocationErr(null);
     }
-  }, [address, distance, selectedIndustries, selectedLocations]);
+  }, [useMap, selectedIndustries, selectedLocations]);
 
   return (
     <div className="pt-3 pb-4" style={{ margin: "0px 100px" }}>
@@ -271,14 +296,24 @@ function JobList() {
               </div>
             </div>
             <div className="ms-3 mt-2 d-flex gap-2 align-items-lg-center flex-lg-row flex-column">
-              <Form.Check
-                type="switch"
-                label="Tìm kiếm với map"
-                className="ts-smd"
-                style={{ marginTop: "5px" }}
-                onClick={handleUseMap}
-              />
-              {useMap ? (
+              <CTooltip
+                text={
+                  !checkCanUseMap()
+                    ? "Để sử dụng tính năng này vui lòng lựa chọn Tỉnh thành và Ngành nghề"
+                    : "Có thể dùng"
+                }
+              >
+                <div style={{ marginTop: "5px", width: "170px" }}>
+                  <Form.Check
+                    type="switch"
+                    label="Tìm kiếm với map"
+                    className="ts-smd"
+                    onClick={handleUseMap}
+                    disabled={!checkCanUseMap() && !useMap}
+                  />
+                </div>
+              </CTooltip>
+              {useMap && (
                 <>
                   <div className="position-relative" style={{ width: "390px" }}>
                     <Form.Control
@@ -332,23 +367,12 @@ function JobList() {
                     </InputGroup.Text>
                   </InputGroup>
                 </>
-              ) : (
-                <Form.Select
-                  size="sm"
-                  onChange={() => null}
-                  style={{ width: "220px" }}
-                >
-                  <option value="0">Mặc định</option>
-                  <option value="1">Mức lương tăng dần</option>
-                  <option value="2">Mức lương giảm dần</option>
-                  <option value="3">Mới nhất đến cũ nhất</option>
-                  <option value="4">Cũ nhất đến mới nhất</option>
-                </Form.Select>
               )}
             </div>
           </div>
           <div className="flex-fill ps-3 align-self-lg-center mt-2 mt-lg-0">
             <button
+              id="job-filter-btn"
               type="button"
               className="btn btn-sm border-0 bg-main text-white rounded-sm px-4"
               onClick={handleSubmit(handleFilter)}
@@ -363,8 +387,24 @@ function JobList() {
           </div>
         </div>
       </Form>
-      <div className="mt-3 mb-2 text-main ts-smd">
-        Có {jobNum} kết quả phù hợp
+      <div className="clearfix mt-3 mb-2">
+        <div className="float-start text-main ts-smd mt-2">
+          Có {jobNum} kết quả phù hợp
+        </div>
+        {!useMap && jobs.length > 0 ? (
+          <CTooltip text="Sắp xếp theo">
+            <Form.Select
+              size="sm"
+              className="float-end"
+              style={{ width: "220px" }}
+              onChange={(e) => setSortType(Number(e.target.value))}
+            >
+              <option value="0">Mặc định</option>
+              <option value="1">Mới nhất đến cũ nhất</option>
+              <option value="2">Cũ nhất đến mới nhất</option>
+            </Form.Select>
+          </CTooltip>
+        ) : null}
       </div>
       {useMap ? (
         <JobMap
@@ -376,6 +416,7 @@ function JobList() {
           hintLocations={hintLocations}
           setHintLocations={setHintLocations}
           curLocation={curLocation}
+          setJobNum={setJobNum}
         />
       ) : isLoading ? (
         <div className="row row-cols-lg-3">

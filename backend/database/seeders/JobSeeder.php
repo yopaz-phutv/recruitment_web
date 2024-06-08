@@ -56,8 +56,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.011024, 
                 'longitude' => 105.814989,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 2,
@@ -97,8 +97,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.011024, 
                 'longitude' => 105.814989,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 3,
@@ -143,8 +143,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.011024, 
                 'longitude' => 105.814989,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 4,
@@ -175,8 +175,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.00822, 
                 'longitude' => 105.807611,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 5,
@@ -210,8 +210,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.00822, 
                 'longitude' => 105.807611,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 6,
@@ -249,8 +249,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.00822, 
                 'longitude' => 105.807611,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 7,
@@ -289,8 +289,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.029937, 
                 'longitude' => 105.785086,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(4),
+                'updated_at' => Carbon::now()->subDays(4),
             ],
             [
                 'id' => 8,
@@ -327,8 +327,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.029937, 
                 'longitude' => 105.785086,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 9,
@@ -370,8 +370,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.029937, 
                 'longitude' => 105.785086,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 10,
@@ -407,8 +407,8 @@ class JobSeeder extends Seeder
                 'latitude' => 20.9978385,
                 'longitude' => 105.7974438,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 11,
@@ -456,8 +456,8 @@ class JobSeeder extends Seeder
                 'latitude' => 20.9978385,
                 'longitude' => 105.7974438,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 12,
@@ -503,8 +503,8 @@ class JobSeeder extends Seeder
                 'latitude' => 20.9978385,
                 'longitude' => 105.7974438,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(4),
+                'updated_at' => Carbon::now()->subDays(4),
             ],
             [
                 'id' => 13,
@@ -541,8 +541,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.031497, 
                 'longitude' => 105.796483,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 14,
@@ -582,8 +582,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.031497, 
                 'longitude' => 105.796483,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 15,
@@ -623,8 +623,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.031497, 
                 'longitude' => 105.796483,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 16,
@@ -669,8 +669,8 @@ class JobSeeder extends Seeder
                 'latitude' => 20.997785, 
                 'longitude' => 105.793742,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 17,
@@ -712,8 +712,8 @@ class JobSeeder extends Seeder
                 'latitude' => 20.997785, 
                 'longitude' => 105.793742,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 18,
@@ -752,8 +752,8 @@ class JobSeeder extends Seeder
                 'latitude' => 20.997785, 
                 'longitude' => 105.793742,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 19,
@@ -788,8 +788,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.0500198, 
                 'longitude' => 105.7973772,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(4),
+                'updated_at' => Carbon::now()->subDays(4),
             ],
             [
                 'id' => 20,
@@ -824,8 +824,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.0500198, 
                 'longitude' => 105.7973772,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 21,
@@ -863,8 +863,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.0500198, 
                 'longitude' => 105.7973772,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 22,
@@ -908,8 +908,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.811372, 
                 'longitude' => 106.628735,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 23,
@@ -948,8 +948,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.811372, 
                 'longitude' => 106.628735,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 24,
@@ -987,8 +987,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.791298, 
                 'longitude' => 106.688542,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(4),
+                'updated_at' => Carbon::now()->subDays(4),
             ],
             [
                 'id' => 25,
@@ -1034,8 +1034,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.791298, 
                 'longitude' => 106.688542,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 26,
@@ -1078,8 +1078,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.791298, 
                 'longitude' => 106.688542,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 27,
@@ -1113,8 +1113,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.803909, 
                 'longitude' => 106.720066,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 28,
@@ -1149,8 +1149,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.803909, 
                 'longitude' => 106.720066,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 29,
@@ -1185,8 +1185,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.803909, 
                 'longitude' => 106.720066,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 30,
@@ -1231,8 +1231,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.78734, 
                 'longitude' => 106.68515,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 31,
@@ -1276,8 +1276,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.78734, 
                 'longitude' => 106.68515,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(4),
+                'updated_at' => Carbon::now()->subDays(4),
             ],
             [
                 'id' => 32,
@@ -1317,8 +1317,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.78734, 
                 'longitude' => 106.68515,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 33,
@@ -1364,8 +1364,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.787655, 
                 'longitude' => 106.645442,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 34,
@@ -1412,8 +1412,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.787655, 
                 'longitude' => 106.645442,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 35,
@@ -1456,11 +1456,11 @@ class JobSeeder extends Seeder
                 Thời gian làm việc: 8 tiếng từ T2 - T6 (8:00- 12:/ 13:00 - 17:00)',
                 'expire_at' => '2024/08/15',
                 'interview_round_num' => 3,
-                'latitude' => 20.85677, 
-                'longitude' => 106.58339,
+                'latitude' => 21.0113019, 
+                'longitude' => 105.7766342,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 36,
@@ -1500,11 +1500,11 @@ class JobSeeder extends Seeder
                 Thời gian làm việc: 8 tiếng từ T2 - T6 (8:00- 12:00/ 13:00- 17:00), Happy hour chiều thứ 6 hàng tuần',
                 'expire_at' => '2024/08/15',
                 'interview_round_num' => 3,
-                'latitude' => 20.85677, 
-                'longitude' => 106.58339,
+                'latitude' => 21.0113019, 
+                'longitude' => 105.7766342,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(4),
+                'updated_at' => Carbon::now()->subDays(4),
             ],
             [
                 'id' => 37,
@@ -1547,8 +1547,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.009231, 
                 'longitude' => 105.823711,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 38,
@@ -1586,8 +1586,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.009231, 
                 'longitude' => 105.823711,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 39,
@@ -1625,8 +1625,8 @@ class JobSeeder extends Seeder
                 'latitude' => 20.999533, 
                 'longitude' => 105.831645,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 40,
@@ -1668,8 +1668,8 @@ class JobSeeder extends Seeder
                 'latitude' => 20.999533, 
                 'longitude' => 105.831645,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 41,
@@ -1708,8 +1708,8 @@ class JobSeeder extends Seeder
                 'latitude' => 20.999533, 
                 'longitude' => 105.831645,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 42,
@@ -1750,8 +1750,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.790966, 
                 'longitude' => 106.656124,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 43,
@@ -1793,8 +1793,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.790966, 
                 'longitude' => 106.656124,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(4),
+                'updated_at' => Carbon::now()->subDays(4),
             ],
             [
                 'id' => 44,
@@ -1835,8 +1835,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.790966, 
                 'longitude' => 106.656124,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(6),
+                'updated_at' => Carbon::now()->subDays(6),
             ],
             [
                 'id' => 45,
@@ -1889,8 +1889,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.010369, 
                 'longitude' => 105.815518,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 46,
@@ -1935,8 +1935,8 @@ class JobSeeder extends Seeder
                 'latitude' => 21.010369, 
                 'longitude' => 105.815518,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(2),
+                'updated_at' => Carbon::now()->subDays(2),
             ],
             [
                 'id' => 47,
@@ -1989,8 +1989,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.770592, 
                 'longitude' => 106.684486,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(4),
+                'updated_at' => Carbon::now()->subDays(4),
             ],
             [
                 'id' => 48,
@@ -2042,8 +2042,8 @@ class JobSeeder extends Seeder
                 'latitude' => 10.770592, 
                 'longitude' => 106.684486,
                 'is_active' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->subDays(4),
+                'updated_at' => Carbon::now()->subDays(4),
             ],
             // [
             //     'id' => ,

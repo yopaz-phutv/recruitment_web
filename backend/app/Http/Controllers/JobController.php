@@ -60,15 +60,9 @@ class JobController extends Controller
         } else {
             switch ($req->sort_type) {
                 case 1:
-                    $query->orderBy('yoe');
-                    break;
-                case 2:
-                    $query->orderBy('yoe', 'desc');
-                    break;
-                case 3:
                     $query->orderBy('created_at', 'desc');
                     break;
-                case 4:
+                case 2:
                     $query->orderBy('created_at');
                     break;
                 default:
@@ -106,8 +100,8 @@ class JobController extends Controller
     public function getHotList()
     {
         $res = Job::with(['employer', 'locations'])
-            ->where('is_hot', 1)
-            ->orderByDesc('created_at')
+            ->where('id', '<=', 15)
+            ->inRandomOrder()
             ->paginate(6);
 
         return response()->json($res);

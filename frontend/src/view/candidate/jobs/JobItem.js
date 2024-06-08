@@ -3,7 +3,7 @@ import { MdLocationOn } from "react-icons/md";
 import dayjs from "dayjs";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
-import defaultCompanyLogo from "../../../assets/images/default_company_logo.png"
+import defaultCompanyLogo from "../../../assets/images/default_company_logo.png";
 
 export default function JobItem({ job }) {
   return (
@@ -13,7 +13,11 @@ export default function JobItem({ job }) {
           className="border d-flex align-items-center px-2"
           style={{ width: "100px", height: "100px" }}
         >
-          <img src={job.employer.logo || defaultCompanyLogo} width="100%" alt={job.jname} />
+          <img
+            src={job.employer.logo || defaultCompanyLogo}
+            width="100%"
+            alt={job.jname}
+          />
         </div>
         <div className="ms-2 mt-1" style={{ width: "calc(100% - 125px)" }}>
           <OverlayTrigger
@@ -79,11 +83,14 @@ export default function JobItem({ job }) {
                 className="rounded-pill bg-disabled"
                 style={{ padding: "2.5px 8px" }}
               >
-                Còn&nbsp;
-                {dayjs().diff(job.expire_at, "day") <= 30
-                  ? dayjs(job.expire_at).diff(new Date(), "day")
-                  : "30+"}{" "}
-                ngày
+                {dayjs(job.created_at).format("DD/MM/YYYY")}
+              </span>
+              <span className="mx-2">-</span>
+              <span
+                className="rounded-pill bg-disabled"
+                style={{ padding: "2.5px 8px" }}
+              >
+                {dayjs(job.expire_at).format("DD/MM/YYYY")}
               </span>
             </div>
           </div>
