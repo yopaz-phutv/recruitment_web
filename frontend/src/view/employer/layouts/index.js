@@ -1,5 +1,5 @@
 import "./style.css";
-import { AiFillProfile, AiTwotoneAppstore } from "react-icons/ai";
+import { AiFillProfile, AiFillAppstore } from "react-icons/ai";
 import {
   BsFillBriefcaseFill,
   BsFillPeopleFill,
@@ -75,7 +75,7 @@ function Layout(props) {
       </nav>
       <div
         className="d-flex flex-column flex-lg-row"
-        style={{ marginTop: "57px" }}
+        style={{ marginTop: "56px" }}
       >
         <div className="ts-smd fw-600 text-secondary menu-part bg-white border-lg-end">
           <div className="sticky-top top-0 d-flex flex-row flex-wrap flex-lg-column">
@@ -89,7 +89,7 @@ function Layout(props) {
               )}
               onClick={() => handleChangePage("/employer")}
             >
-              <AiTwotoneAppstore className="fs-5 me-1" />
+              <AiFillAppstore className="fs-5 me-1" />
               Dashboard
             </div>
             <div

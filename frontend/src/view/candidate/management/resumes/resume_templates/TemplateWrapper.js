@@ -50,7 +50,7 @@ export default function TemplateWrapper({
 
   useEffect(() => {
     if (mode) setCvMode(mode);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { id } = useParams(); //resume ID if exist
@@ -177,7 +177,7 @@ export default function TemplateWrapper({
       getEditResume();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [cvMode]);
 
   useEffect(() => {
     if (cvMode === "CREATE_1") {

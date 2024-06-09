@@ -90,7 +90,7 @@ export default function SavedCandidates() {
   return (
     <div
       className="bg-white ms-3 mt-3 pb-2 shadow-sm"
-      style={{ paddingLeft: "45px", paddingRight: "35px" }}
+      style={{ paddingLeft: "45px", paddingRight: "35px", height: "92.5%" }}
     >
       <h4 className="mb-2 pt-3 text-main">Danh sách ứng viên đã đánh dấu</h4>
       <div className="d-flex gap-2 flex-column flex-sm-row">

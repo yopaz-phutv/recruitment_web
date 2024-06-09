@@ -105,7 +105,7 @@ export default function FindingCandidates() {
   return (
     <div
       className="bg-white ms-3 mt-3 pb-2 shadow-sm"
-      style={{ paddingLeft: "45px", paddingRight: "35px" }}
+      style={{ paddingLeft: "45px", paddingRight: "35px", height: "92.5%" }}
     >
       <h4 className="mb-2 pt-3 text-main">
         Tìm kiếm ứng viên theo tiêu chí việc làm

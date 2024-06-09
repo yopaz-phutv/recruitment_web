@@ -1,5 +1,4 @@
-// import "./style.css";
-import defaultAvt from "./default-avatar.webp";
+import defaultAvt from "../../../../../../assets/images/default-avatar.webp";
 import { IoCalendarClear } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
@@ -970,7 +969,7 @@ export default function Template1() {
           );
         })}
       </div>
-      <div className="flex-fill px-1 bg-white">
+      <div className="flex-fill px-1 bg-white pt-2">
         <div className="ms-2">
           {parts.map((_, index) => {
             return (

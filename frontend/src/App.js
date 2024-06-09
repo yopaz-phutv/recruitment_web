@@ -31,6 +31,8 @@ import FindingCandidates from "./view/employer/find-candidates";
 import AdminCandidateList from "./view/admin/candidates";
 import SavedCandidates from "./view/employer/saved-candidates";
 import ForgetPassword from "./components/forget-password";
+import EmployerGeneral from "./view/employer/general";
+import AdminGeneral from "./view/admin/general";
 
 export const AppContext = createContext();
 
@@ -96,6 +98,7 @@ function App() {
               element={
                 <EmployerLayout>
                   <Routes>
+                    <Route path="" element={<EmployerGeneral />} />
                     <Route path="candidates" element={<CandidateList />} />
                     <Route path="jobs" element={<JobManagement />} />
                     <Route
@@ -127,6 +130,7 @@ function App() {
               element={
                 <AdminLayout>
                   <Routes>
+                    <Route path="" element={<AdminGeneral />} />
                     <Route path="employers" element={<EmployerList />} />
                     <Route path="candidates" element={<AdminCandidateList />} />
                   </Routes>

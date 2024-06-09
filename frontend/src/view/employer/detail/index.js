@@ -27,7 +27,10 @@ export default function EmployerDetail() {
   }, []);
 
   return (
-    <div className="bg-white ms-3 mt-3 pb-4 position-relative shadow-sm">
+    <div
+      className="bg-white ms-3 mt-3 pb-4 position-relative shadow-sm"
+      style={{ height: "92.5%" }}
+    >
       <div className="pt-3" style={{ marginLeft: "45px" }}>
         <h4 className="text-main">Thông tin công ty</h4>
         {isLoading ? (

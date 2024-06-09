@@ -43,7 +43,7 @@ export default function TemplatePreviewModal({ show, setShow, templateId }) {
         <Modal.Body>
           <div className="d-flex gap-4 align-items-start">
             <div style={{ marginLeft: "40px" }}>
-              <Template mode="READ" useSampleData templateId={templateId} />
+              <Template mode="READ" useSampleData={true} templateId={templateId} />
             </div>
             <div className="flex-fill sticky-top">
               <button

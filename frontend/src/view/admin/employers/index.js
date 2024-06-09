@@ -207,7 +207,7 @@ export default function EmployerList() {
                     <div className="ms-2 d-flex gap-2">
                       <BsEye
                         type="button"
-                        className="text-primary ts-md"
+                        className="text-main ts-md"
                         onClick={() => handleClickActionBtn(item, "VIEW")}
                       />
                       {curTabInd === 1 && !status.is_denied ? (

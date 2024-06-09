@@ -62,8 +62,8 @@ export default function Resume() {
   }, [isAuth]);
 
   return (
-    <div className="vh-100 pt-4 px-4">
-      <div className="bg-white py-3 ps-5">
+    <div className="pt-4 ps-4">
+      <div className="bg-white py-3 ps-5 vh-100">
         <h4 className="text-main">Quản lý hồ sơ</h4>
         <div className="w-85 clearfix">
           <Button

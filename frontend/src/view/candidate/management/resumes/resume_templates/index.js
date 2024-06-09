@@ -12,13 +12,13 @@ export default function TemplateList() {
   };
 
   return (
-    <div className="mx-4 mt-4 px-5 py-3 bg-white h-100">
+    <div className="ms-4 mt-4 px-5 py-3 bg-white">
       <h4 className="mb-4 text-main">Mẫu hồ sơ</h4>
-      <div className="row row-cols-lg-3 row-cols-2">
+      <div className="row row-cols-lg-4 row-cols-3">
         {templateList.map((item) => (
           <div
-            key={`template_${item.id}`}
-            className="pe-2"
+            key={item.id}
+            className="pe-3 mb-3"
             onClick={() => handleView(item)}
           >
             <TemplatePreview template={item} />

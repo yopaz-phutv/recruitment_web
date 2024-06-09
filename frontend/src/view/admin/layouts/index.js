@@ -1,6 +1,8 @@
 import "./style.css";
-import { AiTwotoneAppstore } from "react-icons/ai";
-import { BsFillPersonFill } from "react-icons/bs";
+import { AiFillAppstore } from "react-icons/ai";
+import { BsFillPeopleFill, BsFillPersonFill } from "react-icons/bs";
+import { RiBuilding2Fill } from "react-icons/ri";
+
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -31,7 +33,7 @@ function Layout(props) {
   };
 
   useEffect(() => {
-    setCurUrl(window.location.pathname)
+    setCurUrl(window.location.pathname);
     if (!localStorage.getItem("admin_jwt")) {
       nav("/admin/login");
     } else {
@@ -43,7 +45,9 @@ function Layout(props) {
   return (
     <>
       <nav className="navbar border-bottom shadow-sm fixed-top bg-white">
-        <div className="navbar-brand ms-3 text-secondary fw-600">Recruitment</div>
+        <div className="navbar-brand ms-3 text-secondary fw-600">
+          Recruitment
+        </div>
         <div className="dropdown pointer">
           <div
             className="d-flex align-items-center me-5 dropdown-toggle"
@@ -71,25 +75,27 @@ function Layout(props) {
             )}
             onClick={() => handleChangeUrl("/admin")}
           >
-            <AiTwotoneAppstore className="fs-5 me-1" />
-            Dashboard
+            <AiFillAppstore className="fs-5 me-1" />
+            Tổng quan
           </div>
           <div
             className={clsx(
-              "ps-lg-5 py-lg-2 px-2 py-2 pointer hover-bg-light hover-text-main",
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 py-2 pointer hover-bg-light hover-text-main",
               curUrl === "/admin/employers" && "bg-mlight text-main"
             )}
             onClick={() => handleChangeUrl("/admin/employers")}
           >
+            <RiBuilding2Fill className="fs-5 me-1" />
             Nhà tuyển dụng
           </div>
           <div
             className={clsx(
-              "ps-lg-5 py-lg-2 px-2 py-2 pointer hover-bg-light hover-text-main",
+              "d-flex align-items-center ps-lg-5 py-lg-2 px-2 py-2 pointer hover-bg-light hover-text-main",
               curUrl === "/admin/candidates" && "bg-mlight text-main"
             )}
             onClick={() => handleChangeUrl("/admin/candidates")}
           >
+            <BsFillPeopleFill className="fs-5 me-1" />
             Ứng viên
           </div>
         </div>

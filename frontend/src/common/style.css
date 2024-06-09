@@ -187,16 +187,6 @@
 .z-index-4 {
   z-index: 4;
 }
-/* others */
-.whitespace-preline {
-  white-space: pre-line;
-}
-.text-decoration-none {
-  text-decoration: none;
-}
-.pointer {
-  cursor: pointer;
-}
 /* custom bootstrap css */
 .form-control:focus {
   color: #212529;
@@ -211,4 +201,22 @@
   border-color: #ced4da;
   outline: 0;
   box-shadow: none;
+}
+
+/* others */
+.whitespace-preline {
+  white-space: pre-line;
+}
+.text-decoration-none {
+  text-decoration: none;
+}
+.pointer {
+  cursor: pointer;
+}
+.text-maxline-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Số dòng tối đa */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

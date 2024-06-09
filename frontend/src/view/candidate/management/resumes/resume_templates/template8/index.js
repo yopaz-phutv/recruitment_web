@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 import { TemplateContext } from "../TemplateWrapper";
 import FlexInput from "../../../../../../components/FlexInput";
 
-export default function Template2() {
+export default function Template8() {
   const {
     parts,
     setParts,

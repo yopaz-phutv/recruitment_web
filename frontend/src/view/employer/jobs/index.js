@@ -75,7 +75,10 @@ function JobManagement() {
 
   return (
     <>
-      <div className="bg-white ms-3 mt-3 pb-3 shadow-sm">
+      <div
+        className="bg-white ms-3 mt-3 pb-3 shadow-sm"
+        style={{ height: "92.5%" }}
+      >
         <div className="pt-3" style={{ marginLeft: "45px" }}>
           <h4 className="text-main">Danh sách việc làm</h4>
           <div className="clearfix my-3" style={{ width: "93%" }}>
