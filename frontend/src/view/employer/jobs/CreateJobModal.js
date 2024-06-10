@@ -206,7 +206,7 @@ export default function CreateJobModal({
                 value="0"
                 {...register("salaryOpt")}
               />
-              Theo thỏa thuận <br />
+              Thỏa thuận <br />
               <input
                 type="radio"
                 className="form-check-input"

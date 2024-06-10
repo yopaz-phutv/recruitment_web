@@ -2,7 +2,7 @@ import CTooltip from "../CTooltip";
 
 const TextItem = ({ title, text }) => {
   return (
-    <div className="ps-0 mb-4 pe-">
+    <div className="ps-0 mb-4 pe-4">
       <div
         className="bg-main text-white rounded px-3 pt-1 d-flex flex-column justify-content-center h-100"
         style={{ minHeight: "78px" }}

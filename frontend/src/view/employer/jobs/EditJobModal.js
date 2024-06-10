@@ -267,12 +267,12 @@ export default function EditJobModal({
                 style={{ width: "180px" }}
               >
                 {!watch("salaryOpt") && !inf.min_salary
-                  ? "Theo thỏa thuận"
+                  ? "Thỏa thuận"
                   : null}
                 {!watch("salaryOpt") && inf.min_salary ? (
                   <span>{inf.min_salary + "-" + inf.max_salary} triệu VND</span>
                 ) : null}
-                {watch("salaryOpt") === "0" && "Theo thỏa thuận"}
+                {watch("salaryOpt") === "0" && "Thỏa thuận"}
                 {watch("salaryOpt") === "1" && (
                   <span>
                     {watch("min_salary") && watch("min_salary")}-
@@ -297,7 +297,7 @@ export default function EditJobModal({
                   value="0"
                   {...register("salaryOpt")}
                 />
-                Theo thỏa thuận <br />
+                Thỏa thuận <br />
                 <input
                   type="radio"
                   className="form-check-input"

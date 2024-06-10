@@ -55,7 +55,7 @@ export default function JobItem({ job }) {
                     {job.min_salary} - {job.max_salary} triệu VND
                   </span>
                 ) : (
-                  <span>Theo thỏa thuận</span>
+                  <span>Thỏa thuận</span>
                 )}
               </div>
               <OverlayTrigger

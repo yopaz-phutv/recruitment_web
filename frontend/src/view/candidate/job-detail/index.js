@@ -22,6 +22,8 @@ import Button from "react-bootstrap/Button";
 import AppyingDialog from "./ApplyingDialog";
 import { toast } from "react-toastify";
 import defaultCompanyLogo from "../../../assets/images/default_company_logo.png";
+import SimilarJobItem from "./SimilarJobItem";
+import clsx from "clsx";
 
 function Job() {
   const { id } = useParams();
@@ -41,11 +43,17 @@ function Job() {
   const [industries, setIndustries] = useState([]);
   const [recommendData, setRecommendData] = useState({});
   const [isLoadingRecommend, setIsLoadingRecommend] = useState(true);
+  const [similarJobs, setSimilarJobs] = useState([]);
 
   const getJobInf = async () => {
     const res = await jobApi.getById(id);
     setJob(res);
     setIndustries(res.industries);
+  };
+
+  const getSimilarJobs = async () => {
+    const res = await jobApi.getSimilarJobs(id);
+    setSimilarJobs(res);
   };
 
   const checkApplying = async () => {
@@ -78,13 +86,13 @@ function Job() {
 
   const handleClickSaveBtn = async (status) => {
     const data = { status: status };
-    const res = await candidateApi.processJobSaving(id, data);
-    console.log("res::", res);
+    await candidateApi.processJobSaving(id, data);
     setIsSaved(!isSaved);
   };
 
   useEffect(() => {
     getJobInf();
+    getSimilarJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
@@ -104,7 +112,7 @@ function Job() {
             src={job.employer.image}
             className="mx-auto d-block mt-3"
             style={{ maxWidth: "93%", maxHeight: "400px" }}
-            alt={"com-img-" + job.employer.id}
+            alt=""
           />
         </div>
       ) : (
@@ -116,12 +124,12 @@ function Job() {
             <div className="d-flex border-bottom ps-4 pe-4">
               <div
                 className="d-flex align-items-center ms-2 mt-4 mb-3"
-                style={{ minWidth: "130px" }}
+                style={{ width: "130px", height: "130px" }}
               >
                 <img
                   src={job.employer.logo || defaultCompanyLogo}
-                  width="100%"
-                  alt={job.employer.name}
+                  style={{ width: "130px" }}
+                  alt=""
                 />
               </div>
               <div className="container pt-2" style={{ marginLeft: "25px" }}>
@@ -297,11 +305,11 @@ function Job() {
               >
                 <img
                   src={job.employer.logo || defaultCompanyLogo}
-                  width="100%"
+                  style={{ width: "90px" }}
                   alt={job.employer.name}
                 />
               </div>
-              <div className="fw-bold ms-3">{job.employer.name}</div>
+              <div className="ts-smd fw-bold ms-2 me-1">{job.employer.name}</div>
             </div>
             <div className="mx-2 ts-smd mb-1">
               <div className="d-flex">
@@ -346,6 +354,20 @@ function Job() {
                 Xem trang công ty
               </Button>
             </div>
+          </div>
+          <div className="mt-3 bg-white shadow-sm">
+            <div className="bg-main ts-lg text-white text-center border-bottom py-1">
+              Việc làm tương tự
+            </div>
+            {similarJobs.map((job, index) => (
+              <SimilarJobItem
+                key={job.id}
+                job={job}
+                className={clsx(
+                  index !== similarJobs.length - 1 && "border-bottom"
+                )}
+              />
+            ))}
           </div>
         </div>
       </div>

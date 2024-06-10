@@ -34,6 +34,12 @@ const jobApi = {
   checkApplying: (id) => {
     return candidateAxios.get(`${prefix}/${id}/checkApplying`);
   },
+  getSimilarJobs: (id) => {
+    return commonAxios.get(`${prefix}/${id}/getSimilarJobs`);
+  },
+  getRecommendJobs: (id) => {
+    return candidateAxios.get(`${prefix}/getRecommendJobs`);
+  },
 };
 
 export default jobApi;

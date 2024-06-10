@@ -45,16 +45,14 @@ function Layout(props) {
   return (
     <>
       <nav className="navbar border-bottom shadow-sm fixed-top bg-white">
-        <div className="navbar-brand ms-3 text-secondary fw-600">
-          Recruitment
-        </div>
+        <div className="navbar-brand ms-3 text-main fw-600">FastJob</div>
         <div className="dropdown pointer">
           <div
             className="d-flex align-items-center me-5 dropdown-toggle"
             data-bs-toggle="dropdown"
           >
-            <BsFillPersonFill style={{ fontSize: "26px" }} />
-            Admin
+            <BsFillPersonFill fontSize="26px" className="text-main" />
+            Tài khoản
           </div>
           <ul className="dropdown-menu">
             <li className="dropdown-item" onClick={handleLogout}>

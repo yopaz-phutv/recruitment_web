@@ -14,7 +14,8 @@ import Placeholder from "react-bootstrap/Placeholder";
 import { AppContext } from "../../../App";
 import clsx from "clsx";
 import InnerHTML from "dangerously-set-html-content";
-import { toast } from "react-toastify";
+import { AiOutlineHeart } from "react-icons/ai";
+import CTooltip from "../../../components/CTooltip";
 
 const user_icon = process.env.PUBLIC_URL + "/image/user_icon.png";
 
@@ -38,12 +39,11 @@ function Layout(props) {
     await authApi.logout(1);
     dispatch(candAuthActions.logout());
     localStorage.removeItem("candidate_jwt");
-    nav("/");
+    handleChangePage("/");
   };
 
   const getAllMessages = async () => {
     const res = await candMsgApi.getMsgs(candidate.id);
-    console.log("bell msgs:", res);
     setBellMsgs(res);
   };
   const handleReadMsg = async (inf) => {
@@ -90,11 +90,7 @@ function Layout(props) {
     }
   };
 
-  const handleChangePage = (url, needLogin) => {
-    if (needLogin && !isAuth) {
-      toast.error("Vui lòng đăng nhập");
-      return;
-    }
+  const handleChangePage = (url) => {
     nav(url);
     setCurUrl(url);
   };
@@ -134,11 +130,11 @@ function Layout(props) {
           className="fixed-top bg-white text-secondary shadow-sm ts-17 fw-600"
         >
           <div
-            className="pointer ms-2 pe-2 ts-xl pb-1"
+            className="pointer ms-2 pe-2 ts-xl pb-1 text-main"
             to="/"
             onClick={() => handleChangePage("/")}
           >
-            Recruitment
+            FastJob
           </div>
           <div
             className={clsx(
@@ -159,18 +155,35 @@ function Layout(props) {
           >
             Việc làm
           </div>
-          <div
-            className={clsx(
-              "pointer py-3 px-2",
-              curUrl === "/candidate/templates" && "text-main"
-            )}
-            onClick={() => handleChangePage("/candidate/templates", true)}
-          >
-            Hồ sơ
-          </div>
+          {isAuth && (
+            <>
+              <div
+                className={clsx(
+                  "pointer py-3 px-2",
+                  curUrl === "/candidate/templates" && "text-main"
+                )}
+                onClick={() => handleChangePage("/candidate/templates")}
+              >
+                Hồ sơ
+              </div>
+              <div
+                className={clsx(
+                  "pointer py-3 px-2",
+                  curUrl === "/candidate/profile" && "text-main"
+                )}
+                onClick={() => handleChangePage("/candidate/profile")}
+              >
+                Profile
+              </div>
+            </>
+          )}
           <div className="me-auto"></div>
           {isLoadingAuth ? (
             <Placeholder animation="glow" style={{ marginRight: "40px" }}>
+              <Placeholder
+                className="rounded-circle"
+                style={{ width: "35px", height: "35px", marginRight: "14px" }}
+              />
               <Placeholder
                 className="rounded-circle me-3"
                 style={{ width: "35px", height: "35px" }}
@@ -179,7 +192,7 @@ function Layout(props) {
                 className="rounded-circle me-1"
                 style={{ width: "35px", height: "35px" }}
               />
-              <Placeholder style={{ width: "80px" }} />
+              <Placeholder style={{ width: "80px", height: "22px" }} />
             </Placeholder>
           ) : !isAuth ? (
             <div className="d-flex align-items-center fw-normal ts-md pointer">
@@ -204,12 +217,20 @@ function Layout(props) {
               className="d-flex align-items-center"
               style={{ marginRight: "40px" }}
             >
+              <CTooltip text="Việc làm đã lưu" placement="bottom">
+                <div>
+                  <AiOutlineHeart
+                    className="fs-3 me-3 pointer text-danger"
+                    onClick={() => handleChangePage("/candidate/saved-jobs")}
+                  />
+                </div>
+              </CTooltip>
               <div
                 className="position-relative"
                 onMouseLeave={() => setShowListMsg(false)}
               >
                 <BsBell
-                  className="fs-3 me-4 pointer"
+                  className="fs-3 me-4 pointer text-main"
                   onClick={() => setShowListMsg(true)}
                 />
                 {hasNew && (
@@ -246,7 +267,7 @@ function Layout(props) {
                   src={user_icon}
                   alt="user_icon"
                   style={{ width: "35px" }}
-                  className="rounded-pill border border-2"
+                  className="rounded-circle border border-main"
                 />
                 &nbsp;
                 <span
@@ -258,18 +279,20 @@ function Layout(props) {
                 </span>
                 <ul className="dropdown-menu">
                   <li>
-                    <Link className="dropdown-item" to="/candidate/profile">
-                      Tài khoản
-                    </Link>
+                    <div
+                      className="dropdown-item pointer"
+                      onClick={() => handleChangePage("/candidate/profile")}
+                    >
+                      Quản lý tài khoản
+                    </div>
                   </li>
                   <li>
-                    <button
-                      type="button"
-                      className="dropdown-item"
+                    <div
+                      className="dropdown-item pointer"
                       onClick={handleLogout}
                     >
                       Đăng xuất
-                    </button>
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -292,12 +315,12 @@ function Layout(props) {
               style={{ fontSize: "15.6px", paddingLeft: "27px" }}
             >
               <h5 className="text-main">Thông tin liên hệ</h5>
-              <p>Email: info@tuyendung.com</p>
-              <p>Điện thoại: 0333-555-789</p>
-              <p>
+              <div>Email: info@fastjob.com.vn</div>
+              <div className="mt-1">Điện thoại: 0333-555-789</div>
+              <div className="mt-1">
                 Địa chỉ: 05 Đường Trâu Quỳ, Thị trấn Trâu Quỳ, <br />
                 Huyện Gia Lâm, TP.Hà Nội
-              </p>
+              </div>
             </div>
             <div className="col-md-4" style={{ paddingLeft: "125px" }}>
               <h5 className="text-main">Chuyên mục</h5>
@@ -375,7 +398,7 @@ function Layout(props) {
             </div>
           </div>
           <hr />
-          <p className="text-center">© 2023 Tuyển dụng. All rights reserved.</p>
+          <p className="text-center">© 2023 FastJob. All rights reserved.</p>
         </div>
       </footer>
     </>

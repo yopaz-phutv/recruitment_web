@@ -6,3 +6,7 @@ export const emailjsConfig = {
     common: "template_3hu4j4r",
   },
 };
+
+export const hereMapConfig = {
+  apiKey: "6oHbb-JxL6jRASoosnCuzaDmWkAoeYkmbVlM9ewPd1s"
+}

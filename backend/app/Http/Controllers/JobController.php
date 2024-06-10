@@ -215,6 +215,7 @@ class JobController extends Controller
 
         return response()->json('applied successfully');
     }
+
     public function checkApplying($job_id)
     {
         $user = Auth::user();
@@ -227,5 +228,57 @@ class JobController extends Controller
         if ($res != null) {
             return response()->json(['value' => true]);
         } else return response()->json(['value' => false]);
+    }
+
+    public function getSimilarJobs($id)
+    {
+        $location_ids = Job::join('job_location', 'jobs.id', '=', 'job_id')
+            ->where('job_id', $id)
+            ->pluck('location_id');
+        $industry_ids = DB::table('job_industry')
+            ->where('job_id', $id)
+            ->pluck('industry_id');
+        $similar_jobs = Job::with('employer', 'locations')
+            ->join('job_industry', 'jobs.id', '=', 'job_industry.job_id')
+            ->join('job_location', 'jobs.id', '=', 'job_location.job_id')
+            ->whereIn('industry_id', $industry_ids)
+            ->whereIn('location_id', $location_ids)
+            ->where('jobs.id', '<>', $id)
+            ->select('jobs.*')
+            ->inRandomOrder()
+            ->take(5)
+            ->get();
+
+        return response()->json($similar_jobs);
+    }
+
+    public function getRecommendJobs()
+    {
+        $user_id = Auth::user()->id;
+        $candidate = Candidate::find($user_id);
+        $location_id = $candidate->location_id;
+        $industry_id = $candidate->desired_industry_id;
+        $jtype_id = $candidate->desired_jtype_id;
+        $jlevel_id = $candidate->desired_jlevel_id;
+
+        $query = Job::query()->with('employer', 'locations');
+        if ($location_id) {
+            $query->join('job_location', 'jobs.id', '=', 'job_location.job_id')
+                ->where('location_id', $location_id);
+        }
+        if ($industry_id) {
+            $query->join('job_industry', 'jobs.id', '=', 'job_industry.job_id')
+                ->where('industry_id', $industry_id);
+        }
+        if ($jtype_id) {
+            $query->where('jtype_id', $jtype_id);
+        }
+        if ($jlevel_id) {
+            $query->where('jlevel_id', $jlevel_id);
+        }
+
+        $jobs = $query->inRandomOrder()->take(6)->select('jobs.*')->get();
+
+        return response()->json($jobs);
     }
 }

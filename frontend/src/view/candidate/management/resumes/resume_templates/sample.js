@@ -12,7 +12,7 @@ export const sample = {
   },
   educations: [
     {
-      school: "Đại học Recruitment",
+      school: "Đại học FastJob",
       major: "QUẢN TRỊ DOANH NGHIỆP",
       start_date: new Date("2010-10"),
       end_date: new Date("2014-05"),

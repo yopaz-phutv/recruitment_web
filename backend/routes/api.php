@@ -93,6 +93,8 @@ Route::controller(JobController::class)->prefix('jobs')->group(function () {
     Route::get('{id}/getJobIndustries', 'getJobIndustries');
     Route::post('{id}/apply', 'apply')->middleware('jwt');
     Route::get('{id}/checkApplying', 'checkApplying')->middleware('jwt');
+    Route::get('{id}/getSimilarJobs', 'getSimilarJobs');
+    Route::get('getRecommendJobs', 'getRecommendJobs'); 
 });
 
 Route::controller(IndustryController::class)->prefix('industries')->group(function () {

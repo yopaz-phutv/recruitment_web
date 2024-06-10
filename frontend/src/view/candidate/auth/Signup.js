@@ -7,7 +7,7 @@ import { useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
 
 function Signup() {
-  const required_field = <span className="text-danger fw-bold">*</span>;
+  const required_field = <span className="text-danger fw-bold">&nbsp;*</span>;
 
   const {
     register,

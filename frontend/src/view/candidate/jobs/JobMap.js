@@ -4,6 +4,7 @@ import redLocationIcon from "../../../assets/images/icons/red_location.png";
 import greenLocationIcon from "../../../assets/images/icons/green_location.png";
 import { isNullObject } from "../../../common/functions";
 import dayjs from "dayjs";
+import { hereMapConfig } from "../../../services";
 
 export default function JobMap({
   className,
@@ -169,7 +170,7 @@ export default function JobMap({
   useEffect(() => {
     if (!curMap.current) {
       platform.current = new H.service.Platform({
-        apikey: "6oHbb-JxL6jRASoosnCuzaDmWkAoeYkmbVlM9ewPd1s",
+        apikey: hereMapConfig.apiKey,
       });
 
       var defaultLayers = platform.current.createDefaultLayers();
