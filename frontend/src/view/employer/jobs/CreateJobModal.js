@@ -66,7 +66,7 @@ export default function CreateJobModal({
       <Modal.Body className="mb-4">
         <form className="ms-3" onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <strong>Tên:</strong>
+            <strong>Tên việc làm:</strong>
             <input
               type="text"
               className="form-control w-50 mt-1"
@@ -124,7 +124,7 @@ export default function CreateJobModal({
             <span className="text-danger">Vui lòng chọn 1 lựa chọn</span>
           )}
           <div className="mt-2">
-            <strong>Cấp bậc:</strong>
+            <strong>Cấp bậc việc làm:</strong>
             <select
               className="form-select w-50 mt-1"
               {...register("jlevel_id", { required: true })}
@@ -169,7 +169,7 @@ export default function CreateJobModal({
             ) : null}
           </div>
           <div className="mt-2">
-            <strong>Địa chỉ:</strong>
+            <strong>Địa chỉ làm việc:</strong>
             <textarea
               rows="4"
               className="form-control mt-1 w-75"
@@ -196,7 +196,7 @@ export default function CreateJobModal({
           )}
           <div className="mt-2">
             <div className="d-flex align-items-center">
-              <strong>Lương:</strong>
+              <strong>Mức lương:</strong>
             </div>
             <div className="form-check mt-1">
               <input
@@ -285,12 +285,34 @@ export default function CreateJobModal({
           <div className="mt-2">
             <strong>Mô tả việc làm:</strong>
             <textarea
-              rows="13"
+              rows="10"
               className="form-control mt-1"
               style={{ width: "98%" }}
               placeholder="Nhập mô tả việc làm"
               required
               {...register("description")}
+            />
+          </div>
+          <div className="mt-2">
+            <strong>Yêu cầu ứng viên:</strong>
+            <textarea
+              rows="10"
+              className="form-control mt-1"
+              style={{ width: "98%" }}
+              placeholder="Nhập yêu cầu ứng viên"
+              required
+              {...register("requirements")}
+            />
+          </div>
+          <div className="mt-2">
+            <strong>Chế độ phúc lợi:</strong>
+            <textarea
+              rows="10"
+              className="form-control mt-1"
+              style={{ width: "98%" }}
+              placeholder="Nhập chế độ phúc lợi"
+              required
+              {...register("benefits")}
             />
           </div>
           <div className="mt-3 float-end">

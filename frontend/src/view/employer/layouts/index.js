@@ -90,7 +90,7 @@ function Layout(props) {
               onClick={() => handleChangePage("/employer")}
             >
               <AiFillAppstore className="fs-5 me-1" />
-              Dashboard
+              Tổng quan
             </div>
             <div
               className={clsx(

@@ -94,7 +94,7 @@ function Login() {
           {msg && <div className="text-danger text-center mt-2">{msg}</div>}
           <button
             type="submit"
-            className="btn btn-primary w-100 mt-3"
+            className="btn bg-main text-white w-100 mt-3"
             disabled={isLoading}
           >
             {isLoading && (

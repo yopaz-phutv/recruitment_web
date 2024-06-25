@@ -12,6 +12,7 @@ import CTooltip from "../../../components/CTooltip";
 import useGetJobsByEmployer from "../../../hooks/useGetJobsByEmployer";
 import StepTabs from "./StepTabs";
 import { isNullObject } from "../../../common/functions";
+import dayjs from "dayjs";
 
 function CandidateList() {
   // loc ho so theo: vi tri ung tuyen, tinh thanh,
@@ -43,7 +44,7 @@ function CandidateList() {
         job_id: curJob.id,
       };
       if (step === "step2") params.interview_round = curRound;
-      
+
       const res = await employerApi.getCandidateList(params);
       setCandidates(res);
     } catch (error) {
@@ -178,7 +179,9 @@ function CandidateList() {
                 <tr>
                   <th style={{ width: "17%" }}>Họ tên</th>
                   <th>Vị trí</th>
-                  <th style={{ width: "15%" }}>Thời gian</th>
+                  <th style={{ width: "12%" }}>
+                    {step === "step1" ? "Thời điểm nộp" : "Thời điểm cập nhật"}
+                  </th>
                   <th style={{ width: "12%" }}>Số điện thoại</th>
                   <th style={{ width: "18%" }}>Email</th>
                   {step === "step2" && <th>Vòng phỏng vấn</th>}
@@ -191,7 +194,11 @@ function CandidateList() {
                     <tr key={item.jname + item.phone}>
                       <td>{item.lastname + " " + item.firstname}</td>
                       <td>{item.jname}</td>
-                      <td>{item.appliedTime}</td>
+                      <td>
+                        {step === "step1"
+                          ? item.appliedTime
+                          : dayjs(item.updated_at).format("DD/MM/YYYY HH:mm")}
+                      </td>
                       <td>{item.phone}</td>
                       <td>{item.email}</td>
                       {step === "step2" && <td>{item.interview_round}</td>}

@@ -89,7 +89,7 @@ export default function EditJobModal({
       <Modal.Body className="mb-4">
         <form className="ms-3" onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <strong>Tên:</strong>
+            <strong>Tên việc làm:</strong>
             <input
               type="text"
               className="form-control w-50 mt-1"
@@ -236,7 +236,7 @@ export default function EditJobModal({
             )}
           </div>
           <div className="mt-2">
-            <strong>Địa chỉ:</strong>
+            <strong>Địa chỉ làm việc:</strong>
             <textarea
               rows="4"
               className="form-control mt-1 w-75"
@@ -266,9 +266,7 @@ export default function EditJobModal({
                 className="form-control ms-1 disabled-field"
                 style={{ width: "180px" }}
               >
-                {!watch("salaryOpt") && !inf.min_salary
-                  ? "Thỏa thuận"
-                  : null}
+                {!watch("salaryOpt") && !inf.min_salary ? "Thỏa thuận" : null}
                 {!watch("salaryOpt") && inf.min_salary ? (
                   <span>{inf.min_salary + "-" + inf.max_salary} triệu VND</span>
                 ) : null}
@@ -381,13 +379,33 @@ export default function EditJobModal({
             />
           </div>
           <div className="mt-2">
-            <strong>Mô tả việc làm:</strong>
+            <strong>Mô tả công việc:</strong>
             <textarea
-              rows="13"
+              rows="10"
               className="form-control mt-1"
               style={{ width: "98%" }}
               defaultValue={inf.description}
               {...register("description")}
+            />
+          </div>
+          <div className="mt-2">
+            <strong>Yêu cầu ứng viên:</strong>
+            <textarea
+              rows="10"
+              className="form-control mt-1"
+              style={{ width: "98%" }}
+              defaultValue={inf.requirements}
+              {...register("requirements")}
+            />
+          </div>
+          <div className="mt-2">
+            <strong>Chế độ phúc lợi:</strong>
+            <textarea
+              rows="10"
+              className="form-control mt-1"
+              style={{ width: "98%" }}
+              defaultValue={inf.benefits}
+              {...register("benefits")}
             />
           </div>
           <div className="mt-3 float-end">

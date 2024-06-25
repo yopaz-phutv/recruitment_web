@@ -117,7 +117,7 @@ function JobManagement() {
                 <th style={{ width: "25%" }}>Tên</th>
                 <th style={{ width: "13%" }}>Hình thức</th>
                 <th style={{ width: "13%" }}>Cấp bậc</th>
-                <th style={{ width: "15%" }}>Thời gian đăng</th>
+                <th style={{ width: "15%" }}>Thời điểm đăng</th>
                 <th style={{ width: "13%" }}>Thời hạn</th>
                 <th>Trạng thái</th>
                 <th>Hành động</th>

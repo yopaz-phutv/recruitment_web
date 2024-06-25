@@ -274,7 +274,7 @@ function JobList() {
                   className="form-select form-select-sm"
                   {...register("jlevel_id")}
                 >
-                  <option value="">Cấp bậc</option>
+                  <option value="">Cấp bậc việc làm</option>
                   {jlevels.map((item) => (
                     <option value={item.id} key={"jlevel" + item.id}>
                       {item.name}
@@ -374,7 +374,7 @@ function JobList() {
             <button
               id="job-filter-btn"
               type="button"
-              className="btn btn-sm border-0 bg-main text-white rounded-sm px-4"
+              className="btn btn-sm border-0 bg-main text-white rounded-sm px-3"
               onClick={handleSubmit(handleFilter)}
             >
               {isSearchLoading ? (
@@ -382,7 +382,7 @@ function JobList() {
               ) : (
                 <BsSearch className="fs-5" />
               )}
-              <span> Tìm kiếm</span>
+              <span>Tìm kiếm</span>
             </button>
           </div>
         </div>

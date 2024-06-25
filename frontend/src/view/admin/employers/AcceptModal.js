@@ -66,15 +66,14 @@ export default function AcceptModal({
       </Modal.Body>
       <Modal.Footer className="pt-0 pb-2 border-top-0 justify-center">
         <Button
-          variant="primary"
           disabled={isLoading}
-          className="w-50"
+          className="w-50 bg-main border-0"
           onClick={handleConfirm}
         >
           {isLoading && <Spinner size="sm" className="me-1" />}
           Xác nhận
         </Button>
-        <Button variant="danger" className="flex-fill" onClick={handleClose}>
+        <Button variant="secondary" className="flex-fill" onClick={handleClose}>
           Hủy
         </Button>
       </Modal.Footer>
