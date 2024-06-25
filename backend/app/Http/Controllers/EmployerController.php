@@ -156,7 +156,7 @@ class EmployerController extends Controller
             $status = ['WAITING', 'BROWSING_RESUME'];
         } else $status[] = $req->status;
 
-        $candidates = DB::table('job_applying')
+        $query = DB::table('job_applying')
             ->join('jobs', 'job_id', '=', 'jobs.id')
             ->join('candidates', 'candidate_id', '=', 'candidates.id')
             ->whereIn('status', $status)
@@ -170,10 +170,13 @@ class EmployerController extends Controller
                     $query->where('interview_round', $interview_round);
                 }
             )
+            ->when($req->filled('skill_text'), function ($query) use ($req) {
+                $query->whereRaw("MATCH(skill_text) AGAINST ('$req->skill_text' IN NATURAL LANGUAGE MODE)");
+            })
             ->selectRaw('job_applying.*, firstname, lastname, phone, email, jname, interview_round_num,
-                        DATE_FORMAT(job_applying.created_at, "%d/%m/%Y %H:%i") as appliedTime')
-            ->orderByDesc('job_applying.created_at')
-            ->get();
+                        DATE_FORMAT(job_applying.created_at, "%d/%m/%Y %H:%i") as appliedTime');
+        if (!$req->filled('skill_text')) $query->orderByDesc('job_applying.created_at');
+        $candidates = $query->get();
 
         return response()->json($candidates);
     }

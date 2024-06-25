@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 export default function TagInput({
   className,
-  maxTag = 10,
+  maxTag = 20,
   listWord = [],
   setListWord,
   placeholder,
@@ -12,16 +12,30 @@ export default function TagInput({
   const [curWord, setCurWord] = useState([]);
   const [showMaxTagMsg, setShowMaxTagMsg] = useState(false);
 
+  const displayMaxTagError = () => {
+    setShowMaxTagMsg(true);
+    setTimeout(() => {
+      setShowMaxTagMsg(false);
+    }, 2000);
+  };
+
   const handleEnter = (key) => {
     if (key === "Enter") {
       if (listWord.length === maxTag) {
-        setShowMaxTagMsg(true);
-        setTimeout(() => {
-          setShowMaxTagMsg(false);
-        }, 2000);
+        displayMaxTagError();
       } else {
         const listTemp = [...listWord];
-        listTemp.push(curWord);
+        if (curWord.includes(",")) {
+          let wordArr = curWord.split(",");
+          if (listWord.length + wordArr.length > maxTag) displayMaxTagError();
+          let possibleTagNum = maxTag - listWord.length;
+          if (possibleTagNum > 0) {
+            wordArr = wordArr.slice(0, possibleTagNum);
+            wordArr.forEach((word) => {
+              listTemp.push(word.trim());
+            });
+          }
+        } else listTemp.push(curWord);
         setListWord(listTemp);
       }
       document.getElementById("tag-input-part").value = "";

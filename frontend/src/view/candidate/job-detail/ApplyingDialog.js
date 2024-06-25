@@ -27,22 +27,34 @@ export default function AppyingDialog({
   const [curResume, setCurResume] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [useRecommendData, setUseRecommendData] = useState(false);
+  const [skillText, setSkillText] = useState(null);
+  const [isSubmit, setIsSubmit] = useState(false)
 
   const getFileInf = (e) => {
     setFile(e.target.files[0]);
   };
   const handleApply = async () => {
     try {
+      setIsSubmit(true)
       var next = true;
       const formData = new FormData();
 
       if (!useRecommendData) {
-        if (isUpload) formData.append("cv", file);
-        if (isOnline) formData.append("resume_id", curResume.id);
         if (isUpload) {
-          if (!file) next = false;
-        } else if (isOnline) {
+          if (!file || !skillText) next = false;
+          else {
+            formData.append("cv", file);
+
+            var formatedText = skillText.replaceAll('\n', ' ')
+            formatedText = formatedText.replaceAll('-', '')
+            formatedText = formatedText.replace(/\s+/g, ' ').trim()
+
+            formData.append("skill_text", formatedText);
+          }
+        }
+        if (isOnline) {
           if (!curResume) next = false;
+          else formData.append("resume_id", curResume.id);
         }
       } else {
         formData.append("resume_link", recommendData.resume_link);
@@ -60,7 +72,9 @@ export default function AppyingDialog({
       setIsLoading(true);
       await jobApi.apply(jobId, formData);
       toast.success("Ứng tuyển thành công!");
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       toast.error("Đã có lỗi xảy ra!");
     } finally {
@@ -89,19 +103,19 @@ export default function AppyingDialog({
   }, [curResume, file]);
 
   useEffect(() => {
-    setUseRecommendData(!isNullObject(recommendData))
-  }, [recommendData])
-  
+    setUseRecommendData(!isNullObject(recommendData));
+  }, [recommendData]);
+
   useEffect(() => {
-    console.log({useRecommendData});
-  }, [useRecommendData])
+    console.log({ useRecommendData });
+  }, [useRecommendData]);
 
   return (
     <Modal
       show={show}
       onHide={() => setShow(false)}
       size="lg"
-      fullscreen="md-down"
+      fullscreen="lg-down"
       scrollable
     >
       <Modal.Header
@@ -195,13 +209,30 @@ export default function AppyingDialog({
                   <BsUpload /> Tải lên hồ sơ có sẵn
                 </button>
                 {isUpload && (
-                  <div>
-                    <input
-                      type="file"
-                      className="form-control form-control-sm mt-3"
-                      onChange={getFileInf}
+                  <>
+                    <div>
+                      <input
+                        type="file"
+                        className="form-control form-control-sm mt-3"
+                        onChange={getFileInf}
+                      />
+                    </div>
+                    <Form.Group>
+                    <div className="mt-2 mb-1 ts-smd">
+                      Nhập mô tả các kỹ năng
+                    </div>
+                    <Form.Control
+                      as="textarea"
+                      size="sm"
+                      rows={6}
+                      placeholder="Vui lòng viết giống như trong file hồ sơ"
+                      style={{ width: "500px" }}
+                      onChange={(e) => setSkillText(e.target.value)}
+                      isInvalid={isSubmit && !skillText}
                     />
-                  </div>
+                    <Form.Control.Feedback type="invalid">Vui lòng điền vào trường này</Form.Control.Feedback>
+                    </Form.Group>
+                  </>
                 )}
               </div>
               {errorMsg && <div className="text-danger mt-2">{errorMsg}</div>}

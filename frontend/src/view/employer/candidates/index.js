@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import NotificationModal from "./NotificationModal";
 import employerApi from "../../../api/employer";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 import clsx from "clsx";
@@ -13,6 +14,8 @@ import useGetJobsByEmployer from "../../../hooks/useGetJobsByEmployer";
 import StepTabs from "./StepTabs";
 import { isNullObject } from "../../../common/functions";
 import dayjs from "dayjs";
+import TagInput from "../../../components/TagInput";
+import { toast } from "react-toastify";
 
 function CandidateList() {
   // loc ho so theo: vi tri ung tuyen, tinh thanh,
@@ -27,6 +30,8 @@ function CandidateList() {
   const [isLoading, setIsLoading] = useState(true);
   const [curJob, setCurJob] = useState({});
   const [curRound, setCurRound] = useState(1);
+  const [skills, setSkills] = useState([]);
+  const [openFilter, setOpenFilter] = useState(false);
 
   const makeTabStyle = (tabName) => {
     return clsx(
@@ -43,6 +48,13 @@ function CandidateList() {
         status,
         job_id: curJob.id,
       };
+      if (openFilter && skills.length > 0) {
+        let skillText = "";
+        skills.forEach((item) => {
+          skillText += item + " ";
+        });
+        params.skill_text = skillText;
+      }
       if (step === "step2") params.interview_round = curRound;
 
       const res = await employerApi.getCandidateList(params);
@@ -71,6 +83,10 @@ function CandidateList() {
       setCurCandidate({ ...candidate, actType, step });
       setShowDialog(true);
     }
+  };
+
+  const handleFilter = async () => {
+    await getCandidateList();
   };
 
   useEffect(() => {
@@ -158,9 +174,44 @@ function CandidateList() {
                     ))}
                   </Form.Select>
                 </CTooltip>
+                {step === "step1" && status !== "RESUME_FAILED" ? (
+                  <div
+                    onClick={() => {
+                      if (isNullObject(curJob))
+                        toast.error("Vui lòng chọn vị trí việc làm cụ thể!");
+                    }}
+                  >
+                    <Form.Check
+                      type="switch"
+                      label="Sắp xếp theo mức độ phù hợp"
+                      className="ts-smd ms-2 pt-1"
+                      disabled={isNullObject(curJob)}
+                      checked={openFilter}
+                      onClick={() => setOpenFilter(!openFilter)}
+                    />
+                  </div>
+                ) : null}
               </div>
             )}
           </Form>
+          {step === "step1" && status !== "RESUME_FAILED" && openFilter ? (
+            <div className="w-90 d-flex align-items-start gap-2 mt-2">
+              <TagInput
+                size="sm"
+                listWord={skills}
+                setListWord={setSkills}
+                placeholder="Nhập các kỹ năng"
+              />
+              <Button
+                type="button"
+                size="sm"
+                className="w-15 bg-main border-0"
+                onClick={handleFilter}
+              >
+                Sắp xếp
+              </Button>
+            </div>
+          ) : null}
           {step === "step2" &&
           status === "BROWSING_INTERVIEW" &&
           !isNullObject(curJob) &&
@@ -191,7 +242,7 @@ function CandidateList() {
               {!isLoading && (
                 <tbody className="ts-sm">
                   {candidates.map((item) => (
-                    <tr key={item.jname + item.phone}>
+                    <tr key={item.id}>
                       <td>{item.lastname + " " + item.firstname}</td>
                       <td>{item.jname}</td>
                       <td>

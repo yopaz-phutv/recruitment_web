@@ -6,6 +6,7 @@ use App\Models\Candidate;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\JobApplying;
+use App\Models\Resume;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -197,21 +198,29 @@ class JobController extends Controller
         ]);
 
         $url = "";
+        $skill_text = "";
         if ($use_suitable_resume == 1) {
             $new_path = "applied_resumes/applied_resume_{$new_applying->id}.png";
             Storage::copy("suitable_resumes/suitable_resume_{$req->candidate_bookmark_id}.png", $new_path);
             $url = getViewLinkFromGgStorageUrl(Storage::url($new_path));
         } else {
-            if ($req->hasFile('cv'))
+            if ($req->hasFile('cv')){
                 $url = uploadFile2GgDrive($req->cv, 'applied_resumes');
+                $skill_text = $req->skill_text;
+            }
             else if ($req->has('resume_id')) {
                 $new_path = "applied_resumes/applied_resume_{$new_applying->id}.png";
                 Storage::copy("resumes/resume_{$req->resume_id}.png", $new_path);
                 $url = getViewLinkFromGgStorageUrl(Storage::url($new_path));
+                $skill_text = Resume::find($req->resume_id)->skill_text;
             }
         }
 
-        JobApplying::where('id', $new_applying->id)->update(['resume_link' => $url]);
+        JobApplying::where('id', $new_applying->id)
+            ->update([
+                'resume_link' => $url,
+                'skill_text' => $skill_text
+            ]);
 
         return response()->json('applied successfully');
     }
