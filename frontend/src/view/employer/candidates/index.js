@@ -16,6 +16,7 @@ import { isNullObject } from "../../../common/functions";
 import dayjs from "dayjs";
 import TagInput from "../../../components/TagInput";
 import { toast } from "react-toastify";
+import CPagination from "../../../components/CPagination";
 
 function CandidateList() {
   // loc ho so theo: vi tri ung tuyen, tinh thanh,
@@ -32,6 +33,8 @@ function CandidateList() {
   const [curRound, setCurRound] = useState(1);
   const [skills, setSkills] = useState([]);
   const [openFilter, setOpenFilter] = useState(false);
+  const [totalPage, setTotalPage] = useState(1);
+  const [curPage, setCurPage] = useState(1);
 
   const makeTabStyle = (tabName) => {
     return clsx(
@@ -41,12 +44,13 @@ function CandidateList() {
         : "text-secondary"
     );
   };
-  const getCandidateList = async () => {
+  const getCandidateList = async (page = 1) => {
     try {
       setIsLoading(true);
       let params = {
+        page,
         status,
-        job_id: curJob.id,
+        job_id: curJob.id,        
       };
       if (openFilter && skills.length > 0) {
         let skillText = "";
@@ -58,7 +62,8 @@ function CandidateList() {
       if (step === "step2") params.interview_round = curRound;
 
       const res = await employerApi.getCandidateList(params);
-      setCandidates(res);
+      setCandidates(res.data);
+      setTotalPage(res.last_page);
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -90,7 +95,10 @@ function CandidateList() {
   };
 
   useEffect(() => {
-    if (isAuth) getCandidateList();
+    if (isAuth) {
+      setCurPage(1); // only displaying, not logic
+      getCandidateList();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, status, curJob, curRound]);
 
@@ -293,8 +301,16 @@ function CandidateList() {
             </table>
             {isLoading ? (
               <Loading />
+            ) : candidates.length === 0 ? (
+              <h5>Không có bản ghi nào</h5>
             ) : (
-              candidates.length === 0 && <h5>Không có bản ghi nào</h5>
+              <CPagination
+                className="justify-content-center"
+                totalPage={totalPage}
+                curPage={curPage}
+                setCurPage={setCurPage}
+                getList={getCandidateList}
+              />
             )}
             {showDialog && (
               <NotificationModal

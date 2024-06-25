@@ -176,7 +176,7 @@ class EmployerController extends Controller
             ->selectRaw('job_applying.*, firstname, lastname, phone, email, jname, interview_round_num,
                         DATE_FORMAT(job_applying.created_at, "%d/%m/%Y %H:%i") as appliedTime');
         if (!$req->filled('skill_text')) $query->orderByDesc('job_applying.created_at');
-        $candidates = $query->get();
+        $candidates = $query->paginate(3);
 
         return response()->json($candidates);
     }
