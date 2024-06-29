@@ -72,7 +72,7 @@ class PrizeController extends Controller
 
         $file = $req->file('image');
         if ($file) {
-            foreach (['png', 'jpg', 'jpeg'] as $ext) {
+            foreach (['png', 'jpg', 'jpeg', 'webp'] as $ext) {
                 $path = 'prizes/prize_' . $req->id . '.' . $ext;
                 if (Storage::fileExists($path))
                     Storage::delete($path);

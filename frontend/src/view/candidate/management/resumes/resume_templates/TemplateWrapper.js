@@ -50,7 +50,7 @@ export default function TemplateWrapper({
 
   useEffect(() => {
     if (mode) setCvMode(mode);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { id } = useParams(); //resume ID if exist
@@ -111,8 +111,9 @@ export default function TemplateWrapper({
   const getEditResume = async () => {
     let res = await resumeApi.getById(id);
     const avatar = await resumeApi.getAvatar(id);
-    if (Object.keys(avatar).length !== 0) {
-      res.basicInfor = { ...res.basicInfor, avatar };
+    res.basicInfor = { ...res.basicInfor, avatar };
+    if (Object.keys(avatar).length === 0) {
+      delete res.basicInfor.avatar;
     }
     const partsOrder = JSON.parse(res.parts_order);
     const templateStyle = JSON.parse(res.style);
@@ -310,7 +311,6 @@ export default function TemplateWrapper({
         dob,
         template_id: templateId,
         parts_order: JSON.stringify(parts),
-        avatar: !avatarFile && cvMode === "CREATE_1" ? personal.avatar : null,
         skill_text: skillText,
         style: JSON.stringify(style),
       },
@@ -323,6 +323,10 @@ export default function TemplateWrapper({
       activities: isPresentInParts("activity") ? activities : null,
       others: isPresentInParts("other") ? others : null,
     };
+    if (!avatarFile && cvMode === "CREATE_1") {
+      postData.basicInfor.profile_avatar = personal.avatar;
+      // postData.basicInfor.avatar_url = personal.avatar_url;
+    }
 
     const formData = new FormData();
     if (cvMode === "EDIT") postData = { ...postData, resume_id: id };
@@ -418,7 +422,7 @@ export default function TemplateWrapper({
     if (cvMode === "READ") {
       setStyle(curTemplate.defaultStyle);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cvMode]);
 
   useEffect(() => {

@@ -26,11 +26,7 @@ export default function CandidateItem({
         >
           <div className="w-25">
             <img
-              src={
-                !resume.avtSrc || isNullObject(resume.avtSrc)
-                  ? defaultAvt
-                  : resume.avtSrc
-              }
+              src={resume.avatar_url || defaultAvt}
               alt=""
               className="w-100 h-100"
               style={{ objectFit: "cover", aspectRatio: "1/1" }}

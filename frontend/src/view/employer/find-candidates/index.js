@@ -69,11 +69,11 @@ export default function FindingCandidates() {
     setResumes(resumeList);
     setTotalResumes(res.total);
     setTotalPage(res.last_page);
-    for (let i = 0; i < resumeList.length; i++) {
-      const avtSrc = await resumeApi.getAvatar(resumeList[i].id);
-      resumeList[i].avtSrc = avtSrc.length === 0 ? null : avtSrc;
-    }
-    setResumes(resumeList);
+    // for (let i = 0; i < resumeList.length; i++) {
+    //   const avtSrc = await resumeApi.getAvatar(resumeList[i].id);
+    //   resumeList[i].avtSrc = avtSrc.length === 0 ? null : avtSrc;
+    // }
+    // setResumes(resumeList);
   };
 
   const onSubmit = async (data) => {

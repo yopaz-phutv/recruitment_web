@@ -80,7 +80,7 @@ function JobManagement() {
         style={{ height: "92.5%" }}
       >
         <div className="pt-3" style={{ marginLeft: "45px" }}>
-          <h4 className="text-main">Danh sách việc làm</h4>
+          <h4 className="text-main">Quản lý việc làm</h4>
           <div className="clearfix my-3" style={{ width: "93%" }}>
             <form
               className="float-start"

@@ -38,10 +38,12 @@ class ResumeController extends Controller
     {
         $resume = Resume::find($id);
         if (!empty($resume)) {
-            if ($resume->avatar)
+            if ($resume->avatar && Storage::exists($resume->avatar)) {
                 return Storage::get($resume->avatar);
-            else return response()->json(null);
-        } else return response()->json(null);
+            }
+        }
+
+        return response()->json(null);
     }
     public function create(Request $req)
     {
@@ -51,20 +53,39 @@ class ResumeController extends Controller
         $other_data = json_decode($req->otherData);
         $resume_fields = (array)$other_data->basicInfor;
         $resume_fields['candidate_id'] = $candidate_id;
-        $avatar = $resume_fields['avatar'];
-        unset($resume_fields['avatar']);
+        $profile_avatar = $resume_fields['profile_avatar'] ?? null;
+        unset($resume_fields['profile_avatar']);
+        // if ($use_profile_avatar) {
+        //     $resume_fields['avatar'] = 'candidate_avatars/avatar_' . $candidate_id . '_0';
+        // }
 
         $resume = Resume::create($resume_fields);
         $resume_id = $resume->id;
         //save avatar file content to gg drive
         $filename = 'avatar_' . $candidate_id . '_' . $resume_id;
         if ($avatar_file) {
+            $ext = $avatar_file->getClientOriginalExtension();
             $path = uploadFile2GgDrive($avatar_file, 'candidate_avatars', $filename, ['isText' => true]);
-            Resume::where('id', $resume_id)->update(['avatar' => $path]);
-        } else if ($avatar) {
+            $url = uploadFile2GgDrive($avatar_file, 'candidate_avatars', $filename . '.' . $ext, ['isImage' => true]);
+            Resume::where('id', $resume_id)->update(
+                [
+                    'avatar' => $path,
+                    'avatar_url' => $url
+                ]
+            );
+        } else if ($profile_avatar) {
             $path = 'candidate_avatars/' . $filename;
-            Storage::put($path, $avatar);
-            Resume::where('id', $resume_id)->update(['avatar' => $path]);
+            Storage::put($path, $profile_avatar);
+            $profile_avatar_path = 'candidate_avatars/avatar_' . $candidate_id . '_0';
+            $ext = checkImageExists($profile_avatar_path);
+            if($ext) {
+                Storage::copy($profile_avatar_path . '.' . $ext, $path . '.' . $ext);
+                $url = getImageLinkFromGgStorageUrl(Storage::url($path . '.' . $ext));
+            }
+            Resume::where('id', $resume_id)->update([
+                'avatar' => $path,
+                'avatar_url' => $url
+            ]);
         }
         //save resume file to gg drive
         if ($resume_file) {
@@ -160,19 +181,23 @@ class ResumeController extends Controller
         $other_data = json_decode($req->otherData);
         $resume_fields = (array)$other_data->basicInfor;
         $resume_id = $other_data->resume_id;
-        $avatar = $resume_fields['avatar'];
-        unset($resume_fields['avatar']);
 
         //save avatar file content to gg drive
         $filename = 'avatar_' . $candidate_id . '_' . $resume_id;
         if ($avatar_file) {
+            //delete old avatar image:
+            deleteGgImage('candidate_avatars/avatar_' . $candidate_id . '_' . $resume_id);
+            $ext = $avatar_file->getClientOriginalExtension();
             $path = uploadFile2GgDrive($avatar_file, 'candidate_avatars', $filename, ['isText' => true]);
+            $url = uploadFile2GgDrive($avatar_file, 'candidate_avatars', $filename . '.' . $ext, ['isImage' => true]);
             $resume_fields['avatar'] = $path;
-        } else if ($avatar) {
-            $path = 'candidate_avatars/' . $filename;
-            Storage::put($path, $avatar);
-            $resume_fields['avatar'] = $path;
+            $resume_fields['avatar_url'] = $url;
         }
+        //  else if ($avatar) {
+        //     $path = 'candidate_avatars/' . $filename;
+        //     Storage::put($path, $avatar);
+        //     $resume_fields['avatar'] = $path;
+        // }
         //save resume file to gg drive
         if ($resume_file) {
 
@@ -222,6 +247,8 @@ class ResumeController extends Controller
     }
     public function destroy($id)
     {
+        $candidate_id = Auth::user()->id;
+
         Resume::findOrFail($id)->delete();
         Education::where('resume_id', $id)->delete();
         Experience::where('resume_id', $id)->delete();
@@ -231,6 +258,8 @@ class ResumeController extends Controller
         Prize::where('resume_id', $id)->delete();
         Activity::where('resume_id', $id)->delete();
         Other::where('resume_id', $id)->delete();
+        deleteGgImage('resumes/resume_' . $id);
+        deleteGgImage("candidate_avatars/avatar_{$candidate_id}_{$id}");
 
         return response()->json("deleted successfully");
     }

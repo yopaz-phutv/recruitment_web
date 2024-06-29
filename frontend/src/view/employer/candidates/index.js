@@ -50,7 +50,7 @@ function CandidateList() {
       let params = {
         page,
         status,
-        job_id: curJob.id,        
+        job_id: curJob.id,
       };
       if (openFilter && skills.length > 0) {
         let skillText = "";
@@ -109,7 +109,7 @@ function CandidateList() {
         style={{ height: "95%" }}
       >
         <h4 className="mb-0 text-main" style={{ marginLeft: "45px" }}>
-          Danh sách ứng viên
+          Quản lý ứng viên
         </h4>
         <Tab.Container onSelect={(k) => setStep(k)}>
           <Nav className="mx-auto pb-1 justify-content-center">
@@ -132,8 +132,8 @@ function CandidateList() {
         </Tab.Container>
         <div className="mt-1" style={{ marginLeft: "45px" }}>
           <Form>
-            {step !== "step3" && (
-              <div className="d-flex gap-2 mt-2 ts-smd">
+            <div className="d-flex gap-2 mt-2 ts-smd">
+              {step !== "step3" && (
                 <CTooltip text="Trạng thái">
                   <Form.Select
                     size="sm"
@@ -143,7 +143,7 @@ function CandidateList() {
                   >
                     {step === "step1" && (
                       <>
-                        <option value="WAITING">Chưa duyệt hồ sơ</option>
+                        <option value="WAITING">Đang duyệt hồ sơ</option>
                         <option value="RESUME_FAILED">Hồ sơ bị loại</option>
                       </>
                     )}
@@ -159,48 +159,48 @@ function CandidateList() {
                     )}
                   </Form.Select>
                 </CTooltip>
-                <CTooltip text="Vị trí việc làm">
-                  <Form.Select
-                    size="sm"
-                    style={{ width: "290px" }}
-                    onChange={(e) =>
-                      setCurJob(
-                        jobs.find((job) => job.id === Number(e.target.value)) ||
-                          {}
-                      )
-                    }
-                  >
-                    <option value="">Tất cả vị trí</option>
-                    {jobs.map((job) => (
-                      <option
-                        key={job.id}
-                        value={job.id}
-                        selected={job.id === curJob.id}
-                      >
-                        {job.jname}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </CTooltip>
-                {step === "step1" && status !== "RESUME_FAILED" ? (
-                  <div
-                    onClick={() => {
-                      if (isNullObject(curJob))
-                        toast.error("Vui lòng chọn vị trí việc làm cụ thể!");
-                    }}
-                  >
-                    <Form.Check
-                      type="switch"
-                      label="Sắp xếp theo mức độ phù hợp"
-                      className="ts-smd ms-2 pt-1"
-                      disabled={isNullObject(curJob)}
-                      checked={openFilter}
-                      onClick={() => setOpenFilter(!openFilter)}
-                    />
-                  </div>
-                ) : null}
-              </div>
-            )}
+              )}
+              <CTooltip text="Vị trí việc làm">
+                <Form.Select
+                  size="sm"
+                  style={{ width: "290px" }}
+                  onChange={(e) =>
+                    setCurJob(
+                      jobs.find((job) => job.id === Number(e.target.value)) ||
+                        {}
+                    )
+                  }
+                >
+                  <option value="">Tất cả vị trí</option>
+                  {jobs.map((job) => (
+                    <option
+                      key={job.id}
+                      value={job.id}
+                      selected={job.id === curJob.id}
+                    >
+                      {job.jname}
+                    </option>
+                  ))}
+                </Form.Select>
+              </CTooltip>
+              {step === "step1" && status !== "RESUME_FAILED" ? (
+                <div
+                  onClick={() => {
+                    if (isNullObject(curJob))
+                      toast.error("Vui lòng chọn vị trí việc làm cụ thể!");
+                  }}
+                >
+                  <Form.Check
+                    type="switch"
+                    label="Sắp xếp theo mức độ phù hợp"
+                    className="ts-smd ms-2 pt-1"
+                    disabled={isNullObject(curJob)}
+                    checked={openFilter}
+                    onClick={() => setOpenFilter(!openFilter)}
+                  />
+                </div>
+              ) : null}
+            </div>
           </Form>
           {step === "step1" && status !== "RESUME_FAILED" && openFilter ? (
             <div className="w-90 d-flex align-items-start gap-2 mt-2">

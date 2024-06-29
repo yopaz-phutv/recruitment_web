@@ -91,12 +91,11 @@ export default function PersonalInforFormDialog({
       formData.append("address", data.address);
       formData.append("location_id", data.location_id);
       formData.append("link", data.link);
-      formData.append("objective", data.objective);
-      if (hasImg) {
-        formData.append("image", data.image[0]);
-      }
+      formData.append("objective", data.objective);      
       if (isDeleteImg) {
         formData.append("delete_img", 1);
+      } else if (hasImg) {
+        formData.append("image", data.image[0]);
       }
 
       if (data.desired_job) formData.append("desired_job", data.desired_job);
@@ -153,9 +152,8 @@ export default function PersonalInforFormDialog({
                 <img
                   src={personal.avatar}
                   alt=""
-                  width="100%"
-                  height="100%"
-                  className="rounded-pill avatar-img"
+                  className="rounded-pill avatar-img w-100 h-100"
+                  style={{ objectFit: "cover" }}
                 />
               ) : (
                 <FaUser

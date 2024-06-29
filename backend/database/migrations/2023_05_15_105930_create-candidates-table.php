@@ -24,6 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('location_id')->nullable();
             $table->text('link')->nullable();
             $table->text('avatar')->nullable();
+            $table->text('avatar_url')->nullable();
             $table->text('objective')->nullable();
             $table->string('desired_job', 100)->nullable();
             $table->unsignedBigInteger('desired_industry_id')->nullable();

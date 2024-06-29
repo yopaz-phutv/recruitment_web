@@ -53,7 +53,7 @@ class EmployerController extends Controller
         if ($req->hasFile('logo_file')) {
             $logo_file = $req->file('logo_file');
             //delete old logo:
-            foreach (['png', 'jpg', 'jpeg'] as $ext) {
+            foreach (['png', 'jpg', 'jpeg', 'webp'] as $ext) {
                 $path = 'employer_logos/logo_' . $employer_id . '.' . $ext;
                 if (Storage::fileExists($path))
                     Storage::delete($path);
@@ -65,7 +65,7 @@ class EmployerController extends Controller
         if ($req->hasFile('image_file')) {
             $image_file = $req->file('image_file');
             //delete old image:
-            foreach (['png', 'jpg', 'jpeg'] as $ext) {
+            foreach (['png', 'jpg', 'jpeg', 'webp'] as $ext) {
                 $path = 'employer_images/image_' . $employer_id . '.' . $ext;
                 if (Storage::fileExists($path))
                     Storage::delete($path);

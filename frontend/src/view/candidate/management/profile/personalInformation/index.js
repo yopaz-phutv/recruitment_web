@@ -36,9 +36,8 @@ export default function PersonalInfor() {
                 <img
                   src={personal.avatar}
                   alt="image_error"
-                  width="100%"
-                  height="100%"
-                  className="rounded-pill avatar-img"
+                  className="rounded-pill avatar-img w-100 h-100"
+                  style={{ objectFit: "cover" }}
                 />
               ) : (
                 <FaUser

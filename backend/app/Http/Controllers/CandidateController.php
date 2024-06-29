@@ -53,18 +53,20 @@ class CandidateController extends Controller
 
         $file = $req->file('image');
         if ($file) {
+            $ext = $file->getClientOriginalExtension();
             //delete old avatar image:
-            foreach (['png', 'jpg', 'jpeg', ''] as $ext) {
-                $path = 'candidate_avatars/avatar_' . $id . '_0.' . $ext;
-                if (Storage::fileExists($path))
-                    Storage::delete($path);
-            }
+            deleteGgImage('candidate_avatars/avatar_' . $id . '_0');
+
             $filename = 'avatar_' . $id . '_0';
             $path = uploadFile2GgDrive($file, 'candidate_avatars', $filename, ['isText' => true]);
+            $url = uploadFile2GgDrive($file, 'candidate_avatars', $filename . '.' . $ext, ['isImage' => true]);
             $candidate->avatar = $path;
+            $candidate->avatar_url = $url;
         }
         if ($req->delete_img) {
-            $candidate->avatar = NULL;
+            deleteGgImage('candidate_avatars/avatar_' . $id . '_0');
+            $candidate->avatar = null;
+            $candidate->avatar_url = null;
         }
         $candidate->save();
 

@@ -12,6 +12,7 @@ import { CandidateContext } from "../layouts";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import Loading from "../../../../components/Loading";
+import Spinner from "react-bootstrap/Spinner";
 
 export default function Resume() {
   const { setCvMode } = useContext(CandidateContext);
@@ -19,6 +20,8 @@ export default function Resume() {
   const isAuth = useSelector((state) => state.candAuth.isAuth);
   const [resumes, setResumes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const [curResumeId, setCurResumeId] = useState(null);
 
   const getResumes = async () => {
     try {
@@ -43,14 +46,18 @@ export default function Resume() {
   };
 
   const handleDelete = async (id) => {
+    setCurResumeId(id);
     const choice = window.confirm("Bạn có chắc muốn xóa bản ghi này?");
     if (choice) {
       try {
+        setIsDeleteLoading(true);
         await resumeApi.destroy(id);
         toast.success("Xóa bản ghi thành công!");
         await getResumes();
       } catch (error) {
         toast.error("Đã có lỗi xảy ra!");
+      } finally {
+        setIsDeleteLoading(false);
       }
     }
   };
@@ -95,29 +102,36 @@ export default function Resume() {
                   <td className="ts-smd">
                     {dayjs(item.updated_at).format("H:mm DD/MM/YYYY")}
                   </td>
-                  <td className="ts-lg">
-                    <div className="d-flex gap-3 align-items-center">
-                      <a
-                        href={item.resume_link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="d-block"
-                      >
-                        <BsEye
-                          className="text-main pointer"
-                          style={{ marginBottom: "2px" }}
+                  <td>
+                    {isDeleteLoading && item.id === curResumeId ? (
+                      <div>
+                        <Spinner variant="primary" size="sm" className="me-1" />
+                        <span className="text-secondary">Đang xóa</span>
+                      </div>
+                    ) : (
+                      <div className="d-flex gap-3 align-items-center ts-lg">
+                        <a
+                          href={item.resume_link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="d-block"
+                        >
+                          <BsEye
+                            className="text-main pointer"
+                            style={{ marginBottom: "2px" }}
+                          />
+                        </a>
+                        <MdEdit
+                          className="text-primary pointer"
+                          onClick={() => handleEdit(item)}
                         />
-                      </a>
-                      <MdEdit
-                        className="text-primary pointer"
-                        onClick={() => handleEdit(item)}
-                      />
-                      <BsTrash3
-                        className="text-danger pointer"
-                        fontSize="16px"
-                        onClick={() => handleDelete(item.id)}
-                      />
-                    </div>
+                        <BsTrash3
+                          className="text-danger pointer"
+                          fontSize="16px"
+                          onClick={() => handleDelete(item.id)}
+                        />
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}

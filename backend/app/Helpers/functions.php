@@ -4,14 +4,13 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-function getCurUser(int $role) : object
+function getCurUser(int $role): object
 {
     $user = Auth::user();
 
     if ($user->role != $role) {
         throw new Exception('no permission', 405);
-    }
-    else return $user;
+    } else return $user;
 }
 function array2String($arr)
 {
@@ -65,10 +64,39 @@ function uploadFile2GgDrive(
     return $ret;
 }
 
-function getViewLinkFromGgStorageUrl($url) {
+function getViewLinkFromGgStorageUrl($url)
+{
     $start = strpos($url, 'id=') + strlen('id=');
     $end = strpos($url, '&export=media');
     $fileId = substr($url, $start, $end - $start);
 
     return 'https://drive.google.com/file/d/' . $fileId . '/view';
+}
+function getImageLinkFromGgStorageUrl($url)
+{
+    $start = strpos($url, 'id=') + strlen('id=');
+    $end = strpos($url, '&export=media');
+    $fileId = substr($url, $start, $end - $start);
+
+    return "https://lh3.googleusercontent.com/d/{$fileId}?authuser=0";
+}
+
+function deleteGgImage($_path)
+{
+    foreach (['png', 'jpg', 'jpeg', 'webp', ''] as $ext) {
+        if ($ext) $path = $_path . '.' . $ext;
+        else $path = $_path;
+        if (Storage::fileExists($path))
+            Storage::delete($path);
+    }
+}
+function checkImageExists($_path)
+{
+    foreach (['png', 'jpg', 'jpeg', 'webp', ''] as $ext) {
+        if ($ext) $path = $_path . '.' . $ext;
+        else $path = $_path;
+        if (Storage::fileExists($path)) return $ext;
+    }
+
+    return false;
 }

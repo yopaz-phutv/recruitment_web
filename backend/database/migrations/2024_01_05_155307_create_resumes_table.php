@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->text('link')->nullable();
             $table->text('avatar')->nullable();
+            $table->text('avatar_url')->nullable();
             $table->text('objective')->nullable();
             $table->string('personalTitle', 60)->nullable();
             $table->string('objectiveTitle', 60)->nullable();
@@ -38,7 +39,7 @@ return new class extends Migration
             $table->text('resume_link')->nullable();
             $table->json('parts_order')->nullable();
             $table->text('skill_text')->nullable();
-            $table->json('style')->nullable();            
+            $table->json('style')->nullable();
             $table->timestamps();
         });
     }

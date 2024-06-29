@@ -963,15 +963,18 @@ export default function Template8() {
             onChange={(e) => handleDisplayImg(e)}
             disabled={cvMode === "READ"}
           />
-          <img
-            id="cv-avatar"
-            src={basicInfor.avatar || defaultAvt}
-            alt="avatar"
-            width="180px"
-            height="186px"
-            className={clsx(cvMode !== "READ" && "pointer")}
-            onClick={() => document.getElementById("cv-avatar-upload").click()}
-          />
+          <div style={{ width: "180px", height: "186px" }}>
+            <img
+              id="cv-avatar"
+              src={basicInfor.avatar || defaultAvt}
+              alt="avatar"
+              className={clsx("w-100 h-100", cvMode !== "READ" && "pointer")}
+              style={{ objectFit: "cover" }}
+              onClick={() =>
+                document.getElementById("cv-avatar-upload").click()
+              }
+            />
+          </div>
           <FlexInput
             disabled={cvMode === "READ"}
             placeholder="HỌ TÊN"
