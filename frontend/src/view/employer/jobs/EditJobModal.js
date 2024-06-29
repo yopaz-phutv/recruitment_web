@@ -245,6 +245,28 @@ export default function EditJobModal({
               {...register("address")}
             />
           </div>
+          <div className="mt-2 d-inline-block">
+            <strong>Vĩ độ:</strong>
+            <input
+              type="text"
+              className="form-control mt-1"
+              placeholder="Nhập vĩ độ địa lý"
+              defaultValue={inf.latitude}
+              required
+              {...register("latitude")}
+            />
+          </div>
+          <div className="mt-2 d-inline-block ms-4">
+            <strong>Kinh độ:</strong>
+            <input
+              type="text"
+              className="form-control mt-1"
+              placeholder="Nhập kinh độ địa lý"
+              defaultValue={inf.longitude}
+              required
+              {...register("longitude")}
+            />
+          </div>
           <div className="mt-2 d-flex align-items-center">
             <strong>Số lượng tuyển:</strong>
             <input

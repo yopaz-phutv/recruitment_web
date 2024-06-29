@@ -178,9 +178,29 @@ export default function CreateJobModal({
               {...register("address")}
             />
           </div>
-          {errors.jlevel_id && (
+          <div className="mt-2 d-inline-block">
+            <strong>Vĩ độ:</strong>
+            <input
+              type="text"
+              className="form-control mt-1"
+              placeholder="Nhập vĩ độ địa lý"
+              required
+              {...register("latitude")}
+            />
+          </div>
+          <div className="mt-2 d-inline-block ms-4">
+            <strong>Kinh độ:</strong>
+            <input
+              type="text"
+              className="form-control mt-1"
+              placeholder="Nhập kinh độ địa lý"
+              required
+              {...register("longitude")}
+            />
+          </div>
+          {/* {errors.jlevel_id && (
             <span className="text-danger">Vui lòng chọn 1 lựa chọn</span>
-          )}
+          )} */}
           <div className="mt-2 d-flex align-items-center">
             <strong>Số lượng tuyển:</strong>
             <input

@@ -355,7 +355,7 @@ function Job() {
               </Button>
             </div>
           </div>
-          <div className="mt-3 bg-white shadow-sm">
+          <div className="mt-4 bg-white shadow-sm">
             <div className="bg-main ts-lg text-white text-center border-bottom py-1">
               Việc làm tương tự
             </div>
