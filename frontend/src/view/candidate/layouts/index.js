@@ -85,6 +85,11 @@ function Layout(props) {
       const res = await authApi.getMe(1);
       dispatch(candAuthActions.setCurrentCandidate(res));
     } catch (error) {
+      if (error.response.data.message === "Token has expired") {
+        const res = await authApi.refresh(1);
+        localStorage.setItem("candidate_jwt", res.token)
+        window.location.reload()
+      }
     } finally {
       setIsLoadingAuth(false);
     }

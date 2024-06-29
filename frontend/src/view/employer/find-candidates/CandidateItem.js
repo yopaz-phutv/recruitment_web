@@ -3,7 +3,6 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import defaultAvt from "../../../assets/images/default-avatar.webp";
 import dayjs from "dayjs";
-import { isNullObject } from "../../../common/functions";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 export default function CandidateItem({

@@ -13,7 +13,6 @@ import useGetAllJtypes from "../../../hooks/useGetAllJtypes";
 import useGetAllJlevels from "../../../hooks/useGetAllJlevels";
 import { expLevel } from "../../../common/constant";
 import employerApi from "../../../api/employer";
-import resumeApi from "../../../api/resume";
 import CandidateItem from "./CandidateItem";
 import ResumeModal from "./ResumeModal";
 import { useLocation } from "react-router-dom";
