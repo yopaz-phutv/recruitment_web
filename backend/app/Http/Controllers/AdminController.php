@@ -29,7 +29,7 @@ class AdminController extends Controller
         $employers = $query->select(
             'employers.*',
             'email',
-            DB::raw('users.created_at as register_time '),
+            DB::raw('users.created_at as register_time, users.updated_at as update_time'),
             'is_active'
         )
         ->orderByDesc('register_time')

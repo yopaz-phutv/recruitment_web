@@ -35,7 +35,7 @@ export default function EmployerList() {
     const res = await adminApi.getEmployerList({
       ...status,
       page,
-      keyword
+      keyword,
     });
     setEmployers(res.data);
     setTotalPage(res.last_page);
@@ -168,11 +168,12 @@ export default function EmployerList() {
         <Table hover className="w-95 shadow-sm mt-3">
           <thead className="table-primary ts-smd">
             <tr>
-              <th className="fw-600 w-30">Tên</th>
+              <th className="fw-600 w-25">Tên</th>
               <th className="fw-600">Địa chỉ</th>
               <th className="fw-600">Email</th>
               <th className="fw-600">Điện thoại</th>
-              <th className="fw-600">Ngày đăng ký</th>
+              <th className="fw-600">Đăng ký lúc</th>
+              <th className="fw-600">Cập nhật lúc</th>
               {curTabInd === 0 && <th className="fw-600">Trạng thái</th>}
               <th className="fw-600">Hành động</th>
             </tr>
@@ -192,7 +193,12 @@ export default function EmployerList() {
                   </td>
                   <td>{item.email} </td>
                   <td>{item.phone} </td>
-                  <td>{dayjs(item.register_time).format("DD/MM/YYYY")}</td>
+                  <td style={{ fontSize: "13.75px" }}>
+                    {dayjs(item.register_time).format("DD/MM/YYYY HH:mm")}
+                  </td>
+                  <td style={{ fontSize: "13.75px" }}>
+                    {dayjs(item.update_time).format("DD/MM/YYYY HH:mm")}
+                  </td>
                   {curTabInd === 0 && (
                     <td>
                       <Form.Check

@@ -24,8 +24,16 @@ function Layout(props) {
     nav("/admin/login");
   };
   const getMe = async () => {
-    const res = await authApi.getMe(0);
-    dispatch(adminAuthActions.setUser(res));
+    try {
+      const res = await authApi.getMe(0);
+      dispatch(adminAuthActions.setUser(res));      
+    } catch (error) {
+      if (error.response.data.message === "Token has expired") {
+        const res = await authApi.refresh(0);
+        localStorage.setItem("admin_jwt", res.token)
+        window.location.reload()
+      }
+    }
   };
   const handleChangeUrl = (url) => {
     nav(url);
