@@ -339,6 +339,15 @@ class EducationSeeder extends Seeder
                 'end_date' => new Carbon('2024-08-09'),
                 'description' => 'Học chuyên ngành CNTT Việt Nhật'
             ],
+            [
+                'id' => 37,
+                'candidate_id' => 134,
+                'school' => 'Đại học Bách khoa Hà Nội',
+                'major' => 'Công nghệ thông tin',
+                'start_date' => new Carbon('2019-09-09'),
+                'end_date' => new Carbon('2024-08-09'),
+                'description' => 'Học chuyên ngành CNTT Việt Nhật'
+            ],
         ]);
     }
 }

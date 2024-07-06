@@ -949,58 +949,58 @@ export default function Template8() {
   };
 
   return (
-    <div
-      id="resume"
-      className="mx-auto border d-flex shadow-sm"
-      style={{ width: "800px" }}
-    >
-      <div className="bg-white ps-1 pe-2" style={{ width: "510px" }}>
-        <div className="mt-3 ms-3">
-          <input
-            id="cv-avatar-upload"
-            type="file"
-            className="d-none"
-            onChange={(e) => handleDisplayImg(e)}
-            disabled={cvMode === "READ"}
-          />
-          <div style={{ width: "180px", height: "186px" }}>
-            <img
-              id="cv-avatar"
-              src={basicInfor.avatar || defaultAvt}
-              alt="avatar"
-              className={clsx("w-100 h-100", cvMode !== "READ" && "pointer")}
-              style={{ objectFit: "cover" }}
-              onClick={() =>
-                document.getElementById("cv-avatar-upload").click()
-              }
+    <div className="mx-auto " style={{ width: "800px" }}>
+      <div id="resume" className="border d-flex shadow-sm">
+        <div className="bg-white ps-1 pe-2" style={{ width: "510px" }}>
+          <div className="mt-3 ms-3">
+            <input
+              id="cv-avatar-upload"
+              type="file"
+              className="d-none"
+              onChange={(e) => handleDisplayImg(e)}
+              disabled={cvMode === "READ"}
+            />
+            <div style={{ width: "180px", height: "186px" }}>
+              <img
+                id="cv-avatar"
+                src={basicInfor.avatar || defaultAvt}
+                alt="avatar"
+                className={clsx("w-100 h-100", cvMode !== "READ" && "pointer")}
+                style={{ objectFit: "cover" }}
+                onClick={() =>
+                  document.getElementById("cv-avatar-upload").click()
+                }
+              />
+            </div>
+            <FlexInput
+              disabled={cvMode === "READ"}
+              placeholder="HỌ TÊN"
+              className="mt-2"
+              innerClassName={clsx(
+                "h4 cv-text-main text-uppercase",
+                cvMode === "READ" && "bg-white"
+              )}
+              defaultValue={fullname}
+              {...register("fullname")}
             />
           </div>
-          <FlexInput
-            disabled={cvMode === "READ"}
-            placeholder="HỌ TÊN"
-            className="mt-2"
-            innerClassName={clsx(
-              "h4 cv-text-main text-uppercase",
-              cvMode === "READ" && "bg-white"
-            )}
-            defaultValue={fullname}
-            {...register("fullname")}
-          />
-        </div>
-        <hr className="text-secondary" />
-        {parts.map((_, index) => {
-          return (
-            index < 5 && <div key={`part_${index}`}>{renderPart(index)}</div>
-          );
-        })}
-      </div>
-      <div className="flex-fill px-1 cv-bg-main">
-        <div className="ms-2">
+          <hr className="text-secondary" />
           {parts.map((_, index) => {
             return (
-              index >= 5 && <div key={`part_${index}`}>{renderPart(index)}</div>
+              index < 5 && <div key={`part_${index}`}>{renderPart(index)}</div>
             );
           })}
+        </div>
+        <div className="flex-fill px-1 cv-bg-main">
+          <div className="ms-2">
+            {parts.map((_, index) => {
+              return (
+                index >= 5 && (
+                  <div key={`part_${index}`}>{renderPart(index)}</div>
+                )
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

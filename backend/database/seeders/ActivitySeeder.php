@@ -344,7 +344,17 @@ class ActivitySeeder extends Seeder
                 'start_date' => new Carbon('2023-03-20'),
                 'end_date' => new Carbon('2023-06-20'),
                 'description' => 'Hỗ trợ giấy tờ cho ban tổ chức',
-            ],            
+            ],   
+            [
+                'id' => 34,
+                'candidate_id' => 134,
+                'organization' => 'Đội sinh viên tình nguyện',
+                'role' => 'Tình nguyện viên',
+                'is_present' => 0,
+                'start_date' => new Carbon('2023-03-20'),
+                'end_date' => new Carbon('2023-06-20'),
+                'description' => 'Hỗ trợ giấy tờ cho ban tổ chức',
+            ],          
         ]);
     }
 }

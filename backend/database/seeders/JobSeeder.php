@@ -403,12 +403,12 @@ class JobSeeder extends Seeder
                 Được trải nghiệm văn hóa doanh nghiệp trẻ trung, sôi nổi với các hoạt động nội bộ được tổ chức thường xuyên: Sinh nhật thành viên, teambuilding, dã ngoại, du lịch...
                 Văn phòng tầng 14, 18, 16, 19, 20 view đẹp và có nhiều tiện nghi: trà, cafe free, máy chơi game PS5 máy massage, thư viện, boardgame,...',
                 'expire_at' => '2024/08/15',
-                'interview_round_num' => 3,
+                'interview_round_num' => 2,
                 'latitude' => 20.9978385,
                 'longitude' => 105.7974438,
                 'is_active' => 1,
-                'created_at' => Carbon::now()->subDays(2),
-                'updated_at' => Carbon::now()->subDays(2),
+                'created_at' => Carbon::now()->subDays(5),
+                'updated_at' => Carbon::now()->subDays(5),
             ],
             [
                 'id' => 11,
@@ -452,7 +452,7 @@ class JobSeeder extends Seeder
                 - Văn phòng với nhiều tiện nghi: ghế massage, máy chơi game PS5, tủ sách ... Luôn có sẵn trà và cafe free tại công ty. Và 1 tủ đủ loại đồ uống để anh em có thể lấy lại hứng khởi làm việc bất cứ khi nào.
                 - Được cung cấp máy tính làm việc, đóng BHXH sau 2 tháng thử việc và các phúc lợi khác theo quy định của Luật lao động.',
                 'expire_at' => '2024/08/15',
-                'interview_round_num' => 3,
+                'interview_round_num' => 2,
                 'latitude' => 20.9978385,
                 'longitude' => 105.7974438,
                 'is_active' => 1,
@@ -499,12 +499,12 @@ class JobSeeder extends Seeder
                 Thời gian làm việc: từ 8h30 - 18h, thứ 2 đến thứ 6 hàng tuần.
                 Nghỉ phép 13,5 ngày/năm, lương tháng 13, thưởng thâm niên, BHXH, khám sức khỏe hàng năm và phúc lợi khác đầy đủ theo quy định của luật Lao động',
                 'expire_at' => '2024/08/15',
-                'interview_round_num' => 1,
+                'interview_round_num' => 2,
                 'latitude' => 20.9978385,
                 'longitude' => 105.7974438,
                 'is_active' => 1,
-                'created_at' => Carbon::now()->subDays(4),
-                'updated_at' => Carbon::now()->subDays(4),
+                'created_at' => Carbon::now()->subDays(5),
+                'updated_at' => Carbon::now()->subDays(5),
             ],
             [
                 'id' => 13,
@@ -2045,6 +2045,639 @@ class JobSeeder extends Seeder
                 'created_at' => Carbon::now()->subDays(4),
                 'updated_at' => Carbon::now()->subDays(4),
             ],
+            [
+                'id' => 49,
+                'employer_id' => 29,
+                'jtype_id' => 3,
+                'jlevel_id' => 1,
+                'jname' => 'Thực Tập Sinh PHP - Fulltime',
+                'address' => '- Hà Nội: tòa Mitec, Dương Đình Nghệ, Yên Hòa, Cầu Giấy',
+                'amount' => 2,
+                'min_salary' => null,
+                'max_salary' => null,
+                'yoe' => null,
+                'gender' => null,
+                'description' => 'Review lại kiến thức về Html/css/js, Mysql theo chương trình nội bộ
+                Review lại kiến thức về PHP cơ bản theo chương trình nội bộ
+                Làm quen với CMS hoặc Framework Laravel dựa theo mong muốn
+                Tham gia xây dựng và phát triển hệ thống.
+                Lập trình các module phần mềm theo yêu cầu và chỉ dẫn của Leader
+                Tìm hiểu nghiệp vụ, đề xuất giải pháp và lập trình các module, phần mềm theo dự án được giao;
+                Thực hiện sửa các lỗi phát hiện trong quá trình phát triển hệ thống.',
+                'requirements' => 'Sinh viên năm cuối hoặc đã tốt nghiệp trong lĩnh vực CNTT, Khoa học máy tính hoặc các ngành liên quan (có thể đi làm Full-time)
+                Nắm chắc kiến thức cơ bản về lập trình PHP, tư duy lập trình tốt và yêu thích lập trình PHP
+                Yêu thích tìm tòi các cms, framework laravel ...
+                Biết căn bản html/ css và javascript
+                Chịu khó tìm tòi học hỏi, tác phong làm việc chuyên nghiệp, năng động, cầu tiến, có trách nhiệm với công việc
+                Có kĩ năng đọc hiểu English ở mức tương đương TOEIC 600 trở lên, ứng viên có khả năng giao tiếp English là lợi thế
+                CV vui lòng ghi rõ các dự án/đồ án/bài tập lớn đã làm.',
+                'benefits' => 'Ký hợp đồng đào tạo trong vòng 3 tháng, công ty có mức hỗ trợ khi TTS join vào dự án
+                Có cơ hội trở thành nhân viên chính thức với nhiều đãi ngộ hấp dẫn.
+                Được đào tạo fulltime, định hướng bởi mentor giỏi và có nhiều kinh nghiệm.
+                Tiếp cận với những công nghệ tiên tiến, định hướng lộ trình phát triển nghề nghiệp.
+                Môi trường làm việc năng động, trẻ trung, thân thiện khuyến khích trao đổi phản hồi
+                Tham gia các sự kiện của công ty như team building, du lịch hè, các CLB của Công ty: Bóng đá, Gym, Media ...
+                Được nhận quà Tết, quà sinh nhật công ty, quà chào mừng nhân viên mới ...
+                Làm việc trong môi trường sáng tạo năng động, được trao quyền làm chủ, nhiều thử thách và cơ hội phát triển năng lực cá nhân, đồng nghiệp thân thiện cởi mở.
+                Cơ hội thăng tiến rõ ràng, định kỳ đánh giá công việc hàng tháng quý năm
+                Sôi nổi các hoạt động phong trào học tập phát triển',
+                'expire_at' => '2024/08/15',
+                'interview_round_num' => 2,
+                'latitude' => 21.0200084, 
+                'longitude' => 105.7813238,
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 50,
+                'employer_id' => 29,
+                'jtype_id' => 1,
+                'jlevel_id' => 2,
+                'jname' => 'Middle/Senior ReactJS Developer',
+                'address' => '- Hà Nội: tòa Mitec, Dương Đình Nghệ, Yên Hòa, Cầu Giấy',
+                'amount' => 1,
+                'min_salary' => null,
+                'max_salary' => null,
+                'yoe' => 4,
+                'gender' => null,
+                'description' => 'Build web application UIs using modern technologies (HTML5, CSS3, JavaScript, etc.) and ReactJS framework.
+                Participate in all stages of development: requirement analysis, estimation, implementation, code review, unit testing, and overall testing.
+                Collaborate with cross-functional teams to deliver high-quality web interfaces and applications.
+                Optimize existing products for improved efficiency.
+                Continuously learn new technologies and stay updated on industry trends.
+                Contribute to technical and user documentation.
+                Mentor and train intern/junior developers.',
+                'requirements' => 'Proficient in HTML5, CSS3, and JavaScript
+                Have deep knowledge of Javascript and Typescript
+                4+ years experience working with Frontend framework
+                Familiarity with RESTful APIs and GraphQL
+                Experience with responsive and adaptive design across browsers and platforms
+                Debugging skills and strong sense of UI/UX design principles
+                Familiarity with Git/Git-flow and code review processes
+                Ability to write clean, maintainable, and well-documented code
+                Strong problem-solving skills',
+                'benefits' => 'Competitive Salary
+                Bonuses: 13th-month salary, performance-based bonuses tied to the company\'s business performance, individual capacity, etc.
+                Full Salary During Probation: Employees receive 100% of their salary during the probationary period.
+                Social and Health Insurance: Social insurance, health insurance, and unemployment insurance as regulated by the government. Social insurance payment is processed during the labor contract signing process.
+                Top-up Health Insurance for Employees after 1 year of employment contract signing
+                Additional Benefits: Longevity benefits, annual health check-up, bi-annual performance reviews, yearly travel and quarterly team-building activities
+                Company Clubs: Participation in company clubs such as Football Club, Game Club, Gym Club, Badminton Club, Media Club, etc.
+                Gifts and Recognition: Gifts for Tet (Lunar New Year), company birthday, welcoming new employees, and other special occasions.
+                Training and Development:
+                Access to complimentary in-house training with experienced instructors.
+                Support for external training programs.
+                Policies that promote learning activities, knowledge exchange, and sharing.
+                Working Hours: 5 days/week, Monday to Friday
+                Flexible working hours: 8 hours/day, can start between 8:30 am and 9:00 am and end between 5:30 pm and 6:00 pm.',
+                'expire_at' => '2024/08/15',
+                'interview_round_num' => 2,
+                'latitude' => 21.0200084, 
+                'longitude' => 105.7813238,
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 51,
+                'employer_id' => 29,
+                'jtype_id' => 1,
+                'jlevel_id' => 2,
+                'jname' => 'Middle QA Tester',
+                'address' => '- Hà Nội: tòa Mitec, Dương Đình Nghệ, Yên Hòa, Cầu Giấy',
+                'amount' => 1,
+                'min_salary' => null,
+                'max_salary' => null,
+                'yoe' => 4,
+                'gender' => null,
+                'description' => 'Tham gia phân tích yêu cầu cho các dự án phát triển phần mềm.
+                Tạo test scenario, test checklist, test case...
+                Tạo test data, thiết lập môi trường kiểm thử.
+                Lên plan và control plan, chất lượng dự án.
+                Báo lỗi, giám sát việc sửa lỗi của nhà phát triển và đảm bảo chất lượng của phần mềm.
+                Đánh giá test result và viết test report.
+                Đề xuất, điều chỉnh quy trình phát triển sản phẩm phù hợp với yêu cầu cụ thể của từng dự án, kiểm soát đảm bảo thực hiện đúng quy trình đã thống nhất.
+                Kiểm soát tiến độ và chất lượng dự án. (Ứng viên chưa có kinh nghiệm sẽ được đào tạo)
+                Đánh giá/Phát hiện rủi ro, đưa ra giải pháp phòng tránh rủi ro và giải quyết vấn đề.
+                Mentor và train intern/junior QC (nếu chưa có kinh nghiệm sẽ được đào tạo)',
+                'requirements' => 'Có ít nhất 4 năm kinh nghiệm test web/ test app trên thiết bị di động (không tính thời gian thực tập), đã có kinh nghiệm làm dự án thị trường Nhật
+                Có kiến thức chung liên quan đến kiểm thử: định nghĩa cơ bản, thuật ngữ và quy trình phát triển phần mềm
+                Có khả năng phân tích và chuyển các yêu cầu sang tài liệu.
+                Có khả năng Q&A và đàm phán với khách hàng.
+                Đọc hiểu tốt và tạo tài liệu kiểm tra bằng tiếng Anh: test plan, test design, test viewpoint, checklist, test cases
+                Quản lý, phân tích, theo dõi kết quả test từ đó báo cáo và đánh giá chất lượng sản phẩm
+                Có thể review ouput của các member trong team
+                Kỹ năng tổ chức và quản lý; tự nghiên cứu, định nghĩa và quản lý tài liệu test
+                Kỹ năng đọc viết tài liệu bằng tiếng anh
+                Đã từng làm việc với môi trường có áp lực cao
+                Ứng viên có kinh nghiệm trong mảng blockchain là lợi thế',
+                'benefits' => 'Lương thỏa thuận theo năng lực
+                Thưởng lương tháng 13, thưởng hiệu quả theo tình kinh doanh của công ty, thưởng đột xuất theo năng lực cá nhân, ...
+                Thử việc 2 tháng: nhận 100% mức lương
+                Được hưởng BHXH, BHYT, BHTN theo chế độ nhà nước ban hành.
+                Bảo hiểm Sức khỏe cao cấp dành cho toàn bộ CBNV (sau khi ký HĐLĐ 1 năm)
+                Chế độ thâm niên
+                Khám sức khỏe 1 lần/năm
+                Review performance: 2 đợt/năm
+                Được tham gia các Câu lạc bộ của Công ty: CLB Bóng đá, các CLB Game, CLB Gym, CLB Cầu Lông, Media...
+                Quà Tết, Quà sinh nhật công ty, Quà chào mừng nhân viên mới, Quà các dịp lễ ...',
+                'expire_at' => '2024/08/15',
+                'interview_round_num' => 2,
+                'latitude' => 21.0200084, 
+                'longitude' => 105.7813238,
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 52,
+                'employer_id' => 30,
+                'jtype_id' => 1,
+                'jlevel_id' => 1,
+                'jname' => 'ReactJS Fresher',
+                'address' => '- Hà Nội: Tòa nhà Song Da, HH4, Mễ Trì, Nam Từ Liêm, Hà Nội, Nam Từ Liêm',
+                'amount' => 1,
+                'min_salary' => 4,
+                'max_salary' => 6,
+                'yoe' => null,
+                'gender' => null,
+                'description' => 'Tham gia training với vai trò ReactJS Fresher
+                Nắm được các kiến thức, kỹ năng về công việc, hoạt động trong dự án, bộ phận Trung tâm sản xuất phần mềm
+                Có cơ hội chính thức tại các dự án với vai trò ReactJS Developer sau khi kết thúc training',
+                'requirements' => 'Sinh viên Công nghệ thông tin năm cuối (fulltime), hoặc mới tốt nghiệp các trường Đại học/ Cao đẳng
+                Kiến thức: Biết, hiểu và sử dụng ngôn ngữ lập trình hướng đối tượng
+                Kinh nghệm: Tham gia bài tập lớn (1 sản phẩm cụ thể) tại trường hoặc tham gia dự án tại các công ty, tổ chức
+                Ưu tiên: Tốt nghiệp loại Khá trở lên. Đã tham gia các khóa học, được đào tạo về lập trình (học online, tại trung tâm đào tạo)
+                Tinh thần/Thái độ: Chủ động và Khả năng tự học tốt
+                Ngoại ngữ (Tiếng Anh): Có khả năng đọc, hiểu được các tài liệu kỹ thuật bằng tiếng anh. Nói, viết ở mức cơ bản',
+                'benefits' => '- Có trợ cấp trong đào tạo theo đánh giá năng lực và chuyên cần.
+                - Có cơ hội được ký HĐLĐ chính thức với Công ty sau khi thời gian đào tạo fresher và nhận mức lương hấp dẫn.
+                - Giảng viên, mentor là các anh/chị có nhiều kinh nghiệm, chuyên môn sâu và được đánh giá rất cao.
+                - Hỗ trợ vé xe hàng tháng, các thiết bị văn phòng phẩm phục vụ việc học tập.
+                - Chương trình đào tạo bài bản lên chính thức và hoàn toàn không mất phí.
+                - Chương trình được mở ra hoàn toàn mới mục đích tìm kiếm và đào tạo nguồn nhân lực chất lượng cho Công ty trong tương lai, nên chương trình học rất được đầu tư và không ngừng cải tiến nhằm đảm bảo chất lượng đào tạo là tốt nhất.',
+                'expire_at' => '2024/08/15',
+                'interview_round_num' => 3,
+                'latitude' => 21.017707, 
+                'longitude' => 105.781228,
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 53,
+                'employer_id' => 30,
+                'jtype_id' => 1,
+                'jlevel_id' => 2,
+                'jname' => 'IT Comtor (Japanese)',
+                'address' => '- Hà Nội: Tòa nhà Song Da, HH4, Mễ Trì, Nam Từ Liêm, Hà Nội, Nam Từ Liêm',
+                'amount' => 1,
+                'min_salary' => null,
+                'max_salary' => null,
+                'yoe' => 2,
+                'gender' => null,
+                'description' => 'Dịch các tài liệu Nhật - Việt, Việt - Nhật;
+
+                Phiên dịch trong các buổi meeting dự án, đảm bảo thông tin dự án được truyền đạt chính xác và kịp thời tới 2 phía khách hàng và team phát triển;
+                
+                Support team member về mặt nghiệp vụ và kết hợp với Project Manager trong việc quản lý tiến độ dự án',
+                'requirements' => 'Chứng chỉ tiếng Nhật N1, N2 cứng;
+
+                Có ít nhất 1 năm kinh nghiệm làm IT Comtor;
+                
+                Khả năng diễn đạt và giao tiếp hiệu quả;
+                
+                Đam mê và có khả năng học hỏi cái mới nhanh;
+                
+                Nhanh nhẹn, tích cực trong công việc và có tinh thần cầu tiến;
+                
+                Năng động, tích cực trong các hoạt động gắn kết chung.
+                
+                Nice to have:
+                
+                Ưu tiên có kiến thức/kinh nghiệm BA;
+                
+                Có khả năng biên dịch và soạn thảo tài liệu bằng tiếng Nhật
+                
+                Có tinh thần ham học hỏi, chịu được áp lực công việc cao, có khả năng làm việc theo nhóm.',
+                'benefits' => 'Review hiệu quả công việc: 2 lần 1 năm vào tháng 6 và tháng 12, không giới hạn mức điều chỉnh lương;
+
+                Thưởng cuối năm, tháng lương thứ 13: Theo thời gian làm việc thực tế trong năm;
+                
+                Bảo hiểm sức khỏe nâng cao cho bản thân khi có thâm niên 1 năm làm việc, từ 1.5 năm sẽ được hỗ trợ khi mua bảo hiểm cho gia đình;
+                
+                Đào tạo: Chương trình đào tạo nội bộ định kỳ hàng tuần, tháng, quý; chính sách tài trợ thi lấy chứng chỉ;
+                
+                Khám sức khỏe định kỳ: 1 năm 1 lần;
+                
+                Nghỉ mát hàng năm, thể thao, teambuilding, sinh nhật tháng, ngày lễ, các event nội bộ như Du xuân, Giải bóng đá, Men’s Day, Women’s Day,...
+                
+                Môi trường làm việc: Năng động, vui vẻ được đầu tư tổ chức bài bản; CLB Cầu Lông, Yoga, bóng đá, CLB văn hóa Nhật Bản,...
+                
+                Thời gian: linh hoạt trong giờ hành chính, thứ 2 - thứ 6; nghỉ cuối tuần.',
+                'expire_at' => '2024/08/15',
+                'interview_round_num' => 1,
+                'latitude' => 21.017707, 
+                'longitude' => 105.781228,
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 54,
+                'employer_id' => 30,
+                'jtype_id' => 1,
+                'jlevel_id' => 1,
+                'jname' => 'Comtor Intern',
+                'address' => '',
+                'amount' => 3,
+                'min_salary' => 4,
+                'max_salary' => 6,
+                'yoe' => null,
+                'gender' => null,
+                'description' => '- Dịch chat, dịch họp trao đổi team với KH
+
+                - Dịch tài liệu dự án
+                
+                - Follow Opp
+                
+                - Hỗ trợ PM quản lý tiến độ dự án
+                
+                - Hỗ trợ PM transfer spec cho team
+                
+                - Training các member lv thấp hơn',
+                'requirements' => '- JLPT N2 trở lên
+
+                - Sinh viên năm 4 hoặc đã tốt nghiệp Đại học chuyên ngành tiếng Nhật hoặc liên quan
+                
+                ※Ưu tiên đối tượng đã có thời gian du học/làm việc Nhật
+                
+                - Chủ động, năng nổ, thích tham gia các hoạt động chung
+                
+                - Có kỹ năng văn phòng tốt
+                
+                - Không yêu cầu kinh nghiệm Comtor',
+                'benefits' => '- Có trợ cấp trong đào tạo upto 6M theo đánh giá năng lực và chuyên cần.
+
+                - Có cơ hội được ký HĐLĐ chính thức với Công ty sau khi thời gian đào tạo fresher/intern và nhận mức lương hấp dẫn.
+                
+                - Giảng viên, mentor là các anh/chị có nhiều kinh nghiệm, chuyên môn sâu và được đánh giá rất cao.
+                
+                - Hỗ trợ vé xe hàng tháng, các thiết bị văn phòng phẩm phục vụ việc học tập.
+                
+                - Chương trình đào tạo bài bản lên chính thức và hoàn toàn không mất phí.
+                
+                - Chương trình được mở ra hoàn toàn mới mục đích tìm kiếm và đào tạo nguồn nhân lực chất lượng cho Công ty trong tương lai, nên chương trình học rất được đầu tư và không ngừng cải tiến nhằm đảm bảo chất lượng đào tạo là tốt nhất.',
+                'expire_at' => '2024/08/15',
+                'interview_round_num' => 1,
+                'latitude' => 21.017707, 
+                'longitude' => 105.781228,
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 55,
+                'employer_id' => 31,
+                'jtype_id' => 3,
+                'jlevel_id' => 1,
+                'jname' => 'Thực Tập Sinh Reactjs',
+                'address' => 'Tầng 4, Tòa CT1, Tòa nhà Bắc Hà C14, phố Tố hữu, Phường Trung Văn, Quận Nam Từ Liêm, Thành phố Hà Nội, Việt Nam',
+                'amount' => 1,
+                'min_salary' => null,
+                'max_salary' => null,
+                'yoe' => null,
+                'gender' => null,
+                'description' => 'Tham gia phát triển các dự án phần mềm.
+                Thực hiện coding theo các công việc được giao.
+                Công nghệ sử dụng: ReacJS',
+                'requirements' => 'Sinh viên năm 3, 4 chuyên ngành CNTT, toán tin, khoa học máy tính,... hoặc tương đương.
+                Có thể đi làm fulltime
+                Có tư duy logic tốt
+                Có kiến thức về một trong các ngôn ngữ lập trình hoặc frameworks liên quan
+                Chịu khó học hỏi, đam mê kỹ thuật
+                Có khả năng đọc hiểu tiếng Anh là lợi thế
+                Có tiếng Nhật là lợi thế',
+                'benefits' => 'Mức lương tính theo giờ: từ 20.000đ - 60.000đ/giờ
+                Được đào tạo các kiến thức cơ bản trước khi vào dự án.
+                Được Training on Job trong các dự án của Khách hàng Nhật
+                Cơ hội lên nhân viên chính thức với nhiều quyền lợi hấp dẫn
+                Tham gia các khóa học nâng cao trình độ chuyên môn qua Portal đào tạo nội bộ hoặc các khóa học trực tiếp với các giảng viên uy tín.
+                Cơ hội làm việc và đào tạo tại Nhật Bản với các ứng viên có tiếng Nhật
+                Làm việc trong môi trường chuyên nghiệp, được hỗ trợ phát huy
+                Được tham gia các câu lạc bộ của công ty: CLB Bóng đá, CLB Game, CLB Beauty, CLUB Dance...
+                Được tham gia các hoạt động tập thể sôi động của công ty: nghỉ mát hàng năm, teambuilding hàng quý, gala cuối năm....',
+                'expire_at' => '2024/08/15',
+                'interview_round_num' => 3,
+                'latitude' => 20.972259, 
+                'longitude' => 105.757399,
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 56,
+                'employer_id' => 31,
+                'jtype_id' => 1,
+                'jlevel_id' => 2,
+                'jname' => 'IT Comtor (Tiếng Nhật N2)',
+                'address' => 'Tầng 4, Tòa CT1, Tòa nhà Bắc Hà C14, phố Tố hữu, Phường Trung Văn, Quận Nam Từ Liêm, Thành phố Hà Nội, Việt Nam',
+                'amount' => 1,
+                'min_salary' => null,
+                'max_salary' => null,
+                'yoe' => null,
+                'gender' => null,
+                'description' => 'Phiên dịch trong các buổi làm việc hàng ngày của dự án với khách hàng Nhật Bản;
+                Dịch văn bản, tài liệu và phiên dịch trong các cuộc họp;
+                Là đầu mối liên hệ giữa Công ty và khách hàng Nhật;
+                Chi tiết trao đổi thêm trong buổi phỏng vấn.',
+                'requirements' => 'YÊU CẦU CHUNG
+
+                Tiếng Nhật: Trình độ N2 cứng trở lên
+                Có kinh nghiệm tại vị trí communicator từ 1 năm trở lên; ưu tiên khả năng giao tiếp tốt;
+                Có hứng thú, yêu thích làm việc trong ngành IT
+                
+                ƯU TIÊN
+                Ưu tiên ứng viên từng học tập, làm việc tại Nhật Bản
+                
+                YÊU CẦU KHÁC
+                Có tinh thần trách nhiệm cao trong công việc;
+                Có khả năng làm việc độc lập và làm việc theo nhóm;
+                Có khả năng đọc hiểu tiếng Anh là lợi thế.',
+                'benefits' => 'Mức lương khởi điểm hấp dẫn, cạnh tranh, tương xứng với năng lực và kinh nghiệm làm việc;
+                Thu nhập: 13 tháng lương/năm + thưởng dự án, thưởng Tết và các dịp lễ...;
+                Xét tăng lương 2 lần/năm theo năng lực và hiệu quả công việc;
+                Lương làm thêm giờ theo luật lao động, hỗ trợ đồ ăn OT theo quy định công ty;
+                Làm việc từ thứ 2 - thứ 6 (8h30 - 17h30);
+                Được tham gia BHXH, BHYT, BHTN theo quy định của pháp luật hiện hành;
+                Bảo hiểm chăm sóc sức khỏe 24/24 (Bảo Việt);
+                Khám sức khỏe định kỳ 1 năm/1 lần tại bệnh viện Đại học Y Hà Nội;
+                Nghỉ ốm hưởng nguyên lương tối đa 30 ngày/ năm (có giấy chứng nhận của bệnh viện);
+                Nghỉ sau sinh cho nhân viên nữ có con dưới 1 tuổi: 1h/ngày;
+                Nghỉ sinh lý phụ nữ theo luật lao động hiện hành.
+                Miễn phí đồ uống tại khu ăn uống của công ty;
+                Trợ cấp tiếng Nhật và các chứng chỉ IT liên quan (từ 1000.000 VNĐ - 2.500.000 VNĐ/tháng);',
+                'expire_at' => '2024/08/15',
+                'interview_round_num' => 1,
+                'latitude' => 20.972259, 
+                'longitude' => 105.757399,
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 57,
+                'employer_id' => 31,
+                'jtype_id' => 1,
+                'jlevel_id' => 2,
+                'jname' => 'Nhân Viên Tư Vấn Tuyển Sinh',
+                'address' => 'Tầng 4, Tòa CT1, Tòa nhà Bắc Hà C14, phố Tố hữu, Phường Trung Văn, Quận Nam Từ Liêm, Thành phố Hà Nội, Việt Nam',
+                'amount' => 2,
+                'min_salary' => null,
+                'max_salary' => null,
+                'yoe' => 0,
+                'gender' => null,
+                'description' => 'Tư vấn cho khách hàng theo data của học viện.
+                Tìm kiếm nguồn khách hàng, học viên qua các kênh truyền thông.
+                Tư vấn và giới thiệu cho khách hàng về các khóa học của Codestar.
+                Giải đáp thắc mắc cho khách hàng về các chương trình đào tạo.
+                Xây dựng danh sách khách hàng tiềm năng, thiết lập và xây dựng mối quan hệ tốt với khách hàng
+                Chăm sóc và hỗ trợ khách hàng trong suốt quá trình khách hàng biết đến CodeStar và tham gia học tại CodeStar.
+                Làm Admin các lớp học được phân công.
+                Thực hiện các công việc khác theo sự phân công của Giám đốc.',
+                'requirements' => 'Có từ 06 tháng kinh nghiệm làm việc tại vị trí tương đương
+                Ưu tiên những bạn đã làm Tư vấn tuyển sinh tại các trung tâm đào tạo CNTT.
+                Chăm chỉ, sẵn sàng làm việc.
+                Trách nhiệm với Công việc cao.
+                Tiếng Việt lưu loát, không nói ngọng.
+                Có khả năng tư vấn, thuyết phục cao.
+                Năng động, tự tin, trung thực, cẩn thận, nhiệt tình.',
+                'benefits' => 'Xét tăng lương 2 lần/năm theo năng lực và hiệu quả công việc;
+                Làm việc từ thứ 2 - thứ 6 (8h30 - 17h30), 2 ngày thứ 7 trong tháng (8h30 - 17h30);
+                Được tham gia BHXH, BHYT, BHTN theo quy định của pháp luật hiện hành;
+                Khám sức khỏe định kỳ 1 năm/1 lần tại bệnh viện Đại học Y Hà Nội;
+                Nghỉ ốm hưởng nguyên lương tối đa 30 ngày/năm (có giấy chứng nhận của bệnh viện);
+                Nghỉ sau sinh cho nhân viên nữ có con dưới 1 tuổi: 1h/ngày;
+                Miễn phí đồ uống tại khu ăn uống của công ty;
+                Phụ cấp thâm niên; phụ cấp chức vụ;
+                Được tham gia các câu lạc bộ của công ty: CLB Bóng đá, CLB Game, CLB Beauty, CLB Dance...
+                Được tham gia các hoạt động tập thể sôi động của công ty: nghỉ mát hàng năm, teambuilding hàng quý, gala cuối năm....',
+                'expire_at' => '2024/08/15',
+                'interview_round_num' => 1,
+                'latitude' => 20.972259, 
+                'longitude' => 105.757399,
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            // [
+            //     'id' => ,
+            //     'employer_id' => ,
+            //     'jtype_id' => ,
+            //     'jlevel_id' => ,
+            //     'jname' => '',
+            //     'address' => '',
+            //     'amount' => ,
+            //     'min_salary' => null,
+            //     'max_salary' => null,
+            //     'yoe' => ,
+            //     'gender' => null,
+            //     'description' => '',
+            //     'requirements' => '',
+            //     'benefits' => '',
+            //     'expire_at' => '2024/08/15',
+            //     'interview_round_num' => 3,
+            //     'latitude' => , 
+            //     'longitude' => ,
+            //     'is_active' => 1,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now()
+            // ],
+            // [
+            //     'id' => ,
+            //     'employer_id' => ,
+            //     'jtype_id' => ,
+            //     'jlevel_id' => ,
+            //     'jname' => '',
+            //     'address' => '',
+            //     'amount' => ,
+            //     'min_salary' => null,
+            //     'max_salary' => null,
+            //     'yoe' => ,
+            //     'gender' => null,
+            //     'description' => '',
+            //     'requirements' => '',
+            //     'benefits' => '',
+            //     'expire_at' => '2024/08/15',
+            //     'interview_round_num' => 3,
+            //     'latitude' => , 
+            //     'longitude' => ,
+            //     'is_active' => 1,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now()
+            // ],
+            // [
+            //     'id' => ,
+            //     'employer_id' => ,
+            //     'jtype_id' => ,
+            //     'jlevel_id' => ,
+            //     'jname' => '',
+            //     'address' => '',
+            //     'amount' => ,
+            //     'min_salary' => null,
+            //     'max_salary' => null,
+            //     'yoe' => ,
+            //     'gender' => null,
+            //     'description' => '',
+            //     'requirements' => '',
+            //     'benefits' => '',
+            //     'expire_at' => '2024/08/15',
+            //     'interview_round_num' => 3,
+            //     'latitude' => , 
+            //     'longitude' => ,
+            //     'is_active' => 1,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now()
+            // ],
+            // [
+            //     'id' => ,
+            //     'employer_id' => ,
+            //     'jtype_id' => ,
+            //     'jlevel_id' => ,
+            //     'jname' => '',
+            //     'address' => '',
+            //     'amount' => ,
+            //     'min_salary' => null,
+            //     'max_salary' => null,
+            //     'yoe' => ,
+            //     'gender' => null,
+            //     'description' => '',
+            //     'requirements' => '',
+            //     'benefits' => '',
+            //     'expire_at' => '2024/08/15',
+            //     'interview_round_num' => 3,
+            //     'latitude' => , 
+            //     'longitude' => ,
+            //     'is_active' => 1,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now()
+            // ],
+            // [
+            //     'id' => ,
+            //     'employer_id' => ,
+            //     'jtype_id' => ,
+            //     'jlevel_id' => ,
+            //     'jname' => '',
+            //     'address' => '',
+            //     'amount' => ,
+            //     'min_salary' => null,
+            //     'max_salary' => null,
+            //     'yoe' => ,
+            //     'gender' => null,
+            //     'description' => '',
+            //     'requirements' => '',
+            //     'benefits' => '',
+            //     'expire_at' => '2024/08/15',
+            //     'interview_round_num' => 3,
+            //     'latitude' => , 
+            //     'longitude' => ,
+            //     'is_active' => 1,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now()
+            // ],
+            // [
+            //     'id' => ,
+            //     'employer_id' => ,
+            //     'jtype_id' => ,
+            //     'jlevel_id' => ,
+            //     'jname' => '',
+            //     'address' => '',
+            //     'amount' => ,
+            //     'min_salary' => null,
+            //     'max_salary' => null,
+            //     'yoe' => ,
+            //     'gender' => null,
+            //     'description' => '',
+            //     'requirements' => '',
+            //     'benefits' => '',
+            //     'expire_at' => '2024/08/15',
+            //     'interview_round_num' => 3,
+            //     'latitude' => , 
+            //     'longitude' => ,
+            //     'is_active' => 1,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now()
+            // ],
+            // [
+            //     'id' => ,
+            //     'employer_id' => ,
+            //     'jtype_id' => ,
+            //     'jlevel_id' => ,
+            //     'jname' => '',
+            //     'address' => '',
+            //     'amount' => ,
+            //     'min_salary' => null,
+            //     'max_salary' => null,
+            //     'yoe' => ,
+            //     'gender' => null,
+            //     'description' => '',
+            //     'requirements' => '',
+            //     'benefits' => '',
+            //     'expire_at' => '2024/08/15',
+            //     'interview_round_num' => 3,
+            //     'latitude' => , 
+            //     'longitude' => ,
+            //     'is_active' => 1,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now()
+            // ],
+            // [
+            //     'id' => ,
+            //     'employer_id' => ,
+            //     'jtype_id' => ,
+            //     'jlevel_id' => ,
+            //     'jname' => '',
+            //     'address' => '',
+            //     'amount' => ,
+            //     'min_salary' => null,
+            //     'max_salary' => null,
+            //     'yoe' => ,
+            //     'gender' => null,
+            //     'description' => '',
+            //     'requirements' => '',
+            //     'benefits' => '',
+            //     'expire_at' => '2024/08/15',
+            //     'interview_round_num' => 3,
+            //     'latitude' => , 
+            //     'longitude' => ,
+            //     'is_active' => 1,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now()
+            // ],
+            // [
+            //     'id' => ,
+            //     'employer_id' => ,
+            //     'jtype_id' => ,
+            //     'jlevel_id' => ,
+            //     'jname' => '',
+            //     'address' => '',
+            //     'amount' => ,
+            //     'min_salary' => null,
+            //     'max_salary' => null,
+            //     'yoe' => ,
+            //     'gender' => null,
+            //     'description' => '',
+            //     'requirements' => '',
+            //     'benefits' => '',
+            //     'expire_at' => '2024/08/15',
+            //     'interview_round_num' => 3,
+            //     'latitude' => , 
+            //     'longitude' => ,
+            //     'is_active' => 1,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now()
+            // ],
             // [
             //     'id' => ,
             //     'employer_id' => ,

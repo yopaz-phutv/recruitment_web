@@ -13,8 +13,9 @@ import { useNavigate } from "react-router-dom";
 import templateList from "./templateList";
 import { srcToFile } from "../../../../../common/functions";
 // import { jsPDF } from "jspdf";
-// import * as htmlToImage from "html-to-image";
-import html2canvas from "html2canvas";
+import * as htmlToImage from "html-to-image";
+// import html2canvas from "html2canvas";
+
 import {
   cvContentSize,
   cvFontFamily,
@@ -369,8 +370,8 @@ export default function TemplateWrapper({
   };
   const getImgData = async () => {
     let cvElement = document.querySelector("#resume");
-    const canvas = await html2canvas(cvElement);
-    const imgData = canvas.toDataURL("image/png");
+    const imgData = await htmlToImage.toPng(cvElement);
+    // const imgData = canvas.toDataURL("image/png");
 
     return imgData;
   };
@@ -410,7 +411,7 @@ export default function TemplateWrapper({
   useEffect(() => {
     const intervalId = setInterval(() => {
       changeElementsStyle();
-    }, 500);
+    }, 200);
 
     return () => {
       clearInterval(intervalId);

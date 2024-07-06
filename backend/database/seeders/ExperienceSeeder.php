@@ -216,83 +216,83 @@ class ExperienceSeeder extends Seeder
             [
                 'id' => 23,
                 'candidate_id' => 120,
-                'name' => 'Thực tập sinh Web',
-                'company' => 'Công ty TNHH Theinfitech',
+                'name' => 'Thực tập sinh HR',
+                'company' => 'Công ty TNHH DEF',
                 'start_date' => new Carbon('2023-10-07'),
                 'end_date' => new Carbon('2024-01-07'),
-                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
+                'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
             ],
             [
                 'id' => 24,
                 'candidate_id' => 121,
-                'name' => 'Thực tập sinh Web',
-                'company' => 'Công ty TNHH Theinfitech',
+                'name' => 'Thực tập sinh HR',
+                'company' => 'Công ty TNHH DEF',
                 'start_date' => new Carbon('2023-10-07'),
                 'end_date' => new Carbon('2024-01-07'),
-                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
+                'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
             ],
             [
                 'id' => 25,
                 'candidate_id' => 122,
-                'name' => 'Thực tập sinh Web',
-                'company' => 'Công ty TNHH Theinfitech',
+                'name' => 'Thực tập sinh HR',
+                'company' => 'Công ty TNHH DEF',
                 'start_date' => new Carbon('2023-10-07'),
                 'end_date' => new Carbon('2024-01-07'),
-                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
+                'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
             ],
             [
                 'id' => 26,
                 'candidate_id' => 123,
-                'name' => 'Thực tập sinh Web',
-                'company' => 'Công ty TNHH Theinfitech',
+                'name' => 'Thực tập sinh HR',
+                'company' => 'Công ty TNHH DEF',
                 'start_date' => new Carbon('2023-10-07'),
                 'end_date' => new Carbon('2024-01-07'),
-                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
+                'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
             ],
             [
                 'id' => 27,
                 'candidate_id' => 124,
-                'name' => 'Thực tập sinh Web',
-                'company' => 'Công ty TNHH Theinfitech',
+                'name' => 'Thực tập sinh HR',
+                'company' => 'Công ty TNHH DEF',
                 'start_date' => new Carbon('2023-10-07'),
                 'end_date' => new Carbon('2024-01-07'),
-                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
+                'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
             ],
             [
                 'id' => 28,
                 'candidate_id' => 125,
-                'name' => 'Thực tập sinh Web',
-                'company' => 'Công ty TNHH Theinfitech',
+                'name' => 'Thực tập sinh HR',
+                'company' => 'Công ty TNHH DEF',
                 'start_date' => new Carbon('2023-10-07'),
                 'end_date' => new Carbon('2024-01-07'),
-                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
+                'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
             ],
             [
                 'id' => 29,
                 'candidate_id' => 126,
-                'name' => 'Thực tập sinh Web',
-                'company' => 'Công ty TNHH Theinfitech',
+                'name' => 'Thực tập sinh HR',
+                'company' => 'Công ty TNHH DEF',
                 'start_date' => new Carbon('2023-10-07'),
                 'end_date' => new Carbon('2024-01-07'),
-                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
+                'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
             ],
             [
                 'id' => 30,
                 'candidate_id' => 127,
-                'name' => 'Thực tập sinh Web',
-                'company' => 'Công ty TNHH Theinfitech',
+                'name' => 'Thực tập sinh HR',
+                'company' => 'Công ty TNHH DEF',
                 'start_date' => new Carbon('2023-10-07'),
                 'end_date' => new Carbon('2024-01-07'),
-                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
+                'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
             ],
             [
                 'id' => 31,
                 'candidate_id' => 128,
-                'name' => 'Thực tập sinh Web',
-                'company' => 'Công ty TNHH Theinfitech',
+                'name' => 'Thực tập sinh HR',
+                'company' => 'Công ty TNHH DEF',
                 'start_date' => new Carbon('2023-10-07'),
                 'end_date' => new Carbon('2024-01-07'),
-                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
+                'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
             ],
             [
                 'id' => 32,
@@ -333,6 +333,15 @@ class ExperienceSeeder extends Seeder
             [
                 'id' => 36,
                 'candidate_id' => 133,
+                'name' => 'Thực tập sinh Web',
+                'company' => 'Công ty TNHH Theinfitech',
+                'start_date' => new Carbon('2023-10-07'),
+                'end_date' => new Carbon('2024-01-07'),
+                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
+            ],
+            [
+                'id' => 37,
+                'candidate_id' => 134,
                 'name' => 'Thực tập sinh Web',
                 'company' => 'Công ty TNHH Theinfitech',
                 'start_date' => new Carbon('2023-10-07'),

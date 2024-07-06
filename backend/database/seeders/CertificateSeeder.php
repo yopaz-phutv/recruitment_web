@@ -267,6 +267,13 @@ class CertificateSeeder extends Seeder
                 'receive_date' => new Carbon('2021-09-25'),
                 'expire_date' => null,
             ],
+            [
+                'id' => 37,
+                'candidate_id' => 134,
+                'name' => 'TOEIC 700',
+                'receive_date' => new Carbon('2021-09-25'),
+                'expire_date' => null,
+            ],
         ]);
     }
 }

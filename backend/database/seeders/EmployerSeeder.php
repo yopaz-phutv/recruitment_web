@@ -406,60 +406,72 @@ class EmployerSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
-            // [
-            //     'id' => ,
-            //     'user_id' => ,
-            //     'name' => '',
-            //     'address' => '',
-            //     'min_employees' => 25,
-            //     'max_employees' => 99,
-            //     'contact_name' => 'Trần Hồng Ngọc',
-            //     'phone' => '0333333333',
-            //     'website' => '',
-            //     'description' => '',
-            //     'logo' => '',
-            //     'image' => '',
-            //     'latitude' => , 
-            //     'longitude' => ,
-            //     'created_at' => Carbon::now(),
-            //     'updated_at' => Carbon::now()
-            // ],
-            // [
-            //     'id' => ,
-            //     'user_id' => ,
-            //     'name' => '',
-            //     'address' => '',
-            //     'min_employees' => 25,
-            //     'max_employees' => 99,
-            //     'contact_name' => 'Trần Hồng Ngọc',
-            //     'phone' => '0333333333',
-            //     'website' => '',
-            //     'description' => '',
-            //     'logo' => '',
-            //     'image' => '',
-            //     'latitude' => , 
-            //     'longitude' => ,
-            //     'created_at' => Carbon::now(),
-            //     'updated_at' => Carbon::now()
-            // ],
-            // [
-            //     'id' => ,
-            //     'user_id' => ,
-            //     'name' => '',
-            //     'address' => '',
-            //     'min_employees' => 25,
-            //     'max_employees' => 99,
-            //     'contact_name' => 'Trần Hồng Ngọc',
-            //     'phone' => '0333333333',
-            //     'website' => '',
-            //     'description' => '',
-            //     'logo' => '',
-            //     'image' => '',
-            //     'latitude' => , 
-            //     'longitude' => ,
-            //     'created_at' => Carbon::now(),
-            //     'updated_at' => Carbon::now()
-            // ],
+            [
+                'id' => 29,
+                'user_id' => 29,
+                'name' => 'Newwave Solutions JSC',
+                'address' => 'Tầng 1, tầng 4 và tầng 10, Tòa Mitec, Lô E2 Khu Đô thị mới Cầu Giấy, Yên Hòa, Hà Nội',
+                'min_employees' => 100,
+                'max_employees' => 499,
+                'contact_name' => 'Trần Hồng Ngọc',
+                'phone' => '0333333333',
+                'website' => 'https://tuyendung.newwave.vn/',
+                'description' => 'Newwave Solutions là một trong những công ty hàng đầu cung cấp các phần mềm dạng dịch vụ cho các khách hàng thị trường Nhật Bản, thị trường Global và trong nước với 12+ năm kinh nghiệm cùng quy mô 300+ nhân viên.
+
+                Tầm nhìn
+                Định hướng để trở thành biểu tượng niềm tin trong lĩnh vực công nghệ, tích hợp hệ thống chuyển đổi số, đóng góp tích cực vào chuỗi giá trị công nghệ toàn cầu.
+                
+                Triết lý
+                Newwave Solutions thành công bằng tinh thần đương đầu với thách thức, luôn đặt mục tiêu lớn, không ngừng sáng tạo, tối ưu giá trị và hài hòa lợi ích chung.
+                
+                Sứ mệnh
+                Tiên phong kiến tạo hệ sinh thái công nghệ, cung cấp giải pháp linh hoạt, sản phẩm thông minh, dịch vụ xuất sắc, luôn thích ứng với xu thế của làn sóng mới và đồng hành cùng sự phát triển của đất nước.',
+                'logo' => 'https://cdn-new.topcv.vn/unsafe/140x/https://static.topcv.vn/company_logos/YjF8IUn9DGHx3HGzTUPki8DycZsRRqLA_1661485501____8e43ee2aad361f320c7d0a13becc6a92.png',
+                'image' => 'https://static.topcv.vn/company_covers/newwave-solutions-jsc-8055c3ef43965583ec62eec38931c89e-627239364e252.jpg',
+                'latitude' => 21.0200084, 
+                'longitude' => 105.7813238,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 30,
+                'user_id' => 30,
+                'name' => 'Công ty Cổ phần NTQ Solution',
+                'address' => 'Tòa nhà Sông Đà, Phạm Hùng, Nam Từ Liêm, Hà Nội',
+                'min_employees' => 1000,
+                'max_employees' => null,
+                'contact_name' => 'Trần Hồng Ngọc',
+                'phone' => '0333333333',
+                'website' => 'https://www.ntq-solution.com.vn/',
+                'description' => 'Được thành lập từ 2011 với sứ mệnh “Nâng tầm người Việt trên bản đồ số thế giới”, NTQ hiện đang phát triển 3 lĩnh vực dịch vụ chính: Software Development Service, Product Development Service và Business Development Service với gần 1000 dự án được triển khai kể từ khi thành lập, trở thành đối tác tin cậy & lâu dài cùng nhiều khách hàng, đối tác lớn trong và ngoài nước. Với mục tiêu toàn cầu hóa, bên cạnh trụ sở chính tại Hà Nội, NTQ cũng đã chính thức sở hữu các trụ sở tại nước ngoài như: Nhật Bản, Hàn Quốc, Hồng Kông. Đây đều là những thị trường lớn và tiềm năng đối với các mảng dịch vụ mà NTQ đang cung cấp.
+
+                Quy tụ hơn 1000 nhân sự chất lượng, trẻ trung, luôn mang tinh thần say mê và nhiệt huyết trong công việc và cuộc sống, NTQ đã gặt hái vô số các thành tựu trên suốt chặng đường hình thành và phát triển của mình, cũng như nhiều lần xuất hiện trên các trang báo lớn tại Nhật Bản và một số quốc gia khác. 
+                Trong giai đoạn mới (2021-2026), NTQ đặt mục tiêu lọt vào top 5 công ty trong lĩnh vực CNTT tại Việt Nam, cán mốc 2600 nhân sự và giá trị doanh nghiệp đạt 250 triệu USD. Với nền tảng vững mạnh, đội ngũ nhiệt huyết, đoàn kết, NTQ hoàn toàn tin tưởng vào mục tiêu đầy thách thức này!',
+                'logo' => 'https://cdn-new.topcv.vn/unsafe/140x/https://static.topcv.vn/company_logos/cong-ty-co-phan-ntq-solution-5d761d474f7de.jpg',
+                'image' => null,
+                'latitude' => 21.017707, 
+                'longitude' => 105.781228,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 31,
+                'user_id' => 31,
+                'name' => 'CÔNG TY CỔ PHẦN KAOPIZ HOLDINGS',
+                'address' => 'Tầng 4, Tòa CT1, Tòa nhà Bắc Hà C14, phố Tố hữu, Phường Trung Văn, Quận Nam Từ Liêm, Thành phố Hà Nội, Việt Nam',
+                'min_employees' => 25,
+                'max_employees' => 99,
+                'contact_name' => 'Trần Hồng Ngọc',
+                'phone' => '0333333333',
+                'website' => null,
+                'description' => null,
+                'logo' => null,
+                'image' => null,
+                'latitude' => 20.972259, 
+                'longitude' => 105.757399,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
             // [
             //     'id' => ,
             //     'user_id' => ,

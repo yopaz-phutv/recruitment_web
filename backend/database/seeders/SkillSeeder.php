@@ -480,6 +480,20 @@ class SkillSeeder extends Seeder
                 'proficiency' => 4,
                 'description' => 'Tiếng Anh, tiếng Nhật'
             ],
+            [
+                'id' => 69,
+                'candidate_id' => 134,
+                'name' => 'Lập trình',
+                'proficiency' => 4,
+                'description' => 'Java, PHP, Laravel, HTML, CSS, JavaScript, jQuery, ReactJS, Bootstrap'
+            ],
+            [
+                'id' => 70,
+                'candidate_id' => 134,
+                'name' => 'Cơ sở dữ liệu',
+                'proficiency' => 4,
+                'description' => 'MySQL, PostGreSQL'
+            ],       
         ]);
     }
 }

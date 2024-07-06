@@ -38,6 +38,9 @@ class UserSeeder extends Seeder
             ['id' => 26, 'email' => 'company26@gmail.com', 'password' => Hash::make('company@12345'), 'role' => 2],
             ['id' => 27, 'email' => 'company27@gmail.com', 'password' => Hash::make('company@12345'), 'role' => 2],
             ['id' => 28, 'email' => 'company28@gmail.com', 'password' => Hash::make('company@12345'), 'role' => 2],
+            ['id' => 29, 'email' => 'company29@gmail.com', 'password' => Hash::make('company@12345'), 'role' => 2],
+            ['id' => 30, 'email' => 'company30@gmail.com', 'password' => Hash::make('company@12345'), 'role' => 2],
+            ['id' => 31, 'email' => 'company31@gmail.com', 'password' => Hash::make('company@12345'), 'role' => 2],
 
             // candidates:
             ['id' => 101, 'email' => 'tranphudhak@gmail.com', 'password' => Hash::make('phu12345'), 'role' => 1],
@@ -73,6 +76,37 @@ class UserSeeder extends Seeder
             ['id' => 131, 'email' => 'candidate31@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
             ['id' => 132, 'email' => 'candidate32@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
             ['id' => 133, 'email' => 'candidate33@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 134, 'email' => 'candidate34@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+
+            // BROWSING_INTERVIEW and PASSED candidates:
+            ['id' => 201, 'email' => 'candidate201@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 202, 'email' => 'candidate202@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 203, 'email' => 'candidate203@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 204, 'email' => 'candidate204@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 205, 'email' => 'candidate205@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 206, 'email' => 'candidate206@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 207, 'email' => 'candidate207@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 208, 'email' => 'candidate208@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 209, 'email' => 'candidate209@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 210, 'email' => 'candidate210@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 211, 'email' => 'candidate211@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 212, 'email' => 'candidate212@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 213, 'email' => 'candidate213@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 214, 'email' => 'candidate214@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 215, 'email' => 'candidate215@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 216, 'email' => 'candidate216@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 217, 'email' => 'candidate217@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 218, 'email' => 'candidate218@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 219, 'email' => 'candidate219@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 220, 'email' => 'candidate220@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 221, 'email' => 'candidate221@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 222, 'email' => 'candidate222@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 223, 'email' => 'candidate223@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 224, 'email' => 'candidate224@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 225, 'email' => 'candidate225@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            ['id' => 226, 'email' => 'candidate226@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            // ['id' => 227, 'email' => 'candidate227@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
+            // ['id' => 228, 'email' => 'candidate228@gmail.com', 'password' => Hash::make('cand@12345'), 'role' => 1],
         ]);
     }
 }

@@ -281,7 +281,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'id' => 23,
-                'candidate_id' => 120,
+                'candidate_id' => 128,
                 'name' => 'Shoes Shop',
                 'prj_type' => 'nhóm',
                 'role' => 'Backend',
@@ -293,7 +293,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'id' => 24,
-                'candidate_id' => 121,
+                'candidate_id' => 129,
                 'name' => 'Shoes Shop',
                 'prj_type' => 'nhóm',
                 'role' => 'Backend',
@@ -305,7 +305,7 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'id' => 25,
-                'candidate_id' => 122,
+                'candidate_id' => 130,
                 'name' => 'Shoes Shop',
                 'prj_type' => 'nhóm',
                 'role' => 'Backend',
@@ -317,7 +317,19 @@ class ProjectSeeder extends Seeder
             ],
             [
                 'id' => 26,
-                'candidate_id' => 123,
+                'candidate_id' => 131,
+                'name' => 'Shoes Shop',
+                'prj_type' => 'nhóm',
+                'role' => 'Backend',
+                'technologies' => 'ReactJS, Laravel, Bootstrap',
+                'start_date' => new Carbon('2022-03-20'),
+                'end_date' => new Carbon('2022-06-20'),
+                'description' => 'Trang web mua bán giày dép',
+                'link' => 'https://github.com/ldhoang201/shoes_store'
+            ],
+            [
+                'id' => 27,
+                'candidate_id' => 134,
                 'name' => 'Shoes Shop',
                 'prj_type' => 'nhóm',
                 'role' => 'Backend',
