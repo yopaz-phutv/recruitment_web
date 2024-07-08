@@ -48,6 +48,7 @@ export default function TemplateWrapper({
   const curTemplate = templateList.find((item) => item.id === templateId);
 
   const [style, setStyle] = useState(structuredClone(curTemplate.defaultStyle));
+  const [curIntervalId, setCurIntervalId] = useState(null)
 
   useEffect(() => {
     if (mode) setCvMode(mode);
@@ -266,99 +267,103 @@ export default function TemplateWrapper({
   const isPresentInParts = (partName) => {
     return parts.findIndex((item) => item === partName) > -1 ? true : false;
   };
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     setIsSaveLoading(true);
-    var dob = "";
-    if (data.dob) {
-      const [dobDay, dobMonth, dobYear] = data.dob.split("/");
-      dob = dobYear + "-" + dobMonth + "-" + dobDay;
-    }
-
-    let educations = [...cvEducations];
-    let experiences = [...cvExperiences];
-    let projects = [...cvProjects];
-    let skills = [...cvSkills];
-    let certificates = [...cvCertificates];
-    let prizes = [...cvPrizes];
-    let activities = [...cvActivities];
-    let others = [...cvOthers];
-
-    //format date
-    formatDateInPart(educations);
-    formatDateInPart(experiences);
-    formatDateInPart(projects);
-    formatDateInPart(activities);
-    formatDateInPart(certificates);
-    formatDateInPart(prizes);
-    //end: format date
-
-    const image = await getImgData();
-    const resumeFile = await srcToFile(image, "resumeImage.png", "image/png");
-
-    var skillText = "";
-    skills.forEach((item) => {
-      skillText += item.name + " " + item.description + " ";
-    });
-
-    delete data["bg_main_color"];
-    delete data["title_color"];
-    delete data["title_size"];
-    delete data["content_size"];
-    delete data["font_family"];
-
-    let postData = {
-      basicInfor: {
-        ...data,
-        dob,
-        template_id: templateId,
-        parts_order: JSON.stringify(parts),
-        skill_text: skillText,
-        style: JSON.stringify(style),
-      },
-      educations: isPresentInParts("education") ? educations : null,
-      experiences: isPresentInParts("experience") ? experiences : null,
-      projects: isPresentInParts("project") ? projects : null,
-      skills: isPresentInParts("skill") ? skills : null,
-      certificates: isPresentInParts("certificate") ? certificates : null,
-      prizes: isPresentInParts("prize") ? prizes : null,
-      activities: isPresentInParts("activity") ? activities : null,
-      others: isPresentInParts("other") ? others : null,
-    };
-    if (!avatarFile && cvMode === "CREATE_1") {
-      postData.basicInfor.profile_avatar = personal.avatar;
-      // postData.basicInfor.avatar_url = personal.avatar_url;
-    }
-
-    const formData = new FormData();
-    if (cvMode === "EDIT") postData = { ...postData, resume_id: id };
-    if (avatarFile) formData.append("avatar", avatarFile);
-    formData.append("resume_file", resumeFile);
-    formData.append("otherData", JSON.stringify(postData));
-
-    if (cvMode.startsWith("CREATE")) {
-      try {
-        await resumeApi.create(formData);
-        setIsSaveLoading(false);
-        toast.success("Tạo mới thành công!");
-        nav("/candidate/resumes");
-      } catch (e) {
-        setIsSaveLoading(false);
-        toast.error("Đã có lỗi xảy ra!");
-        console.error(">>Error:", e.response.data.message);
+    clearInterval(curIntervalId);
+    setTimeout(async () => {
+      var dob = "";
+      if (data.dob) {
+        const [dobDay, dobMonth, dobYear] = data.dob.split("/");
+        dob = dobYear + "-" + dobMonth + "-" + dobDay;
       }
-    } else if (cvMode === "EDIT") {
-      try {
-        await resumeApi.update(formData);
-        setIsSaveLoading(false);
-        toast.success("Cập nhật thành công!");
-        nav("/candidate/resumes");
-      } catch (e) {
-        setIsSaveLoading(false);
-        toast.error("Đã có lỗi xảy ra!");
-        console.error(">>Error:", e.response.data.message);
+
+      let educations = [...cvEducations];
+      let experiences = [...cvExperiences];
+      let projects = [...cvProjects];
+      let skills = [...cvSkills];
+      let certificates = [...cvCertificates];
+      let prizes = [...cvPrizes];
+      let activities = [...cvActivities];
+      let others = [...cvOthers];
+
+      //format date
+      formatDateInPart(educations);
+      formatDateInPart(experiences);
+      formatDateInPart(projects);
+      formatDateInPart(activities);
+      formatDateInPart(certificates);
+      formatDateInPart(prizes);
+      //end: format date
+
+      const image = await getImgData();
+      const resumeFile = await srcToFile(image, "resumeImage.png", "image/png");
+
+      var skillText = "";
+      skills.forEach((item) => {
+        skillText += item.name + " " + item.description + " ";
+      });
+
+      delete data["bg_main_color"];
+      delete data["title_color"];
+      delete data["title_size"];
+      delete data["content_size"];
+      delete data["font_family"];
+
+      let postData = {
+        basicInfor: {
+          ...data,
+          dob,
+          template_id: templateId,
+          parts_order: JSON.stringify(parts),
+          skill_text: skillText,
+          style: JSON.stringify(style),
+        },
+        educations: isPresentInParts("education") ? educations : null,
+        experiences: isPresentInParts("experience") ? experiences : null,
+        projects: isPresentInParts("project") ? projects : null,
+        skills: isPresentInParts("skill") ? skills : null,
+        certificates: isPresentInParts("certificate") ? certificates : null,
+        prizes: isPresentInParts("prize") ? prizes : null,
+        activities: isPresentInParts("activity") ? activities : null,
+        others: isPresentInParts("other") ? others : null,
+      };
+      if (!avatarFile && cvMode === "CREATE_1") {
+        postData.basicInfor.profile_avatar = personal.avatar;
+        // postData.basicInfor.avatar_url = personal.avatar_url;
       }
-    }
+
+      const formData = new FormData();
+      if (cvMode === "EDIT") postData = { ...postData, resume_id: id };
+      if (avatarFile) formData.append("avatar", avatarFile);
+      formData.append("resume_file", resumeFile);
+      formData.append("otherData", JSON.stringify(postData));
+
+      if (cvMode.startsWith("CREATE")) {
+        try {
+          await resumeApi.create(formData);
+          setIsSaveLoading(false);
+          toast.success("Tạo mới thành công!");
+          nav("/candidate/resumes");
+        } catch (e) {
+          setIsSaveLoading(false);
+          toast.error("Đã có lỗi xảy ra!");
+          console.error(">>Error:", e.response.data.message);
+        }
+      } else if (cvMode === "EDIT") {
+        try {
+          await resumeApi.update(formData);
+          setIsSaveLoading(false);
+          toast.success("Cập nhật thành công!");
+          nav("/candidate/resumes");
+        } catch (e) {
+          setIsSaveLoading(false);
+          toast.error("Đã có lỗi xảy ra!");
+          console.error(">>Error:", e.response.data.message);
+        }
+      }
+    }, 250);
   };
+
   const handleDisplayImg = (e) => {
     setAvatarFile(e.target.files[0]);
     var reader = new FileReader();
@@ -409,6 +414,7 @@ export default function TemplateWrapper({
   };
 
   useEffect(() => {
+    if (curIntervalId) clearInterval(curIntervalId);
     const intervalId = setInterval(() => {
       changeElementsStyle();
     }, 200);
@@ -507,7 +513,7 @@ export default function TemplateWrapper({
       }}
     >
       {mode !== "READ" ? (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
           <div className="ms-3 ps-3 py-2 border-top shadow-sm bg-white">
             <div className="clearfix mt-1">
               <Form.Group className="float-start w-20">
@@ -536,11 +542,12 @@ export default function TemplateWrapper({
                 <span className="fw-600">Tải xuống CV</span>
               </Button>
               <Button
-                type="submit"
+                type="buton"
                 variant="outline-primary"
                 size="sm"
                 className="float-end me-3 px-5 py-1"
                 disabled={isSaveLoading}
+                onClick={handleSubmit(onSubmit)}
               >
                 {isSaveLoading && <Spinner size="sm" className="me-1" />}
                 <span className="fw-600">

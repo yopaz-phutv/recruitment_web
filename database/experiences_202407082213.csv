@@ -1,0 +1,75 @@
+"id","candidate_id","resume_id","name","company","start_date","end_date","description"
+1,101,,Thực tập sinh PHP,Trung tâm CNTT MobiFone,"2023-03-07","2023-06-19",Nghiên cứu và triển khai framework Laravel
+2,101,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+3,102,,Thực tập sinh PHP,Trung tâm CNTT MobiFone,"2023-03-07","2023-06-19",Nghiên cứu và triển khai framework Laravel
+4,102,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+5,103,,Thực tập sinh PHP,Trung tâm CNTT MobiFone,"2023-03-07","2023-06-19",Nghiên cứu và triển khai framework Laravel
+6,103,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+7,104,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+8,105,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+9,106,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+10,107,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+11,108,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+12,109,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+13,110,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+14,111,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+15,112,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+16,113,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+17,114,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+18,115,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+19,116,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+20,117,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+21,118,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+22,119,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+23,120,,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+24,121,,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+25,122,,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+26,123,,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+27,124,,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+28,125,,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+29,126,,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+30,127,,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+31,128,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+32,129,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+33,130,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+34,131,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+35,132,,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+36,133,,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+37,134,,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+38,101,1,Thực tập sinh PHP,Trung tâm CNTT MobiFone,"2023-03-07","2023-06-19",Nghiên cứu và triển khai framework Laravel
+39,101,1,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+40,102,2,Thực tập sinh PHP,Trung tâm CNTT MobiFone,"2023-03-07","2023-06-19",Nghiên cứu và triển khai framework Laravel
+41,102,2,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+42,103,3,Thực tập sinh PHP,Trung tâm CNTT MobiFone,"2023-03-07","2023-06-19",Nghiên cứu và triển khai framework Laravel
+43,103,3,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+44,104,4,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+45,105,5,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+46,106,6,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+47,107,7,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+48,108,8,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+49,109,9,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+50,110,10,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+51,111,11,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+52,112,12,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+53,113,13,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+54,114,14,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+55,115,15,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+56,116,16,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+57,117,17,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+58,118,18,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+59,119,19,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+60,120,20,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+61,121,21,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+62,122,22,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+63,123,23,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+64,124,24,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+65,125,25,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+66,126,26,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+67,127,27,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+68,128,28,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+69,129,29,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+70,130,30,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+71,131,31,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web
+72,132,32,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+73,133,33,Thực tập sinh HR,Công ty TNHH DEF,"2023-10-07","2024-01-07","Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự"
+74,134,34,Thực tập sinh Web,Công ty TNHH Theinfitech,"2023-10-07","2024-01-07",Sử dụng ReactJS và Flask API để lập trình web

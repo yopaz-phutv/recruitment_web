@@ -1,0 +1,75 @@
+INSERT INTO recruitment.activities (candidate_id,resume_id,organization,`role`,is_present,start_date,end_date,description,link) VALUES
+	 (101,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (102,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (103,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (104,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (105,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (106,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (107,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (108,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (109,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (110,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL);
+INSERT INTO recruitment.activities (candidate_id,resume_id,organization,`role`,is_present,start_date,end_date,description,link) VALUES
+	 (111,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (112,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (113,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (114,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (115,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (116,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (117,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (118,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (119,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (120,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL);
+INSERT INTO recruitment.activities (candidate_id,resume_id,organization,`role`,is_present,start_date,end_date,description,link) VALUES
+	 (121,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (122,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (123,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (124,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (125,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (126,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (127,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (128,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (129,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (130,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL);
+INSERT INTO recruitment.activities (candidate_id,resume_id,organization,`role`,is_present,start_date,end_date,description,link) VALUES
+	 (131,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (132,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (133,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (134,NULL,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (101,1,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (102,2,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (103,3,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (104,4,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (105,5,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (106,6,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL);
+INSERT INTO recruitment.activities (candidate_id,resume_id,organization,`role`,is_present,start_date,end_date,description,link) VALUES
+	 (107,7,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (108,8,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (109,9,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (110,10,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (111,11,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (112,12,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (113,13,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (114,14,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (115,15,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (116,16,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL);
+INSERT INTO recruitment.activities (candidate_id,resume_id,organization,`role`,is_present,start_date,end_date,description,link) VALUES
+	 (117,17,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (118,18,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (119,19,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (120,20,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (121,21,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (122,22,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (123,23,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (124,24,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (125,25,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (126,26,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL);
+INSERT INTO recruitment.activities (candidate_id,resume_id,organization,`role`,is_present,start_date,end_date,description,link) VALUES
+	 (127,27,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (128,28,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (129,29,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (130,30,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (131,31,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (132,32,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (133,33,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL),
+	 (134,34,'Đội sinh viên tình nguyện','Tình nguyện viên',0,'2023-03-20','2023-06-20','Hỗ trợ giấy tờ cho ban tổ chức',NULL);

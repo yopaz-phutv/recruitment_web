@@ -285,14 +285,15 @@ class ExperienceSeeder extends Seeder
                 'end_date' => new Carbon('2024-01-07'),
                 'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
             ],
+
             [
                 'id' => 31,
                 'candidate_id' => 128,
-                'name' => 'Thực tập sinh HR',
-                'company' => 'Công ty TNHH DEF',
+                'name' => 'Thực tập sinh Web',
+                'company' => 'Công ty TNHH Theinfitech',
                 'start_date' => new Carbon('2023-10-07'),
                 'end_date' => new Carbon('2024-01-07'),
-                'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
+                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
             ],
             [
                 'id' => 32,
@@ -324,20 +325,20 @@ class ExperienceSeeder extends Seeder
             [
                 'id' => 35,
                 'candidate_id' => 132,
-                'name' => 'Thực tập sinh Web',
-                'company' => 'Công ty TNHH Theinfitech',
+                'name' => 'Thực tập sinh HR',
+                'company' => 'Công ty TNHH DEF',
                 'start_date' => new Carbon('2023-10-07'),
                 'end_date' => new Carbon('2024-01-07'),
-                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
+                'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
             ],
             [
                 'id' => 36,
                 'candidate_id' => 133,
-                'name' => 'Thực tập sinh Web',
-                'company' => 'Công ty TNHH Theinfitech',
+                'name' => 'Thực tập sinh HR',
+                'company' => 'Công ty TNHH DEF',
                 'start_date' => new Carbon('2023-10-07'),
                 'end_date' => new Carbon('2024-01-07'),
-                'description' => 'Sử dụng ReactJS và Flask API để lập trình web'
+                'description' => 'Hỗ trợ, tham gia các công việc liên quan tới quản lý, tuyển dụng nhân sự'
             ],
             [
                 'id' => 37,

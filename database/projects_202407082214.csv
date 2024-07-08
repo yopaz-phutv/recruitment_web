@@ -1,0 +1,55 @@
+"id","candidate_id","resume_id","name","prj_type","role","technologies","start_date","end_date","description","link"
+1,101,,Website tuyển dụng,Cá nhân,,"ReactJS, Laravel, Bootstrap, Redux","2024-01-10","2024-05-30",Trang web giúp tìm kiếm việc làm và đăng bài tuyển dụng,https://github.com/yopaz-phutv/recruitment_web
+2,101,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+3,102,,Website tuyển dụng,Cá nhân,,"ReactJS, Laravel, Bootstrap, Redux","2024-01-10","2024-05-30",Trang web giúp tìm kiếm việc làm và đăng bài tuyển dụng,https://github.com/yopaz-phutv/recruitment_web
+4,102,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+5,103,,Website tuyển dụng,Cá nhân,,"ReactJS, Laravel, Bootstrap, Redux","2024-01-10","2024-05-30",Trang web giúp tìm kiếm việc làm và đăng bài tuyển dụng,https://github.com/yopaz-phutv/recruitment_web
+6,103,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+7,104,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+8,105,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+9,106,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+10,107,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+11,108,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+12,109,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+13,110,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+14,111,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+15,112,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+16,113,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+17,114,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+18,115,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+19,116,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+20,117,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+21,118,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+22,119,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+23,128,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+24,129,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+25,130,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+26,131,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+27,134,,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+28,101,1,Website tuyển dụng,Cá nhân,,"ReactJS, Laravel, Bootstrap, Redux","2024-01-10","2024-05-30",Trang web giúp tìm kiếm việc làm và đăng bài tuyển dụng,https://github.com/yopaz-phutv/recruitment_web
+29,101,1,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+30,102,2,Website tuyển dụng,Cá nhân,,"ReactJS, Laravel, Bootstrap, Redux","2024-01-10","2024-05-30",Trang web giúp tìm kiếm việc làm và đăng bài tuyển dụng,https://github.com/yopaz-phutv/recruitment_web
+31,102,2,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+32,103,3,Website tuyển dụng,Cá nhân,,"ReactJS, Laravel, Bootstrap, Redux","2024-01-10","2024-05-30",Trang web giúp tìm kiếm việc làm và đăng bài tuyển dụng,https://github.com/yopaz-phutv/recruitment_web
+33,103,3,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+34,104,4,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+35,105,5,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+36,106,6,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+37,107,7,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+38,108,8,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+39,109,9,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+40,110,10,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+41,111,11,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+42,112,12,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+43,113,13,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+44,114,14,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+45,115,15,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+46,116,16,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+47,117,17,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+48,118,18,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+49,119,19,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+50,128,28,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+51,129,29,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+52,130,30,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+53,131,31,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store
+54,134,34,Shoes Shop,nhóm,Backend,"ReactJS, Laravel, Bootstrap","2022-03-20","2022-06-20",Trang web mua bán giày dép,https://github.com/ldhoang201/shoes_store

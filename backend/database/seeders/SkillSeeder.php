@@ -395,21 +395,21 @@ class SkillSeeder extends Seeder
                 'proficiency' => 4,
                 'description' => 'Tiếng Anh, tiếng Nhật'
             ],
+
             [
                 'id' => 55,
                 'candidate_id' => 128,
-                'name' => 'Kỹ năng chuyên môn',
+                'name' => 'Lập trình',
                 'proficiency' => 4,
-                'description' => '- Giao tiếp, xử lý tình huống, quản lý thời gian'
+                'description' => 'Java, PHP, Laravel, HTML, CSS, JavaScript, jQuery, ReactJS, Bootstrap'
             ],
             [
                 'id' => 56,
                 'candidate_id' => 128,
-                'name' => 'Kỹ năng khác',
+                'name' => 'Cơ sở dữ liệu',
                 'proficiency' => 4,
-                'description' => 'Tiếng Anh, tiếng Nhật'
+                'description' => 'MySQL, PostGreSQL'
             ],
-
             [
                 'id' => 57,
                 'candidate_id' => 129,
@@ -451,20 +451,20 @@ class SkillSeeder extends Seeder
                 'name' => 'Cơ sở dữ liệu',
                 'proficiency' => 4,
                 'description' => 'MySQL, PostGreSQL'
-            ],
+            ],         
             [
                 'id' => 65,
                 'candidate_id' => 132,
-                'name' => 'Lập trình',
+                'name' => 'Kỹ năng chuyên môn',
                 'proficiency' => 4,
-                'description' => 'PHP, Laravel, HTML, SCSS, JavaScript, jQuery, ReactJS, Tailwind'
+                'description' => '- Giao tiếp, xử lý tình huống, quản lý thời gian'
             ],
             [
                 'id' => 66,
                 'candidate_id' => 132,
-                'name' => 'Cơ sở dữ liệu',
+                'name' => 'Kỹ năng khác',
                 'proficiency' => 4,
-                'description' => 'MySQL, PostGreSQL'
+                'description' => 'Tiếng Anh, tiếng Nhật'
             ],         
             [
                 'id' => 67,
