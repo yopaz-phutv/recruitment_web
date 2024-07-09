@@ -35,8 +35,8 @@ class Job extends Model
     {
         return $this->hasMany(CandidateMessage::class);
     }
-    public function candidate_bookmarks()
-    {
-        return $this->belongsToMany(SavedCandidate::class, 'candidate_bookmark_detail', 'job_id', 'candidate_bookmark_id');
-    }
+    // public function candidate_bookmarks()
+    // {
+    //     return $this->belongsToMany(SavedCandidate::class, 'candidate_bookmark_detail', 'job_id', 'candidate_bookmark_id');
+    // }
 }

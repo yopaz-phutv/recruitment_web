@@ -4,7 +4,7 @@ import jobApi from "../../../api/job";
 import Modal from "react-bootstrap/Modal";
 import Spinner from "react-bootstrap/Spinner";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CreateJobModal({
   jtypes,
@@ -23,10 +23,17 @@ export default function CreateJobModal({
   } = useForm();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [expireAtError, setExpireAtError] = useState(null);
 
   const onSubmit = async (job_inf) => {
     try {
       setIsLoading(true);
+      if (expireAtError) {
+        toast.error("Vui lòng kiểm tra lại thông tin!");
+        return;
+      }
+
+      job_inf.expire_at = job_inf.expire_at + " 23:59:00";
       for (let j = 0; j < job_inf.industries.length; j++) {
         job_inf.industries[j] = industries[job_inf.industries[j]].id;
       }
@@ -37,7 +44,6 @@ export default function CreateJobModal({
       if (job_inf.yoe === "") delete job_inf.yoe;
       if (job_inf.min_salary === "") delete job_inf.min_salary;
       if (job_inf.max_salary === "") delete job_inf.max_salary;
-      console.log(job_inf);
 
       await jobApi.create(job_inf);
       toast.success("Tạo mới thành công!");
@@ -48,6 +54,15 @@ export default function CreateJobModal({
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (
+      new Date(watch("expire_at") + " 23:59:00").getTime() <=
+      new Date().getTime()
+    ) {
+      setExpireAtError("Vui lòng chọn hạn nộp lớn hơn thời điểm hiện tại!");
+    } else setExpireAtError(null);
+  }, [watch("expire_at")]);
 
   return (
     <Modal
@@ -235,9 +250,9 @@ export default function CreateJobModal({
                 {...register("salaryOpt")}
               />
               Cụ thể <br />
-              <span className="text-danger">
+              <small className="text-danger">
                 {!watch("salaryOpt") && "Hãy chọn 1 trong 2 lựa chọn trên"}
-              </span>
+              </small>
               {watch("salaryOpt") === "1" && (
                 <div className="d-flex mt-1 align-items-center">
                   <input
@@ -302,6 +317,9 @@ export default function CreateJobModal({
               {...register("expire_at")}
             />
           </div>
+          {expireAtError && (
+            <small className="text-danger">{expireAtError}</small>
+          )}
           <div className="mt-2">
             <strong>Mô tả việc làm:</strong>
             <textarea

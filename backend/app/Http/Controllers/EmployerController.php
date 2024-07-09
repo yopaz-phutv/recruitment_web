@@ -309,6 +309,8 @@ class EmployerController extends Controller
         )->paginate(9)->toArray();
 
         $employer_id = Auth::user()->id;
+        $employer_job_ids = Job::where('employer_id', $employer_id)->pluck('id');
+
         for ($i = 0; $i < count($resumes['data']); $i++) {
             $resume = $resumes['data'][$i];
             $res = DB::table('candidate_bookmarks')
@@ -328,6 +330,12 @@ class EmployerController extends Controller
                     ->pluck('job_id');
                 $resumes['data'][$i]['job_ids'] = $job_ids;
             }
+            // get applying of any company's jobs:
+            $resumes['data'][$i]['applying'] = DB::table('job_applying')
+                ->where('candidate_id', $resume['candidate_id'])
+                ->whereIn('job_id', $employer_job_ids)
+                ->orderByDesc('created_at')
+                ->first();
         }
 
         return response()->json($resumes);

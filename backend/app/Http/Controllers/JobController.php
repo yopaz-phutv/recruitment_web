@@ -19,6 +19,7 @@ class JobController extends Controller
     {
         $query = Job::query()->with(['employer', 'locations'])
             ->where('jobs.is_active', 1)
+            ->where('expire_at', '>', Carbon::now())
             ->when($req->keyword != null, function ($query) use ($req) {
                 return $query->whereRaw('LOWER(jobs.jname) LIKE ?', ['%' . strtolower($req->keyword) . '%']);
             })
@@ -53,6 +54,9 @@ class JobController extends Controller
             ->when($req->jlevel_id != null, function ($query) use ($req) {
                 return $query->where('jlevel_id', '=', $req->jlevel_id);
             })
+            ->when($req->posting_period != null, function ($query) use ($req) {
+                return $query->where('jobs.created_at', '>=', Carbon::now()->subDays($req->posting_period));
+            })
             ->select('jobs.*')
             ->distinct();
 
@@ -70,16 +74,6 @@ class JobController extends Controller
                     break;
             }
             $jobs = $query->orderByDesc('jobs.created_at')->paginate(9);
-        }
-
-        $jobs = $jobs->toArray();
-        $currentTime = Carbon::now();
-
-        if ($req->posting_period) {
-            $jobs['data'] = array_filter(
-                $jobs['data'],
-                fn ($item) => $currentTime->diffInDays($item['created_at']) <= $req->posting_period
-            );
         }
 
         return response()->json($jobs);
@@ -204,11 +198,10 @@ class JobController extends Controller
             Storage::copy("suitable_resumes/suitable_resume_{$req->candidate_bookmark_id}.png", $new_path);
             $url = getViewLinkFromGgStorageUrl(Storage::url($new_path));
         } else {
-            if ($req->hasFile('cv')){
+            if ($req->hasFile('cv')) {
                 $url = uploadFile2GgDrive($req->cv, 'applied_resumes');
                 $skill_text = $req->skill_text;
-            }
-            else if ($req->has('resume_id')) {
+            } else if ($req->has('resume_id')) {
                 $new_path = "applied_resumes/applied_resume_{$new_applying->id}.png";
                 Storage::copy("resumes/resume_{$req->resume_id}.png", $new_path);
                 $url = getViewLinkFromGgStorageUrl(Storage::url($new_path));
@@ -225,18 +218,22 @@ class JobController extends Controller
         return response()->json('applied successfully');
     }
 
-    public function checkApplying($job_id)
+    public function checkCanApply($job_id)
     {
         $user = Auth::user();
         $res = DB::table('job_applying')
             ->where([
                 ['job_id', '=', $job_id],
                 ['candidate_id', '=', $user->id]
-            ])->first();
+            ])
+            ->orderByDesc('created_at')
+            ->first();
+        if ($res) {
+            if ((Carbon::now())->diffInDays(Carbon::parse($res->created_at)) > 6 * 30)
+                return response()->json(['value' => true]);
+        }
 
-        if ($res != null) {
-            return response()->json(['value' => true]);
-        } else return response()->json(['value' => false]);
+        return response()->json(['value' => false]);
     }
 
     public function getSimilarJobs($id)

@@ -288,7 +288,7 @@ function JobList() {
                   {...register("posting_period")}
                 >
                   <option value="">Đăng trong vòng</option>
-                  <option value="3">4 ngày trước</option>
+                  <option value="4">4 ngày trước</option>
                   <option value="7">1 tuần trước</option>
                   <option value="14">2 tuần trước</option>
                   <option value="30">1 tháng trước</option>

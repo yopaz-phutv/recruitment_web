@@ -305,7 +305,7 @@ function CandidateList() {
               <h5>Không có bản ghi nào</h5>
             ) : (
               <CPagination
-                className="justify-content-center"
+                className="justify-content-center mb-4"
                 totalPage={totalPage}
                 curPage={curPage}
                 setCurPage={setCurPage}

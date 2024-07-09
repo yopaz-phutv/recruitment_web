@@ -92,7 +92,7 @@ Route::controller(JobController::class)->prefix('jobs')->group(function () {
     Route::post('{id}/update', 'update');
     Route::get('{id}/getJobIndustries', 'getJobIndustries');
     Route::post('{id}/apply', 'apply')->middleware('jwt');
-    Route::get('{id}/checkApplying', 'checkApplying')->middleware('jwt');
+    Route::get('{id}/checkCanApply', 'checkCanApply')->middleware('jwt');
     Route::get('{id}/getSimilarJobs', 'getSimilarJobs');
     Route::get('getRecommendJobs', 'getRecommendJobs'); 
 });

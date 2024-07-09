@@ -5,6 +5,7 @@ import jobApi from "../../../api/job";
 import Modal from "react-bootstrap/Modal";
 import Spinner from "react-bootstrap/Spinner";
 import { toast } from "react-toastify";
+import dayjs from "dayjs";
 
 export default function EditJobModal({
   inf,
@@ -29,10 +30,16 @@ export default function EditJobModal({
   const [isEditLocation, setIsEditLocation] = useState(false);
   const [isEditSalary, setIsEditSalary] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [expireAtError, setExpireAtError] = useState(null);
 
   const onSubmit = async (job_inf) => {
     try {
       setIsLoading(true);
+      if (expireAtError) {
+        toast.error("Vui lòng kiểm tra lại thông tin!");
+        return;
+      }
+
       const keys = Object.keys(job_inf);
       for (let i = 0; i < keys.length; i++) {
         let key = keys[i];
@@ -67,10 +74,15 @@ export default function EditJobModal({
       setIsLoading(false);
     }
   };
-
+  
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (
+      new Date(watch("expire_at") + " 23:59:00").getTime() <=
+      new Date().getTime()
+    ) {
+      setExpireAtError("Vui lòng chọn hạn nộp lớn hơn thời điểm hiện tại!");
+    } else setExpireAtError(null);
+  }, [watch("expire_at")]);
 
   return (
     <Modal
@@ -396,10 +408,13 @@ export default function EditJobModal({
               type="date"
               className="form-control ms-1"
               style={{ width: "180px" }}
-              defaultValue={inf.expire_at}
+              defaultValue={dayjs(inf.expire_at).format('YYYY-MM-DD')}
               {...register("expire_at")}
             />
           </div>
+          {expireAtError && (
+            <small className="text-danger">{expireAtError}</small>
+          )}
           <div className="mt-2">
             <strong>Mô tả công việc:</strong>
             <textarea

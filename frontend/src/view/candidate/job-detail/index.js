@@ -38,7 +38,7 @@ function Job() {
   const isAuth = useSelector((state) => state.candAuth.isAuth);
 
   const [showDialog, setShowDialog] = useState(false);
-  const [isApplied, setIsApplied] = useState(false);
+  const [canApply, setCanApply] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [industries, setIndustries] = useState([]);
   const [recommendData, setRecommendData] = useState({});
@@ -56,9 +56,9 @@ function Job() {
     setSimilarJobs(res);
   };
 
-  const checkApplying = async () => {
-    const res = await jobApi.checkApplying(id);
-    setIsApplied(res.value);
+  const checkCanApply = async () => {
+    const res = await jobApi.checkCanApply(id);
+    setCanApply(res.value);
   };
 
   const checkLoggedIn = () => {
@@ -97,7 +97,7 @@ function Job() {
   }, []);
   useEffect(() => {
     if (isAuth) {
-      checkApplying();
+      checkCanApply();
       checkJobSaved();
       getCurJobRecommendData();
     }
@@ -138,10 +138,10 @@ function Job() {
                   <div className="clearfix mt-3 mb-2">
                     <button
                       className="btn bg-main text-white ts-sm"
-                      disabled={isApplied === true}
+                      disabled={!canApply}
                       onClick={checkLoggedIn}
                     >
-                      {isApplied === true ? "Đã ứng tuyển" : "Ứng tuyển"}
+                      {canApply ? "Ứng tuyển" : "Đã ứng tuyển"}
                     </button>
                     <button
                       className="btn border-danger text-danger ms-5 ts-sm"

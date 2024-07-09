@@ -4,13 +4,19 @@ import { MdLocationOn } from "react-icons/md";
 import defaultAvt from "../../../assets/images/default-avatar.webp";
 import dayjs from "dayjs";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { FaInfoCircle } from "react-icons/fa";
+import { useState } from "react";
+// import CTooltip from "../../../components/CTooltip";
 
 export default function CandidateItem({
   resume,
   handleViewDetail,
   setShowSelectJobModal,
   setCurResume,
+  jobs,
 }) {
+  const [showInfor, setShowInfor] = useState(false);
+
   const handleSaveCandidate = async () => {
     setCurResume(resume);
     setShowSelectJobModal(true);
@@ -46,9 +52,37 @@ export default function CandidateItem({
                 </div>
               </div>
             </div>
-            <div className="d-flex align-items-center gap-1">
-              <MdLocationOn fontSize="19px" className="text-main" />
-              {resume.location}
+            <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex align-items-center gap-1">
+                <MdLocationOn fontSize="19px" className="text-main" />
+                {resume.location}
+              </div>
+              {resume.applying && (
+                <div className="position-relative">
+                  <FaInfoCircle
+                    className="text-primary me-2"
+                    onMouseEnter={() => setShowInfor(true)}
+                    onMouseLeave={() => setShowInfor(false)}
+                  />
+                  {showInfor && (
+                    <div
+                      className="z-index-1 position-absolute bottom-100 bg-white shadow-sm border border-primary rounded px-2 py-1"
+                      style={{ width: "200px", left: "-100px" }}
+                    >
+                      Ứng viên này đã nộp hồ sơ lần gần nhất vào{" "}
+                      <span className="text-danger">
+                        {dayjs(resume?.applying.created_at).format(
+                          "DD/MM/YYYY"
+                        )}
+                      </span>
+                      , vị trí{" "}
+                      <span className="text-danger">
+                        {jobs.find((job) => job.id === resume?.applying.job_id)?.jname}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

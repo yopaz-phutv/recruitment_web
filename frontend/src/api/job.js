@@ -31,8 +31,8 @@ const jobApi = {
   apply: (id, formData) => {
     return candidateAxios.post(`${prefix}/${id}/apply`, formData);
   },
-  checkApplying: (id) => {
-    return candidateAxios.get(`${prefix}/${id}/checkApplying`);
+  checkCanApply: (id) => {
+    return candidateAxios.get(`${prefix}/${id}/checkCanApply`);
   },
   getSimilarJobs: (id) => {
     return commonAxios.get(`${prefix}/${id}/getSimilarJobs`);

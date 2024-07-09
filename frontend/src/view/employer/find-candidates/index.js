@@ -264,6 +264,7 @@ export default function FindingCandidates() {
                 }}
                 setShowSelectJobModal={setShowSelectJobModal}
                 setCurResume={setCurResume}
+                jobs={jobs}
               />
             </div>
           ))}
