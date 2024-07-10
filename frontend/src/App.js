@@ -42,6 +42,10 @@ function App() {
     cluster: "ap1",
     encrypted: true,
   });
+  // let pusher = new Pusher("cf0a783079a5b5c81f45", {
+  //   cluster: "ap1",
+  //   encrypted: true,
+  // });
 
   return (
     <div style={{ fontFamily: "sans-serif" }}>

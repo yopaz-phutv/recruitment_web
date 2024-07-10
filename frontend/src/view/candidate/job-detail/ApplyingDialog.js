@@ -9,6 +9,7 @@ import jobApi from "../../../api/job";
 import resumeApi from "../../../api/resume";
 import { isNullObject } from "../../../common/functions";
 import Loading from "../../../components/Loading";
+import { Link } from "react-router-dom";
 
 export default function AppyingDialog({
   show,
@@ -28,26 +29,27 @@ export default function AppyingDialog({
   const [errorMsg, setErrorMsg] = useState(null);
   const [useRecommendData, setUseRecommendData] = useState(false);
   const [skillText, setSkillText] = useState(null);
-  const [isSubmit, setIsSubmit] = useState(false)
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const getFileInf = (e) => {
     setFile(e.target.files[0]);
   };
   const handleApply = async () => {
     try {
-      setIsSubmit(true)
+      setIsSubmit(true);
       var next = true;
       const formData = new FormData();
 
       if (!useRecommendData) {
+        if (!isUpload && !isOnline) next = false;
         if (isUpload) {
           if (!file || !skillText) next = false;
           else {
             formData.append("cv", file);
 
-            var formatedText = skillText.replaceAll('\n', ' ')
-            formatedText = formatedText.replaceAll('-', '')
-            formatedText = formatedText.replace(/\s+/g, ' ').trim()
+            var formatedText = skillText.replaceAll("\n", " ");
+            formatedText = formatedText.replaceAll("-", "");
+            formatedText = formatedText.replace(/\s+/g, " ").trim();
 
             formData.append("skill_text", formatedText);
           }
@@ -181,6 +183,12 @@ export default function AppyingDialog({
                 </button>
                 {isOnline && (
                   <div>
+                    <Link
+                      to="/candidate/templates"
+                      className="d-block mt-1 text-decoration-none"
+                    >
+                      Tạo hồ sơ mới
+                    </Link>
                     {resumes?.map((item) => (
                       <div key={`resume_${item.id}`} className="mt-1">
                         <Form.Check
@@ -218,19 +226,21 @@ export default function AppyingDialog({
                       />
                     </div>
                     <Form.Group>
-                    <div className="mt-2 mb-1 ts-smd">
-                      Nhập mô tả các kỹ năng
-                    </div>
-                    <Form.Control
-                      as="textarea"
-                      size="sm"
-                      rows={6}
-                      placeholder="Vui lòng viết giống như trong file hồ sơ"
-                      style={{ width: "500px" }}
-                      onChange={(e) => setSkillText(e.target.value)}
-                      isInvalid={isSubmit && !skillText}
-                    />
-                    <Form.Control.Feedback type="invalid">Vui lòng điền vào trường này</Form.Control.Feedback>
+                      <div className="mt-2 mb-1 ts-smd">
+                        Nhập mô tả các kỹ năng
+                      </div>
+                      <Form.Control
+                        as="textarea"
+                        size="sm"
+                        rows={6}
+                        placeholder="Vui lòng viết giống như trong file hồ sơ"
+                        style={{ width: "500px" }}
+                        onChange={(e) => setSkillText(e.target.value)}
+                        isInvalid={isSubmit && !skillText}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Vui lòng điền vào trường này
+                      </Form.Control.Feedback>
                     </Form.Group>
                   </>
                 )}

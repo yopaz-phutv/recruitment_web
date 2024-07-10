@@ -228,12 +228,12 @@ class JobController extends Controller
             ])
             ->orderByDesc('created_at')
             ->first();
-        if ($res) {
-            if ((Carbon::now())->diffInDays(Carbon::parse($res->created_at)) > 6 * 30)
-                return response()->json(['value' => true]);
+
+        if ($res && (Carbon::now())->diffInDays(Carbon::parse($res->created_at)) <= 6 * 30) {
+            return response()->json(['value' => false]);
         }
 
-        return response()->json(['value' => false]);
+        return response()->json(['value' => true]);
     }
 
     public function getSimilarJobs($id)

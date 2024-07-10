@@ -24,7 +24,7 @@ export default function BellDialog({ show, setShow, current }) {
         <Button
           className="mt-2 d-block ms-auto"
           size="sm"
-          variant="danger"
+          variant="secondary"
           onClick={handleClose}
         >
           Đóng

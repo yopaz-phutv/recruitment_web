@@ -171,7 +171,7 @@ class EmployerController extends Controller
                 }
             )
             ->when($req->filled('skill_text'), function ($query) use ($req) {
-                $query->whereRaw("MATCH(skill_text) AGAINST ('$req->skill_text' IN NATURAL LANGUAGE MODE)");
+                $query->orderByRaw("MATCH(skill_text) AGAINST ('$req->skill_text' IN NATURAL LANGUAGE MODE) DESC");
             })
             ->selectRaw('job_applying.*, firstname, lastname, phone, email, jname, interview_round_num,
                         DATE_FORMAT(job_applying.created_at, "%d/%m/%Y %H:%i") as appliedTime');
@@ -300,7 +300,7 @@ class EmployerController extends Controller
             $query->where('job_yoe', ">=", $req->job_yoe);
         }
         if ($req->filled('skill_text')) {
-            $query->whereRaw("MATCH(skill_text) AGAINST ('$req->skill_text' IN NATURAL LANGUAGE MODE)");
+            $query->orderByRaw("MATCH(skill_text) AGAINST ('$req->skill_text' IN NATURAL LANGUAGE MODE) DESC");
         }
         $resumes = $query->select(
             'resumes.*',

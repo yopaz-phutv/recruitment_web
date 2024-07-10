@@ -23,7 +23,7 @@ export const expLevel = [
 
 export const candExpLevel = [
   { name: "Tất cả kinh nghiệm", value: "" },
-  { name: "Không yêu cầu", value: -1 },
+  { name: "Không yêu cầu kinh nghiệm", value: "" },
   { name: "Dưới 1 năm", value: 0 },
   { name: "1 năm", value: 1 },
   { name: "2 năm", value: 2 },
