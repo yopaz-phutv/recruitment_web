@@ -14,6 +14,7 @@ use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\JlevelController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\JobQuestionController;
 use App\Http\Controllers\JtypeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\OtherController;
@@ -190,10 +191,10 @@ Route::controller(ResumeController::class)->prefix('resumes')->group(function ()
     Route::post('update', 'update');
     Route::delete('{id}', 'destroy');
 });
-Route::controller(CandidateBookmarkController::class)->prefix('candidate-bookmarks')->group(function () {
-    Route::get('', 'index');
+Route::controller(JobQuestionController::class)->prefix('job-questions')->group(function () {
+    // Route::get('', 'index');
+    Route::get('{id}/getByJobId', 'getByJobId');
     Route::post('', 'create');
-    Route::patch('{id}', 'update');
+    Route::patch('', 'update');
     Route::delete('', 'destroy');
-    Route::post('{id}/send-recommend', 'sendRecommend');
 });

@@ -15,6 +15,8 @@ import useGetAllIndustries from "../../../hooks/useGetAllIndustries";
 import useGetAllLocations from "../../../hooks/useGetAllLocations";
 import EditJobModal from "./EditJobModal";
 import CreateJobModal from "./CreateJobModal";
+import QuestionModal from "./QuestionModal";
+import { FaInfoCircle } from "react-icons/fa";
 
 function JobManagement() {
   const nav = useNavigate();
@@ -31,6 +33,7 @@ function JobManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showQuesModal, setShowQuesModal] = useState(false);
 
   const getJobList = async (data) => {
     try {
@@ -57,6 +60,8 @@ function JobManagement() {
         yoe: job_inf.yoe,
       };
       nav("/employer/find-candidates", { state: stateValue });
+    } else if (type === "QUES") {
+      setShowQuesModal(true);
     }
   };
   const handleClickSwitchBtn = async ({ job_id, status, index }) => {
@@ -164,6 +169,10 @@ function JobManagement() {
                         className="ms-1 text-primary pointer"
                         onClick={() => handleClickActBtn(item, "SEARCH")}
                       />
+                      <FaInfoCircle
+                        className="ms-1 text-main pointer"
+                        onClick={() => handleClickActBtn(item, "QUES")}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -196,6 +205,13 @@ function JobManagement() {
               getJobList={getJobList}
               show={showCreateModal}
               setShow={setShowCreateModal}
+            />
+          )}
+          {showQuesModal && (
+            <QuestionModal
+              jobId={curJob.id}
+              show={showQuesModal}
+              setShow={setShowQuesModal}
             />
           )}
         </div>

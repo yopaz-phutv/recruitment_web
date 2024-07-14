@@ -24,6 +24,8 @@ import { toast } from "react-toastify";
 import defaultCompanyLogo from "../../../assets/images/default_company_logo.png";
 import SimilarJobItem from "./SimilarJobItem";
 import clsx from "clsx";
+import Form from "react-bootstrap/Form";
+import jobQuestionApi from "../../../api/jobQuestion";
 
 function Job() {
   const { id } = useParams();
@@ -44,6 +46,16 @@ function Job() {
   const [recommendData, setRecommendData] = useState({});
   const [isLoadingRecommend, setIsLoadingRecommend] = useState(true);
   const [similarJobs, setSimilarJobs] = useState([]);
+  const [question, setQuestion] = useState(null);
+  const [isLoadingQues, setIsLoadingQues] = useState(false);
+  const [questions, setQuestions] = useState([]);
+  const [quesErr, setQuesErr] = useState(null);
+
+  const getQuestions = async () => {
+    const res = await jobQuestionApi.getByJobId(job.id);
+    console.log({ res });
+    setQuestions(res);
+  };
 
   const getJobInf = async () => {
     const res = await jobApi.getById(id);
@@ -90,6 +102,28 @@ function Job() {
     setIsSaved(!isSaved);
   };
 
+  const handleSendQues = async () => {
+    if (!question) {
+      setQuesErr("Vui lòng nhập câu hỏi!");
+      return;
+    }
+    document.getElementById("ques-input").value = null;
+    try {
+      setIsLoadingQues(true);
+      let data = {
+        employer_id: job.employer_id,
+        job_id: job.id,
+        question: question,
+      };
+      await jobQuestionApi.create(data);
+      toast.success("Gửi thành công!");
+      await getQuestions();
+    } catch (error) {
+    } finally {
+      setIsLoadingQues(false);
+    }
+  };
+
   useEffect(() => {
     getJobInf();
     getSimilarJobs();
@@ -103,6 +137,14 @@ function Job() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
+
+  useEffect(() => {
+    getQuestions();
+  }, [job]);
+
+  useEffect(() => {
+    if (question) setQuesErr(null);
+  }, [question]);
 
   return (
     <div style={{ margin: "0 10%" }}>
@@ -272,7 +314,7 @@ function Job() {
               </div>
             </div>
           </div>
-          <div className="bg-white mt-4 mb-5 shadow-sm">
+          <div className="bg-white mt-4 shadow-sm">
             <h5 className="bg-main text-white p-3">Chi tiết về job</h5>
             <div className="ps-4 pe-3 pt-1 pb-4 whitespace-preline">
               <div>
@@ -295,6 +337,46 @@ function Job() {
               </div>
             </div>
           </div>
+          <div className="bg-white mt-3 mb-5 shadow-sm px-3 py-2">
+            <Form.Group>
+              <strong>Đặt câu hỏi</strong>
+              <div className="d-flex gap-2">
+                <Form.Control
+                  id="ques-input"
+                  type="text"
+                  size="sm"
+                  placeholder="Nhập câu hỏi"
+                  className=""
+                  onChange={(e) => setQuestion(e.target.value)}
+                />
+                <Button
+                  size="sm"
+                  className="bg-main border-0 px-3"
+                  onClick={handleSendQues}
+                >
+                  Gửi
+                </Button>
+              </div>
+            </Form.Group>
+            {quesErr && <small className="text-danger">{quesErr}</small>}
+            <div className="mt-3">
+              {questions?.map((item, index) => (
+                <div key={item.id}>
+                  <div className="ts-sm">
+                    {item.author} -{" "}
+                    {dayjs(item.created_at).format("DD/MM/YYYY HH:mm")}
+                  </div>
+                  <strong>Câu hỏi {index + 1}:</strong>&nbsp;
+                  {item.question}
+                  <div>
+                    {"-> "}
+                    {item.answer || "Đợi trả lời"}
+                  </div>
+                  <hr className="text-main" />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="right-part ps-3">
           <div className="bg-white px-1 pb-2 shadow-sm">
@@ -309,7 +391,9 @@ function Job() {
                   alt={job.employer.name}
                 />
               </div>
-              <div className="ts-smd fw-bold ms-2 me-1">{job.employer.name}</div>
+              <div className="ts-smd fw-bold ms-2 me-1">
+                {job.employer.name}
+              </div>
             </div>
             <div className="mx-2 ts-smd mb-1">
               <div className="d-flex">
