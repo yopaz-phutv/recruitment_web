@@ -48,8 +48,7 @@ export default function TemplateWrapper({
   const curTemplate = templateList.find((item) => item.id === templateId);
 
   const [style, setStyle] = useState(structuredClone(curTemplate.defaultStyle));
-  const [curIntervalId, setCurIntervalId] = useState(null)
-
+  
   useEffect(() => {
     if (mode) setCvMode(mode);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -269,7 +268,6 @@ export default function TemplateWrapper({
   };
   const onSubmit = (data) => {
     setIsSaveLoading(true);
-    clearInterval(curIntervalId);
     setTimeout(async () => {
       var dob = "";
       if (data.dob) {
@@ -414,7 +412,6 @@ export default function TemplateWrapper({
   };
 
   useEffect(() => {
-    if (curIntervalId) clearInterval(curIntervalId);
     const intervalId = setInterval(() => {
       changeElementsStyle();
     }, 200);

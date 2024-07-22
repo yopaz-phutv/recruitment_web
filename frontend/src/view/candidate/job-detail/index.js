@@ -47,7 +47,6 @@ function Job() {
   const [isLoadingRecommend, setIsLoadingRecommend] = useState(true);
   const [similarJobs, setSimilarJobs] = useState([]);
   const [question, setQuestion] = useState(null);
-  const [isLoadingQues, setIsLoadingQues] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [quesErr, setQuesErr] = useState(null);
 
@@ -108,20 +107,14 @@ function Job() {
       return;
     }
     document.getElementById("ques-input").value = null;
-    try {
-      setIsLoadingQues(true);
-      let data = {
-        employer_id: job.employer_id,
-        job_id: job.id,
-        question: question,
-      };
-      await jobQuestionApi.create(data);
-      toast.success("Gửi thành công!");
-      await getQuestions();
-    } catch (error) {
-    } finally {
-      setIsLoadingQues(false);
-    }
+    let data = {
+      employer_id: job.employer_id,
+      job_id: job.id,
+      question: question,
+    };
+    await jobQuestionApi.create(data);
+    toast.success("Gửi thành công!");
+    await getQuestions();
   };
 
   useEffect(() => {
@@ -140,6 +133,7 @@ function Job() {
 
   useEffect(() => {
     getQuestions();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [job]);
 
   useEffect(() => {

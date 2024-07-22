@@ -2,11 +2,10 @@ import defaultCompanyLogo from "../../../assets/images/default_company_logo.png"
 import { MdLocationOn, MdOutlineAttachMoney } from "react-icons/md";
 import CTooltip from "../../../components/CTooltip";
 import clsx from "clsx";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function SimilarJobItem({ className, job }) {
-  const nav = useNavigate();
-
+  
   return (
     <div className={clsx("d-flex px-3 py-2", className)}>
       <div

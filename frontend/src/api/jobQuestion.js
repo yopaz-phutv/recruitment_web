@@ -1,5 +1,4 @@
 import queryString from "query-string";
-import employerAxios from "./employerAxios";
 import candidateAxios from "./candidateAxios";
 import commonAxios from "./commonAxios";
 
@@ -21,13 +20,6 @@ const jobQuestionApi = {
   update: (data) => {
     return commonAxios.patch(`${prefix}`, data);
   },
-  // destroy: (params) => {
-  //   return employerAxios.delete(
-  //     `${prefix}?${queryString.stringify(params, {
-  //       arrayFormat: "index",
-  //     })}`
-  //   );
-  // },
 };
 
 export default jobQuestionApi;

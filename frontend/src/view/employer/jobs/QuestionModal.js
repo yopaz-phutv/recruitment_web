@@ -36,6 +36,7 @@ export default function QuestionModal({ show, setShow, jobId }) {
 
   useEffect(() => {
     getQuestions();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

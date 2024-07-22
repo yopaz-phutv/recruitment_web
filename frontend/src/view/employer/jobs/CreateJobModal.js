@@ -62,6 +62,7 @@ export default function CreateJobModal({
     ) {
       setExpireAtError("Vui lòng chọn hạn nộp lớn hơn thời điểm hiện tại!");
     } else setExpireAtError(null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch("expire_at")]);
 
   return (

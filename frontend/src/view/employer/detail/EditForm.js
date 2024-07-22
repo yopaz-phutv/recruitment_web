@@ -7,7 +7,6 @@ import useGetAllLocations from "../../../hooks/useGetAllLocations";
 import { useState } from "react";
 import employerApi from "../../../api/employer";
 import { toast } from "react-toastify";
-import { BsTrash3 } from "react-icons/bs";
 
 export default function EditForm({
   className,
