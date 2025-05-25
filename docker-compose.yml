@@ -35,11 +35,20 @@ services:
       MYSQL_PASSWORD: secret
     volumes:
       - dbdata:/var/lib/mysql
-    ports:
-      - "3306:3306"
+    # ports:
+    #   - "3307:3306"
     networks:
       - laravel
 
+  recruitment-frontend:
+      build:
+        context: ./frontend        # thư mục chứa React app và Dockerfile frontend
+        dockerfile: Dockerfile
+      container_name: recruitment-frontend
+      ports:
+        - "3001:80"                # map port 3000 host đến port 80 container (nginx serve React)
+      networks:
+        - laravel
 volumes:
   dbdata:
 
