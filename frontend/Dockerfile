@@ -1,31 +1,18 @@
-# 1. Build stage
+# Build stage
 FROM node:18-alpine AS build
+WORKDIR /app
 
-WORKDIR /frontend
-
-# Copy package.json và package-lock.json (nếu có)
+# Copy package files và cài đặt dependencies (cache tối ưu)
 COPY package*.json ./
+RUN npm ci
 
-# Cài dependencies
-RUN npm install
-
-# Copy toàn bộ source code
+# Copy source và build app
 COPY . .
-
-# Build React app (tạo thư mục build)
 RUN npm run build
 
-# 2. Production stage
+# 3) Serve bằng nginx
 FROM nginx:alpine
-
-# Copy build từ stage trước sang thư mục serve của nginx
-COPY --from=build /frontend/build /usr/share/nginx/html
-
-# Copy config nginx nếu bạn có file custom (bỏ comment nếu cần)
-# COPY nginx.conf /etc/nginx/nginx.conf
-
-# Expose port 80
-# EXPOSE 80
-
-# Chạy nginx khi container start
+COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+EXPOSE 8003
 CMD ["nginx", "-g", "daemon off;"]

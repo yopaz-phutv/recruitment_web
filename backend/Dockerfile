@@ -1,23 +1,21 @@
-# backend/Dockerfile
-FROM php:8.2-fpm
+FROM php:8.2-fpm-alpine
 
-# Install các extension Laravel cần
-RUN apt-get update && apt-get install -y \
-    git curl zip unzip libpng-dev libonig-dev libxml2-dev \
-    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+# Cài extension cần thiết
+RUN docker-php-ext-install pdo pdo_mysql bcmath
 
-# Cài Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Cài composer
+COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 
-# Set working dir
+# Copy source code
 WORKDIR /var/www
-
-# Copy toàn bộ source
 COPY . .
 
-# Cài Laravel dependencies
-RUN composer install
+# Cài dependency
+RUN composer install --no-dev --optimize-autoloader && \
+    # php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache && \
+    chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# Set quyền cho Laravel
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 775 storage bootstrap/cache
+EXPOSE 9000
+CMD ["php-fpm"]
