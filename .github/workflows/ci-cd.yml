@@ -25,6 +25,11 @@ jobs:
           cd backend
           composer install --no-interaction --prefer-dist --no-progress
           
+      - name: Create env file
+        run: |
+          cd backend
+          cp .env.example .env || echo "APP_ENV=testing" > .env
+
       - name: Generate app key
         run: |
           cd backend
