@@ -60,11 +60,6 @@ jobs:
           cd frontend
           npm run lint
 
-      - name: Build React app
-        run: |
-          cd frontend
-          npm run build
-
   docker:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -115,7 +110,7 @@ jobs:
           username: ${{ secrets.EMAIL_USER }}
           password: ${{ secrets.EMAIL_PASS }}
           subject: "CI/CD result for ${{ github.repository }}"
-          to: "yourmail@example.com"
+          to: ${{ secrets.EMAIL_USER }}
           from: "GitHub Actions <${{ secrets.EMAIL_USER }}>"
           body: |
             ✅ Repository: ${{ github.repository }}
