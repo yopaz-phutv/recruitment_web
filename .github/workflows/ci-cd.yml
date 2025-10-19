@@ -4,6 +4,7 @@ on:
   push:
     branches: [ "main", "develop" ]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   # === CI PHASE ===
@@ -84,6 +85,7 @@ jobs:
 
   # === CD PHASE ===
   deploy-backend:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     needs: docker
     steps:
@@ -92,6 +94,7 @@ jobs:
           curl -X POST https://api.render.com/deploy/srv-d3qb56m3jp1c738g18a0?key=${{ secrets.RENDER_API_KEY }}
 
   deploy-frontend:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     needs: docker
     steps:
