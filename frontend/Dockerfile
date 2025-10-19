@@ -1,31 +1,23 @@
-# 1. Build stage
+# Build stage
 FROM node:18-alpine AS build
 
-WORKDIR /frontend
+ARG REACT_APP_API_URL=http://localhost:8000
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
 
-# Copy package.json và package-lock.json (nếu có)
+WORKDIR /app
+
 COPY package*.json ./
+RUN npm ci
 
-# Cài dependencies
-RUN npm install
-
-# Copy toàn bộ source code
 COPY . .
-
-# Build React app (tạo thư mục build)
 RUN npm run build
 
-# 2. Production stage
 FROM nginx:alpine
-
-# Copy build từ stage trước sang thư mục serve của nginx
-COPY --from=build /frontend/build /usr/share/nginx/html
-
-# Copy config nginx nếu bạn có file custom (bỏ comment nếu cần)
-# COPY nginx.conf /etc/nginx/nginx.conf
-
-# Expose port 80
-# EXPOSE 80
-
-# Chạy nginx khi container start
-CMD ["nginx", "-g", "daemon off;"]
+RUN apk add --no-cache bash gettext && mkdir -p /run/nginx
+COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx/default.conf.template /etc/nginx/templates/default.conf.tpl
+COPY nginx/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENV PORT=80
+EXPOSE 80
+CMD ["/entrypoint.sh"]

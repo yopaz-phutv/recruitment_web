@@ -1,56 +1,67 @@
-# version: '3.8'
-
 services:
-  app:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    restart: always
+    ports:
+      - "8003:80"
+    depends_on:
+      - backend-web
+    networks:
+      - recruitment
+
+  backend-app:
     build:
       context: ./backend
-      dockerfile: Dockerfile
-    container_name: laravel-app
-    working_dir: /var/www
-    volumes:
-      - ./backend:/var/www
+      target: backend-app
+    container_name: backend-app
+    restart: always
+    expose:
+      - "9000"
+    depends_on:
+      - postgres
     networks:
-      - laravel
+      - recruitment
+    # environment:
+    #   APP_ENV: production
+    #   APP_DEBUG: 'false'
+    #   APP_URL: http://backend-web
+    #   DB_CONNECTION: pgsql
+    #   DB_HOST: postgres
+    #   DB_PORT: 5432
+    #   DB_DATABASE: recruitment
+    #   DB_USERNAME: postgres
+    #   DB_PASSWORD: secret
 
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
+  backend-web:
+    build:
+      context: ./backend
+      target: backend-web
+    container_name: backend-nginx
+    restart: always
+    depends_on:
+      - backend-app
     ports:
       - "8000:80"
-    volumes:
-      - ./backend:/var/www
-      - ./backend/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - app
     networks:
-      - laravel
+      - recruitment
 
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
     environment:
-      MYSQL_DATABASE: recruitment
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_USER: root
-      MYSQL_PASSWORD: secret
+      POSTGRES_DB: recruitment
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
     volumes:
-      - dbdata:/var/lib/mysql
-    # ports:
-    #   - "3307:3306"
+      - pgdata:/var/lib/postgresql/data
     networks:
-      - laravel
-
-  recruitment-frontend:
-      build:
-        context: ./frontend        # thư mục chứa React app và Dockerfile frontend
-        dockerfile: Dockerfile
-      container_name: recruitment-frontend
-      ports:
-        - "3001:80"                # map port 3000 host đến port 80 container (nginx serve React)
-      networks:
-        - laravel
-volumes:
-  dbdata:
+      - recruitment
 
 networks:
-  laravel:
+  recruitment:
+
+volumes:
+  pgdata:
