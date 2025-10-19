@@ -161,7 +161,7 @@ export default function JobMap({
         q: address,
       },
       (res) => setHintLocations(res.items),
-      (error) => {
+      () => {
         console.log("Can't search for current address keyword!");
       }
     );

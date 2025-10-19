@@ -37,7 +37,7 @@ const jobApi = {
   getSimilarJobs: (id) => {
     return commonAxios.get(`${prefix}/${id}/getSimilarJobs`);
   },
-  getRecommendJobs: (id) => {
+  getRecommendJobs: () => {
     return candidateAxios.get(`${prefix}/getRecommendJobs`);
   },
 };

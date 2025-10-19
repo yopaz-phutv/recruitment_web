@@ -2,6 +2,7 @@ services:
   frontend:
     build:
       context: ./frontend
+    image: phutvdhak/recruitment-frontend:latest
     container_name: frontend
     restart: always
     ports:
@@ -38,6 +39,7 @@ services:
     build:
       context: ./backend
       target: backend-web
+    image: phutvdhak/recruitment-backend:latest
     container_name: backend-nginx
     restart: always
     depends_on:
