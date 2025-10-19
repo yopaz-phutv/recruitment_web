@@ -35,12 +35,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'  # cache npm để build nhanh hơn
+          cache: 'npm'  # cache npm
 
       - name: Install Node dependencies
         run: |
           cd frontend
-          npm ci   # dùng npm ci để đảm bảo build reproducible và sạch
+          npm ci
 
       - name: Run ESLint
         run: |
@@ -76,22 +76,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: docker
     steps:
-      - name: Trigger Render deploy
+      - name: Trigger Render backend deploy
         run: |
-          curl -X POST https://api.render.com/deploy/srv-d3q5f4gdl3ps73blv0fg?key=${{ secrets.RENDER_API_KEY }}
+          curl -X POST https://api.render.com/deploy/srv-d3qb56m3jp1c738g18a0?key=${{ secrets.RENDER_API_KEY }}
 
   deploy-frontend:
     runs-on: ubuntu-latest
-    needs: ci
+    needs: docker
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Deploy to Vercel
+      - name: Trigger Render frontend deploy
         run: |
-          npm i -g vercel
-          cd frontend
-          vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
+          echo "Deploying frontend to Render..."
+          curl -X POST https://api.render.com/deploy/srv-d3qb7u3ipnbc73ae3nag?key=${{ secrets.RENDER_API_KEY }}
 
   notify:
     runs-on: ubuntu-latest
@@ -109,6 +105,8 @@ jobs:
           to: "yourmail@example.com"
           from: "GitHub Actions <${{ secrets.EMAIL_USER }}>"
           body: |
-            Status: ${{ job.status }}
-            Commit: ${{ github.sha }}
-            Author: ${{ github.actor }}
+            ✅ Repository: ${{ github.repository }}
+            🧑‍💻 Author: ${{ github.actor }}
+            🔁 Commit: ${{ github.sha }}
+            📦 Branch: ${{ github.ref }}
+            🚀 Status: ${{ job.status }}
