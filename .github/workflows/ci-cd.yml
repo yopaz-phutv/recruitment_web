@@ -24,6 +24,11 @@ jobs:
         run: |
           cd backend
           composer install --no-interaction --prefer-dist --no-progress
+          
+      - name: Generate app key
+        run: |
+          cd backend
+          php artisan key:generate
 
       - name: Run Laravel tests
         run: |
