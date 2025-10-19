@@ -78,7 +78,7 @@ jobs:
     steps:
       - name: Trigger Render deploy
         run: |
-          curl -X POST https://api.render.com/deploy/srv-xxxxxx?key=${{ secrets.RENDER_API_KEY }}
+          curl -X POST https://api.render.com/deploy/srv-d3q5f4gdl3ps73blv0fg?key=${{ secrets.RENDER_API_KEY }}
 
   deploy-frontend:
     runs-on: ubuntu-latest

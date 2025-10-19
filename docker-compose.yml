@@ -1,43 +1,62 @@
-
 services:
-  nginx:
+  frontend:
     build:
       context: ./frontend
-    container_name: nginx
+    container_name: frontend
     restart: always
     ports:
       - "8003:80"
     depends_on:
-      - backend
+      - backend-web
     networks:
       - recruitment
 
-  backend:
+  backend-app:
     build:
       context: ./backend
-    container_name: backend
+      target: backend-app
+    container_name: backend-app
     restart: always
+    expose:
+      - "9000"
+    depends_on:
+      - postgres
+    networks:
+      - recruitment
     # environment:
     #   APP_ENV: production
-    #   APP_KEY: base64:Y+YIy0qyCz8CNJ81Y/HaiweoVcBkqHaa/9bE3+WZTIs=
-    #   APP_DEBUG: false
-    #   APP_URL: http://localhost
-    #   DB_HOST: mysql
+    #   APP_DEBUG: 'false'
+    #   APP_URL: http://backend-web
+    #   DB_CONNECTION: pgsql
+    #   DB_HOST: postgres
+    #   DB_PORT: 5432
     #   DB_DATABASE: recruitment
-    #   DB_USERNAME: root
+    #   DB_USERNAME: postgres
     #   DB_PASSWORD: secret
+
+  backend-web:
+    build:
+      context: ./backend
+      target: backend-web
+    container_name: backend-nginx
+    restart: always
+    depends_on:
+      - backend-app
+    ports:
+      - "8000:80"
     networks:
       - recruitment
 
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
+  postgres:
+    image: postgres:15
+    container_name: postgres
     restart: always
     environment:
-      MYSQL_DATABASE: recruitment
-      MYSQL_ROOT_PASSWORD: secret
+      POSTGRES_DB: recruitment
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
     volumes:
-      - dbdata:/var/lib/mysql
+      - pgdata:/var/lib/postgresql/data
     networks:
       - recruitment
 
@@ -45,4 +64,4 @@ networks:
   recruitment:
 
 volumes:
-  dbdata:
+  pgdata:
