@@ -113,7 +113,7 @@ function Layout(props) {
       getAllMessages();
       let channelName = `candidate-channel_${candidate.id}`;
       let channel = pusher.subscribe(channelName);
-      channel.bind("notification-event", async (data) => {
+      channel.bind("notification-event", async () => {
         // alert("bell message::", JSON.stringify(data));
         await getAllMessages();
       });
