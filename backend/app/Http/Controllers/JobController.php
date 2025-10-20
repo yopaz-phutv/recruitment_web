@@ -82,7 +82,7 @@ class JobController extends Controller
     {
         $job = Job::with(['employer', 'jtype', 'jlevel', 'industries'])
             ->where('id', $id)
-            ->select('jobs.*', DB::raw('DATE_FORMAT(created_at, "%d/%m/%Y") as postDate'))
+            ->select('jobs.*', DB::raw("TO_CHAR(created_at, 'DD/MM/YYYY') as postDate"))
             ->first();
         $this->addLocationInf($job);
 

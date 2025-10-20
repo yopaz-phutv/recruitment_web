@@ -130,8 +130,8 @@ class EmployerController extends Controller
                 ['jobs.is_active', '=', 1]
             ])
             ->select('jobs.*', DB::raw(
-                'DATE_FORMAT(jobs.created_at, "%d/%m/%Y") as postDate,
-                 DATE_FORMAT(jobs.expire_at, "%d/%m/%Y") as deadline'
+                "TO_CHAR(jobs.created_at, 'DD/MM/YYYY') as postDate,
+                 TO_CHAR(jobs.expire_at, 'DD/MM/YYYY') as deadline"
             ))
             ->get();
         for ($i = 0; $i < count($jobs); $i++) {
@@ -171,10 +171,14 @@ class EmployerController extends Controller
                 }
             )
             ->when($req->filled('skill_text'), function ($query) use ($req) {
-                $query->orderByRaw("MATCH(skill_text) AGAINST ('$req->skill_text' IN NATURAL LANGUAGE MODE) DESC");
+                $term = strtolower($req->skill_text);
+                $query->orderByRaw(
+                    "CASE WHEN LOWER(skill_text) LIKE ? THEN 0 ELSE 1 END",
+                    ['%' . $term . '%']
+                );
             })
-            ->selectRaw('job_applying.*, firstname, lastname, phone, email, jname, interview_round_num,
-                        DATE_FORMAT(job_applying.created_at, "%d/%m/%Y %H:%i") as appliedTime');
+            ->selectRaw("job_applying.*, firstname, lastname, phone, email, jname, interview_round_num,
+                        TO_CHAR(job_applying.created_at, 'DD/MM/YYYY HH24:MI') as appliedTime");
         if (!$req->filled('skill_text')) $query->orderByDesc('job_applying.created_at');
         $candidates = $query->paginate(10);
 
@@ -254,9 +258,9 @@ class EmployerController extends Controller
                         ->orWhereraw('LOWER(jlevels.name) LIKE ?', ['%' . strtolower($keyword) . '%']);
                 });
             })
-            ->selectRaw('jobs.*, jtypes.name as jtype_name, jlevels.name as jlevel_name,
-                        DATE_FORMAT(jobs.created_at ,"%d/%m/%Y %H:%i") as postTime,
-                        DATE_FORMAT(expire_at ,"%d/%m/%Y") as deadline')
+            ->selectRaw("jobs.*, jtypes.name as jtype_name, jlevels.name as jlevel_name,
+                        TO_CHAR(jobs.created_at ,'DD/MM/YYYY HH24:MI') as postTime,
+                        TO_CHAR(expire_at ,'DD/MM/YYYY') as deadline")
             ->orderByDesc('jobs.created_at')
             ->get();
 
@@ -292,7 +296,7 @@ class EmployerController extends Controller
         }
         if ($req->filled('min_age')) {
             $query->whereRaw(
-                'DATE_FORMAT(NOW(), "%Y") - DATE_FORMAT(resumes.dob, "%Y") BETWEEN ? AND ?',
+                'EXTRACT(YEAR FROM AGE(resumes.dob)) BETWEEN ? AND ?',
                 [$req->min_age, $req->max_age]
             );
         }
@@ -300,7 +304,11 @@ class EmployerController extends Controller
             $query->where('job_yoe', ">=", $req->job_yoe);
         }
         if ($req->filled('skill_text')) {
-            $query->orderByRaw("MATCH(skill_text) AGAINST ('$req->skill_text' IN NATURAL LANGUAGE MODE) DESC");
+            $term = strtolower($req->skill_text);
+            $query->orderByRaw(
+                "CASE WHEN LOWER(skill_text) LIKE ? THEN 0 ELSE 1 END",
+                ['%' . $term . '%']
+            );
         }
         $resumes = $query->select(
             'resumes.*',

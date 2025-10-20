@@ -51,6 +51,7 @@ function Job() {
   const [quesErr, setQuesErr] = useState(null);
 
   const getQuestions = async () => {
+    if (!job?.id) return;
     const res = await jobQuestionApi.getByJobId(job.id);
     console.log({ res });
     setQuestions(res);
