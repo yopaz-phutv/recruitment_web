@@ -84,7 +84,7 @@ class CandidateController extends Controller
                 'employers.name',
                 'resume_link',
                 'status',
-                DB::raw('DATE_FORMAT(job_applying.created_at, "%d/%m/%Y") as postDate')
+                DB::raw("TO_CHAR(job_applying.created_at, 'DD/MM/YYYY') as postDate")
             )
             ->orderByDesc('job_applying.created_at')
             ->get();
@@ -97,7 +97,7 @@ class CandidateController extends Controller
         $jobs = Job::with(['employer', 'locations'])
             ->join('saved_jobs', 'id', '=', 'job_id')
             ->where('candidate_id', $id)
-            ->select('jobs.*', DB::raw('DATE_FORMAT(expire_at, "%d/%m/%Y") as deadline'))
+            ->select('jobs.*', DB::raw("TO_CHAR(expire_at, 'DD/MM/YYYY') as deadline"))
             ->get();
 
         return response()->json($jobs);

@@ -21,8 +21,22 @@ function Home() {
   const [curPage, setCurPage] = useState(1);
   const [recommendJobs, setRecommendJobs] = useState([]);
 
-  const getHotJobs = async (apiURL) => {
-    await axios.get(apiURL).then((res) => {
+  const buildHotJobUrl = (pageUrl) => {
+    if (!pageUrl) return null;
+    if (pageUrl.startsWith("http")) {
+      const { search } = new URL(pageUrl);
+      return `${apiUrl}/api/jobs/getHotList${search}`;
+    }
+    return pageUrl;
+  };
+
+  const getHotJobs = async (pageUrl) => {
+    const targetUrl = buildHotJobUrl(
+      pageUrl ?? `${apiUrl}/api/jobs/getHotList`
+    );
+    if (!targetUrl) return;
+
+    await axios.get(targetUrl).then((res) => {
       setHotJobs(res.data.data);
       delete res.data.data;
       setPage(res.data);
@@ -42,7 +56,7 @@ function Home() {
   };
 
   useEffect(() => {
-    getHotJobs(`${apiUrl}/api/jobs/getHotList`);
+    getHotJobs();
     getHotCompanies();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
